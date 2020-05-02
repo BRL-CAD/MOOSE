@@ -24,29 +24,29 @@
 
 
 SET(DatabaseSources
-    Arb8.cpp
-    BagOfTriangles.cpp
-    Combination.cpp
-    Cone.cpp
-    ConstDatabase.cpp
-    Database.cpp
-    Ellipsoid.cpp
-    EllipticalTorus.cpp
-    FileDatabase.cpp
-    Halfspace.cpp
-    HyperbolicCylinder.cpp
-    Hyperboloid.cpp
-    MemoryDatabase.cpp
-    NonManifoldGeometry.cpp
-    Object.cpp
-    ParabolicCylinder.cpp
-    Paraboloid.cpp
-    Particle.cpp
-    Pipe.cpp
-    Sketch.cpp
-    Sphere.cpp
-    Torus.cpp
-    Unknown.cpp
+    Database/Arb8.cpp
+    Database/BagOfTriangles.cpp
+    Database/Combination.cpp
+    Database/Cone.cpp
+    Database/ConstDatabase.cpp
+    Database/Database.cpp
+    Database/Ellipsoid.cpp
+    Database/EllipticalTorus.cpp
+    Database/FileDatabase.cpp
+    Database/Halfspace.cpp
+    Database/HyperbolicCylinder.cpp
+    Database/Hyperboloid.cpp
+    Database/MemoryDatabase.cpp
+    Database/NonManifoldGeometry.cpp
+    Database/Object.cpp
+    Database/ParabolicCylinder.cpp
+    Database/Paraboloid.cpp
+    Database/Particle.cpp
+    Database/Pipe.cpp
+    Database/Sketch.cpp
+    Database/Sphere.cpp
+    Database/Torus.cpp
+    Database/Unknown.cpp
 )
 
 SET(DatabaseHeaders
@@ -74,14 +74,5 @@ SET(DatabaseHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/Database/Torus.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/Database/Unknown.h
 )
-
-IF(MSVC)
-    add_definitions(-DBRLCAD_MOOSE_EXPORT=__declspec(dllexport))
-    add_definitions(-DBU_DLL_IMPORTS -DRT_DLL_IMPORTS -DWDB_DLL_IMPORTS)
-ELSE(MSVC)
-    add_definitions(-DBRLCAD_MOOSE_EXPORT=)
-ENDIF(MSVC)
-
-ADD_LIBRARY(database STATIC ${DatabaseSources})
 
 INSTALL(FILES ${DatabaseHeaders} DESTINATION include/brlcad/Database)
