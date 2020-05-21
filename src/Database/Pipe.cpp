@@ -64,7 +64,7 @@ static void PipeCopy
         wdb_pipe_pnt* ctlPoint;
         BU_GET(ctlPoint, wdb_pipe_pnt);
 
-        for(int i = 0; i < 3; i++)
+        for (size_t i = 0; i < 3; ++i)
             ctlPoint->pp_coord[i] = temp->pp_coord[i];
 
         ctlPoint->pp_id         = temp->pp_id;
@@ -81,7 +81,7 @@ static void PipeCopy
             temp = BU_LIST_NEXT(wdb_pipe_pnt, &temp->l);
             BU_GET(ctlPoint, wdb_pipe_pnt);
 
-            for(int i = 0; i < 3; i++)
+            for (size_t i = 0; i < 3; ++i)
                 ctlPoint->pp_coord[i] = temp->pp_coord[i];
 
             ctlPoint->pp_id         = temp->pp_id;
@@ -94,6 +94,23 @@ static void PipeCopy
 }
 
 
+rt_pipe_internal* ClonePipeInternal
+(
+    const rt_pipe_internal& pipe
+) {
+    rt_pipe_internal* ret = 0;
+
+    BU_GET(ret, rt_pipe_internal);
+    ret->pipe_magic = RT_PIPE_INTERNAL_MAGIC;
+    ret->pipe_count = 0;
+    BU_LIST_INIT(&(ret->pipe_segs_head));
+
+    PipeCopy(ret, &pipe);
+
+    return ret;
+}
+
+
 Pipe::Pipe(void) : Object() {
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_pipe_internal);
@@ -101,9 +118,8 @@ Pipe::Pipe(void) : Object() {
         m_internalp->pipe_count = 0;
         BU_LIST_INIT(&(m_internalp->pipe_segs_head));
     }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 }
@@ -113,16 +129,10 @@ Pipe::Pipe
 (
     const Pipe& original
 ) {
-    if (!BU_SETJUMP) {
-        BU_GET(m_internalp, rt_pipe_internal);
-        m_internalp->pipe_magic = RT_PIPE_INTERNAL_MAGIC;
-        m_internalp->pipe_count = 0;
-        BU_LIST_INIT(&(m_internalp->pipe_segs_head));
-        PipeCopy(m_internalp, original.Internal());
-    }
-    else {
+    if (!BU_SETJUMP)
+        m_internalp = ClonePipeInternal(*original.Internal());
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 }
@@ -143,14 +153,13 @@ const Pipe& Pipe::operator=
 (
     const Pipe& original
 ) {
-    if(&original != this) {
+    if (&original != this) {
         Copy(original);
 
-        if(!BU_SETJUMP)
+        if (!BU_SETJUMP)
             PipeCopy(Internal(), original.Internal());
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
@@ -164,7 +173,7 @@ Vector3D Pipe::ControlPoint::Point(void) const {
 
     Vector3D ret;
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         ret = Vector3D(m_controlPoint->pp_coord);
 
     return ret;
@@ -177,8 +186,8 @@ void Pipe::ControlPoint::SetPoint
 ) {
     assert(m_pipe != 0);
 
-    if(m_pipe != 0) {
-        for(int i = 0; i < 3; i++)
+    if (m_pipe != 0) {
+        for (size_t i = 0; i < 3; ++i)
             m_controlPoint->pp_coord[i] = point.coordinates[i];
     }
 }
@@ -189,7 +198,7 @@ double Pipe::ControlPoint::InnerDiameter(void) const {
 
     double ret;
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         ret = m_controlPoint->pp_id;
 
     return ret;
@@ -202,7 +211,7 @@ void Pipe::ControlPoint::SetInnerDiameter
 ) {
     assert(m_pipe != 0);
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         m_controlPoint->pp_id = id;
 }
 
@@ -212,7 +221,7 @@ double Pipe::ControlPoint::OuterDiameter(void) const {
 
     double ret;
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         ret = m_controlPoint->pp_od;
 
     return ret;
@@ -225,7 +234,7 @@ void Pipe::ControlPoint::SetOuterDiameter
 ) {
     assert(m_pipe != 0);
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         m_controlPoint->pp_od = od;
 }
 
@@ -235,7 +244,7 @@ double Pipe::ControlPoint::BendRadius(void) const {
 
     double ret;
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         ret = m_controlPoint->pp_bendradius;
 
     return ret;
@@ -248,12 +257,17 @@ void Pipe::ControlPoint::SetBendRadius
 ) {
     assert(m_pipe != 0);
 
-    if(m_pipe != 0)
+    if (m_pipe != 0)
         m_controlPoint->pp_bendradius = br;
 }
 
 
-Pipe::ControlPoint Pipe::Get
+size_t Pipe::NumberOfControlPoints(void) const {
+    return Internal()->pipe_count;
+}
+
+
+Pipe::ControlPoint Pipe::GetControlPoint
 (
     size_t index
 ) {
@@ -262,7 +276,7 @@ Pipe::ControlPoint Pipe::Get
     Pipe::ControlPoint ret;
     bu_list*           seghead = &Internal()->pipe_segs_head;
 
-    if(index < Internal()->pipe_count) {
+    if (index < Internal()->pipe_count) {
         wdb_pipe_pnt* itr = BU_LIST_FIRST(wdb_pipe_pnt, seghead);
 
         for (size_t count = 0; count < index; ++count)
@@ -284,10 +298,10 @@ Pipe::ControlPoint Pipe::AppendControlPoint
 ) {
     Pipe::ControlPoint ret;
 
-    if(!BU_SETJUMP) {
-        wdb_pipe_pnt* ctlPoint = static_cast<wdb_pipe_pnt*>(bu_calloc(1, sizeof(wdb_pipe_pnt),"Pipe::AppendControlPoint: wdb_pipe_pnt"));
+    if (!BU_SETJUMP) {
+        wdb_pipe_pnt* ctlPoint = static_cast<wdb_pipe_pnt*>(bu_calloc(1, sizeof(wdb_pipe_pnt),"BRLCAD::Pipe::AppendControlPoint: wdb_pipe_pnt"));
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
             ctlPoint->pp_coord[i] = point.coordinates[i];
 
         ctlPoint->pp_id         = innerDiameter;
@@ -299,9 +313,8 @@ Pipe::ControlPoint Pipe::AppendControlPoint
 
         ret = ControlPoint(Internal(), ctlPoint);
     }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     return ret;
 }
@@ -320,10 +333,10 @@ Pipe::ControlPoint Pipe::InsertControlPoint
     Pipe::ControlPoint ret;
 
     if (index <= Internal()->pipe_count) {
-        if(!BU_SETJUMP) {
-            wdb_pipe_pnt* ctlPoint = static_cast<wdb_pipe_pnt*>(bu_calloc(1, sizeof(wdb_pipe_pnt),"Pipe::InsertControlPoint: wdb_pipe_pnt"));
+        if (!BU_SETJUMP) {
+            wdb_pipe_pnt* ctlPoint = static_cast<wdb_pipe_pnt*>(bu_calloc(1, sizeof(wdb_pipe_pnt),"BRLCAD::Pipe::InsertControlPoint: wdb_pipe_pnt"));
 
-            for(int i = 0; i < 3; i++)
+            for (size_t i = 0; i < 3; ++i)
                 ctlPoint->pp_coord[i] = point.coordinates[i];
 
             ctlPoint->pp_id         = innerDiameter;
@@ -340,9 +353,8 @@ Pipe::ControlPoint Pipe::InsertControlPoint
 
             ret = ControlPoint(Internal(), ctlPoint);
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
     }
 
     return ret;

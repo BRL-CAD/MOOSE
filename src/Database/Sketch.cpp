@@ -54,7 +54,7 @@ static size_t AddToVerts
         ++sketch.vert_count;
         sketch.verts = static_cast<point2d_t*>(bu_realloc(sketch.verts,
                                                           sketch.vert_count * sizeof(point2d_t),
-                                                          "sketch interface AddToVerts()"));
+                                                          "BRLCAD sketch interface AddToVerts"));
 
         V2MOVE(sketch.verts[ret], point);
     }
@@ -129,7 +129,7 @@ static void RemoveFromVerts
             --sketch.vert_count;
             sketch.verts = static_cast<point2d_t*>(bu_realloc(sketch.verts,
                                                               sketch.vert_count * sizeof(point2d_t),
-                                                              "sketch interface RemoveFromVerts()"));
+                                                              "BRLCAD sketch interface RemoveFromVerts"));
         }
     }
 }
@@ -161,22 +161,24 @@ static void AppendSegment
     rt_sketch_internal* sketch
 ) {
     if (sketch->curve.count == 0) {
-        sketch->curve.reverse = static_cast<int*>(bu_malloc(sizeof(int), "Sketch::AppendLine: reverse"));
-        sketch->curve.segment = static_cast<void**>(bu_malloc(sizeof(void*), "Sketch::AppendLine: segment"));
+        sketch->curve.reverse = static_cast<int*>(bu_malloc(sizeof(int),
+                                                            "BRLCAD sketch interface AppendSegment: reverse"));
+        sketch->curve.segment = static_cast<void**>(bu_malloc(sizeof(void*),
+                                                              "BRLCAD sketch interface AppendSegment: segment"));
     }
     else {
         sketch->curve.reverse = static_cast<int*>(bu_realloc(sketch->curve.reverse,
-                                                                (sketch->curve.count + 1) * sizeof(int),
-                                                                "Sketch::AppendLine: reverse"));
+                                                             (sketch->curve.count + 1) * sizeof(int),
+                                                             "BRLCAD sketch interface AppendSegment: reverse"));
         sketch->curve.segment = static_cast<void**>(bu_realloc(sketch->curve.segment,
-                                                                    (sketch->curve.count + 1) * sizeof(void*),
-                                                                    "Sketch::AppendLine: segment"));
+                                                               (sketch->curve.count + 1) * sizeof(void*),
+                                                               "BRLCAD sketch interface AppendSegment: segment"));
     }
 
     sketch->curve.reverse[sketch->curve.count] = 0;
     sketch->curve.segment[sketch->curve.count] = segment;
     ++(sketch->curve.count);
-};
+}
 
 
 static void InsertSegment
@@ -188,11 +190,11 @@ static void InsertSegment
     assert(sketch->curve.count > 0);
 
     sketch->curve.reverse = static_cast<int*>(bu_realloc(sketch->curve.reverse,
-                                                            (sketch->curve.count + 1) * sizeof(int),
-                                                            "Sketch::AppendLine: reverse"));
+                                                         (sketch->curve.count + 1) * sizeof(int),
+                                                         "BRLCAD sketch interface InsertSegment: reverse"));
     sketch->curve.segment = static_cast<void**>(bu_realloc(sketch->curve.segment,
-                                                                (sketch->curve.count + 1) * sizeof(void*),
-                                                                "Sketch::AppendLine: segment"));
+                                                           (sketch->curve.count + 1) * sizeof(void*),
+                                                           "BRLCAD sketch interface InsertSegment: segment"));
 
     memmove(sketch->curve.segment + index + 1, sketch->curve.segment + index, (sketch->curve.count - index) * sizeof(int));
     memmove(sketch->curve.segment + index + 1, sketch->curve.segment + index, (sketch->curve.count - index) * sizeof(void*));
@@ -200,7 +202,7 @@ static void InsertSegment
     sketch->curve.reverse[index] = 0;
     sketch->curve.segment[index] = segment;
     ++(sketch->curve.count);
-};
+}
 
 
 Sketch::Sketch(void) : Object() {
@@ -210,12 +212,11 @@ Sketch::Sketch(void) : Object() {
         m_internalp->curve.count = 0;
         m_internalp->vert_count = 0;
     }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
-};
+}
 
 
 Sketch::Sketch
@@ -224,13 +225,11 @@ Sketch::Sketch
 ) {
     if (!BU_SETJUMP)
         m_internalp = rt_copy_sketch(original.Internal());
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
-
-};
+}
 
 
 Sketch::~Sketch(void) {
@@ -242,7 +241,7 @@ Sketch::~Sketch(void) {
 
         BU_PUT(m_internalp, rt_sketch_internal);
     }
-};
+}
 
 
 const Sketch& Sketch::operator=(
@@ -255,26 +254,31 @@ const Sketch& Sketch::operator=(
             rt_sketch_internal*       thisInternal     = Internal();
             const rt_sketch_internal* originalInternal = original.Internal();
 
+            if (thisInternal->verts != 0)
+                bu_free(thisInternal->verts, "BRLCAD::Sketch::operator=::Internal->verts");
+
             memcpy(thisInternal, originalInternal, sizeof(rt_sketch_internal));
 
             if (thisInternal->vert_count > 0) {
-                thisInternal->verts = static_cast<point2d_t*>(bu_calloc(thisInternal->vert_count, sizeof(point2d_t), "Sketch::operator=::m_internalp->verts"));
+                thisInternal->verts = static_cast<point2d_t*>(bu_calloc(thisInternal->vert_count, sizeof(point2d_t), "BRLCAD::Sketch::operator=::Internal->verts"));
 
                 for (size_t i = 0; i < thisInternal->vert_count; ++i)
                     V2MOVE(thisInternal->verts[i], originalInternal->verts[i]);
             }
 
-            rt_copy_curve(&thisInternal->curve, &originalInternal->curve);
+            if (&thisInternal->curve != 0) {
+                rt_curve_free(&thisInternal->curve);
+                rt_copy_curve(&thisInternal->curve, &originalInternal->curve);
+            }
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
 
     return *this;
-};
+}
 
 
 //
@@ -298,12 +302,12 @@ Sketch::Segment::SegmentType Sketch::Line::Type(void) const {
 
     return ret;
 
-};
+}
 
 
 Sketch::Segment* Sketch::Line::Clone(void) const {
     return new Line(*this);
-};
+}
 
 
 Vector2D Sketch::Line::StartPoint(void) const {
@@ -316,12 +320,12 @@ Vector2D Sketch::Line::StartPoint(void) const {
         ret = Vector2D(m_sketch->verts[m_lineSegment->start]);
 
     return ret;
-};
+}
 
 
 void Sketch::Line::SetStartPoint
 (
-        const Vector2D& startPoint
+    const Vector2D& startPoint
 ) {
     assert(m_lineSegment != 0);
     assert(m_sketch != 0);
@@ -329,13 +333,12 @@ void Sketch::Line::SetStartPoint
     if ((m_lineSegment != 0) && (m_sketch != 0)) {
         if (!BU_SETJUMP)
             SwapVertex(m_lineSegment->start, startPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 Vector2D Sketch::Line::EndPoint(void) const {
@@ -348,12 +351,12 @@ Vector2D Sketch::Line::EndPoint(void) const {
         ret = Vector2D(m_sketch->verts[m_lineSegment->end]);
 
     return ret;
-};
+}
 
 
 void Sketch::Line::SetEndPoint
 (
-        const Vector2D& endPoint
+    const Vector2D& endPoint
 ) {
     assert(m_lineSegment != 0);
     assert(m_sketch != 0);
@@ -361,13 +364,12 @@ void Sketch::Line::SetEndPoint
     if ((m_lineSegment != 0) && (m_sketch != 0)) {
         if (!BU_SETJUMP)
             SwapVertex(m_lineSegment->end, endPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 //
@@ -381,7 +383,7 @@ Vector3D Sketch::CircularArc::Center(void) const {
     assert(m_sketch != 0);
 
     if ((m_circularArcSegment != 0) && (m_sketch != 0)) {
-        if(m_circularArcSegment->radius <= 0.0) {
+        if (m_circularArcSegment->radius <= 0.) {
             point_t center;
 
             VJOIN2(center, m_sketch->V, m_sketch->verts[m_circularArcSegment->end][0],
@@ -394,8 +396,7 @@ Vector3D Sketch::CircularArc::Center(void) const {
     }
 
     return ret;
-
-};
+}
 
 
 void Sketch::CircularArc::SetCenter(
@@ -408,28 +409,26 @@ void Sketch::CircularArc::SetCenter(
 
         if (!BU_SETJUMP)
             SwapVertex(m_circularArcSegment->center, c.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
-    };
+    }
 }
 
 
 Sketch::Segment::SegmentType Sketch::CircularArc::Type(void) const {
-     Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
+    Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
 
     if ((m_circularArcSegment != 0) && (m_sketch != 0))
         ret = Sketch::Segment::CircularArc;
 
     return ret;
-
-};
+}
 
 Sketch::Segment* Sketch::CircularArc::Clone(void) const {
     return new CircularArc(*this);
-};
+}
 
 
 Vector2D Sketch::CircularArc::StartPoint(void) const {
@@ -442,12 +441,12 @@ Vector2D Sketch::CircularArc::StartPoint(void) const {
         ret = Vector2D(m_sketch->verts[m_circularArcSegment->start]);
 
     return ret;
-};
+}
 
 
 void Sketch::CircularArc::SetStartPoint
 (
-        const Vector2D& startPoint
+    const Vector2D& startPoint
 ) {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
@@ -456,23 +455,22 @@ void Sketch::CircularArc::SetStartPoint
 
         if (!BU_SETJUMP)
             SwapVertex(m_circularArcSegment->start, startPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
-    };
-};
+    }
+}
 
 
 Vector2D Sketch::CircularArc::EndPoint(void) const {
     return Vector2D(m_sketch->verts[m_circularArcSegment->end]);
-};
+}
 
 
 void Sketch::CircularArc::SetEndPoint
 (
-        const Vector2D& endPoint
+    const Vector2D& endPoint
 ) {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
@@ -481,20 +479,20 @@ void Sketch::CircularArc::SetEndPoint
 
         if (!BU_SETJUMP)
             SwapVertex(m_circularArcSegment->end, endPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 double Sketch::CircularArc::Radius(void) const {
    assert(m_circularArcSegment != 0);
    assert(m_sketch != 0);
+
    return m_circularArcSegment->radius;
-};
+}
 
 
 void Sketch::CircularArc::SetRadius
@@ -503,32 +501,36 @@ void Sketch::CircularArc::SetRadius
 ) {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
+
     m_circularArcSegment->radius =  Radius;
-};
+}
 
 
 bool Sketch::CircularArc::CenterIsLeft(void) const {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
+
     return m_circularArcSegment->center_is_left;
-};
+}
 
 
 void Sketch::CircularArc::SetCenterIsLeft
 (
     bool centerIsLeft
-    ) {
+) {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
+
     m_circularArcSegment->center_is_left = centerIsLeft;
-};
+}
 
 
 bool Sketch::CircularArc::ClockwiseOriented(void) const {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
+
     return this->m_circularArcSegment->orientation;
-};
+}
 
 
 void Sketch::CircularArc::SetClockwiseOriented
@@ -537,8 +539,9 @@ void Sketch::CircularArc::SetClockwiseOriented
 ) {
     assert(m_circularArcSegment != 0);
     assert(m_sketch != 0);
+
     m_circularArcSegment->orientation = clockwiseOriented;
-};
+}
 
 
 //
@@ -550,29 +553,32 @@ Sketch::Segment::SegmentType Sketch::Nurb::Type(void) const {
 
     if ((m_nurbSegment != 0) && (m_sketch != 0))
         ret = Sketch::Segment::Nurb;
+
     return ret;
-};
+}
 
 
 Sketch::Segment* Sketch::Nurb::Clone(void) const {
     return new Nurb(*this);
-};
+}
 
 
 Vector2D Sketch::Nurb::StartPoint(void) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     Vector2D ret;
+
     if ((m_nurbSegment != 0) && (m_sketch != 0))
         ret = Vector2D(m_sketch->verts[m_nurbSegment->ctl_points[0]]);
 
     return ret;
-};
+}
 
 
 void Sketch::Nurb::SetStartPoint
 (
-        const Vector2D& startPoint
+    const Vector2D& startPoint
 ) {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
@@ -580,28 +586,30 @@ void Sketch::Nurb::SetStartPoint
     if ((m_nurbSegment != 0) && (m_sketch != 0)) {
         if (!BU_SETJUMP)
             SwapVertex(m_nurbSegment->ctl_points[0], startPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 Vector2D Sketch::Nurb::EndPoint(void) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     Vector2D ret;
+
     if ((m_nurbSegment != 0) && (m_sketch != 0))
         ret = Vector2D(m_sketch->verts[m_nurbSegment->ctl_points[m_nurbSegment->c_size]]);
+
     return ret;
-};
+}
 
 
 void Sketch::Nurb::SetEndPoint
 (
-        const Vector2D& endPoint
+    const Vector2D& endPoint
 ) {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
@@ -609,36 +617,39 @@ void Sketch::Nurb::SetEndPoint
     if ((m_nurbSegment != 0) && (m_sketch != 0)) {
         if (!BU_SETJUMP)
             SwapVertex(m_nurbSegment->ctl_points[m_nurbSegment->c_size], endPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 size_t Sketch::Nurb::Order(void) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     return m_nurbSegment->order;
-};
+}
 
 
-bool  Sketch::Nurb::IsRational(void) const {
+bool Sketch::Nurb::IsRational(void) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     if(m_nurbSegment->weights)
         return true;
+
     return false;
-};
+}
 
 
 size_t Sketch::Nurb::NumberOfKnots(void) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     return m_nurbSegment->k.k_size;
-};
+}
 
 
 double Sketch::Nurb::Knot
@@ -647,15 +658,17 @@ double Sketch::Nurb::Knot
 ) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     return m_nurbSegment->k.knots[index];
-};
+}
 
 
 size_t Sketch::Nurb::NumberOfControlPoints(void)const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     return this->m_nurbSegment->c_size;
-};
+}
 
 
 Vector2D Sketch::Nurb::ControlPoint
@@ -664,11 +677,14 @@ Vector2D Sketch::Nurb::ControlPoint
 ) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     Vector2D ret;
+
     if ((m_nurbSegment != 0) && (m_sketch != 0))
         ret = Vector2D(m_sketch->verts[this->m_nurbSegment->ctl_points[index]]);
+
     return ret;
-};
+}
 
 
 double Sketch::Nurb::ControlPointWeight
@@ -677,10 +693,12 @@ double Sketch::Nurb::ControlPointWeight
 ) const {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
+
     if(!IsRational())
         return 0;
+
     return this->m_nurbSegment->weights[index];
-};
+}
 
 
 void Sketch::Nurb::SetOrder
@@ -689,8 +707,9 @@ void Sketch::Nurb::SetOrder
 ) {
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
-    m_nurbSegment->order = order;
-};
+
+    m_nurbSegment->order = static_cast<int>(order);
+}
 
 
 void Sketch::Nurb::AddKnot
@@ -701,11 +720,9 @@ void Sketch::Nurb::AddKnot
     assert(m_sketch != 0);
 
     m_nurbSegment->k.k_size++;
-    m_nurbSegment->k.knots = (double*) bu_realloc(m_nurbSegment->k.knots,
-            m_nurbSegment->k.k_size * sizeof(double), "Sketch::Nurb::AddKnot");
+    m_nurbSegment->k.knots                              = static_cast<double*>(bu_realloc(m_nurbSegment->k.knots, m_nurbSegment->k.k_size * sizeof(double), "BRLCAD::Sketch::Nurb::AddKnot"));
     m_nurbSegment->k.knots[m_nurbSegment->k.k_size - 1] = knot;
-
-};
+}
 
 
 void Sketch::Nurb::AddControlPoint
@@ -715,20 +732,18 @@ void Sketch::Nurb::AddControlPoint
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
 
-    int vcount, ret;
-    vcount = m_sketch->vert_count;
-    ret = AddToVerts(point.coordinates, *m_sketch);
-    if(vcount < ret) {
-        m_nurbSegment->c_size++;
-        m_nurbSegment->ctl_points = (int*) bu_realloc(m_nurbSegment->ctl_points,
-            m_nurbSegment->c_size * sizeof(int), "Sketch::Nurb::AddControlPoint");
-        m_nurbSegment->ctl_points[m_nurbSegment->c_size - 1] = ret;
-        if(!m_nurbSegment->weights)
-            m_nurbSegment->weights = (fastf_t*) bu_realloc(m_nurbSegment->weights,
-            m_nurbSegment->c_size * sizeof(fastf_t), "Sketch::Nurb::AddControlPoint - weights");
+    size_t vcount = m_sketch->vert_count;
+    size_t ret    = AddToVerts(point.coordinates, *m_sketch);
 
+    if (vcount < ret) {
+        m_nurbSegment->c_size++;
+        m_nurbSegment->ctl_points                            = static_cast<int*>(bu_realloc(m_nurbSegment->ctl_points, m_nurbSegment->c_size * sizeof(int), "BRLCAD::Sketch::Nurb::AddControlPoint"));
+        m_nurbSegment->ctl_points[m_nurbSegment->c_size - 1] = static_cast<int>(ret);
+
+        if (!m_nurbSegment->weights)
+            m_nurbSegment->weights = static_cast<double*>(bu_realloc(m_nurbSegment->weights, m_nurbSegment->c_size * sizeof(fastf_t), "BRLCAD::Sketch::Nurb::AddControlPoint: weights"));
     }
-};
+}
 
 
 void Sketch::Nurb::AddControlPointWeight
@@ -739,13 +754,13 @@ void Sketch::Nurb::AddControlPointWeight
     assert(m_nurbSegment != 0);
     assert(m_sketch != 0);
 
-    int ret = AddToVerts(point.coordinates, *m_sketch);
+    size_t ret = AddToVerts(point.coordinates, *m_sketch);
 
     if(!m_nurbSegment->weights) {
-        m_nurbSegment->weights = (fastf_t*) bu_calloc(m_nurbSegment->c_size, sizeof(fastf_t), "Sketch::Nurb::AddControlPointWeight");
+        m_nurbSegment->weights      = static_cast<double*>(bu_calloc(m_nurbSegment->c_size, sizeof(fastf_t), "BRLCAD::Sketch::Nurb::AddControlPointWeight"));
         m_nurbSegment->weights[ret] = weight;
     }
-};
+}
 
 
 //
@@ -753,19 +768,18 @@ void Sketch::Nurb::AddControlPointWeight
 //
 
  Sketch::Segment::SegmentType Sketch::Bezier::Type(void) const {
-     Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
+    Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
 
     if ((m_bezierSegment != 0) && (m_sketch != 0))
         ret = Sketch::Segment::Bezier;
 
     return ret;
-
-};
+}
 
 
 Sketch::Segment* Sketch::Bezier::Clone(void) const {
     return new Bezier(*this);
-};
+}
 
 
 Vector2D Sketch::Bezier::StartPoint(void) const {
@@ -773,15 +787,17 @@ Vector2D Sketch::Bezier::StartPoint(void) const {
     assert(m_sketch != 0);
 
     Vector2D ret;
+
     if ((m_bezierSegment != 0) && (m_sketch != 0))
         ret = Vector2D(m_sketch->verts[m_bezierSegment->ctl_points[0]]);
+
     return ret;
-};
+}
 
 
 void Sketch::Bezier::SetStartPoint
 (
-        const Vector2D& startPoint
+    const Vector2D& startPoint
 ) {
     assert(m_bezierSegment != 0);
     assert(m_sketch != 0);
@@ -789,23 +805,22 @@ void Sketch::Bezier::SetStartPoint
     if ((m_bezierSegment != 0) && (m_sketch != 0)) {
         if (!BU_SETJUMP)
             SwapVertex(m_bezierSegment->ctl_points[0], startPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 Vector2D Sketch::Bezier::EndPoint(void) const {
     return Vector2D(m_sketch->verts[m_bezierSegment->ctl_points[m_bezierSegment->degree]]);
-};
+}
 
 
 void Sketch::Bezier::SetEndPoint
 (
-        const Vector2D& endPoint
+    const Vector2D& endPoint
 ) {
     assert(m_bezierSegment != 0);
     assert(m_sketch != 0);
@@ -813,13 +828,12 @@ void Sketch::Bezier::SetEndPoint
     if ((m_bezierSegment != 0) && (m_sketch != 0)) {
         if (!BU_SETJUMP)
             SwapVertex(m_bezierSegment->ctl_points[m_bezierSegment->degree], endPoint.coordinates, *m_sketch);
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
-};
+}
 
 
 size_t Sketch::Bezier::Degree(void) const {
@@ -827,7 +841,7 @@ size_t Sketch::Bezier::Degree(void) const {
     assert(m_sketch != 0);
 
     return m_bezierSegment->degree;
-};
+}
 
 
 Vector2D Sketch::Bezier::ControlPoint(
@@ -836,11 +850,13 @@ Vector2D Sketch::Bezier::ControlPoint(
     assert(m_bezierSegment != 0);
     assert(m_sketch != 0);
 
-    if(index >= 0 && index <= m_bezierSegment->degree)
-    return Vector2D(m_sketch->verts[m_bezierSegment->ctl_points[index]]);
-    return NULL;
-};
+    Vector2D ret;
 
+    if(index >= 0 && index <= m_bezierSegment->degree)
+        ret = Vector2D(m_sketch->verts[m_bezierSegment->ctl_points[index]]);
+
+    return ret;
+}
 
 
 void Sketch::Bezier::AddControlPoint
@@ -850,17 +866,15 @@ void Sketch::Bezier::AddControlPoint
     assert(m_bezierSegment != 0);
     assert(m_sketch != 0);
 
-    int vcount, ret;
-    vcount = m_sketch->vert_count;
-    ret = AddToVerts(Point.coordinates, *m_sketch);
-    if(vcount < ret) {
-        m_bezierSegment->degree++;
-        m_bezierSegment->ctl_points = (int*) bu_realloc(m_bezierSegment->ctl_points,
-            m_bezierSegment->degree * sizeof(int), "Sketch::Bezier::AddControlPoint");
-        m_bezierSegment->ctl_points[m_bezierSegment->degree] = ret;
+    size_t vcount = m_sketch->vert_count;
+    size_t ret    = AddToVerts(Point.coordinates, *m_sketch);
 
+    if (vcount < ret) {
+        m_bezierSegment->degree++;
+        m_bezierSegment->ctl_points                          = static_cast<int*>(bu_realloc(m_bezierSegment->ctl_points, m_bezierSegment->degree * sizeof(int), "BRLCAD::Sketch::Bezier::AddControlPoint"));
+        m_bezierSegment->ctl_points[m_bezierSegment->degree] = static_cast<int>(ret);
     }
-};
+}
 
 
 //
@@ -872,41 +886,46 @@ void Sketch::Get
     size_t                index,
     ConstSegmentCallback& callback
 ) const {
-    if(Internal() != 0) {
-        if(!BU_SETJUMP) {
+    if (Internal() != 0) {
+        if (!BU_SETJUMP) {
             const uint32_t *magic = reinterpret_cast<uint32_t*>(Internal()->curve.segment[index]);
+
             switch (*magic) {
                 case CURVE_LSEG_MAGIC: {
                     line_seg* line = reinterpret_cast<line_seg*>(Internal()->curve.segment[index]);
-                    Line lineClass(line, const_cast<rt_sketch_internal*>(Internal()));
+                    Line      lineClass(line, const_cast<rt_sketch_internal*>(Internal()));
+
                     callback(lineClass);
                     }
                     break;
 
                 case CURVE_CARC_MAGIC: {
-                    carc_seg* carc = reinterpret_cast<carc_seg*>(Internal()->curve.segment[index]);
+                    carc_seg*   carc = reinterpret_cast<carc_seg*>(Internal()->curve.segment[index]);
                     CircularArc arcClass(carc, const_cast<rt_sketch_internal*>(Internal()));
+
                     callback(arcClass);
                     }
                     break;
 
                 case CURVE_NURB_MAGIC: {
                     nurb_seg* nurb = reinterpret_cast<nurb_seg*>(Internal()->curve.segment[index]);
-                    Nurb nurbClass(nurb, const_cast<rt_sketch_internal*>(Internal()));
+                    Nurb      nurbClass(nurb, const_cast<rt_sketch_internal*>(Internal()));
+
                     callback(nurbClass);
                     }
                     break;
 
                 case CURVE_BEZIER_MAGIC: {
                     bezier_seg* bezier = reinterpret_cast<bezier_seg*>(Internal()->curve.segment[index]);
-                    Bezier bezierClass(bezier, const_cast<rt_sketch_internal*>(Internal()));
+                    Bezier      bezierClass(bezier, const_cast<rt_sketch_internal*>(Internal()));
+
                     callback(bezierClass);
                     }
                     break;
-            };
-        };
+            }
+        }
     }
-};
+}
 
 
 void Sketch::Get
@@ -920,34 +939,38 @@ void Sketch::Get
             switch (*magic) {
                 case CURVE_LSEG_MAGIC: {
                     line_seg* line = reinterpret_cast<line_seg*>(Internal()->curve.segment[index]);
-                    Line lineClass(line, static_cast<rt_sketch_internal*>(Internal()));
+                    Line      lineClass(line, static_cast<rt_sketch_internal*>(Internal()));
+
                     callback(lineClass);
                     }
                     break;
 
                 case CURVE_CARC_MAGIC: {
-                    carc_seg* carc = reinterpret_cast<carc_seg*>(Internal()->curve.segment[index]);
+                    carc_seg*   carc = reinterpret_cast<carc_seg*>(Internal()->curve.segment[index]);
                     CircularArc arcClass(carc, static_cast<rt_sketch_internal*>(Internal()));
+
                     callback(arcClass);
                     }
                     break;
 
                 case CURVE_NURB_MAGIC: {
                     nurb_seg* nurb = reinterpret_cast<nurb_seg*>(Internal()->curve.segment[index]);
-                    Nurb nurbClass(nurb, static_cast<rt_sketch_internal*>(Internal()));
+                    Nurb      nurbClass(nurb, static_cast<rt_sketch_internal*>(Internal()));
+
                     callback(nurbClass);
                     }
                     break;
 
                 case CURVE_BEZIER_MAGIC: {
                     bezier_seg* bezier = reinterpret_cast<bezier_seg*>(Internal()->curve.segment[index]);
-                    Bezier bezierClass(bezier, static_cast<rt_sketch_internal*>(Internal()));
+                    Bezier      bezierClass(bezier, static_cast<rt_sketch_internal*>(Internal()));
+
                     callback(bezierClass);
                     }
-            };
-        };
+            }
+        }
     }
-};
+}
 
 
 Sketch::Segment* Sketch::Get
@@ -957,16 +980,19 @@ Sketch::Segment* Sketch::Get
     class SegmentCallbackIntern: public ConstSegmentCallback {
     public:
         SegmentCallbackIntern(void) : ConstSegmentCallback(), m_segment(0) {}
+
         virtual ~SegmentCallbackIntern(void) {}
+
         virtual void operator()(const Segment& segment) {
             try {
                 m_segment = segment.Clone();
             }
             catch(std::bad_alloc&) {}
         }
+
         Sketch::Segment* GetSegment(void) const {
             return m_segment;
-        };
+        }
 
     private:
         Segment* m_segment;
@@ -975,7 +1001,7 @@ Sketch::Segment* Sketch::Get
     Get(index, segCallbackIntern);
 
     return segCallbackIntern.GetSegment();
-};
+}
 
 
 Sketch::Line* Sketch::AppendLine(void) {
@@ -983,8 +1009,7 @@ Sketch::Line* Sketch::AppendLine(void) {
 
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
-        line_seg*           line   = static_cast<line_seg*>(bu_calloc(1, sizeof(line_seg), "Sketch::AppendLine: line_seg"));
-
+        line_seg*           line   = static_cast<line_seg*>(bu_calloc(1, sizeof(line_seg), "BRLCAD::Sketch::AppendLine"));
         line->magic = CURVE_LSEG_MAGIC;
 
         // start and end point are arbitrary (but valid: index 0)
@@ -997,14 +1022,13 @@ Sketch::Line* Sketch::AppendLine(void) {
         AppendSegment(line, sketch);
         ret = new Line(line, sketch);
     }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 
     return ret;
-};
+}
 
 
 Sketch::Line* Sketch::InsertLine
@@ -1016,8 +1040,7 @@ Sketch::Line* Sketch::InsertLine
 
     if (index < sketch->curve.count) {
         if (!BU_SETJUMP) {
-            line_seg* line = static_cast<line_seg*>(bu_calloc(1, sizeof(line_seg), "Sketch::InsertLine: line_seg"));
-
+            line_seg* line = static_cast<line_seg*>(bu_calloc(1, sizeof(line_seg), "BRLCAD::Sketch::InsertLine"));
             line->magic = CURVE_LSEG_MAGIC;
 
             // start and end point are arbitrary (but valid: index 0)
@@ -1030,15 +1053,14 @@ Sketch::Line* Sketch::InsertLine
             InsertSegment(line, index, sketch);
             ret = new Line(line, sketch);
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
 
     return ret;
-};
+}
 
 
 Sketch::CircularArc* Sketch::AppendArc(void) {
@@ -1046,7 +1068,7 @@ Sketch::CircularArc* Sketch::AppendArc(void) {
 
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
-        carc_seg* carc =  static_cast<carc_seg*>(bu_calloc(1, sizeof(carc_seg), "Sketch::AppendArc: carc_seg"));
+        carc_seg* carc =  static_cast<carc_seg*>(bu_calloc(1, sizeof(carc_seg), "BRLCAD::Sketch::AppendArc"));
         carc->magic = CURVE_CARC_MAGIC;
 
         // start and end point are arbitrary (but valid: index 0)
@@ -1058,29 +1080,26 @@ Sketch::CircularArc* Sketch::AppendArc(void) {
 
         AppendSegment(carc, sketch);
         ret = new CircularArc(carc, sketch);
-
-        }
-        else {
-            BU_UNSETJUMP;
-        }
-
+    }
+    else
         BU_UNSETJUMP;
 
-        return ret;
-};
+    BU_UNSETJUMP;
+
+    return ret;
+}
 
 
 Sketch::CircularArc* Sketch::InsertArc
 (
         size_t index
 ) {
-    Sketch::CircularArc*       ret    = 0;
-    rt_sketch_internal* sketch = Internal();
+    Sketch::CircularArc* ret    = 0;
+    rt_sketch_internal*  sketch = Internal();
 
     if (index < sketch->curve.count) {
         if (!BU_SETJUMP) {
-            carc_seg* carc = static_cast<carc_seg*>(bu_calloc(1, sizeof(carc_seg), "Sketch::InsertArc: carc_seg"));
-
+            carc_seg* carc = static_cast<carc_seg*>(bu_calloc(1, sizeof(carc_seg), "BRLCAD::Sketch::InsertArc"));
             carc->magic = CURVE_CARC_MAGIC;
 
             // start and end point are arbitrary (but valid: index 0)
@@ -1093,22 +1112,22 @@ Sketch::CircularArc* Sketch::InsertArc
             InsertSegment(carc, index, sketch);
             ret = new CircularArc(carc, sketch);
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
 
     return ret;
-};
+}
 
 
 Sketch::Nurb* Sketch::AppendNurb(void) {
     Sketch::Nurb* ret = 0;
+
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
-        nurb_seg*           nurb   = static_cast<nurb_seg*>(bu_calloc(1, sizeof(nurb_seg), "Sketch::AppendNurb: nurb_seg"));
+        nurb_seg*           nurb   = static_cast<nurb_seg*>(bu_calloc(1, sizeof(nurb_seg), "BRLCAD::Sketch::AppendNurb"));
         nurb->magic = CURVE_NURB_MAGIC;
 
         // start and end point are arbitrary (but valid: index 0)
@@ -1122,14 +1141,13 @@ Sketch::Nurb* Sketch::AppendNurb(void) {
         ret = new Nurb(nurb, sketch);
 
     }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 
     return ret;
-};
+}
 
 
 Sketch::Nurb* Sketch::InsertNurb
@@ -1138,10 +1156,10 @@ Sketch::Nurb* Sketch::InsertNurb
 ) {
     Sketch::Nurb*       ret    = 0;
     rt_sketch_internal* sketch = Internal();
+
     if (index < sketch->curve.count) {
         if (!BU_SETJUMP) {
-            nurb_seg* nurb = static_cast<nurb_seg*>(bu_calloc(1, sizeof(nurb_seg), "Sketch::InsertNurb: nurb_seg"));
-
+            nurb_seg* nurb = static_cast<nurb_seg*>(bu_calloc(1, sizeof(nurb_seg), "BRLCAD::Sketch::InsertNurb"));
             nurb->magic = CURVE_NURB_MAGIC;
 
             // start and end point are arbitrary (but valid: index 0)
@@ -1154,54 +1172,53 @@ Sketch::Nurb* Sketch::InsertNurb
             InsertSegment(nurb, index, sketch);
             ret = new Nurb(nurb, sketch);
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
 
     return ret;
-};
+}
 
 
 Sketch::Bezier* Sketch::AppendBezier(void) {
     Sketch::Bezier* ret = 0;
+
     if (!BU_SETJUMP) {
-    rt_sketch_internal* sketch = Internal();
-    bezier_seg*           bezier   = static_cast<bezier_seg*>(bu_calloc(1, sizeof(bezier_seg), "Sketch::AppendBezier: bezier_seg"));
-    bezier->magic = CURVE_BEZIER_MAGIC;
+        rt_sketch_internal* sketch = Internal();
+        bezier_seg*         bezier = static_cast<bezier_seg*>(bu_calloc(1, sizeof(bezier_seg), "BRLCAD::Sketch::AppendBezier"));
+        bezier->magic = CURVE_BEZIER_MAGIC;
 
-    // start and end point are arbitrary (but valid: index 0)
-    if (sketch->vert_count == 0) {
-        point2d_t zero = {0.};
+        // start and end point are arbitrary (but valid: index 0)
+        if (sketch->vert_count == 0) {
+            point2d_t zero = {0.};
 
-        AddToVerts(zero, *sketch);
+            AddToVerts(zero, *sketch);
+        }
+
+        AppendSegment(bezier, sketch);
+        ret = new Bezier(bezier, sketch);
     }
-
-    AppendSegment(bezier, sketch);
-    ret = new Bezier(bezier, sketch);
-    }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 
     return ret;
-};
+}
 
 
 Sketch::Bezier* Sketch::InsertBezier
 (
     size_t index
 ) {
-    Sketch::Bezier*       ret    = 0;
+    Sketch::Bezier*     ret    = 0;
     rt_sketch_internal* sketch = Internal();
+
     if (index < sketch->curve.count) {
         if (!BU_SETJUMP) {
-            bezier_seg* bezier = static_cast<bezier_seg*>(bu_calloc(1, sizeof(bezier_seg), "Sketch::InsertBezier: bezier_seg"));
-
+            bezier_seg* bezier = static_cast<bezier_seg*>(bu_calloc(1, sizeof(bezier_seg), "BRLCAD::Sketch::InsertBezier"));
             bezier->magic = CURVE_BEZIER_MAGIC;
 
             // start and end point are arbitrary (but valid: index 0)
@@ -1214,13 +1231,14 @@ Sketch::Bezier* Sketch::InsertBezier
             InsertSegment(bezier, index, sketch);
             ret = new Bezier(bezier, sketch);
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
+
         BU_UNSETJUMP;
     }
+
     return ret;
-};
+}
 
 
 static void FreeSegment
@@ -1229,46 +1247,51 @@ static void FreeSegment
     rt_sketch_internal& sketch
 ){
     const uint32_t *magic = static_cast<uint32_t*>(sketch.curve.segment[index]);
+
     switch (*magic) {
         case CURVE_LSEG_MAGIC: {
             line_seg* line = static_cast<line_seg*>(sketch.curve.segment[index]);
+
             RemoveFromVerts(line->start, sketch);
             RemoveFromVerts(line->end, sketch);
-            bu_free(line,"Sketch::DeleteSegment::bu_free");
+            bu_free(line,"BRLCAD sketch interface FreeSegment: line");
         }
         break;
 
         case CURVE_CARC_MAGIC: {
             carc_seg* carc = static_cast<carc_seg*>(sketch.curve.segment[index]);
+
             RemoveFromVerts(carc->start, sketch);
             RemoveFromVerts(carc->end, sketch);
-            bu_free(carc,"Sketch::DeleteSegment::bu_free");
+            bu_free(carc,"BRLCAD sketch interface FreeSegment: carc");
         }
         break;
 
         case CURVE_NURB_MAGIC: {
             nurb_seg* nurb = static_cast<nurb_seg*>(sketch.curve.segment[index]);
-            for(int i = 0; i < nurb->c_size; i++) {
-                RemoveFromVerts(nurb->ctl_points[i], sketch);
-            };
-            bu_free(nurb->ctl_points,"Sketch::DeleteSegment::bu_free");
-            bu_free(nurb->weights,"Sketch::DeleteSegment::bu_free");
-            bu_free(nurb,"Sketch::DeleteSegment::bu_free");
 
+            for(int i = 0; i < nurb->c_size; ++i) {
+                RemoveFromVerts(nurb->ctl_points[i], sketch);
+            }
+
+            bu_free(nurb->ctl_points,"BRLCAD sketch interface FreeSegment: nurb.ctl_points");
+            bu_free(nurb->weights,"BRLCAD sketch interface FreeSegment: nurb.weights");
+            bu_free(nurb,"BRLCAD sketch interface FreeSegment: nurb");
         }
         break;
 
         case CURVE_BEZIER_MAGIC: {
-                bezier_seg* bezier = static_cast<bezier_seg*>(sketch.curve.segment[index]);
-                for(int i = 0; i < bezier->degree - 1; i++) {
-                    RemoveFromVerts(bezier->ctl_points[i], sketch);
-                };
-                bu_free(bezier->ctl_points,"Sketch::DeleteSegment::bu_free");
-                bu_free(bezier,"Sketch::DeleteSegment::bu_free");
-        };
-    }
+            bezier_seg* bezier = static_cast<bezier_seg*>(sketch.curve.segment[index]);
 
-};
+            for(int i = 0; i < bezier->degree - 1; ++i) {
+                RemoveFromVerts(bezier->ctl_points[i], sketch);
+            }
+
+            bu_free(bezier->ctl_points,"BRLCAD sketch interface FreeSegment: bezier.ctl_points");
+            bu_free(bezier,"BRLCAD sketch interface FreeSegment: bezier");
+        }
+    }
+}
 
 
 void Sketch::DeleteSegment
@@ -1277,65 +1300,62 @@ void Sketch::DeleteSegment
 ) {
     assert(index < Internal()->curve.count);
 
-    if(index < Internal()->curve.count)
-        return;
+    if(index < Internal()->curve.count) {
+        int    tempItr = 0;
+        void** temp    = static_cast<void**>(bu_calloc(Internal()->curve.count - 1, sizeof(void*), "BRLCAD::Sketch::DeleteSegment"));
 
-    void** temp;
-    int tempItr = 0;
-    temp = (void**) bu_calloc(Internal()->curve.count - 1, sizeof(void*),
-        "Sketch::DeleteSegment");
-    for(int i = 0; i < Internal()->curve.count; i++) {
-        if(i != index) {
-            temp[tempItr] = Internal()->curve.segment[i];
-            tempItr++;
-        };
-    };
-    FreeSegment(index, *Internal());
+        for(int i = 0; i < Internal()->curve.count; ++i) {
+            if(i != index) {
+                temp[tempItr] = Internal()->curve.segment[i];
+                tempItr++;
+            }
+        }
 
-    bu_free(Internal()->curve.segment, "Sketch::DeleteSegment::bu_free");
-    Internal()->curve.segment = temp;
-    Internal()->curve.count--;
-};
+        FreeSegment(index, *Internal());
+
+        bu_free(Internal()->curve.segment, "BRLCAD::Sketch::DeleteSegment");
+        Internal()->curve.segment = temp;
+        Internal()->curve.count--;
+    }
+}
 
 
-int Sketch::NumberOfSegments(void) const {
+size_t Sketch::NumberOfSegments(void) const {
     return Internal()->curve.count;
-};
+}
 
 
 Vector3D Sketch::EmbeddingPlaneX(void) const {
     return Vector3D(Internal()->u_vec);
-};
+}
 
 
 Vector3D Sketch::EmbeddingPlaneY(void) const  {
     return Vector3D(Internal()->v_vec);
-};
+}
 
 
 void Sketch::SetEmbeddingPlaneX
 (
     Vector3D& u
 ) {
-    for(int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; ++i)
         Internal()->u_vec[i] = u.coordinates[i];
-    };
-};
+}
 
 
 void Sketch::SetEmbeddingPlaneY
 (
     Vector3D& v
 ) {
-    for(int i = 0; i < 3; i++) {
+    for (size_t i = 0; i < 3; ++i)
         Internal()->v_vec[i] = v.coordinates[i];
-    };
-};
+}
 
 
 Vector3D Sketch::EmbeddingPlaneOrigin(void) const {
     return Vector3D(Internal()->V);
-};
+}
 
 
 void Sketch::SetEmbeddingPlaneOrigin
@@ -1345,7 +1365,7 @@ void Sketch::SetEmbeddingPlaneOrigin
     Internal()->V[0] = p.coordinates[0];
     Internal()->V[1] = p.coordinates[1];
     Internal()->V[2] = p.coordinates[2];
-};
+}
 
 
 const Object& Sketch::operator=
@@ -1359,22 +1379,22 @@ const Object& Sketch::operator=
         *this = *sketch;
 
     return *this;
-};
+}
 
 
 Object* Sketch::Clone(void) const {
     return new Sketch(*this);
-};
+}
 
 
 const char* Sketch::ClassName(void) {
     return "Sketch";
-};
+}
 
 
 const char* Sketch::Type(void) const {
     return ClassName();
-};
+}
 
 
 rt_sketch_internal* Sketch::Internal(void) {
@@ -1388,7 +1408,7 @@ rt_sketch_internal* Sketch::Internal(void) {
     RT_SKETCH_CK_MAGIC(ret);
 
     return ret;
-};
+}
 
 
 const rt_sketch_internal* Sketch::Internal(void) const {
@@ -1406,10 +1426,8 @@ const rt_sketch_internal* Sketch::Internal(void) const {
 
 
 bool Sketch::IsValid(void) const {
-    if (rt_check_curve(&Internal()->curve, Internal(), 1))
-        return false;
-    return true;
-};
+    return rt_check_curve(&Internal()->curve, Internal(), 1) == 0;
+}
 
 
 Sketch::Sketch

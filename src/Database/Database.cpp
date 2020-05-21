@@ -38,12 +38,14 @@
 #include <brlcad/Database/Halfspace.h>
 #include <brlcad/Database/Sphere.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
+#include <brlcad/Database/Pipe.h>
 #include <brlcad/Database/Particle.h>
 #include <brlcad/Database/ParabolicCylinder.h>
 #include <brlcad/Database/HyperbolicCylinder.h>
 #include <brlcad/Database/Paraboloid.h>
 #include <brlcad/Database/Hyperboloid.h>
 #include <brlcad/Database/EllipticalTorus.h>
+#include <brlcad/Database/Sketch.h>
 #include <brlcad/Database/BagOfTriangles.h>
 #include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Database.h>
@@ -164,6 +166,15 @@ bool Database::Add
 
                 rtInternal = nmg_clone_model(nmg->Internal());
             }
+            else if (object.Type() == Pipe::ClassName()) {
+                id = ID_PIPE; // 15
+
+                const Pipe* pipe = dynamic_cast<const Pipe*>(&object);
+
+                assert(pipe != 0);
+
+                rtInternal = ClonePipeInternal(*(pipe->Internal()));
+            }
             else if (object.Type() == Particle::ClassName()) {
                 id = ID_PARTICLE; // 16
 
@@ -223,6 +234,15 @@ bool Database::Add
 
                 BU_GET(rtInternal, rt_eto_internal);
                 memcpy(rtInternal, ellipticalTorus->Internal(), sizeof(rt_eto_internal));
+            }
+            else if (object.Type() == Sketch::ClassName()) {
+                id = ID_SKETCH; // 26
+
+                const Sketch* sketch = dynamic_cast<const Sketch*>(&object);
+
+                assert(sketch != 0);
+
+                rtInternal = rt_copy_sketch(sketch->Internal());
             }
             else if (object.Type() == BagOfTriangles::ClassName()) {
                 id = ID_BOT; // 30

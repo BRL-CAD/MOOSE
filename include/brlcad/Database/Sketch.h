@@ -59,11 +59,11 @@ namespace BRLCAD {
             virtual ~Segment(void) {}
 
             void                Destroy(void);
-            virtual Segment*    Clone(void) const                          = 0;
-            virtual SegmentType Type(void) const                           = 0;
+            virtual Segment*    Clone(void) const      = 0;
+            virtual SegmentType Type(void) const       = 0;
 
-            virtual Vector2D    StartPoint(void) const                     = 0;
-            virtual Vector2D    EndPoint(void) const                       = 0;
+            virtual Vector2D    StartPoint(void) const = 0;
+            virtual Vector2D    EndPoint(void) const   = 0;
 
             bool                Reverse(void) const;
             void                SetReverse(bool reverse);
@@ -244,7 +244,7 @@ namespace BRLCAD {
             const SegmentCallback& operator=(const SegmentCallback&) {return *this;}
         };
 
-        int                   NumberOfSegments(void) const;
+        size_t                NumberOfSegments(void) const;
 
         /// selects a single object and hand it over to an SegmentCallback
         void                  Get(size_t                index,

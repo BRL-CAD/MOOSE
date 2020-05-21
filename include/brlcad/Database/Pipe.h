@@ -82,7 +82,8 @@ namespace BRLCAD {
             friend class Pipe;
         };
 
-        ControlPoint          Get(size_t index);
+        size_t                NumberOfControlPoints(void) const;
+        ControlPoint          GetControlPoint(size_t index);
         ControlPoint          AppendControlPoint(const Vector3D& point,
                                                  double          innerDiameter,
                                                  double          outerDiameter,

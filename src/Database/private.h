@@ -27,8 +27,14 @@
 #ifndef PRIVATE_INCLUDED
 #define PRIVATE_INCLUDED
 
+struct rt_pipe_internal;
 struct rt_bot_internal;
 
+
+rt_pipe_internal* ClonePipeInternal
+(
+    const rt_pipe_internal& pipe
+);
 
 rt_bot_internal* CloneBotInternal
 (

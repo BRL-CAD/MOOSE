@@ -238,6 +238,53 @@ static void EnsureFaceNormals
 }
 
 
+static void CleanBotInternal
+(
+    rt_bot_internal* bot
+) {
+    assert(bot != 0);
+
+    RT_BOT_CK_MAGIC(bot);
+
+    if (bot->tie != 0)
+        bot->tie = 0;
+
+    if (bot->vertices != 0) {
+        bu_free(bot->vertices, "bot interface CleanBotInternal(): vertices");
+        bot->vertices     = 0;
+        bot->num_vertices = 0;
+    }
+
+    if (bot->faces != 0) {
+        bu_free(bot->faces, "bot interface CleanBotInternal(): faces");
+        bot->faces     = 0;
+        bot->num_faces = 0;
+    }
+
+    if (bot->thickness != 0) {
+        bu_free(bot->thickness, "bot interface CleanBotInternal(): thickness");
+        bot->thickness = 0;
+    }
+
+    if (bot->face_mode != 0) {
+        bu_free(bot->face_mode, "bot interface CleanBotInternal(): face_mode");
+        bot->face_mode = 0;
+    }
+
+    if (bot->normals != 0) {
+        bu_free(bot->normals, "bot interface CleanBotInternal(): normals");
+        bot->normals     = 0;
+        bot->num_normals = 0;
+    }
+
+    if (bot->face_normals != 0) {
+        bu_free(bot->face_normals, "bot interface CleanBotInternal(): face_normals");
+        bot->face_normals     = 0;
+        bot->num_face_normals = 0;
+    }
+}
+
+
 static void FreeBotInternal
 (
     rt_bot_internal* bot
@@ -245,40 +292,56 @@ static void FreeBotInternal
     assert(bot != 0);
 
     RT_BOT_CK_MAGIC(bot);
+
+    CleanBotInternal(bot);
     bot->magic = 0; /* sanity */
-
-    if (bot->tie != 0)
-        bot->tie = 0;
-
-    if (bot->vertices != 0) {
-        bu_free(bot->vertices, "bot interface FreeBotInternal(): vertices");
-        bot->vertices     = 0;
-        bot->num_vertices = 0;
-    }
-
-    if (bot->faces != 0) {
-        bu_free(bot->faces, "bot interface FreeBotInternal(): faces");
-        bot->faces     = 0;
-        bot->num_faces = 0;
-    }
-
-    if (bot->thickness != 0) {
-        bu_free(bot->thickness, "bot interface FreeBotInternal(): thickness");
-        bot->thickness = 0;
-    }
-
-    if (bot->face_mode != 0) {
-        bu_free(bot->face_mode, "bot interface FreeBotInternal(): face_mode");
-        bot->face_mode = 0;
-    }
-
-    if (bot->normals != 0)
-        bu_free(bot->normals, "bot interface FreeBotInternal(): normals");
-
-    if (bot->face_normals != 0)
-        bu_free(bot->face_normals, "bot interface FreeBotInternal(): face_normals");
-
     bu_free(bot, "bot interface FreeBotInternal(): rt_bot_internal");
+}
+
+
+static void CopyBotInternal
+(
+    rt_bot_internal*       copy,
+    const rt_bot_internal* original
+) {
+    RT_BOT_CK_MAGIC(copy);
+    RT_BOT_CK_MAGIC(original);
+
+    CleanBotInternal(copy);
+    *copy = *original;
+
+    if (original->faces != 0) {
+        copy->faces =  static_cast<int*>(bu_malloc(3 * original->num_faces * sizeof(int), "bot interface CopyBotInternal(): faces"));
+
+        memcpy(copy->faces, original->faces, 3 * original->num_faces * sizeof(int));
+    }
+
+    if (original->vertices != 0) {
+        copy->vertices = static_cast<fastf_t*>(bu_malloc(3 * original->num_vertices * sizeof(fastf_t), "bot interface CopyBotInternal(): vertices"));
+
+        memcpy(copy->vertices, original->vertices, 3 * original->num_vertices * sizeof(fastf_t));
+    }
+
+    if (original->thickness != 0) {
+        copy->thickness = static_cast<fastf_t*>(bu_malloc(original->num_faces * sizeof(fastf_t), "bot interface CopyBotInternal(): thickness"));
+
+        memcpy(copy->thickness, original->thickness, original->num_faces * sizeof(fastf_t));
+    }
+
+    if (original->face_mode != 0)
+        copy->face_mode = bu_bitv_dup(original->face_mode);
+
+    if (original->normals != 0) {
+        copy->normals = static_cast<fastf_t*>(bu_malloc(3 * original->num_normals * sizeof(fastf_t), "bot interface CopyBotInternal(): normals"));
+
+        memcpy(copy->normals, original->normals, 3 * original->num_normals * sizeof(fastf_t));
+    }
+
+    if (original->face_normals != 0) {
+        copy->face_normals = static_cast<int*>(bu_malloc(3 * original->num_face_normals * sizeof(int), "bot interface CopyBotInternal(): face_normals"));
+
+        memcpy(copy->face_normals, original->face_normals, 3 * original->num_face_normals * sizeof(int));
+    }
 }
 
 
@@ -289,41 +352,10 @@ rt_bot_internal* CloneBotInternal
     RT_BOT_CK_MAGIC(&bot);
 
     struct rt_bot_internal* ret;
-    BU_ALLOC(ret, struct rt_bot_internal);
-    *ret = bot;
 
-    if (bot.faces != 0) {
-        ret->faces =  static_cast<int*>(bu_malloc(3 * bot.num_faces * sizeof(int), "bot interface CloneBotInternal(): faces"));
-
-        memcpy(ret->faces, bot.faces, 3 * bot.num_faces * sizeof(int));
-    }
-
-    if (bot.vertices != 0) {
-        ret->vertices = static_cast<fastf_t*>(bu_malloc(3 * bot.num_vertices * sizeof(fastf_t), "bot interface CloneBotInternal(): vertices"));
-
-        memcpy(ret->vertices, bot.vertices, 3 * bot.num_vertices * sizeof(fastf_t));
-    }
-
-    if (bot.thickness != 0) {
-        ret->thickness = static_cast<fastf_t*>(bu_malloc(bot.num_faces * sizeof(fastf_t), "bot interface CloneBotInternal(): thickness"));
-
-        memcpy(ret->thickness, bot.thickness, bot.num_faces * sizeof(fastf_t));
-    }
-
-    if (bot.face_mode != 0)
-        ret->face_mode = bu_bitv_dup(bot.face_mode);
-
-    if (bot.normals != 0) {
-        ret->normals = static_cast<fastf_t*>(bu_malloc(3 * bot.num_normals * sizeof(fastf_t), "bot interface CloneBotInternal(): normals"));
-
-        memcpy(ret->normals, bot.normals, 3 * bot.num_normals * sizeof(fastf_t));
-    }
-
-    if (bot.face_normals != 0) {
-        ret->face_normals = static_cast<int*>(bu_malloc(3 * bot.num_face_normals * sizeof(int), "bot interface CloneBotInternal(): face_normals"));
-
-        memcpy(ret->face_normals, bot.face_normals, 3 * bot.num_face_normals * sizeof(int));
-    }
+    BU_GET(ret, rt_bot_internal);
+    ret->magic = RT_BOT_INTERNAL_MAGIC;
+    CopyBotInternal(ret, &bot);
 
     return ret;
 }
@@ -510,11 +542,10 @@ const BagOfTriangles& BagOfTriangles::operator=
             rt_bot_internal*       thisInternal     = Internal();
             const rt_bot_internal* originalInternal = original.Internal();
 
-            thisInternal = CloneBotInternal(*originalInternal);
+            CopyBotInternal(thisInternal, originalInternal);
         }
-        else {
+        else
             BU_UNSETJUMP;
-        }
 
         BU_UNSETJUMP;
     }
@@ -896,9 +927,8 @@ BagOfTriangles::Face BagOfTriangles::AddFace
 
         ret = Face(bot, bot->num_faces - 1);
     }
-    else {
+    else
         BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 

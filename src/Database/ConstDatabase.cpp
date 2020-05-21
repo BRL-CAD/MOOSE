@@ -37,12 +37,14 @@
 #include <brlcad/Database/Halfspace.h>
 #include <brlcad/Database/Sphere.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
+#include <brlcad/Database/Pipe.h>
 #include <brlcad/Database/Particle.h>
 #include <brlcad/Database/ParabolicCylinder.h>
 #include <brlcad/Database/HyperbolicCylinder.h>
 #include <brlcad/Database/Paraboloid.h>
 #include <brlcad/Database/Hyperboloid.h>
 #include <brlcad/Database/EllipticalTorus.h>
+#include <brlcad/Database/Sketch.h>
 #include <brlcad/Database/BagOfTriangles.h>
 #include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Unknown.h>
@@ -73,8 +75,10 @@ static void InitBrlCad(void) {
     if (init) { // do it only once
         init = false;
 
-        if (!BU_SETJUMP)
+        if (!BU_SETJUMP) {
+            BU_LIST_INIT(&RTG.rtg_vlfree);
             bu_log_add_hook(NullLogger, 0);
+        }
 
         BU_UNSETJUMP;
     }
@@ -293,6 +297,10 @@ void ConstDatabase::Get
                             callback(NonManifoldGeometry(m_resp, pDir, &intern, m_rtip->rti_dbip));
                             break;
 
+                        case ID_PIPE: // 15
+                            callback(Pipe(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                            break;
+
                         case ID_PARTICLE: // 16
                             callback(Particle(m_resp, pDir, &intern, m_rtip->rti_dbip));
                             break;
@@ -315,6 +323,10 @@ void ConstDatabase::Get
 
                         case ID_ETO: // 21
                             callback(EllipticalTorus(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                            break;
+
+                        case ID_SKETCH: // 26
+                            callback(Sketch(m_resp, pDir, &intern, m_rtip->rti_dbip));
                             break;
 
                         case ID_BOT: // 30
