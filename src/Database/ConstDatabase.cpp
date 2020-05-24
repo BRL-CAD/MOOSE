@@ -30,6 +30,8 @@
 #include "raytrace.h"
 #include "bu/parallel.h"
 
+#include "../init.h"
+
 #include <brlcad/Database/Torus.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
@@ -59,35 +61,6 @@
 
 using namespace BRLCAD;
 
-
-static int NullLogger
-(
-    void* UNUSED(data),
-    void* UNUSED(string)
-) {
-    return 0;
-}
-
-
-static void InitBrlCad(void) {
-    static bool init = true;
-
-    if (init) { // do it only once
-        init = false;
-
-        if (!BU_SETJUMP) {
-            BU_LIST_INIT(&RTG.rtg_vlfree);
-            bu_log_add_hook(NullLogger, 0);
-        }
-
-        BU_UNSETJUMP;
-    }
-}
-
-
-//
-// class ConstDatabase
-//
 
 ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0) {
     InitBrlCad();

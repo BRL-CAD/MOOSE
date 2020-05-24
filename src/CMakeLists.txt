@@ -36,6 +36,8 @@ GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSou
 SET(MooseSources
     ${DatabaseSources}
     globals.cpp
+    init.cpp
+    VectorList.cpp
 )
 
 SET(MooseHeaders
@@ -43,6 +45,7 @@ SET(MooseHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/memory.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/vector.h
     ${MOOSE_BINARY_DIR}/include/brlcad/version.h
+    ${MOOSE_BINARY_DIR}/include/brlcad/VectorList.h
 )
 
 IF(MSVC)
