@@ -456,6 +456,60 @@ NonManifoldGeometry* ConstDatabase::Facetize
 }
 
 
+static tree* PlotLeaf
+(
+    db_tree_state*      tsp,
+    const db_full_path* pathp,
+    rt_db_internal*     ip,
+    void*               clientData
+) {
+    tree*    ret   = TREE_NULL;
+    bu_list* vlist = static_cast<bu_list*>(clientData);
+
+    if (ip->idb_meth->ft_plot != 0) {
+        if (ip->idb_meth->ft_plot(vlist, ip, tsp->ts_ttol, tsp->ts_tol, 0) == 0) {
+            // Indicate success by returning something other than TREE_NULL
+            BU_GET(ret, tree);
+            RT_TREE_INIT(ret);
+            ret->tr_op = OP_NOP;
+        }
+    }
+
+    return ret;
+}
+
+
+void ConstDatabase::Plot
+(
+    const char* objectName,
+    VectorList& vectorList
+) const {
+    if (m_rtip != 0) {
+        if (!BU_SETJUMP) {
+            db_tree_state initState;
+
+            db_init_db_tree_state(&initState, m_rtip->rti_dbip, m_resp);
+            initState.ts_ttol = &m_rtip->rti_ttol;
+            initState.ts_tol  = &m_rtip->rti_tol;
+
+            db_walk_tree(m_rtip->rti_dbip,
+                         1,
+                         &objectName,
+                         1,
+                         &initState,
+                         0,
+                         0,
+                         PlotLeaf,
+                         vectorList.m_vlist);
+        }
+        else
+            BU_UNSETJUMP;
+
+        BU_UNSETJUMP;
+    }
+}
+
+
 void ConstDatabase::Select
 (
     const char* objectName

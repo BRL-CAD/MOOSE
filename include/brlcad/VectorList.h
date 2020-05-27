@@ -501,7 +501,7 @@ namespace BRLCAD {
     private:
         bu_list* m_vlist;
 
-        //friend class ConstDatabase;
+        friend class ConstDatabase;
     };
 };
 
