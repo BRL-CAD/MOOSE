@@ -28,7 +28,7 @@
 
 
 namespace BRLCAD {
-    struct Vector2D {
+    struct BRLCAD_MOOSE_EXPORT Vector2D {
         double coordinates[2];
 
         Vector2D(void) {
@@ -49,7 +49,7 @@ namespace BRLCAD {
     };
 
 
-    struct Mapping2D {
+    struct BRLCAD_MOOSE_EXPORT Mapping2D {
         Vector2D point;
         Vector2D delta;
 
@@ -58,7 +58,7 @@ namespace BRLCAD {
     };
 
 
-    struct Vector3D {
+    struct BRLCAD_MOOSE_EXPORT Vector3D {
         double coordinates[3];
 
         Vector3D(void) {
@@ -83,13 +83,13 @@ namespace BRLCAD {
     };
 
 
-    struct Ray3D {
+    struct BRLCAD_MOOSE_EXPORT Ray3D {
         Vector3D origin;
         Vector3D direction;
     };
 
 
-    struct Curvature3D {
+    struct BRLCAD_MOOSE_EXPORT Curvature3D {
         Vector3D minPrincipalDirection;
         double   minPrincipalCurvature;
         double   maxPrincipalCurvature;
