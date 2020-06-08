@@ -83,6 +83,52 @@ namespace BRLCAD {
             const Element& operator=(const Element& original); // not implemented
         };
 
+        class BRLCAD_MOOSE_EXPORT PointDraw : public Element {
+        public:
+            PointDraw(void) : Element(), m_point() {}
+            PointDraw(const PointDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
+            PointDraw(const Vector3D& point) : Element(), m_point(point) {}
+            virtual ~PointDraw(void) {}
+
+            const PointDraw&    operator=(const PointDraw& original);
+
+            virtual ElementType Type(void) const;
+
+            Vector3D            Point(void) const;
+            void                SetPoint(const Vector3D& point);
+
+        private:
+            Vector3D m_point;
+
+            PointDraw(bn_vlist* chunk,
+                      size_t    index);
+
+            friend class VectorList;
+        };
+
+        class BRLCAD_MOOSE_EXPORT PointSize : public Element {
+        public:
+            PointSize(void) : Element(), m_size(1.) {}
+            PointSize(const PointSize& original) : VectorList::Element(original), m_size(original.m_size) {}
+            PointSize(double size) : Element(), m_size(size) {}
+            virtual ~PointSize(void) {}
+
+            const PointSize&    operator=(const PointSize& original);
+
+            virtual ElementType Type(void) const;
+
+            double              Size(void) const;
+            void                SetSize(double size);
+
+        private:
+            double m_size;
+
+            PointSize(bn_vlist* chunk,
+                      size_t    index);
+
+            friend class VectorList;
+        };
+
         class BRLCAD_MOOSE_EXPORT LineMove : public Element {
         public:
             LineMove(void) : Element(), m_point() {}
@@ -151,121 +197,6 @@ namespace BRLCAD {
 
             friend class VectorList;
        };
-
-        class BRLCAD_MOOSE_EXPORT PolygonStart : public Element {
-        public:
-            PolygonStart(void) : Element(), m_normal() {}
-            PolygonStart(const PolygonStart& original) : VectorList::Element(original), m_normal(original.m_normal) {}
-            PolygonStart(const Vector3D& normal) : Element(), m_normal(normal) {}
-            virtual ~PolygonStart(void) {}
-
-            const PolygonStart& operator=(const PolygonStart& original);
-
-            virtual ElementType Type(void) const;
-
-            Vector3D            Normal(void) const;
-            void                SetNormal(const Vector3D& normal);
-
-        private:
-            Vector3D m_normal;
-
-            PolygonStart(bn_vlist* chunk,
-                         size_t    index);
-
-            friend class VectorList;
-       };
-
-        class BRLCAD_MOOSE_EXPORT PolygonMove : public Element {
-        public:
-            PolygonMove(void) : Element(), m_point() {}
-            PolygonMove(const PolygonMove& original) : VectorList::Element(original), m_point(original.m_point) {}
-            PolygonMove(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PolygonMove(void) {}
-
-            const PolygonMove&  operator=(const PolygonMove& original);
-
-            virtual ElementType Type(void) const;
-
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
-
-        private:
-            Vector3D m_point;
-
-            PolygonMove(bn_vlist* chunk,
-                        size_t    index);
-
-            friend class VectorList;
-        };
-
-        class BRLCAD_MOOSE_EXPORT PolygonDraw : public Element {
-        public:
-            PolygonDraw(void) : Element(), m_point() {}
-            PolygonDraw(const PolygonDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
-            PolygonDraw(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PolygonDraw(void) {}
-
-            const PolygonDraw&  operator=(const PolygonDraw& original);
-
-            virtual ElementType Type(void) const;
-
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
-
-        private:
-            Vector3D m_point;
-
-            PolygonDraw(bn_vlist* chunk,
-                        size_t    index);
-
-            friend class VectorList;
-        };
-
-        class BRLCAD_MOOSE_EXPORT PolygonEnd : public Element {
-        public:
-            PolygonEnd(void) : Element(), m_point() {}
-            PolygonEnd(const PolygonEnd& original) : VectorList::Element(original), m_point(original.m_point) {}
-            PolygonEnd(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PolygonEnd(void) {}
-
-            const PolygonEnd&   operator=(const PolygonEnd& original);
-
-            virtual ElementType Type(void) const;
-
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
-
-        private:
-            Vector3D m_point;
-
-            PolygonEnd(bn_vlist* chunk,
-                       size_t    index);
-
-            friend class VectorList;
-        };
-
-        class BRLCAD_MOOSE_EXPORT PolygonVertexNormal : public Element {
-        public:
-            PolygonVertexNormal(void) : Element(), m_normal() {}
-            PolygonVertexNormal(const PolygonVertexNormal& original) : VectorList::Element(original), m_normal(original.m_normal) {}
-            PolygonVertexNormal(const Vector3D& normal) : Element(), m_normal(normal) {}
-            virtual ~PolygonVertexNormal(void) {}
-
-            const PolygonVertexNormal& operator=(const PolygonVertexNormal& original);
-
-            virtual ElementType        Type(void) const;
-
-            Vector3D                   Normal(void) const;
-            void                       SetNormal(const Vector3D& normal);
-
-        private:
-            Vector3D m_normal;
-
-            PolygonVertexNormal(bn_vlist* chunk,
-                                size_t    index);
-
-            friend class VectorList;
-        };
 
         class BRLCAD_MOOSE_EXPORT TriangleStart : public Element {
         public:
@@ -382,14 +313,37 @@ namespace BRLCAD {
             friend class VectorList;
         };
 
-        class BRLCAD_MOOSE_EXPORT PointDraw : public Element {
+        class BRLCAD_MOOSE_EXPORT PolygonStart : public Element {
         public:
-            PointDraw(void) : Element(), m_point() {}
-            PointDraw(const PointDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
-            PointDraw(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PointDraw(void) {}
+            PolygonStart(void) : Element(), m_normal() {}
+            PolygonStart(const PolygonStart& original) : VectorList::Element(original), m_normal(original.m_normal) {}
+            PolygonStart(const Vector3D& normal) : Element(), m_normal(normal) {}
+            virtual ~PolygonStart(void) {}
 
-            const PointDraw&    operator=(const PointDraw& original);
+            const PolygonStart& operator=(const PolygonStart& original);
+
+            virtual ElementType Type(void) const;
+
+            Vector3D            Normal(void) const;
+            void                SetNormal(const Vector3D& normal);
+
+        private:
+            Vector3D m_normal;
+
+            PolygonStart(bn_vlist* chunk,
+                         size_t    index);
+
+            friend class VectorList;
+       };
+
+        class BRLCAD_MOOSE_EXPORT PolygonMove : public Element {
+        public:
+            PolygonMove(void) : Element(), m_point() {}
+            PolygonMove(const PolygonMove& original) : VectorList::Element(original), m_point(original.m_point) {}
+            PolygonMove(const Vector3D& point) : Element(), m_point(point) {}
+            virtual ~PolygonMove(void) {}
+
+            const PolygonMove&  operator=(const PolygonMove& original);
 
             virtual ElementType Type(void) const;
 
@@ -399,31 +353,77 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            PointDraw(bn_vlist* chunk,
-                      size_t    index);
+            PolygonMove(bn_vlist* chunk,
+                        size_t    index);
 
             friend class VectorList;
         };
 
-        class BRLCAD_MOOSE_EXPORT PointSize : public Element {
+        class BRLCAD_MOOSE_EXPORT PolygonDraw : public Element {
         public:
-            PointSize(void) : Element(), m_size(1.) {}
-            PointSize(const PointSize& original) : VectorList::Element(original), m_size(original.m_size) {}
-            PointSize(double size) : Element(), m_size(size) {}
-            virtual ~PointSize(void) {}
+            PolygonDraw(void) : Element(), m_point() {}
+            PolygonDraw(const PolygonDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
+            PolygonDraw(const Vector3D& point) : Element(), m_point(point) {}
+            virtual ~PolygonDraw(void) {}
 
-            const PointSize&    operator=(const PointSize& original);
+            const PolygonDraw&  operator=(const PolygonDraw& original);
 
             virtual ElementType Type(void) const;
 
-            double              Size(void) const;
-            void                SetSize(double size);
+            Vector3D            Point(void) const;
+            void                SetPoint(const Vector3D& point);
 
         private:
-            double m_size;
+            Vector3D m_point;
 
-            PointSize(bn_vlist* chunk,
-                      size_t    index);
+            PolygonDraw(bn_vlist* chunk,
+                        size_t    index);
+
+            friend class VectorList;
+        };
+
+        class BRLCAD_MOOSE_EXPORT PolygonEnd : public Element {
+        public:
+            PolygonEnd(void) : Element(), m_point() {}
+            PolygonEnd(const PolygonEnd& original) : VectorList::Element(original), m_point(original.m_point) {}
+            PolygonEnd(const Vector3D& point) : Element(), m_point(point) {}
+            virtual ~PolygonEnd(void) {}
+
+            const PolygonEnd&   operator=(const PolygonEnd& original);
+
+            virtual ElementType Type(void) const;
+
+            Vector3D            Point(void) const;
+            void                SetPoint(const Vector3D& point);
+
+        private:
+            Vector3D m_point;
+
+            PolygonEnd(bn_vlist* chunk,
+                       size_t    index);
+
+            friend class VectorList;
+        };
+
+        class BRLCAD_MOOSE_EXPORT PolygonVertexNormal : public Element {
+        public:
+            PolygonVertexNormal(void) : Element(), m_normal() {}
+            PolygonVertexNormal(const PolygonVertexNormal& original) : VectorList::Element(original), m_normal(original.m_normal) {}
+            PolygonVertexNormal(const Vector3D& normal) : Element(), m_normal(normal) {}
+            virtual ~PolygonVertexNormal(void) {}
+
+            const PolygonVertexNormal& operator=(const PolygonVertexNormal& original);
+
+            virtual ElementType        Type(void) const;
+
+            Vector3D                   Normal(void) const;
+            void                       SetNormal(const Vector3D& normal);
+
+        private:
+            Vector3D m_normal;
+
+            PolygonVertexNormal(bn_vlist* chunk,
+                                size_t    index);
 
             friend class VectorList;
         };
