@@ -29,12 +29,25 @@ INCLUDE_DIRECTORIES(
         ${BRLCAD_INCLUDE_DIRS}
 )
 
+# Module: Database
 SET(DatabaseSources "")
 ADD_SUBDIRECTORY(Database)
 GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSources)
 
+# Module: Lua
+SET(LuaSources "")
+SET(LuaHeaders "")
+OPTION(MODULE_LUA "Build the Lua module" ON)
+if(MODULE_LUA)
+    FIND_PACKAGE(Lua REQUIRED)
+    INCLUDE_DIRECTORIES(${LUA_INCLUDE_DIR})
+    ADD_SUBDIRECTORY(Lua)
+    GET_DIRECTORY_PROPERTY(LuaSources DIRECTORY Lua DEFINITION LuaSources)
+ENDIF(MODULE_LUA)
+
 SET(MooseSources
     ${DatabaseSources}
+    ${LuaSources}
     globals.cpp
     init.cpp
     VectorList.cpp
@@ -72,6 +85,7 @@ TARGET_LINK_LIBRARIES(brlcad
     pthread
     uuid
     z
+    ${LUA_LIBRARIES}
 )
 
 INSTALL(TARGETS brlcad DESTINATION lib)
