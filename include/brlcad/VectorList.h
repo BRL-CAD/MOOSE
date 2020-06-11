@@ -472,7 +472,7 @@ namespace BRLCAD {
         public:
             virtual ~ConstElementCallback(void) {}
 
-            virtual bool operator()(Element* element) = 0;
+            virtual bool operator()(const Element* element) = 0;
 
         protected:
             ConstElementCallback(void) {}
