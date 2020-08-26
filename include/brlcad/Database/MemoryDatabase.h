@@ -40,6 +40,8 @@ namespace BRLCAD {
         /** The old content of the in-memory database will be discarded.
             The file will be opened for reading only and closed after finishing the operation. */
         virtual bool Load(const char* fileName);
+        bool         Load(const void* data,
+                          size_t      dataSize);
         bool         Save(const char* fileName);
 
     private:

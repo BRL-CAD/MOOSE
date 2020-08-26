@@ -91,6 +91,32 @@ bool MemoryDatabase::Load
 }
 
 
+bool MemoryDatabase::Load
+(
+    const void* data,
+    size_t      dataSize
+) {
+    bool ret = false;
+
+    if (!BU_SETJUMP) {
+        rt_i* source = rt_dirbuild_inmem(data, dataSize, 0, 0);
+
+        if (source != 0) {
+            ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
+
+            assert(m_wdbp->dbip == m_rtip->rti_dbip);
+            db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
+
+            rt_free_rti(source);
+        }
+    }
+
+    BU_UNSETJUMP;
+
+    return ret;
+}
+
+
 bool MemoryDatabase::Save
 (
     const char* fileName
