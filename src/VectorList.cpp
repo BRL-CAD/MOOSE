@@ -898,7 +898,7 @@ const VectorList& VectorList::operator=
 
 void VectorList::Iterate
 (
-    VectorList::ConstElementCallback& callBack
+    const VectorList::ConstElementCallback& callBack
 ) const {
     if (m_vlist != 0) {
         bool      cont = true;
@@ -1075,7 +1075,7 @@ void VectorList::Iterate
 
 void VectorList::Iterate
 (
-    VectorList::ElementCallback& callBack
+    const VectorList::ElementCallback& callBack
 ) {
     if (m_vlist != 0) {
         bool      cont = true;

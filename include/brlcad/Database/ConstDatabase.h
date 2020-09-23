@@ -97,22 +97,11 @@ namespace BRLCAD {
 
         /// @name Accessing objects
         //@{
-        class ObjectCallback {
-        public:
-            virtual ~ObjectCallback(void) {}
-
-            /// the user has to implement this object method to evaluate the object
-            virtual void operator()(const Object& object) = 0;
-
-        protected:
-            ObjectCallback(void) {}
-            ObjectCallback(const ObjectCallback&) {}
-            const ObjectCallback& operator=(const ObjectCallback&) {return *this;}
-        };
+        typedef std::function<void(const Object& object)> ObjectCallback;
 
         /// selects a single object and hand it over to an ObjectCallback (read only)
-        void                 Get(const char*     objectName,
-                                 ObjectCallback& callback) const;
+        void                 Get(const char*           objectName,
+                                 const ObjectCallback& callback) const;
 
         /// overloaded member function, provided for convenience: selects a single object and and returns a copy of it
         /** Do not forget to BRLCAD::Object::Destroy() the copy when you are finished with it! */
@@ -171,35 +160,17 @@ namespace BRLCAD {
             const Hit& operator=(const Hit&) {return *this;}
         };
 
+        typedef std::function<bool(const Hit& hit)> HitCallback;
 
-        class HitCallback {
-        public:
-            virtual ~HitCallback(void) {}
-
-            /** return true: go on; false: stop
-                The return value gives the calling function the possibility to optimize.
-                However be aware the return value may be ignored. */
-            /** Do not throw en exception here.
-                This method will be called from deep inside the brlcad libraries.
-                The status of the program after an exception will be undetermined. */
-            virtual bool operator()(const Hit& hit) = 0;
-
-        protected:
-            HitCallback(void) {}
-            HitCallback(const HitCallback&) {}
-            const HitCallback& operator=(const HitCallback&) {return *this;}
-        };
-
-
-        void                 ShootRay(const Ray3D& ray,
-                                      HitCallback& callback) const;
+        void                 ShootRay(const Ray3D&       ray,
+                                      const HitCallback& callback) const;
 
         static const int StopAfterFirstHit = 1;
         static const int WithOverlaps      = 2;
 
-        void                 ShootRay(const Ray3D& ray,
-                                      HitCallback& callback,
-                                      int          flags) const;
+        void                 ShootRay(const Ray3D&       ray,
+                                      const HitCallback& callback,
+                                      int                flags) const;
         //@}
 
     protected:

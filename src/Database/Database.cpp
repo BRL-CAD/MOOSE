@@ -336,33 +336,22 @@ void Database::Delete
 
 void Database::Get
 (
-    const char*     objectName,
-    ObjectCallback& callback
+    const char*           objectName,
+    const ObjectCallback& callback
 ) {
-    class ObjectCallbackIntern : public ConstDatabase::ObjectCallback {
-    public:
-        ObjectCallbackIntern(Database::ObjectCallback& cb) : ConstDatabase::ObjectCallback(),
-                                                             m_callback(cb) {}
+    ConstDatabase::ObjectCallback callbackIntern = [callback](const Object& object) {
+        Object& objectIntern = const_cast<Object&>(object);
 
-        virtual ~ObjectCallbackIntern(void) {}
+        callback(objectIntern);
 
-        virtual void operator()(const Object& object) {
-            Object& objectIntern = const_cast<Object&>(object);
+        if (!BU_SETJUMP)
+            rt_db_put_internal(objectIntern.m_pDir,
+                               objectIntern.m_dbip,
+                               objectIntern.m_ip,
+                               objectIntern.m_resp);
 
-            m_callback(objectIntern);
-
-            if (!BU_SETJUMP)
-                rt_db_put_internal(objectIntern.m_pDir,
-                                   objectIntern.m_dbip,
-                                   objectIntern.m_ip,
-                                   objectIntern.m_resp);
-
-            BU_UNSETJUMP;
-        }
-
-    private:
-        Database::ObjectCallback& m_callback;
-    } callbackIntern(callback);
+        BU_UNSETJUMP;
+    };
 
     ConstDatabase::Get(objectName, callbackIntern);
 }
@@ -372,22 +361,7 @@ void Database::Set
 (
     const Object& object
 ) {
-    class ObjectCallbackIntern : public ObjectCallback {
-    public:
-        ObjectCallbackIntern(const Object& obj) : ObjectCallback(),
-                                                  m_object(obj) {}
-
-        virtual ~ObjectCallbackIntern(void) {}
-
-        virtual void operator()(Object& obj) {
-            obj = m_object;
-        }
-
-    private:
-        const Object& m_object;
-    } callbackIntern(object);
-
-    Get(object.Name(), callbackIntern);
+    Get(object.Name(), [&object](Object& obj){obj = object;});
 }
 
 

@@ -883,8 +883,8 @@ void Sketch::Bezier::AddControlPoint
 
 void Sketch::Get
 (
-    size_t                index,
-    ConstSegmentCallback& callback
+    size_t                      index,
+    const ConstSegmentCallback& callback
 ) const {
     if (Internal() != 0) {
         if (!BU_SETJUMP) {
@@ -930,8 +930,8 @@ void Sketch::Get
 
 void Sketch::Get
 (
-    size_t           index,
-    SegmentCallback& callback
+    size_t                 index,
+    const SegmentCallback& callback
 ) {
     if(Internal() != 0) {
         if(!BU_SETJUMP) {
@@ -977,30 +977,11 @@ Sketch::Segment* Sketch::Get
 (
     size_t index
 ) const {
-    class SegmentCallbackIntern: public ConstSegmentCallback {
-    public:
-        SegmentCallbackIntern(void) : ConstSegmentCallback(), m_segment(0) {}
+    Sketch::Segment* ret = 0;
 
-        virtual ~SegmentCallbackIntern(void) {}
+    Get(index, [&ret](const Segment& segment){try{ret = segment.Clone();}catch(std::bad_alloc&){}});
 
-        virtual void operator()(const Segment& segment) {
-            try {
-                m_segment = segment.Clone();
-            }
-            catch(std::bad_alloc&) {}
-        }
-
-        Sketch::Segment* GetSegment(void) const {
-            return m_segment;
-        }
-
-    private:
-        Segment* m_segment;
-    } segCallbackIntern;
-
-    Get(index, segCallbackIntern);
-
-    return segCallbackIntern.GetSegment();
+    return ret;
 }
 
 

@@ -26,6 +26,8 @@
 #ifndef BRLCAD_SKETCH_INCLUDED
 #define BRLCAD_SKETCH_INCLUDED
 
+#include <functional>
+
 #include <brlcad/vector.h>
 #include <brlcad/Database/Object.h>
 
@@ -218,39 +220,16 @@ namespace BRLCAD {
             friend class Sketch;
         };
 
-        class ConstSegmentCallback {
-        public:
-            virtual ~ConstSegmentCallback(void) {}
-
-            /// the user has to implement this method to evaluate the object
-            virtual void operator()(const Segment& segment) = 0;
-
-        protected:
-            ConstSegmentCallback(void) {}
-            ConstSegmentCallback(const ConstSegmentCallback&) {}
-            const ConstSegmentCallback& operator=(const ConstSegmentCallback&) {return *this;}
-        };
-
-        class SegmentCallback {
-        public:
-            virtual ~SegmentCallback(void) {}
-
-            /// the user has to implement this method to evaluate the object
-            virtual void operator()(Segment& segment) = 0;
-
-        private:
-            SegmentCallback(void) {}
-            SegmentCallback(const SegmentCallback&) {}
-            const SegmentCallback& operator=(const SegmentCallback&) {return *this;}
-        };
+        typedef std::function<void(const Segment& segment)> ConstSegmentCallback;
+        typedef std::function<void(Segment& segment)> SegmentCallback;
 
         size_t                NumberOfSegments(void) const;
 
         /// selects a single object and hand it over to an SegmentCallback
-        void                  Get(size_t                index,
-                                  ConstSegmentCallback& callback) const;
-        void                  Get(size_t           index,
-                                  SegmentCallback& callback);
+        void                  Get(size_t                      index,
+                                  const ConstSegmentCallback& callback) const;
+        void                  Get(size_t                 index,
+                                  const SegmentCallback& callback);
 
         /// overloaded member function, provided for convenience: selects a single segment and and returns it
         /** Do not forget to BRLCAD::Sketch::Segment::Destroy() the copy when you are finished with it! */

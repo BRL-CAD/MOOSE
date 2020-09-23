@@ -468,32 +468,11 @@ namespace BRLCAD {
             friend class VectorList;
         };
 
-        class ConstElementCallback {
-        public:
-            virtual ~ConstElementCallback(void) {}
+        typedef std::function<bool(const Element* element)> ConstElementCallback;
+        typedef std::function<bool(Element* element)>       ElementCallback;
 
-            virtual bool operator()(const Element* element) = 0;
-
-        protected:
-            ConstElementCallback(void) {}
-            ConstElementCallback(const ConstElementCallback&) {}
-            const ConstElementCallback& operator=(const ConstElementCallback&) {return *this;}
-        };
-
-        class ElementCallback {
-        public:
-            virtual ~ElementCallback(void) {}
-
-            virtual bool operator()(Element* element) = 0;
-
-        protected:
-            ElementCallback(void) {}
-            ElementCallback(const ElementCallback&) {}
-            const ElementCallback& operator=(const ElementCallback&) {return *this;}
-        };
-
-        void              Iterate(ConstElementCallback& callBack) const;
-        void              Iterate(ElementCallback& callBack);
+        void              Iterate(const ConstElementCallback& callBack) const;
+        void              Iterate(const ElementCallback& callBack);
 
         bool              Append(const Element& element);
         void              Clear(void);

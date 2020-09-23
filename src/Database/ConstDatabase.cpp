@@ -228,8 +228,8 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
 
 void ConstDatabase::Get
 (
-    const char*     objectName,
-    ObjectCallback& callback
+    const char*           objectName,
+    const ObjectCallback& callback
 ) const {
     if (m_rtip != 0) {
         if (!BU_SETJUMP) {
@@ -333,31 +333,11 @@ Object* ConstDatabase::Get
 (
     const char* objectName
 ) const {
-    class ObjectCallbackIntern : public ObjectCallback {
-    public:
-        ObjectCallbackIntern(void) : ConstDatabase::ObjectCallback(),
-                                     m_object(0) {}
+    Object* ret = 0;
 
-        virtual ~ObjectCallbackIntern(void) {}
+    Get(objectName, [&ret](const Object& object){try{ret = object.Clone();}catch(std::bad_alloc&){}});
 
-        virtual void operator()(const Object& object) {
-            try {
-                m_object = object.Clone();
-            }
-            catch(std::bad_alloc&) {}
-        }
-
-        Object*      GetObject(void) const {
-            return m_object;
-        }
-
-    private:
-        Object* m_object;
-    } callbackIntern;
-
-    Get(objectName, callbackIntern);
-
-    return callbackIntern.GetObject();
+    return ret;
 }
 
 
@@ -707,8 +687,8 @@ static int HitDo
     partition*   partitionHead,
     seg*         UNUSED(segment)
 ) {
-    ConstDatabase::HitCallback* callback = static_cast<ConstDatabase::HitCallback*>(ap->a_uptr);
-    int&                        ret      = ap->a_return;
+    const ConstDatabase::HitCallback* callback = static_cast<const ConstDatabase::HitCallback*>(ap->a_uptr);
+    int&                              ret      = ap->a_return;
 
     if (ret == 0) {
         for (partition* part = partitionHead->pt_forw;
@@ -727,8 +707,8 @@ static int HitDo
 
 void ConstDatabase::ShootRay
 (
-    const Ray3D& ray,
-    HitCallback& callback
+    const Ray3D&       ray,
+    const HitCallback& callback
 ) const {
     if (!SelectionIsEmpty()) {
         application ap;
@@ -743,7 +723,7 @@ void ConstDatabase::ShootRay
         ap.a_onehit       = 0; // all hits
         ap.a_resource     = m_resp;
         ap.a_return       = 0;
-        ap.a_uptr         = &callback;
+        ap.a_uptr         = const_cast<HitCallback*>(&callback);
 
         VMOVE(ap.a_ray.r_pt, ray.origin.coordinates);
         VMOVE(ap.a_ray.r_dir, ray.direction.coordinates);
@@ -770,8 +750,8 @@ static void MultioverlapDo
     bu_ptbl*     regiontable,
     partition*   UNUSED(inputHdp)
 ) {
-    ConstDatabase::HitCallback* callback = static_cast<ConstDatabase::HitCallback*>(ap->a_uptr);
-    int&                        ret      = ap->a_return;
+    const ConstDatabase::HitCallback* callback = static_cast<const ConstDatabase::HitCallback*>(ap->a_uptr);
+    int&                              ret      = ap->a_return;
 
     if (ret == 0) {
         for (size_t i = 0; i < BU_PTBL_LEN(regiontable); ++i) {
@@ -795,9 +775,9 @@ static void MultioverlapDo
 
 void ConstDatabase::ShootRay
 (
-    const Ray3D& ray,
-    HitCallback& callback,
-    int          flags
+    const Ray3D&       ray,
+    const HitCallback& callback,
+    int                flags
 ) const {
     if (!SelectionIsEmpty()) {
         application ap;
@@ -811,7 +791,7 @@ void ConstDatabase::ShootRay
         ap.a_onehit   = flags & StopAfterFirstHit;
         ap.a_resource = m_resp;
         ap.a_return   = 0;
-        ap.a_uptr     = &callback;
+        ap.a_uptr     = const_cast<HitCallback*>(&callback);
 
         if (flags & WithOverlaps)
             ap.a_multioverlap = MultioverlapDo;

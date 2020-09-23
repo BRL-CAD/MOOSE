@@ -27,6 +27,8 @@
 #ifndef BRLCAD_GLOBALS_INCLUDED
 #define BRLCAD_GLOBALS_INCLUDED
 
+#include <functional>
+
 
 namespace BRLCAD {
     /// @name get BRL-CAD version information
@@ -40,17 +42,7 @@ namespace BRLCAD {
     /// @name capturing the logging output
     //@{
     /// log handler (to be implemented by the caller)
-    class LogHandler {
-    public:
-        virtual ~LogHandler(void) {}
-
-        virtual void operator()(const char* logString) = 0;
-
-    protected:
-        LogHandler(void) {}
-        LogHandler(const LogHandler&) {}
-        const LogHandler& operator=(const LogHandler&) {return *this;}
-    };
+    typedef std::function<void(const char* logString)> LogHandler;
 
     void BRLCAD_MOOSE_EXPORT RegisterLogHandler(LogHandler& logHandler);
     void BRLCAD_MOOSE_EXPORT DeRegisterLogHandler(LogHandler& logHandler);

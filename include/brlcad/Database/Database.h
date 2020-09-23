@@ -54,22 +54,11 @@ namespace BRLCAD {
         //@{
         using ConstDatabase::Get;
 
-        class ObjectCallback {
-        public:
-            virtual ~ObjectCallback(void) {}
-
-            /// the user has to implement this object method to evaluate and modify the object
-            virtual void operator()(Object& object) = 0;
-
-        protected:
-            ObjectCallback(void) {}
-            ObjectCallback(const ObjectCallback&) {}
-            const ObjectCallback& operator=(const ObjectCallback&) {return *this;}
-        };
+        typedef std::function<void(Object& object)> ObjectCallback;
 
         /// selects a single object and hand it over to an ObjectCallback (for read and write)
-        void         Get(const char*     objectName,
-                         ObjectCallback& callback);
+        void         Get(const char*           objectName,
+                         const ObjectCallback& callback);
 
         /// provided for convenience: selects a single object and sets it to \a object
         /** The type of the object in the database and \a object must match. */
