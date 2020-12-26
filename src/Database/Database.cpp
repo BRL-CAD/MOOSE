@@ -336,10 +336,10 @@ void Database::Delete
 
 void Database::Get
 (
-    const char*           objectName,
-    const ObjectCallback& callback
+    const char*     objectName,
+    ObjectCallback& callback
 ) {
-    ConstDatabase::ObjectCallback callbackIntern = [callback](const Object& object) {
+    ConstObjectCallback callbackIntern = [callback](const Object& object) {
         Object& objectIntern = const_cast<Object&>(object);
 
         callback(objectIntern);
@@ -361,7 +361,9 @@ void Database::Set
 (
     const Object& object
 ) {
-    Get(object.Name(), [&object](Object& obj){obj = object;});
+    ObjectCallback callback = [&object](Object& obj){obj = object;};
+
+    Get(object.Name(), callback);
 }
 
 

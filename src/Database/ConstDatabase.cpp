@@ -228,8 +228,8 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
 
 void ConstDatabase::Get
 (
-    const char*           objectName,
-    const ObjectCallback& callback
+    const char*          objectName,
+    ConstObjectCallback& callback
 ) const {
     if (m_rtip != 0) {
         if (!BU_SETJUMP) {
@@ -333,9 +333,10 @@ Object* ConstDatabase::Get
 (
     const char* objectName
 ) const {
-    Object* ret = 0;
+    Object*             ret      = 0;
+    ConstObjectCallback callback = [&ret](const Object& object){try{ret = object.Clone();}catch(std::bad_alloc&){}};
 
-    Get(objectName, [&ret](const Object& object){try{ret = object.Clone();}catch(std::bad_alloc&){}});
+    Get(objectName, callback);
 
     return ret;
 }
@@ -707,8 +708,8 @@ static int HitDo
 
 void ConstDatabase::ShootRay
 (
-    const Ray3D&       ray,
-    const HitCallback& callback
+    const Ray3D& ray,
+    HitCallback& callback
 ) const {
     if (!SelectionIsEmpty()) {
         application ap;

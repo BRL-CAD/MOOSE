@@ -97,11 +97,11 @@ namespace BRLCAD {
 
         /// @name Accessing objects
         //@{
-        typedef std::function<void(const Object& object)> ObjectCallback;
+        typedef std::function<void(const Object& object)> ConstObjectCallback;
 
-        /// selects a single object and hand it over to an ObjectCallback (read only)
-        void                 Get(const char*           objectName,
-                                 const ObjectCallback& callback) const;
+        /// selects a single object and hand it over to an ConstObjectCallback (read only)
+        void                 Get(const char*          objectName,
+                                 ConstObjectCallback& callback) const;
 
         /// overloaded member function, provided for convenience: selects a single object and and returns a copy of it
         /** Do not forget to BRLCAD::Object::Destroy() the copy when you are finished with it! */
@@ -162,8 +162,8 @@ namespace BRLCAD {
 
         typedef std::function<bool(const Hit& hit)> HitCallback;
 
-        void                 ShootRay(const Ray3D&       ray,
-                                      const HitCallback& callback) const;
+        void                 ShootRay(const Ray3D& ray,
+                                      HitCallback& callback) const;
 
         static const int StopAfterFirstHit = 1;
         static const int WithOverlaps      = 2;
