@@ -471,8 +471,8 @@ namespace BRLCAD {
         typedef std::function<bool(const Element* element)> ConstElementCallback;
         typedef std::function<bool(Element* element)>       ElementCallback;
 
-        void              Iterate(const ConstElementCallback& callBack) const;
-        void              Iterate(const ElementCallback& callBack);
+        void              Iterate(ConstElementCallback& callBack) const;
+        void              Iterate(ElementCallback& callBack);
 
         bool              Append(const Element& element);
         void              Clear(void);
