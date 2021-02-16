@@ -468,11 +468,8 @@ namespace BRLCAD {
             friend class VectorList;
         };
 
-        typedef std::function<bool(const Element* element)> ConstElementCallback;
-        typedef std::function<bool(Element* element)>       ElementCallback;
-
-        void              Iterate(ConstElementCallback& callBack) const;
-        void              Iterate(ElementCallback& callBack);
+        void              Iterate(std::function<bool(const Element* element)> callback) const;
+        void              Iterate(std::function<bool(Element* element)> callback);
 
         bool              Append(const Element& element);
         void              Clear(void);

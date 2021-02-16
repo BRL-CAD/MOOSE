@@ -54,11 +54,9 @@ namespace BRLCAD {
         //@{
         using ConstDatabase::Get;
 
-        typedef std::function<void(Object& object)> ObjectCallback;
-
-        /// selects a single object and hand it over to an ObjectCallback (for read and write)
-        void         Get(const char*     objectName,
-                         ObjectCallback& callback);
+        /// selects a single object and hand it over to a callback (for read and write)
+        void         Get(const char*                         objectName,
+                         std::function<void(Object& object)> callback);
 
         /// provided for convenience: selects a single object and sets it to \a object
         /** The type of the object in the database and \a object must match. */

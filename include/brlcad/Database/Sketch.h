@@ -220,16 +220,13 @@ namespace BRLCAD {
             friend class Sketch;
         };
 
-        typedef std::function<void(const Segment& segment)> ConstSegmentCallback;
-        typedef std::function<void(Segment& segment)> SegmentCallback;
-
         size_t                NumberOfSegments(void) const;
 
         /// selects a single object and hand it over to an SegmentCallback
-        void                  Get(size_t                index,
-                                  ConstSegmentCallback& callback) const;
-        void                  Get(size_t           index,
-                                  SegmentCallback& callback);
+        void                  Get(size_t                                      index,
+                                  std::function<void(const Segment& segment)> callback) const;
+        void                  Get(size_t                                index,
+                                  std::function<void(Segment& segment)> callback);
 
         /// overloaded member function, provided for convenience: selects a single segment and and returns it
         /** Do not forget to BRLCAD::Sketch::Segment::Destroy() the copy when you are finished with it! */

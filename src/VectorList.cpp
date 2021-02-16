@@ -898,7 +898,7 @@ const VectorList& VectorList::operator=
 
 void VectorList::Iterate
 (
-    VectorList::ConstElementCallback& callBack
+    std::function<bool(const Element* element)> callback
 ) const {
     if (m_vlist != 0) {
         bool      cont = true;
@@ -910,7 +910,7 @@ void VectorList::Iterate
                     case BN_VLIST_LINE_MOVE: {
                         LineMove element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -919,7 +919,7 @@ void VectorList::Iterate
                     case BN_VLIST_LINE_DRAW: {
                         LineDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -928,7 +928,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_START: {
                         PolygonStart element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -937,7 +937,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_MOVE: {
                         PolygonMove element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -946,7 +946,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_DRAW: {
                         PolygonDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -955,7 +955,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_END: {
                         PolygonEnd element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -964,7 +964,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_VERTNORM: {
                         PolygonVertexNormal element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -973,7 +973,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_START: {
                         TriangleStart element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -982,7 +982,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_MOVE: {
                         TriangleMove element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -991,7 +991,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_DRAW: {
                         TriangleDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1000,7 +1000,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_END: {
                         TriangleEnd element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1009,7 +1009,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_VERTNORM: {
                         TriangleVertexNormal element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1018,7 +1018,7 @@ void VectorList::Iterate
                     case BN_VLIST_POINT_DRAW: {
                         PointDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1027,7 +1027,7 @@ void VectorList::Iterate
                     case BN_VLIST_POINT_SIZE: {
                         PointSize element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1036,7 +1036,7 @@ void VectorList::Iterate
                     case BN_VLIST_LINE_WIDTH: {
                         LineWidth element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1045,7 +1045,7 @@ void VectorList::Iterate
                     case BN_VLIST_DISPLAY_MAT: {
                         DisplaySpace element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1054,14 +1054,14 @@ void VectorList::Iterate
                     case BN_VLIST_MODEL_MAT: {
                         ModelSpace element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
                     }
 
                     default:
-                        if (!callBack(0))
+                        if (!callback(0))
                             cont = false;
                 }
 
@@ -1075,7 +1075,7 @@ void VectorList::Iterate
 
 void VectorList::Iterate
 (
-    VectorList::ElementCallback& callBack
+    std::function<bool(Element* element)> callback
 ) {
     if (m_vlist != 0) {
         bool      cont = true;
@@ -1087,7 +1087,7 @@ void VectorList::Iterate
                     case BN_VLIST_LINE_MOVE: {
                         LineMove element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1096,7 +1096,7 @@ void VectorList::Iterate
                     case BN_VLIST_LINE_DRAW: {
                         LineDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1105,7 +1105,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_START: {
                         PolygonStart element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1114,7 +1114,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_MOVE: {
                         PolygonMove element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1123,7 +1123,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_DRAW: {
                         PolygonDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1132,7 +1132,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_END: {
                         PolygonEnd element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1141,7 +1141,7 @@ void VectorList::Iterate
                     case BN_VLIST_POLY_VERTNORM: {
                         PolygonVertexNormal element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1150,7 +1150,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_START: {
                         TriangleStart element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1159,7 +1159,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_MOVE: {
                         TriangleMove element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1168,7 +1168,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_DRAW: {
                         TriangleDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1177,7 +1177,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_END: {
                         TriangleEnd element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1186,7 +1186,7 @@ void VectorList::Iterate
                     case BN_VLIST_TRI_VERTNORM: {
                         TriangleVertexNormal element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1195,7 +1195,7 @@ void VectorList::Iterate
                     case BN_VLIST_POINT_DRAW: {
                         PointDraw element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1204,7 +1204,7 @@ void VectorList::Iterate
                     case BN_VLIST_POINT_SIZE: {
                         PointSize element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1213,7 +1213,7 @@ void VectorList::Iterate
                     case BN_VLIST_LINE_WIDTH: {
                         LineWidth element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1222,7 +1222,7 @@ void VectorList::Iterate
                     case BN_VLIST_DISPLAY_MAT: {
                         DisplaySpace element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
@@ -1231,14 +1231,14 @@ void VectorList::Iterate
                     case BN_VLIST_MODEL_MAT: {
                         ModelSpace element(chunk, i);
 
-                        if (!callBack(&element))
+                        if (!callback(&element))
                             cont = false;
 
                         break;
                     }
 
                     default:
-                        if (!callBack(0))
+                        if (!callback(0))
                             cont = false;
                 }
 

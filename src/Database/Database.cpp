@@ -336,10 +336,10 @@ void Database::Delete
 
 void Database::Get
 (
-    const char*     objectName,
-    ObjectCallback& callback
+    const char*                         objectName,
+    std::function<void(Object& object)> callback
 ) {
-    ConstObjectCallback callbackIntern = [callback](const Object& object) {
+    ConstDatabase::Get(objectName, [callback](const Object& object) {
         Object& objectIntern = const_cast<Object&>(object);
 
         callback(objectIntern);
@@ -351,9 +351,7 @@ void Database::Get
                                objectIntern.m_resp);
 
         BU_UNSETJUMP;
-    };
-
-    ConstDatabase::Get(objectName, callbackIntern);
+    });
 }
 
 
@@ -361,9 +359,7 @@ void Database::Set
 (
     const Object& object
 ) {
-    ObjectCallback callback = [&object](Object& obj){obj = object;};
-
-    Get(object.Name(), callback);
+    Get(object.Name(), [&object](Object& obj){obj = object;});
 }
 
 

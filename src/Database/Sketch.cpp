@@ -883,8 +883,8 @@ void Sketch::Bezier::AddControlPoint
 
 void Sketch::Get
 (
-    size_t                index,
-    ConstSegmentCallback& callback
+    size_t                                      index,
+    std::function<void(const Segment& segment)> callback
 ) const {
     if (Internal() != 0) {
         if (!BU_SETJUMP) {
@@ -930,8 +930,8 @@ void Sketch::Get
 
 void Sketch::Get
 (
-    size_t           index,
-    SegmentCallback& callback
+    size_t                                index,
+    std::function<void(Segment& segment)> callback
 ) {
     if(Internal() != 0) {
         if(!BU_SETJUMP) {
@@ -977,10 +977,9 @@ Sketch::Segment* Sketch::Get
 (
     size_t index
 ) const {
-    Sketch::Segment*     ret      = 0;
-    ConstSegmentCallback callback = [&ret](const Segment& segment){try{ret = segment.Clone();}catch(std::bad_alloc&){}};
+    Sketch::Segment* ret = 0;
 
-    Get(index, callback);
+    Get(index, [&ret](const Segment& segment){try{ret = segment.Clone();}catch(std::bad_alloc&){}});
 
     return ret;
 }
