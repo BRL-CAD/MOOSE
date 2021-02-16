@@ -229,7 +229,6 @@ ENDFOREACH(brl_lib ${BRL-CAD_LIBS_SEARCH_LIST})
 SET(BRL-CAD_SRC_OTHER_REQUIRED
     exppp
     express
-    gdiam
     lz4
     openNURBS
     poly2tri
@@ -237,7 +236,6 @@ SET(BRL-CAD_SRC_OTHER_REQUIRED
     stepdai
     stepeditor
     steputils
-    vds
 )
 
 FOREACH(ext_lib ${BRL-CAD_SRC_OTHER_REQUIRED})
