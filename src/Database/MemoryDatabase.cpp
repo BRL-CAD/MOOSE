@@ -41,9 +41,6 @@ MemoryDatabase::MemoryDatabase(void) : Database() {
         dbip = db_create_inmem();
         RT_CK_DBI(dbip);
     }
-    else {
-        BU_UNSETJUMP;
-    }
 
     BU_UNSETJUMP;
 
@@ -76,6 +73,26 @@ bool MemoryDatabase::Load
         rt_i* source = rt_dirbuild(fileName, 0, 0);
 
         if (source != 0) {
+            // free old database
+            if (m_wdbp != 0) {
+                wdb_close(m_wdbp);
+                m_wdbp = 0;
+            }
+
+            if (m_rtip != 0) {
+                rt_free_rti(m_rtip);
+                m_rtip = 0;
+            }
+
+            // build new database
+            db_i* dbip = db_open_inmem();
+            RT_CK_DBI(dbip);
+
+            m_rtip = rt_new_rti(dbip);
+            rt_init_resource(m_resp, 0, m_rtip);
+            m_wdbp = dbip->dbi_wdbp;
+
+            // fill database
             ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
 
             assert(m_wdbp->dbip == m_rtip->rti_dbip);
@@ -102,6 +119,26 @@ bool MemoryDatabase::Load
         rt_i* source = rt_dirbuild_inmem(data, dataSize, 0, 0);
 
         if (source != 0) {
+            // free old database
+            if (m_wdbp != 0) {
+                wdb_close(m_wdbp);
+                m_wdbp = 0;
+            }
+
+            if (m_rtip != 0) {
+                rt_free_rti(m_rtip);
+                m_rtip = 0;
+            }
+
+            // build new database
+            db_i* dbip = db_open_inmem();
+            RT_CK_DBI(dbip);
+
+            m_rtip = rt_new_rti(dbip);
+            rt_init_resource(m_resp, 0, m_rtip);
+            m_wdbp = dbip->dbi_wdbp;
+
+            // fill database
             ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
 
             assert(m_wdbp->dbip == m_rtip->rti_dbip);
