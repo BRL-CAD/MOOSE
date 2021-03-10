@@ -37,7 +37,7 @@ GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSou
 # Module: Lua
 SET(LuaSources "")
 SET(LuaHeaders "")
-OPTION(MODULE_LUA "Build the Lua module" ON)
+OPTION(MODULE_LUA "Build the Lua module" OFF)
 if(MODULE_LUA)
     FIND_PACKAGE(Lua REQUIRED)
     INCLUDE_DIRECTORIES(${LUA_INCLUDE_DIR})
