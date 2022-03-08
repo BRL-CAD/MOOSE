@@ -33,7 +33,7 @@
 
 
 struct bu_list;
-struct bn_vlist;
+struct bv_vlist;
 
 
 namespace BRLCAD {
@@ -72,12 +72,12 @@ namespace BRLCAD {
             virtual ElementType Type(void) const = 0;
 
         protected:
-            bn_vlist* m_chunk;
+            bv_vlist* m_chunk;
             size_t    m_index;
 
             Element(void) : m_chunk(0), m_index(-1) {}
             Element(const Element& original) : m_chunk(0), m_index(-1) {}
-            Element(bn_vlist* chunk,
+            Element(bv_vlist* chunk,
                     size_t    index) : m_chunk(chunk), m_index(index) {}
 
             const Element& operator=(const Element& original); // not implemented
@@ -100,7 +100,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            PointDraw(bn_vlist* chunk,
+            PointDraw(bv_vlist* chunk,
                       size_t    index);
 
             friend class VectorList;
@@ -123,7 +123,7 @@ namespace BRLCAD {
         private:
             double m_size;
 
-            PointSize(bn_vlist* chunk,
+            PointSize(bv_vlist* chunk,
                       size_t    index);
 
             friend class VectorList;
@@ -146,7 +146,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            LineMove(bn_vlist* chunk,
+            LineMove(bv_vlist* chunk,
                      size_t    index);
 
             friend class VectorList;
@@ -169,7 +169,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            LineDraw(bn_vlist* chunk,
+            LineDraw(bv_vlist* chunk,
                      size_t    index);
 
             friend class VectorList;
@@ -192,7 +192,7 @@ namespace BRLCAD {
         private:
             double m_width;
 
-            LineWidth(bn_vlist* chunk,
+            LineWidth(bv_vlist* chunk,
                       size_t    index);
 
             friend class VectorList;
@@ -215,7 +215,7 @@ namespace BRLCAD {
         private:
             Vector3D m_normal;
 
-            TriangleStart(bn_vlist* chunk,
+            TriangleStart(bv_vlist* chunk,
                           size_t    index);
 
             friend class VectorList;
@@ -238,7 +238,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            TriangleMove(bn_vlist* chunk,
+            TriangleMove(bv_vlist* chunk,
                          size_t    index);
 
             friend class VectorList;
@@ -261,7 +261,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            TriangleDraw(bn_vlist* chunk,
+            TriangleDraw(bv_vlist* chunk,
                          size_t    index);
 
             friend class VectorList;
@@ -284,7 +284,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            TriangleEnd(bn_vlist* chunk,
+            TriangleEnd(bv_vlist* chunk,
                         size_t    index);
 
             friend class VectorList;
@@ -307,7 +307,7 @@ namespace BRLCAD {
         private:
             Vector3D m_normal;
 
-            TriangleVertexNormal(bn_vlist* chunk,
+            TriangleVertexNormal(bv_vlist* chunk,
                                  size_t    index);
 
             friend class VectorList;
@@ -330,7 +330,7 @@ namespace BRLCAD {
         private:
             Vector3D m_normal;
 
-            PolygonStart(bn_vlist* chunk,
+            PolygonStart(bv_vlist* chunk,
                          size_t    index);
 
             friend class VectorList;
@@ -353,7 +353,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            PolygonMove(bn_vlist* chunk,
+            PolygonMove(bv_vlist* chunk,
                         size_t    index);
 
             friend class VectorList;
@@ -376,7 +376,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            PolygonDraw(bn_vlist* chunk,
+            PolygonDraw(bv_vlist* chunk,
                         size_t    index);
 
             friend class VectorList;
@@ -399,7 +399,7 @@ namespace BRLCAD {
         private:
             Vector3D m_point;
 
-            PolygonEnd(bn_vlist* chunk,
+            PolygonEnd(bv_vlist* chunk,
                        size_t    index);
 
             friend class VectorList;
@@ -422,7 +422,7 @@ namespace BRLCAD {
         private:
             Vector3D m_normal;
 
-            PolygonVertexNormal(bn_vlist* chunk,
+            PolygonVertexNormal(bv_vlist* chunk,
                                 size_t    index);
 
             friend class VectorList;
@@ -445,7 +445,7 @@ namespace BRLCAD {
         private:
             Vector3D m_referencePoint;
 
-            DisplaySpace(bn_vlist* chunk,
+            DisplaySpace(bv_vlist* chunk,
                          size_t    index);
 
             friend class VectorList;
@@ -462,7 +462,7 @@ namespace BRLCAD {
             virtual ElementType Type(void) const;
 
         private:
-            ModelSpace(bn_vlist* chunk,
+            ModelSpace(bv_vlist* chunk,
                        size_t    index);
 
             friend class VectorList;
