@@ -223,7 +223,8 @@ bool HyperbolicCylinder::IsValid(void) const {
     bool                   ret       = false;
     const rt_rhc_internal* internalp = Internal();
 
-    if (!VNEAR_ZERO(internalp->rhc_H, SMALL_FASTF) &&
+    if (Validate() &&
+        !VNEAR_ZERO(internalp->rhc_H, SMALL_FASTF) &&
         !VNEAR_ZERO(internalp->rhc_B, SMALL_FASTF) &&
         (internalp->rhc_r > SMALL_FASTF) &&
         (internalp->rhc_c > SMALL_FASTF) &&

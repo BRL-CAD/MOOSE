@@ -980,7 +980,7 @@ const char* BagOfTriangles::Type(void) const {
 
 
 bool BagOfTriangles::IsValid(void) const {
-    return true;
+    return Validate();
 }
 
 

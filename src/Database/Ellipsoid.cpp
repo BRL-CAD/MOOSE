@@ -343,7 +343,8 @@ bool Ellipsoid::IsValid(void) const {
     bool                   ret       = false;
     const rt_ell_internal* internalp = Internal();
 
-    if (!VNEAR_ZERO(internalp->a, SMALL_FASTF) &&
+    if (Validate() &&
+        !VNEAR_ZERO(internalp->a, SMALL_FASTF) &&
         !VNEAR_ZERO(internalp->b, SMALL_FASTF) &&
         !VNEAR_ZERO(internalp->c, SMALL_FASTF) &&
         NEAR_ZERO(VDOT(internalp->b, Internal()->a ), RT_DOT_TOL) &&

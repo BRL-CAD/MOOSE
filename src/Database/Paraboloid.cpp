@@ -301,7 +301,8 @@ bool Paraboloid::IsValid(void) const {
     bool                   ret       = false;
     const rt_epa_internal* internalp = Internal();
 
-    if (!VNEAR_ZERO(internalp->epa_H, SMALL_FASTF) &&
+    if (Validate() &&
+        !VNEAR_ZERO(internalp->epa_H, SMALL_FASTF) &&
         NEAR_EQUAL(MAGNITUDE(internalp->epa_Au), 1., RT_LEN_TOL) &&
         (internalp->epa_r1 > SMALL_FASTF) &&
         (internalp->epa_r1 >= internalp->epa_r2) &&

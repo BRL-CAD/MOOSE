@@ -183,7 +183,8 @@ bool Sphere::IsValid(void) const {
     const  rt_ell_internal* internalp = Internal();
     double dist                       = 0.0005 * 0.0005;
 
-    if (!VNEAR_ZERO(internalp->a, SMALL_FASTF) &&
+    if (Validate() &&
+        !VNEAR_ZERO(internalp->a, SMALL_FASTF) &&
         !VNEAR_ZERO(internalp->b, SMALL_FASTF) &&
         !VNEAR_ZERO(internalp->c, SMALL_FASTF) &&
         NEAR_ZERO(VDOT(internalp->b, Internal()->a ), RT_DOT_TOL)   &&

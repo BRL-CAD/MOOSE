@@ -231,7 +231,8 @@ bool EllipticalTorus::IsValid(void) const {
     const rt_eto_internal* internalp = Internal();
     double                 rc        = MAGNITUDE(internalp->eto_C);
 
-    ret = (!VNEAR_ZERO(internalp->eto_N, SMALL_FASTF) &&
+    ret = (Validate() &&
+           !VNEAR_ZERO(internalp->eto_N, SMALL_FASTF) &&
            !NEAR_ZERO(rc, 0.0001) &&
            !NEAR_ZERO(internalp->eto_r, 0.0001) &&
            !NEAR_ZERO(internalp->eto_rd, 0.0001));

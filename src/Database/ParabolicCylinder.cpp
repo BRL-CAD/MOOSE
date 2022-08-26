@@ -207,7 +207,8 @@ bool ParabolicCylinder::IsValid(void) const {
     bool                   ret       = false;
     const rt_rpc_internal* internalp = Internal();
 
-    if (!VNEAR_ZERO(internalp->rpc_H, SMALL_FASTF) &&
+    if (Validate() &&
+        !VNEAR_ZERO(internalp->rpc_H, SMALL_FASTF) &&
         !VNEAR_ZERO(internalp->rpc_B, SMALL_FASTF) &&
         (internalp->rpc_r > SMALL_FASTF) &&
         NEAR_ZERO(VDOT(internalp->rpc_H, Internal()->rpc_B), RT_DOT_TOL))

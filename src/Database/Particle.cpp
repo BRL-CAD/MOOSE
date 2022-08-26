@@ -229,7 +229,7 @@ bool Particle::IsValid(void) const {
 	minRadius = internalp->part_vrad;
     }
 
-    if ((maxRadius > 0.) && (minRadius >= 0.)) {
+    if (Validate() && (maxRadius > 0.) && (minRadius >= 0.)) {
         if (internalp->part_type == RT_PARTICLE_TYPE_SPHERE) {
             if (((maxRadius - minRadius) / maxRadius) < SMALL_FASTF) // radii are nearly equal
                 ret = true;

@@ -1407,7 +1407,7 @@ const rt_sketch_internal* Sketch::Internal(void) const {
 
 
 bool Sketch::IsValid(void) const {
-    return rt_check_curve(&Internal()->curve, Internal(), 1) == 0;
+    return Validate() && (rt_check_curve(&Internal()->curve, Internal(), 1) == 0);
 }
 
 

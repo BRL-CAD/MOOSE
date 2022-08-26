@@ -413,7 +413,8 @@ const char* Pipe::Type(void) const {
 bool Pipe::IsValid(void) const {
     const rt_pipe_internal* pipe = Internal();
 
-    return ((bu_list_len(&pipe->pipe_segs_head) == pipe->pipe_count) &&
+    return (Validate() &&
+            (bu_list_len(&pipe->pipe_segs_head) == pipe->pipe_count) &&
             (rt_pipe_ck(&pipe->pipe_segs_head) == 0));
 }
 

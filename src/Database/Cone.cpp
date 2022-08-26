@@ -419,11 +419,12 @@ const char* Cone::Type(void) const {
 bool Cone::IsValid(void) const {
     bool                   ret       = false;
     const rt_tgc_internal* internalp = Internal();
-        double magA = MAGNITUDE(internalp->a);
-        double magB = MAGNITUDE(internalp->b);
-        double magH = MAGNITUDE(internalp->h);
+    double                 magA      = MAGNITUDE(internalp->a);
+    double                 magB      = MAGNITUDE(internalp->b);
+    double                 magH      = MAGNITUDE(internalp->h);
 
-    if (!NEAR_ZERO(magA, RT_LEN_TOL) &&
+    if (Validate() &&
+        !NEAR_ZERO(magA, RT_LEN_TOL) &&
         !NEAR_ZERO(magB, RT_LEN_TOL) &&
         !NEAR_ZERO(magH, RT_LEN_TOL) &&
         NEAR_ZERO(VDOT(internalp->a, internalp->b) / magA * magB, RT_DOT_TOL)) {

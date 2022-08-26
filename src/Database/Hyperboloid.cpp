@@ -320,7 +320,8 @@ bool Hyperboloid::IsValid(void) const {
     bool                   ret       = false;
     const rt_ehy_internal* internalp = Internal();
 
-    if (!VNEAR_ZERO(internalp->ehy_H, SMALL_FASTF) &&
+    if (Validate() &&
+        !VNEAR_ZERO(internalp->ehy_H, SMALL_FASTF) &&
         NEAR_EQUAL(MAGNITUDE(internalp->ehy_Au), 1., RT_LEN_TOL) &&
         (internalp->ehy_r1 > SMALL_FASTF) &&
         (internalp->ehy_r1 >= internalp->ehy_r2) &&
