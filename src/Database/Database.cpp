@@ -92,7 +92,7 @@ bool Database::Add
 ) {
     bool ret = false;
 
-    if (m_wdbp != 0) {
+    if (object.IsValid() && (m_wdbp != 0)) {
         if (!BU_SETJUMP) {
             int   id         = ID_NULL;
             void* rtInternal = 0;
@@ -334,32 +334,45 @@ void Database::Delete
 }
 
 
-void Database::Get
+bool Database::Get
 (
     const char*                         objectName,
     std::function<void(Object& object)> callback
 ) {
-    ConstDatabase::Get(objectName, [callback](const Object& object) {
+    bool ret = true;
+
+    ConstDatabase::Get(objectName, [callback, &ret](const Object& object) {
         Object& objectIntern = const_cast<Object&>(object);
 
         callback(objectIntern);
 
-        if (!BU_SETJUMP)
-            rt_db_put_internal(objectIntern.m_pDir,
-                               objectIntern.m_dbip,
-                               objectIntern.m_ip,
-                               objectIntern.m_resp);
+        if (objectIntern.IsValid()) {
+            bool success = false;
 
-        BU_UNSETJUMP;
+            if (!BU_SETJUMP)
+                success = (rt_db_put_internal(objectIntern.m_pDir,
+                                              objectIntern.m_dbip,
+                                              objectIntern.m_ip,
+                                              objectIntern.m_resp) == 0);
+
+            BU_UNSETJUMP;
+
+            if (!success)
+                ret = false;
+        }
+        else
+            ret = false;
     });
+
+    return ret;
 }
 
 
-void Database::Set
+bool Database::Set
 (
     const Object& object
 ) {
-    Get(object.Name(), [&object](Object& obj){obj = object;});
+    return Get(object.Name(), [&object](Object& obj){obj = object;});
 }
 
 
