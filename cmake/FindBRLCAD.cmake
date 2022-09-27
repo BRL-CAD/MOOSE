@@ -30,8 +30,10 @@
 #     BRLCAD_LIBRARIES - link these to use the BRL-CAD Libraries
 #
 #     BRLCAD_ANALYZE_LIBRARY - BRL-CAD Analysis library
-#     BRLCAD_BN_LIBRARY - BRL-CAD Numerical library
-#     BRLCAD_BU_LIBRARY - BRL-CAD Utility library
+#     BRLCAD_BG_LIBRARY - BRL-CAD Basic Geometry library
+#     BRLCAD_BV_LIBRARY - BRL-CAD Basic View library
+#     BRLCAD_BN_LIBRARY - BRL-CAD Basic Numerical library
+#     BRLCAD_BU_LIBRARY - BRL-CAD Basic Utility library
 #     BRLCAD_CURSOR_LIBRARY - libcursor
 #     BRLCAD_DM_LIBRARY - BRL-CAD Display Manager library
 #     BRLCAD_FB_LIBRARY - BRL-CAD Frame Buffer library
@@ -186,6 +188,7 @@ ENDIF(BRLCAD_CONFIGEXE)
 SET(BRL-CAD_LIBS_SEARCH_LIST
     analyze
     bg
+    bv
     bn
     brep
     bu
