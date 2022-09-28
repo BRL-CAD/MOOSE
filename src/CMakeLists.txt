@@ -70,7 +70,7 @@ IF(MSVC)
         Rpcrt4
     )
 ELSE(MSVC)
-    add_definitions(-DBRLCAD_MOOSE_EXPORT=)
+    add_definitions("-DBRLCAD_MOOSE_EXPORT=")
 ENDIF(MSVC)
 
 ADD_LIBRARY(brlcad SHARED ${MooseSources})
