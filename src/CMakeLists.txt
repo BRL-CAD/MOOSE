@@ -27,6 +27,7 @@ INCLUDE_DIRECTORIES(
         ${MOOSE_SOURCE_DIR}/include
         ${MOOSE_BINARY_DIR}/include
         ${BRLCAD_INCLUDE_DIRS}
+        ${ZLIB_INCLUDE_DIRS}
 )
 
 # Module: Database
@@ -62,8 +63,12 @@ SET(MooseHeaders
 )
 
 IF(MSVC)
-    add_definitions(-DBRLCAD_MOOSE_EXPORT=__declspec(dllexport))
-    add_definitions(-DBU_DLL_IMPORTS -DRT_DLL_IMPORTS -DWDB_DLL_IMPORTS)
+    add_definitions("-DBRLCAD_MOOSE_EXPORT=__declspec(dllexport)")
+    set(MSVC_LIBRARIES
+        Ws2_32
+        Psapi
+        Rpcrt4
+    )
 ELSE(MSVC)
     add_definitions(-DBRLCAD_MOOSE_EXPORT=)
 ENDIF(MSVC)
@@ -82,9 +87,10 @@ TARGET_LINK_LIBRARIES(brlcad
     ${BRLCAD_OPENNURBS_STATIC_LIBRARY}
     ${BRLCAD_POLY2TRI_STATIC_LIBRARY}
     ${BRLCAD_VDS_STATIC_LIBRARY}
-    pthread
+    ${REGEX_STATIC_LIBRARIES}
+    ${ZLIB_STATIC_LIBRARIES}
+    ${MSVC_LIBRARIES}
     uuid
-    z
     ${LUA_LIBRARIES}
 )
 
