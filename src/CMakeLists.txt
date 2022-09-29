@@ -76,7 +76,7 @@ ENDIF(MSVC)
 # uuid library
 find_package(UUID REQUIRED)
 
-link_directories(${BRLCAD_INCLUDE_DIRS}/../../lib)
+link_directories(${BRLCAD_LIB_DIR})
 
 ADD_LIBRARY(brlcad SHARED ${MooseSources})
 TARGET_LINK_LIBRARIES(brlcad
