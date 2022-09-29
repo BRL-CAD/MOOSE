@@ -73,6 +73,11 @@ ELSE(MSVC)
     add_definitions("-DBRLCAD_MOOSE_EXPORT=")
 ENDIF(MSVC)
 
+# uuid library
+find_package(UUID REQUIRED)
+
+link_directories(${BRLCAD_INCLUDE_DIRS}/../../lib)
+
 ADD_LIBRARY(brlcad SHARED ${MooseSources})
 TARGET_LINK_LIBRARIES(brlcad
     ${BRLCAD_RT_STATIC_LIBRARY}
@@ -90,8 +95,10 @@ TARGET_LINK_LIBRARIES(brlcad
     ${REGEX_STATIC_LIBRARIES}
     ${ZLIB_STATIC_LIBRARIES}
     ${MSVC_LIBRARIES}
-    uuid
+    ${UUID_LIBRARY}
     ${LUA_LIBRARIES}
+    regex_brl
+    z_brl
 )
 
 INSTALL(TARGETS brlcad DESTINATION lib)
