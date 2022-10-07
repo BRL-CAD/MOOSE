@@ -69,6 +69,8 @@ namespace BRLCAD {
         Database(void);
 
     private:
+        friend class CommandString;
+
         Database(const Database&);                  // not implemented
         const Database& operator=(const Database&); // not implemented
     };

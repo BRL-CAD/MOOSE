@@ -35,9 +35,22 @@ SET(DatabaseSources "")
 ADD_SUBDIRECTORY(Database)
 GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSources)
 
+# Module: Command string
+SET(CommandStringSources "")
+OPTION(MODULE_COMMANDSTRING "Build the command string module" OFF)
+if(MODULE_COMMANDSTRING)
+    ADD_SUBDIRECTORY(CommandString)
+    GET_DIRECTORY_PROPERTY(CommandStringSources DIRECTORY CommandString DEFINITION CommandStringSources)
+    SET(COMMANDSTRING_LIBRARIES
+        ${BRLCAD_GED_STATIC_LIBRARY}
+        ${BRLCAD_ANALYZE_STATIC_LIBRARY}
+        ${BRLCAD_BG_STATIC_LIBRARY}
+        ${BRLCAD_BV_STATIC_LIBRARY}
+    )
+ENDIF(MODULE_COMMANDSTRING)
+
 # Module: Lua
 SET(LuaSources "")
-SET(LuaHeaders "")
 OPTION(MODULE_LUA "Build the Lua module" OFF)
 if(MODULE_LUA)
     FIND_PACKAGE(Lua REQUIRED)
@@ -48,6 +61,7 @@ ENDIF(MODULE_LUA)
 
 SET(MooseSources
     ${DatabaseSources}
+    ${CommandStringSources}
     ${LuaSources}
     globals.cpp
     init.cpp
@@ -91,6 +105,7 @@ TARGET_LINK_LIBRARIES(brlcad
     ${ZLIB_STATIC_LIBRARIES}
     ${MSVC_LIBRARIES}
     uuid
+    ${COMMANDSTRING_LIBRARIES}
     ${LUA_LIBRARIES}
 )
 
