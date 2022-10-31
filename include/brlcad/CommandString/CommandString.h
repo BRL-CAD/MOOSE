@@ -26,6 +26,8 @@
 #ifndef BRLCAD_COMMANDSTRING_INCLUDED
 #define BRLCAD_COMMANDSTRING_INCLUDED
 
+#include <vector>
+
 #include <brlcad/Database/Database.h>
 
 
@@ -37,6 +39,13 @@ namespace BRLCAD {
     public:
         CommandString(Database& database);
         ~CommandString(void);
+
+        bool Parse(const std::vector<const char*>& arguments);
+
+        const char* Results(void) const;
+        size_t      NumberOfResults(void) const;
+        const char* Result(size_t index) const;
+        void        ClearResults(void);
 
     private:
         ged* m_ged;
