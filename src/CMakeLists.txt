@@ -35,6 +35,8 @@ SET(DatabaseSources "")
 ADD_SUBDIRECTORY(Database)
 GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSources)
 
+FIND_PACKAGE(Threads)
+
 # Module: Command string
 SET(CommandStringSources "")
 OPTION(MODULE_COMMANDSTRING "Build the command string module" OFF)
@@ -107,6 +109,8 @@ TARGET_LINK_LIBRARIES(brlcad
     ${MSVC_LIBRARIES}
     uuid
     ${LUA_LIBRARIES}
+    ${CMAKE_DL_LIBS}
+    Threads::Threads
 )
 
 INSTALL(TARGETS brlcad DESTINATION lib)
