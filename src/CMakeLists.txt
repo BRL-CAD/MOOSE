@@ -35,9 +35,24 @@ SET(DatabaseSources "")
 ADD_SUBDIRECTORY(Database)
 GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSources)
 
+FIND_PACKAGE(Threads)
+
+# Module: Command string
+SET(CommandStringSources "")
+OPTION(MODULE_COMMANDSTRING "Build the command string module" OFF)
+if(MODULE_COMMANDSTRING)
+    ADD_SUBDIRECTORY(CommandString)
+    GET_DIRECTORY_PROPERTY(CommandStringSources DIRECTORY CommandString DEFINITION CommandStringSources)
+    SET(COMMANDSTRING_LIBRARIES
+        ${BRLCAD_GED_STATIC_LIBRARY}
+        ${BRLCAD_ANALYZE_STATIC_LIBRARY}
+        ${BRLCAD_BG_STATIC_LIBRARY}
+        ${BRLCAD_BV_STATIC_LIBRARY}
+    )
+ENDIF(MODULE_COMMANDSTRING)
+
 # Module: Lua
 SET(LuaSources "")
-SET(LuaHeaders "")
 OPTION(MODULE_LUA "Build the Lua module" OFF)
 if(MODULE_LUA)
     FIND_PACKAGE(Lua REQUIRED)
@@ -48,6 +63,7 @@ ENDIF(MODULE_LUA)
 
 SET(MooseSources
     ${DatabaseSources}
+    ${CommandStringSources}
     ${LuaSources}
     globals.cpp
     init.cpp
@@ -80,6 +96,7 @@ link_directories(${BRLCAD_LIB_DIR})
 
 ADD_LIBRARY(brlcad SHARED ${MooseSources})
 TARGET_LINK_LIBRARIES(brlcad
+    ${COMMANDSTRING_LIBRARIES}
     ${BRLCAD_RT_STATIC_LIBRARY}
     ${BRLCAD_NMG_STATIC_LIBRARY}
     ${BRLCAD_WDB_STATIC_LIBRARY}
@@ -99,6 +116,8 @@ TARGET_LINK_LIBRARIES(brlcad
     ${LUA_LIBRARIES}
     regex_brl
     z_brl
+    ${CMAKE_DL_LIBS}
+    Threads::Threads
 )
 
 INSTALL(TARGETS brlcad DESTINATION lib)
