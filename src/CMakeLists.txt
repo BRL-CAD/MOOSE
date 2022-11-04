@@ -113,7 +113,7 @@ TARGET_LINK_LIBRARIES(brlcad
     ${LUA_LIBRARIES}
     ${CMAKE_DL_LIBS}
     Threads::Threads
-    ${UUID_LIBRARY}
+    ${UUID_LIBRARIES}
 )
 
 INSTALL(TARGETS brlcad DESTINATION lib)
