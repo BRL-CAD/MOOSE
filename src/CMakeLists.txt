@@ -36,11 +36,12 @@ ADD_SUBDIRECTORY(Database)
 GET_DIRECTORY_PROPERTY(DatabaseSources DIRECTORY Database DEFINITION DatabaseSources)
 
 FIND_PACKAGE(Threads)
+FIND_PACKAGE(UUID)
 
 # Module: Command string
 SET(CommandStringSources "")
 OPTION(MODULE_COMMANDSTRING "Build the command string module" OFF)
-if(MODULE_COMMANDSTRING)
+IF(MODULE_COMMANDSTRING)
     ADD_SUBDIRECTORY(CommandString)
     GET_DIRECTORY_PROPERTY(CommandStringSources DIRECTORY CommandString DEFINITION CommandStringSources)
     SET(COMMANDSTRING_LIBRARIES
@@ -54,7 +55,7 @@ ENDIF(MODULE_COMMANDSTRING)
 # Module: Lua
 SET(LuaSources "")
 OPTION(MODULE_LUA "Build the Lua module" OFF)
-if(MODULE_LUA)
+IF(MODULE_LUA)
     FIND_PACKAGE(Lua REQUIRED)
     INCLUDE_DIRECTORIES(${LUA_INCLUDE_DIR})
     ADD_SUBDIRECTORY(Lua)
@@ -79,20 +80,17 @@ SET(MooseHeaders
 )
 
 IF(MSVC)
-    add_definitions("-DBRLCAD_MOOSE_EXPORT=__declspec(dllexport)")
-    set(MSVC_LIBRARIES
+    ADD_DEFINITIONS("-DBRLCAD_MOOSE_EXPORT=__declspec(dllexport)")
+    SET(MSVC_LIBRARIES
         Ws2_32
         Psapi
         Rpcrt4
     )
 ELSE(MSVC)
-    add_definitions("-DBRLCAD_MOOSE_EXPORT=")
+    ADD_DEFINITIONS("-DBRLCAD_MOOSE_EXPORT=")
 ENDIF(MSVC)
 
-# uuid library
-find_package(UUID REQUIRED)
-
-link_directories(${BRLCAD_LIB_DIR})
+LINK_DIRECTORIES(${BRLCAD_LIB_DIR})
 
 ADD_LIBRARY(brlcad SHARED ${MooseSources})
 TARGET_LINK_LIBRARIES(brlcad
@@ -112,12 +110,10 @@ TARGET_LINK_LIBRARIES(brlcad
     ${REGEX_STATIC_LIBRARIES}
     ${ZLIB_STATIC_LIBRARIES}
     ${MSVC_LIBRARIES}
-    ${UUID_LIBRARY}
     ${LUA_LIBRARIES}
-    regex_brl
-    z_brl
     ${CMAKE_DL_LIBS}
     Threads::Threads
+    ${UUID_LIBRARY}
 )
 
 INSTALL(TARGETS brlcad DESTINATION lib)
