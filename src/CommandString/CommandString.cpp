@@ -26,6 +26,7 @@
 #include "bu/malloc.h"
 #include "bu/parallel.h"
 #include "ged/commands.h"
+#include "rt/db_io.h"
 
 #include <brlcad/CommandString/CommandString.h>
 
@@ -39,7 +40,6 @@ CommandString::CommandString
 ) {
     if (!BU_SETJUMP) {
         BU_GET(m_ged, ged);
-        GED_INIT(m_ged, database.m_wdbp);
     }
     else {
         BU_UNSETJUMP;
@@ -48,6 +48,25 @@ CommandString::CommandString
     }
 
     BU_UNSETJUMP;
+
+    if (m_ged != nullptr) {
+        if (!BU_SETJUMP) {
+            ged_init((m_ged));
+
+            if (database.m_wdbp != nullptr)
+                m_ged->dbip = db_clone_dbi(database.m_wdbp->dbip, nullptr);
+            else
+                m_ged->dbip = nullptr;
+        }
+        else {
+            BU_UNSETJUMP;
+
+            BU_PUT(m_ged, ged);
+            m_ged = nullptr;
+        }
+
+        BU_UNSETJUMP;
+    }
 }
 
 
