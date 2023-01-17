@@ -2,7 +2,7 @@
 #
 #	BRL-CAD
 #
-#	Copyright (c) 2011-2020 United States Government as represented by
+#	Copyright (c) 2011-2023 United States Government as represented by
 #	the U.S. Army Research Laboratory.
 #
 #	This library is free software; you can redistribute it and/or
@@ -118,3 +118,13 @@ TARGET_LINK_LIBRARIES(brlcad
 
 INSTALL(TARGETS brlcad DESTINATION lib)
 INSTALL(FILES ${MooseHeaders} DESTINATION include/brlcad)
+
+ADD_EXECUTABLE(generateDataTest Database/tests/generateData.cpp)
+TARGET_LINK_LIBRARIES(generateDataTest brlcad)
+ADD_TEST(NAME generateDataTest_getTitle COMMAND generateDataTest getTitle)
+
+ADD_EXECUTABLE(getTitleTest Database/tests/getTitle.cpp)
+TARGET_LINK_LIBRARIES(getTitleTest brlcad)
+ADD_TEST(NAME getTitleTest_const COMMAND getTitleTest const)
+ADD_TEST(NAME getTitleTest_file COMMAND getTitleTest file)
+ADD_TEST(NAME getTitleTest_memory COMMAND getTitleTest memory)

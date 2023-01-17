@@ -2,7 +2,7 @@
 #
 #	BRL-CAD
 #
-#	Copyright (c) 2011-2020 United States Government as represented by
+#	Copyright (c) 2011-2023 United States Government as represented by
 #	the U.S. Army Research Laboratory.
 #
 #	This library is free software; you can redistribute it and/or
@@ -25,6 +25,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1.3)
 
 PROJECT(MOOSE)
+
+ENABLE_TESTING()
 
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 SET(CMAKE_CXX_STANDARD 11)
