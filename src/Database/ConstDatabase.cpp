@@ -228,8 +228,8 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
 
 void ConstDatabase::Get
 (
-    const char*                               objectName,
-    std::function<void(const Object& object)> callback
+    const char*                                      objectName,
+    const std::function<void(const Object& object)>& callback
 ) const {
     if (m_rtip != 0) {
         if (!BU_SETJUMP) {
@@ -707,8 +707,8 @@ static int HitDo
 
 void ConstDatabase::ShootRay
 (
-    const Ray3D&                        ray,
-    std::function<bool(const Hit& hit)> callback
+    const Ray3D&                               ray,
+    const std::function<bool(const Hit& hit)>& callback
 ) const {
     if (!SelectionIsEmpty()) {
         application ap;
@@ -775,9 +775,9 @@ static void MultioverlapDo
 
 void ConstDatabase::ShootRay
 (
-    const Ray3D&                        ray,
-    std::function<bool(const Hit& hit)> callback,
-    int                                 flags
+    const Ray3D&                               ray,
+    const std::function<bool(const Hit& hit)>& callback,
+    int                                        flags
 ) const {
     if (!SelectionIsEmpty()) {
         application ap;
@@ -791,7 +791,7 @@ void ConstDatabase::ShootRay
         ap.a_onehit   = flags & StopAfterFirstHit;
         ap.a_resource = m_resp;
         ap.a_return   = 0;
-        ap.a_uptr     = &callback;
+        ap.a_uptr     = const_cast<std::function<bool(const Hit& hit)>*>(&callback);
 
         if (flags & WithOverlaps)
             ap.a_multioverlap = MultioverlapDo;

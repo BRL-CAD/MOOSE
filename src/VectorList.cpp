@@ -898,7 +898,7 @@ const VectorList& VectorList::operator=
 
 void VectorList::Iterate
 (
-    std::function<bool(const Element* element)> callback
+    const std::function<bool(const Element* element)>& callback
 ) const {
     if (m_vlist != 0) {
         bool      cont = true;
@@ -1075,7 +1075,7 @@ void VectorList::Iterate
 
 void VectorList::Iterate
 (
-    std::function<bool(Element* element)> callback
+    const std::function<bool(Element* element)>& callback
 ) {
     if (m_vlist != 0) {
         bool      cont = true;

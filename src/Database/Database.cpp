@@ -336,8 +336,8 @@ void Database::Delete
 
 bool Database::Get
 (
-    const char*                         objectName,
-    std::function<void(Object& object)> callback
+    const char*                                objectName,
+    const std::function<void(Object& object)>& callback
 ) {
     bool ret = true;
 
