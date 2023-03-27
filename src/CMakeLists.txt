@@ -85,6 +85,7 @@ IF(MSVC)
         Ws2_32
         Psapi
         Rpcrt4
+        Shlwapi
     )
 ELSE(MSVC)
     ADD_DEFINITIONS("-DBRLCAD_MOOSE_EXPORT=")
