@@ -407,7 +407,7 @@ NonManifoldGeometry* ConstDatabase::Facetize
                              &initState,
                              0,
                              FacetizeRegionEnd,
-                             nmg_booltree_leaf_tess,
+                             rt_booltree_leaf_tess,
                              &facetizeTree) == 0) {
                 if (facetizeTree != 0) {
                     nmg_boolean(facetizeTree, ret->m_internalp, &RTG.rtg_vlfree, &m_rtip->rti_tol, &rt_uniresource);
