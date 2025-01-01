@@ -863,7 +863,7 @@ VectorList::VectorList
     BU_LIST_INIT(m_vlist);
 
     if (!BU_SETJUMP)
-        bv_vlist_copy(&RTG.rtg_vlfree, m_vlist, original.m_vlist);
+        bv_vlist_copy(&rt_vlfree, m_vlist, original.m_vlist);
     else
         BU_UNSETJUMP;
 
@@ -872,7 +872,7 @@ VectorList::VectorList
 
 
 VectorList::~VectorList(void) {
-    RT_FREE_VLIST(m_vlist);
+    BV_FREE_VLIST(&rt_vlfree, m_vlist);
     delete m_vlist;
 }
 
@@ -882,10 +882,10 @@ const VectorList& VectorList::operator=
     const VectorList& original
 ) {
     if (&original != this) {
-        RT_FREE_VLIST(m_vlist);
+        BV_FREE_VLIST(&rt_vlfree, m_vlist);
 
         if (!BU_SETJUMP)
-            bv_vlist_copy(&RTG.rtg_vlfree, m_vlist, original.m_vlist);
+            bv_vlist_copy(&rt_vlfree, m_vlist, original.m_vlist);
         else
             BU_UNSETJUMP;
 
@@ -1261,117 +1261,117 @@ bool VectorList::Append
             case Element::ElementType::PointDraw: {
                 const PointDraw& actualElement = static_cast<const PointDraw&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_POINT_DRAW);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_POINT_DRAW);
                 break;
             }
 
             case Element::ElementType::PointSize: {
                 const PointSize& actualElement = static_cast<const PointSize&>(element);
 
-                RT_VLIST_SET_POINT_SIZE(m_vlist, actualElement.Size());
+                BV_VLIST_SET_POINT_SIZE(&rt_vlfree, m_vlist, actualElement.Size());
                 break;
             }
 
             case Element::ElementType::LineMove: {
                 const LineMove& actualElement = static_cast<const LineMove&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_LINE_MOVE);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_LINE_MOVE);
                 break;
             }
 
             case Element::ElementType::LineDraw: {
                 const LineDraw& actualElement = static_cast<const LineDraw&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_LINE_DRAW);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_LINE_DRAW);
                 break;
             }
 
             case Element::ElementType::LineWidth: {
                 const LineWidth& actualElement = static_cast<const LineWidth&>(element);
 
-                RT_VLIST_SET_LINE_WIDTH(m_vlist, actualElement.Width());
+                BV_VLIST_SET_LINE_WIDTH(&rt_vlfree, m_vlist, actualElement.Width());
                 break;
             }
 
             case Element::ElementType::TriangleStart: {
                 const TriangleStart& actualElement = static_cast<const TriangleStart&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Normal().coordinates, BV_VLIST_TRI_START);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Normal().coordinates, BV_VLIST_TRI_START);
                 break;
             }
 
             case Element::ElementType::TriangleMove: {
                 const TriangleMove& actualElement = static_cast<const TriangleMove&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_TRI_MOVE);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_TRI_MOVE);
                 break;
             }
 
             case Element::ElementType::TriangleDraw: {
                 const TriangleDraw& actualElement = static_cast<const TriangleDraw&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_TRI_DRAW);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_TRI_DRAW);
                 break;
             }
 
             case Element::ElementType::TriangleEnd: {
                 const TriangleEnd& actualElement = static_cast<const TriangleEnd&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_TRI_END);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_TRI_END);
                 break;
             }
 
             case Element::ElementType::TriangleVertexNormal: {
                 const TriangleVertexNormal& actualElement = static_cast<const TriangleVertexNormal&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Normal().coordinates, BV_VLIST_TRI_VERTNORM);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Normal().coordinates, BV_VLIST_TRI_VERTNORM);
                 break;
             }
 
             case Element::ElementType::PolygonStart: {
                 const PolygonStart& actualElement = static_cast<const PolygonStart&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Normal().coordinates, BV_VLIST_POLY_START);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Normal().coordinates, BV_VLIST_POLY_START);
                 break;
             }
 
             case Element::ElementType::PolygonMove: {
                 const PolygonMove& actualElement = static_cast<const PolygonMove&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_POLY_MOVE);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_POLY_MOVE);
                 break;
             }
 
             case Element::ElementType::PolygonDraw: {
                 const PolygonDraw& actualElement = static_cast<const PolygonDraw&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_POLY_DRAW);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_POLY_DRAW);
                 break;
             }
 
             case Element::ElementType::PolygonEnd: {
                 const PolygonEnd& actualElement = static_cast<const PolygonEnd&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Point().coordinates, BV_VLIST_POLY_END);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Point().coordinates, BV_VLIST_POLY_END);
                 break;
             }
 
             case Element::ElementType::PolygonVertexNormal: {
                 const PolygonVertexNormal& actualElement = static_cast<const PolygonVertexNormal&>(element);
 
-                RT_ADD_VLIST(m_vlist, actualElement.Normal().coordinates, BV_VLIST_POLY_VERTNORM);
+                BV_ADD_VLIST(&rt_vlfree, m_vlist, actualElement.Normal().coordinates, BV_VLIST_POLY_VERTNORM);
                 break;
             }
 
             case Element::ElementType::DisplaySpace: {
                 const DisplaySpace& actualElement = static_cast<const DisplaySpace&>(element);
 
-                RT_VLIST_SET_DISP_MAT(m_vlist, actualElement.ReferencePoint().coordinates);
+                BV_VLIST_SET_DISP_MAT(&rt_vlfree, m_vlist, actualElement.ReferencePoint().coordinates);
                 break;
             }
 
             case Element::ElementType::ModelSpace:
-                RT_VLIST_SET_MODEL_MAT(m_vlist);
+                BV_VLIST_SET_MODEL_MAT(&rt_vlfree, m_vlist);
         }
 
         ret = true;
@@ -1386,5 +1386,5 @@ bool VectorList::Append
 
 
 void VectorList::Clear(void) {
-    RT_FREE_VLIST(m_vlist);
+    BV_FREE_VLIST(&rt_vlfree, m_vlist);
 }

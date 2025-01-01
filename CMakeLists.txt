@@ -22,7 +22,7 @@
 #	@file CMakeLists.txt
 #########################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1.3)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.18)
 
 PROJECT(MOOSE)
 
@@ -36,9 +36,9 @@ FIND_PACKAGE(BRLCAD REQUIRED)
 
 IF(BRLCAD_VERSION_FOUND)
     SET(VERSION_H_CONTENT
-        "#define BRLCAD_LIB_MAJOR ${BRLCAD_MAJOR_VERSION}\n"
-        "#define BRLCAD_LIB_MINOR ${BRLCAD_MINOR_VERSION}\n"
-        "#define BRLCAD_LIB_PATCH ${BRLCAD_PATCH_VERSION}\n"
+        "#define BRLCAD_LIB_MAJOR ${BRLCAD_VERSION_MAJOR}\n"
+        "#define BRLCAD_LIB_MINOR ${BRLCAD_VERSION_MINOR}\n"
+        "#define BRLCAD_LIB_PATCH ${BRLCAD_VERSION_PATCH}\n"
     )
     FILE(WRITE ${CMAKE_BINARY_DIR}/include/brlcad/version.h ${VERSION_H_CONTENT})
 

@@ -36,20 +36,15 @@
 #     BRLCAD_BU_LIBRARY - BRL-CAD Basic Utility library
 #     BRLCAD_CURSOR_LIBRARY - libcursor
 #     BRLCAD_DM_LIBRARY - BRL-CAD Display Manager library
-#     BRLCAD_FB_LIBRARY - BRL-CAD Frame Buffer library
 #     BRLCAD_FFT_LIBRARY - BRL-CAD FFT library
 #     BRLCAD_GCV_LIBRARY - BRL-CAD Geometry Conversion library
 #     BRLCAD_GED_LIBRARY - BRL-CAD Geometry Editing library
 #     BRLCAD_ICV_LIBRARY - BRL-CAD Image Conversion library
-#     BRLCAD_MULTISPECTRAL_LIBRARY - BRL-CAD multispectral library
 #     BRLCAD_NMG_LIBRARY - BRL-CAD non-manifold geometry library
 #     BRLCAD_OPTICAL_LIBRARY - BRL-CAD optical library
-#     BRLCAD_ORLE_LIBRARY - liborle
 #     BRLCAD_PKG_LIBRARY - BRL-CAD libpkg
 #     BRLCAD_RENDER_LIBRARY - librender
 #     BRLCAD_RT_LIBRARY - BRL-CAD Raytracing library
-#     BRLCAD_SYSV_LIBRARY - libsysv
-#     BRLCAD_TERMIO_LIBRARY - libtermio (non WIN32 systems)
 #     BRLCAD_WDB_LIBRARY - BRL-CAD Write Database library
 #
 #  Technically these are external but we need the versions
@@ -133,7 +128,7 @@ IF(NOT BRLCAD_HEADERS_DIR)
     FIND_PATH(BRLCAD_HEADERS_DIR NAMES bu.h HINTS ${BRLCAD_BASE_DIR} PATH_SUFFIXES include/brlcad)
     GET_FILENAME_COMPONENT(BRLCAD_HEADERS_PARENT_DIR ${BRLCAD_HEADERS_DIR} PATH)
 ENDIF(NOT BRLCAD_HEADERS_DIR)
-FIND_PATH(BRLCAD_OPENNURBS_HEADERS_DIR NAMES opennurbs.h HINTS ${BRLCAD_BASE_DIR} PATH_SUFFIXES include/openNURBS include/opennurbs)
+FIND_PATH(BRLCAD_OPENNURBS_HEADERS_DIR NAMES opennurbs.h HINTS ${BRLCAD_BASE_DIR} PATH_SUFFIXES include/OpenNURBS include/openNURBS include/opennurbs)
 SET(BRLCAD_INCLUDE_DIRS ${BRLCAD_HEADERS_PARENT_DIR} ${BRLCAD_HEADERS_DIR} ${BRLCAD_OPENNURBS_HEADERS_DIR})
 SET(BRLCAD_INCLUDE_DIRS ${BRLCAD_INCLUDE_DIRS} CACHE STRING "BRL-CAD include directories")
 
@@ -157,9 +152,9 @@ IF(BRLCAD_CONFIGEXE)
     EXECUTE_PROCESS(COMMAND ${BRLCAD_CONFIGEXE} --version OUTPUT_VARIABLE BRLCAD_VERSION)
     STRING(STRIP "${BRLCAD_VERSION}" BRLCAD_VERSION)
     IF(BRLCAD_VERSION)
-        STRING(REGEX REPLACE "([0-9]+)\\.[0-9]+\\.[0-9]+" "\\1" BRLCAD_MAJOR_VERSION "${BRLCAD_VERSION}")
-        STRING(REGEX REPLACE "[0-9]+\\.([0-9]+)\\.[0-9]+" "\\1" BRLCAD_MINOR_VERSION "${BRLCAD_VERSION}")
-        STRING(REGEX REPLACE "[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1" BRLCAD_PATCH_VERSION "${BRLCAD_VERSION}")
+        STRING(REGEX REPLACE "([0-9]+)\\.[0-9]+\\.[0-9]+" "\\1" BRLCAD_VERSION_MAJOR "${BRLCAD_VERSION}")
+        STRING(REGEX REPLACE "[0-9]+\\.([0-9]+)\\.[0-9]+" "\\1" BRLCAD_VERSION_MINOR "${BRLCAD_VERSION}")
+        STRING(REGEX REPLACE "[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1" BRLCAD_VERSION_PATCH "${BRLCAD_VERSION}")
         SET(BRLCAD_VERSION_FOUND TRUE)
     ELSE(BRLCAD_VERSION)
         MESSAGE(WARNING "\t\t'brlcad-config --version' was found and executed, but produced no output.")
@@ -195,22 +190,16 @@ SET(BRL-CAD_LIBS_SEARCH_LIST
     bn
     brep
     bu
-    cursor
     dm
-    fb
     fft
     gcv
     ged
     icv
-    multispectral
     nmg
     optical
-    orle
     pkg
     render
     rt
-    sysv
-    termio
     wdb
 )
 
@@ -235,9 +224,7 @@ ENDFOREACH(brl_lib ${BRL-CAD_LIBS_SEARCH_LIST})
 SET(BRL-CAD_SRC_OTHER_REQUIRED
     exppp
     express
-    lz4
     openNURBS
-    poly2tri
     stepcore
     stepdai
     stepeditor
@@ -259,6 +246,9 @@ FOREACH(ext_lib ${BRL-CAD_SRC_OTHER_REQUIRED})
     FIND_LIBRARY(BRLCAD_${LIBCORE}_STATIC_LIBRARY NAMES ${ext_lib}${STATIC_LIBRARY_SUFFIX} lib${ext_lib}${STATIC_LIBRARY_SUFFIX} ${ext_lib}_brl${STATIC_LIBRARY_SUFFIX} lib${ext_lib}_brl${STATIC_LIBRARY_SUFFIX} PATHS ${BRLCAD_LIB_DIR} NO_SYSTEM_PATH)
 ENDFOREACH(ext_lib ${BRL-CAD_SRC_OTHER_REQUIRED})
 
+# Do another check for opennurbs static lib
+FIND_LIBRARY(BRLCAD_OPENNURBS_STATIC_LIBRARY NAMES opennurbsStatic PATHS ${BRLCAD_LIB_DIR} NO_SYSTEM_PATH)
+
 # Lastly, we need to check for local installs in the BRL-CAD install of
 # libraries that might otherwise be present on the system - if they are
 # found in the BRL-CAD install tree, use those versions instead of any
@@ -278,8 +268,8 @@ SET(ZLIB_STATIC_LIBRARIES ${ZLIB_STATIC_LIBRARY})
 SET(ZLIB_INCLUDE_DIRS ${ZLIB_INCLUDE_DIR})
 
 #  libregex
-FIND_LIBRARY(REGEX_LIBRARY NAMES c regex compat regex_brl PATHS ${BRLCAD_LIB_DIR})
-FIND_LIBRARY(REGEX_STATIC_LIBRARY NAMES c${STATIC_LIBRARY_SUFFIX} regex${STATIC_LIBRARY_SUFFIX} compat${STATIC_LIBRARY_SUFFIX} regex_brl${STATIC_LIBRARY_SUFFIX} PATHS ${BRLCAD_LIB_DIR} NO_SYSTEM_PATH)
+FIND_LIBRARY(REGEX_LIBRARY NAMES regex_brl c regex compat PATHS ${BRLCAD_LIB_DIR})
+FIND_LIBRARY(REGEX_STATIC_LIBRARY NAMES regex_brl${STATIC_LIBRARY_SUFFIX} c${STATIC_LIBRARY_SUFFIX} regex${STATIC_LIBRARY_SUFFIX} compat${STATIC_LIBRARY_SUFFIX} PATHS ${BRLCAD_LIB_DIR} NO_SYSTEM_PATH)
 IF("${REGEX_STATIC_LIBRARY}" STREQUAL "REGEX_STATIC_LIBRARY-NOTFOUND")
     # if there is a system library, use it
     FIND_LIBRARY(REGEX_STATIC_LIBRARY NAMES c regex compat)

@@ -548,7 +548,7 @@ void NonManifoldGeometry::Triangulate(void) {
     tolerance.para    = 1 - tolerance.perp;
 
     if (!BU_SETJUMP)
-        nmg_triangulate_model(Internal(), &RTG.rtg_vlfree, &tolerance);
+        nmg_triangulate_model(Internal(), &rt_vlfree, &tolerance);
     else {
         BU_UNSETJUMP;
     }
@@ -570,7 +570,7 @@ void NonManifoldGeometry::Triangulate
     tolerance.para    = 1 - tolerance.perp;
 
     if (!BU_SETJUMP)
-        nmg_triangulate_shell(const_cast<shell*>(shellToTrinagulate.m_shell), &RTG.rtg_vlfree, &tolerance);
+        nmg_triangulate_shell(const_cast<shell*>(shellToTrinagulate.m_shell), &rt_vlfree, &tolerance);
     else {
         BU_UNSETJUMP;
     }
@@ -592,7 +592,7 @@ void NonManifoldGeometry::Triangulate
     tolerance.para    = 1 - tolerance.perp;
 
     if (!BU_SETJUMP)
-        nmg_triangulate_fu(const_cast<faceuse*>(faceToTrinagulate.m_face), &RTG.rtg_vlfree, &tolerance);
+        nmg_triangulate_fu(const_cast<faceuse*>(faceToTrinagulate.m_face), &rt_vlfree, &tolerance);
     else {
         BU_UNSETJUMP;
     }

@@ -410,7 +410,7 @@ NonManifoldGeometry* ConstDatabase::Facetize
                              rt_booltree_leaf_tess,
                              &facetizeTree) == 0) {
                 if (facetizeTree != 0) {
-                    nmg_boolean(facetizeTree, ret->m_internalp, &RTG.rtg_vlfree, &m_rtip->rti_tol, &rt_uniresource);
+                    nmg_boolean(facetizeTree, ret->m_internalp, &rt_vlfree, &m_rtip->rti_tol, &rt_uniresource);
 
                     // ok, now we have a mess here: the model/region with the faces is both in ret and facetizeTree
                     // freeing facetizeTree would destroy the ret too
