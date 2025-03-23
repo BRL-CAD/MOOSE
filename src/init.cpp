@@ -23,8 +23,10 @@
  *      private initialization function implementation
  */
 
+#include "bu/list.h"
 #include "bu/log.h"
 #include "bu/parallel.h"
+#include "rt/global.h"
 
 #include "init.h"
 
@@ -47,6 +49,8 @@ void InitBrlCad(void) {
         if (!BU_SETJUMP) {
             bu_log_add_hook(NullLogger, 0);
         }
+
+        BU_LIST_INIT(&rt_vlfree);
 
         BU_UNSETJUMP;
     }
