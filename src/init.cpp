@@ -1,7 +1,7 @@
 /*                         I N I T . C P P
  * BRL-CAD
  *
- * Copyright (c) 2020 United States Government as represented by
+ * Copyright (c) 2020-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -23,10 +23,13 @@
  *      private initialization function implementation
  */
 
+#include <cassert>
+
 #include "bu/list.h"
 #include "bu/log.h"
 #include "bu/parallel.h"
 #include "rt/global.h"
+#include "rt/resource.h"
 
 #include "init.h"
 
@@ -48,9 +51,10 @@ void InitBrlCad(void) {
 
         if (!BU_SETJUMP) {
             bu_log_add_hook(NullLogger, 0);
-        }
 
-        BU_LIST_INIT(&rt_vlfree);
+            assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
+            assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
+        }
 
         BU_UNSETJUMP;
     }

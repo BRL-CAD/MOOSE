@@ -1,7 +1,7 @@
 /*                      C O N S T D A T A B A S E . C P P
  * BRL-CAD
  *
- * Copyright (c) 2008-2020 United States Government as represented by
+ * Copyright (c) 2008-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -64,9 +64,6 @@ using namespace BRLCAD;
 
 ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0) {
     InitBrlCad();
-
-    if (rt_uniresource.re_magic != RESOURCE_MAGIC)
-        rt_init_resource(&rt_uniresource, 0, NULL);
 
     if (!BU_SETJUMP) {
         m_resp = static_cast<resource*>(bu_calloc(1, sizeof(resource), "BRLCAD::ConstDatabase::~ConstDatabase::m_resp"));
