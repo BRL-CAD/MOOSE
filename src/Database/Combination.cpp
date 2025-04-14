@@ -382,7 +382,8 @@ Combination::TreeNode Combination::TreeNode::Apply
             tree* newNode;
 
             if (!BU_SETJUMP) {
-                RT_GET_TREE(newNode, m_resp);
+                BU_GET(newNode, union tree);
+                RT_TREE_INIT(newNode);
             }
             else {
                 BU_UNSETJUMP;
@@ -432,7 +433,8 @@ Combination::TreeNode Combination::TreeNode::Apply
             tree* newNode;
 
             if (!BU_SETJUMP) {
-                RT_GET_TREE(newNode, m_resp);
+                BU_GET(newNode, union tree);
+                RT_TREE_INIT(newNode);
             }
             else {
                 BU_UNSETJUMP;
@@ -451,7 +453,7 @@ Combination::TreeNode Combination::TreeNode::Apply
                 ret.m_tree->tr_b.tb_right = db_dup_subtree(theOther.m_tree, m_resp);
             else {
                 BU_UNSETJUMP;
-                RT_FREE_TREE(newNode, m_resp);
+                BU_PUT(newNode, union tree);
             }
 
             BU_UNSETJUMP;
@@ -485,7 +487,8 @@ Combination::TreeNode Combination::TreeNode::Apply
         TreeNode newLeaf(*this);
 
         if (!BU_SETJUMP) {
-            RT_GET_TREE(newLeaf.m_tree, newLeaf.m_resp);
+            BU_GET(newLeaf.m_tree, union tree);
+            RT_TREE_INIT(newLeaf.m_tree);
         }
         else {
             BU_UNSETJUMP;
@@ -508,7 +511,7 @@ Combination::TreeNode Combination::TreeNode::Apply
         ret = Apply(op, newLeaf);
 
         if (ret.m_tree == 0) // in case of an error
-            RT_FREE_TREE(newLeaf.m_tree, newLeaf.m_resp);
+            BU_PUT(newLeaf.m_tree, union tree);
     }
 
     return ret;
@@ -534,7 +537,8 @@ Combination::TreeNode Combination::TreeNode::Apply
             tree* newNode;
 
             if (!BU_SETJUMP) {
-                RT_GET_TREE(newNode, m_resp);
+                BU_GET(newNode, union tree);
+                RT_TREE_INIT(newNode);
             }
             else {
                 BU_UNSETJUMP;
@@ -552,7 +556,7 @@ Combination::TreeNode Combination::TreeNode::Apply
                 ret.m_tree->tr_b.tb_left = db_dup_subtree(theOther.m_tree, m_resp);
             else {
                 BU_UNSETJUMP;
-                RT_FREE_TREE(newNode, m_resp);
+                BU_PUT(newNode, union tree);
             }
 
             BU_UNSETJUMP;
@@ -588,7 +592,8 @@ Combination::TreeNode Combination::TreeNode::Apply
         TreeNode newLeaf(*this);
 
         if (!BU_SETJUMP) {
-            RT_GET_TREE(newLeaf.m_tree, newLeaf.m_resp);
+            BU_GET(newLeaf.m_tree, union tree);
+            RT_TREE_INIT(newLeaf.m_tree);
         }
         else {
             BU_UNSETJUMP;
@@ -611,7 +616,7 @@ Combination::TreeNode Combination::TreeNode::Apply
         ret = Apply(newLeaf, op);
 
         if (ret.m_tree == 0) // in case of an error
-            RT_FREE_TREE(newLeaf.m_tree, newLeaf.m_resp);
+            BU_PUT(newLeaf.m_tree, union tree);
     }
 
     return ret;
@@ -835,7 +840,8 @@ void Combination::AddLeaf
 
     if (internalp->tree == 0) {
         if (!BU_SETJUMP) {
-            RT_GET_TREE(internalp->tree, m_resp);
+            BU_GET(internalp->tree, union tree);
+            RT_TREE_INIT(internalp->tree);
         }
         else {
             BU_UNSETJUMP;
@@ -851,7 +857,7 @@ void Combination::AddLeaf
             internalp->tree->tr_l.tl_name = bu_strdup(leafName);
         else {
             BU_UNSETJUMP;
-            RT_FREE_TREE(internalp->tree, m_resp);
+            BU_PUT(internalp->tree, union tree);
             internalp->tree = 0;
 
         }
