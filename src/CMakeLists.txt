@@ -118,8 +118,7 @@ TARGET_LINK_LIBRARIES(brlcad
     ${UUID_LIBRARIES}
 )
 
-INSTALL(TARGETS brlcad RUNTIME_DEPENDENCY_SET brlcad_deps DESTINATION lib)
-INSTALL(RUNTIME_DEPENDENCY_SET brlcad_deps DESTINATION lib)
+INSTALL(TARGETS brlcad DESTINATION lib)
 INSTALL(FILES ${MooseHeaders} DESTINATION include/brlcad)
 
 ADD_EXECUTABLE(generateDataTest Database/tests/generateData.cpp)
