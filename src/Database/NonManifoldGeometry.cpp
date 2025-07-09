@@ -1,7 +1,7 @@
 /*            N O N M A N I F O L D G E O M E T R Y . C P P
  * BRL-CAD
  *
- * Copyright (c) 2011-2020 United States Government as represented by
+ * Copyright (c) 2011-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -476,6 +476,8 @@ NonManifoldGeometry::Region NonManifoldGeometry::RegionIterator::CurrentRegion(v
 //
 
 NonManifoldGeometry::NonManifoldGeometry(void) : Object(), m_internalp(0) {
+    assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
+
     if (!BU_SETJUMP)
         m_internalp = nmg_mm();
     else {
@@ -661,7 +663,9 @@ NonManifoldGeometry::NonManifoldGeometry
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(0) {
+    assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
+}
 
 
 const model* NonManifoldGeometry::Internal(void) const {

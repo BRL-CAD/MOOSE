@@ -2,7 +2,7 @@
 #
 #	BRL-CAD
 #
-#	Copyright (c) 2011-2023 United States Government as represented by
+#	Copyright (c) 2011-2025 United States Government as represented by
 #	the U.S. Army Research Laboratory.
 #
 #	This library is free software; you can redistribute it and/or
@@ -67,7 +67,6 @@ SET(MooseSources
     ${CommandStringSources}
     ${LuaSources}
     globals.cpp
-    init.cpp
     VectorList.cpp
 )
 

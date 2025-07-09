@@ -1,7 +1,7 @@
 /*                    V E C T O R L I S T. C P P
  * BRL-CAD
  *
- * Copyright (c) 2020 United States Government as represented by
+ * Copyright (c) 2020-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -28,8 +28,6 @@
 #include "bu/parallel.h"
 #include "rt/global.h"
 #include "bv/vlist.h"
-
-#include "init.h"
 
 #include <brlcad/VectorList.h>
 
@@ -848,7 +846,7 @@ VectorList::ModelSpace::ModelSpace
 // BRLCAD::VectorList
 //
 VectorList::VectorList(void) {
-    InitBrlCad();
+    assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
 
     m_vlist = new bu_list;
     BU_LIST_INIT(m_vlist);

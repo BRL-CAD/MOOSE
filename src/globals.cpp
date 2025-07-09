@@ -1,7 +1,7 @@
 /*                      G L O B A L S . C P P
  * BRL-CAD
  *
- * Copyright (c) 2011-2020 United States Government as represented by
+ * Copyright (c) 2011-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -34,18 +34,51 @@
 using namespace BRLCAD;
 
 
+static int NullLogger
+(
+    void* data,
+    void* string
+) {
+    return 0;
+}
+
+
+static struct BrlCadGlobal {
+    BrlCadGlobal() {
+        if (!BU_SETJUMP)
+            bu_log_add_hook(NullLogger, 0);
+
+        BU_UNSETJUMP;
+    }
+
+    ~BrlCadGlobal() {}
+
+    int MajorVersion(void) {
+        return BRLCAD_LIB_MAJOR;
+    }
+
+    int MinorVersion(void) {
+        return BRLCAD_LIB_MINOR;
+    }
+
+    int PatchVersion(void) {
+        return BRLCAD_LIB_PATCH;
+    }
+} Globals;
+
+
 int BRLCAD_MOOSE_EXPORT BRLCAD::MajorVersion(void) {
-    return BRLCAD_LIB_MAJOR;
+    return Globals.MajorVersion();
 }
 
 
 int BRLCAD_MOOSE_EXPORT BRLCAD::MinorVersion(void) {
-    return BRLCAD_LIB_MINOR;
+    return Globals.MinorVersion();
 }
 
 
 int BRLCAD_MOOSE_EXPORT BRLCAD::PatchVersion(void) {
-    return BRLCAD_LIB_PATCH;
+    return Globals.PatchVersion();
 }
 
 

@@ -30,8 +30,6 @@
 #include "raytrace.h"
 #include "bu/parallel.h"
 
-#include "../init.h"
-
 #include <brlcad/Database/Torus.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
@@ -63,7 +61,7 @@ using namespace BRLCAD;
 
 
 ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0) {
-    InitBrlCad();
+    assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
 
     if (!BU_SETJUMP) {
         m_resp = static_cast<resource*>(bu_calloc(1, sizeof(resource), "BRLCAD::ConstDatabase::~ConstDatabase::m_resp"));
