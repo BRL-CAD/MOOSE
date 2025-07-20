@@ -60,7 +60,7 @@
 using namespace BRLCAD;
 
 
-ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0) {
+ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0), m_changeSignalHandlers() {
     assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
 
     if (!BU_SETJUMP) {
@@ -239,91 +239,7 @@ void ConstDatabase::Get
             if ((objectName != 0) && (strlen(objectName) > 0)) {
                 directory* pDir = db_lookup(m_rtip->rti_dbip, objectName, LOOKUP_NOISE);
 
-                if (pDir != RT_DIR_NULL) {
-                    rt_db_internal intern;
-                    int            id = rt_db_get_internal(&intern, pDir, m_rtip->rti_dbip, 0, m_resp);
-
-                    try {
-                        switch(id) {
-                        case ID_TOR: // 1
-                            callback(Torus(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_TGC: // 2
-                            callback(Cone(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_ELL: // 3
-                            callback(Ellipsoid(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_ARB8: // 4
-                            callback(Arb8(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_HALF: // 6
-                            callback(Halfspace(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_SPH: // 10
-                            callback(Sphere(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_NMG: // 11
-                            callback(NonManifoldGeometry(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_PIPE: // 15
-                            callback(Pipe(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_PARTICLE: // 16
-                            callback(Particle(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_RPC: // 17
-                            callback(ParabolicCylinder(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_RHC: // 18
-                            callback(HyperbolicCylinder(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_EPA: // 19
-                            callback(Paraboloid(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_EHY: // 20
-                            callback(Hyperboloid(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_ETO: // 21
-                            callback(EllipticalTorus(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_SKETCH: // 26
-                            callback(Sketch(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_BOT: // 30
-                            callback(BagOfTriangles(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        case ID_COMBINATION: // 31
-                            callback(Combination(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                            break;
-
-                        default:
-                            callback(Unknown(m_resp, pDir, &intern, m_rtip->rti_dbip));
-                        }
-                    }
-                    catch(...) {
-                        BU_UNSETJUMP;
-                        rt_db_free_internal(&intern);
-                    }
-
-                    rt_db_free_internal(&intern);
-                }
+                GetInternal(pDir, callback);
             }
         }
 
@@ -821,22 +737,141 @@ void ConstDatabase::ShootRay
 
 void ConstDatabase::DatabaseChangedHook
 (
-    db_i*      database,
-    directory* object,
-    int        changeType,
+    db_i*      dbip,
+    directory* pDir,
+    int        mode,
     void*      myself
 ) {
     if (myself != 0) {
         ConstDatabase* me = static_cast<ConstDatabase*>(myself);
 
-        me->SignalChange(object, changeType);
+        me->SignalChange(dbip, pDir, mode);
+    }
+}
+
+
+void ConstDatabase::GetInternal
+(
+    directory*                                       pDir,
+    const std::function<void(const Object& object)>& callback
+) const {
+    if (pDir != RT_DIR_NULL) {
+        rt_db_internal intern;
+        int            id = rt_db_get_internal(&intern, pDir, m_rtip->rti_dbip, 0, m_resp);
+
+        try {
+            switch(id) {
+            case ID_TOR: // 1
+                callback(Torus(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_TGC: // 2
+                callback(Cone(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_ELL: // 3
+                callback(Ellipsoid(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_ARB8: // 4
+                callback(Arb8(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_HALF: // 6
+                callback(Halfspace(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_SPH: // 10
+                callback(Sphere(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_NMG: // 11
+                callback(NonManifoldGeometry(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_PIPE: // 15
+                callback(Pipe(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_PARTICLE: // 16
+                callback(Particle(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_RPC: // 17
+                callback(ParabolicCylinder(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_RHC: // 18
+                callback(HyperbolicCylinder(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_EPA: // 19
+                callback(Paraboloid(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_EHY: // 20
+                callback(Hyperboloid(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_ETO: // 21
+                callback(EllipticalTorus(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_SKETCH: // 26
+                callback(Sketch(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_BOT: // 30
+                callback(BagOfTriangles(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            case ID_COMBINATION: // 31
+                callback(Combination(m_resp, pDir, &intern, m_rtip->rti_dbip));
+                break;
+
+            default:
+                callback(Unknown(m_resp, pDir, &intern, m_rtip->rti_dbip));
+            }
+        }
+        catch(...) {}
+
+        rt_db_free_internal(&intern);
     }
 }
 
 
 void ConstDatabase::SignalChange
 (
-    directory* object,
-    int        changeType
-) {
+    db_i*      dbip,
+    directory* pDir,
+    int        mode
+) const {
+    if ((m_rtip != nullptr) && (m_rtip->rti_dbip == dbip)) {
+        ChangeType changeType;
+
+        switch (mode) {
+        case 0:
+            changeType = ChangeType::Modification;
+            break;
+
+        case 1:
+            changeType = ChangeType::Addition;
+            break;
+
+        case 2:
+            changeType = ChangeType::Removal;
+            break;
+
+        default:
+            changeType = ChangeType::Unknown;
+        }
+
+        if (!BU_SETJUMP)
+            GetInternal(pDir, [&] (const Object& object) {
+                for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
+                    (*m_changeSignalHandlers[i])(object, changeType);
+            });
+
+        BU_UNSETJUMP;
+    }
 }

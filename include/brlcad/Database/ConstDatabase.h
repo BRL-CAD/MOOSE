@@ -26,6 +26,8 @@
 #ifndef BRLCAD_CONSTDATABASE_INCLUDED
 #define BRLCAD_CONSTDATABASE_INCLUDED
 
+#include <vector>
+
 #include <brlcad/VectorList.h>
 #include <brlcad/Database/Object.h>
 
@@ -173,31 +175,37 @@ namespace BRLCAD {
         //@{
         enum class ChangeType {
             Unknown,
-            Modify,
-            Add,
-            Remove
+            Modification,
+            Addition,
+            Removal
         };
 
         /// signal handler (to be implemented by the caller)
         typedef std::function<void(const Object& object,
                                    ChangeType    changeType)> ChangeSignalHandler;
 
-        void                 RegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
-        void                 DeRegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
+        void                 RegisterChangeSignalHandler(ChangeSignalHandler* changeSignalHandler);
+        void                 DeRegisterChangeSignalHandler(ChangeSignalHandler* changeSignalHandler);
         //@}
 
     protected:
         rt_i*     m_rtip;
         resource* m_resp;
 
-        static void DatabaseChangedHook(db_i*      database,
-                                        directory* object,
-                                        int        changeType,
+        static void DatabaseChangedHook(db_i*      dbip,
+                                        directory* pDir,
+                                        int        mode,
                                         void*      myself);
 
     private:
-        void  SignalChange(directory* object,
-                           int        changeType);
+        std::vector<ChangeSignalHandler*> m_changeSignalHandlers;
+
+        void GetInternal(directory*                                       pDir,
+                         const std::function<void(const Object& object)>& callback) const;
+
+        void  SignalChange(db_i*      dbip,
+                           directory* pDir,
+                           int        mode) const;
 
         ConstDatabase(const ConstDatabase&);                  // not implemented
         const ConstDatabase& operator=(const ConstDatabase&); // not implemented
