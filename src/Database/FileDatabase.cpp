@@ -46,8 +46,10 @@ bool FileDatabase::Load
 
     if (m_resp != 0) {
         if (m_rtip != 0) {
-            if (!BU_SETJUMP)
+            if (!BU_SETJUMP) {
+                db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
                 rt_free_rti(m_rtip);
+            }
 
             BU_UNSETJUMP;
             m_rtip = 0;
@@ -81,6 +83,7 @@ bool FileDatabase::Load
 
                     if (m_rtip != 0) {
                         rt_init_resource(m_resp, 0, m_rtip);
+                        db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
                         ret = true;
                     }
                     else {

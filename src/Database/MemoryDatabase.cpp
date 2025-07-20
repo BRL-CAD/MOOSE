@@ -47,6 +47,7 @@ MemoryDatabase::MemoryDatabase(void) : Database() {
     if (!BU_SETJUMP) {
         m_rtip = rt_new_rti(dbip); // clones dbip
         rt_init_resource(m_resp, 0, m_rtip);
+        db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
     }
     else {
         BU_UNSETJUMP;
@@ -74,6 +75,9 @@ bool MemoryDatabase::Load
 
         if (source != 0) {
             // free old database
+            if (m_rtip != 0)
+                db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+
             if (m_wdbp != 0) {
                 wdb_close(m_wdbp);
                 m_wdbp = 0;
@@ -97,6 +101,7 @@ bool MemoryDatabase::Load
 
             assert(m_wdbp->dbip == m_rtip->rti_dbip);
             db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
+            db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
 
             rt_free_rti(source);
         }
@@ -120,6 +125,9 @@ bool MemoryDatabase::Load
 
         if (source != 0) {
             // free old database
+            if (m_rtip != 0)
+                db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+
             if (m_wdbp != 0) {
                 wdb_close(m_wdbp);
                 m_wdbp = 0;
@@ -143,6 +151,7 @@ bool MemoryDatabase::Load
 
             assert(m_wdbp->dbip == m_rtip->rti_dbip);
             db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
+            db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
 
             rt_free_rti(source);
         }

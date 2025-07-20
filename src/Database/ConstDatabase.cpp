@@ -77,8 +77,10 @@ ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0) {
 
 ConstDatabase::~ConstDatabase(void) {
     if (m_rtip != 0) {
-        if (!BU_SETJUMP)
+        if (!BU_SETJUMP) {
+            db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
             rt_free_rti(m_rtip);
+        }
 
         BU_UNSETJUMP;
     }
@@ -96,8 +98,10 @@ bool ConstDatabase::Load
 ) {
     if (m_resp != 0) {
         if (m_rtip != 0) {
-            if (!BU_SETJUMP)
+            if (!BU_SETJUMP) {
+                db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
                 rt_free_rti(m_rtip);
+            }
 
             BU_UNSETJUMP;
 
@@ -110,13 +114,17 @@ bool ConstDatabase::Load
         BU_UNSETJUMP;
 
         if (m_rtip != 0) {
-            if (!BU_SETJUMP)
+            if (!BU_SETJUMP) {
                 rt_init_resource(m_resp, 0, m_rtip);
+                db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+            }
             else {
                 BU_UNSETJUMP;
 
-                if (!BU_SETJUMP)
+                if (!BU_SETJUMP) {
+                    db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
                     rt_free_rti(m_rtip);
+                }
 
                 m_rtip = 0;
             }
@@ -808,4 +816,27 @@ void ConstDatabase::ShootRay
 
         BU_UNSETJUMP;
     }
+}
+
+
+void ConstDatabase::DatabaseChangedHook
+(
+    db_i*      database,
+    directory* object,
+    int        changeType,
+    void*      myself
+) {
+    if (myself != 0) {
+        ConstDatabase* me = static_cast<ConstDatabase*>(myself);
+
+        me->SignalChange(object, changeType);
+    }
+}
+
+
+void ConstDatabase::SignalChange
+(
+    directory* object,
+    int        changeType
+) {
 }

@@ -169,11 +169,36 @@ namespace BRLCAD {
                                       int                                        flags) const;
         //@}
 
+        /// @name signalling of database changes
+        //@{
+        enum class ChangeType {
+            Unknown,
+            Modify,
+            Add,
+            Remove
+        };
+
+        /// signal handler (to be implemented by the caller)
+        typedef std::function<void(const Object& object,
+                                   ChangeType    changeType)> ChangeSignalHandler;
+
+        void                 RegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
+        void                 DeRegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
+        //@}
+
     protected:
         rt_i*     m_rtip;
         resource* m_resp;
 
+        static void DatabaseChangedHook(db_i*      database,
+                                        directory* object,
+                                        int        changeType,
+                                        void*      myself);
+
     private:
+        void  SignalChange(directory* object,
+                           int        changeType);
+
         ConstDatabase(const ConstDatabase&);                  // not implemented
         const ConstDatabase& operator=(const ConstDatabase&); // not implemented
     };
