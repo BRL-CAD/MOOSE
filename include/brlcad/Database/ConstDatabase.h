@@ -184,8 +184,8 @@ namespace BRLCAD {
         typedef std::function<void(const Object& object,
                                    ChangeType    changeType)> ChangeSignalHandler;
 
-        void                 RegisterChangeSignalHandler(ChangeSignalHandler* changeSignalHandler);
-        void                 DeRegisterChangeSignalHandler(ChangeSignalHandler* changeSignalHandler);
+        void                 RegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
+        void                 DeRegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
         //@}
 
     protected:

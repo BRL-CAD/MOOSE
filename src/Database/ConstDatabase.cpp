@@ -735,6 +735,39 @@ void ConstDatabase::ShootRay
 }
 
 
+void ConstDatabase::RegisterChangeSignalHandler
+(
+    ChangeSignalHandler& changeSignalHandler
+) {
+    size_t i = 0;
+
+    while (i < m_changeSignalHandlers.size()) {
+        if (m_changeSignalHandlers[i] == &changeSignalHandler)
+            break;
+
+        ++i;
+    }
+
+    if (i == m_changeSignalHandlers.size())
+        m_changeSignalHandlers.push_back(&changeSignalHandler);
+}
+
+
+void ConstDatabase::DeRegisterChangeSignalHandler
+(
+    ChangeSignalHandler& changeSignalHandler
+) {
+    std::vector<ChangeSignalHandler*>::iterator it = m_changeSignalHandlers.begin();
+
+    while (it != m_changeSignalHandlers.end()) {
+        if (*it == &changeSignalHandler)
+            it = m_changeSignalHandlers.erase(it);
+        else
+            ++it;
+    }
+}
+
+
 void ConstDatabase::DatabaseChangedHook
 (
     db_i*      dbip,
