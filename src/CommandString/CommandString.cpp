@@ -25,6 +25,7 @@
 
 #include "bu/malloc.h"
 #include "bu/parallel.h"
+#include "bu/str.h"
 #include "ged/commands.h"
 #include "rt/db_io.h"
 
@@ -118,4 +119,35 @@ const char* CommandString::Result
 void CommandString::ClearResults(void) {
     bu_vls_free(m_ged->ged_result_str);
     ged_results_clear(m_ged->ged_results);
+}
+
+
+const std::vector<const char*>& CommandString::CmdCompletions(const char *seed) {
+    cmdCompletionsVector.clear();
+
+    const char **completions = NULL;
+    int count = ged_cmd_completions(&completions, seed);
+
+    for (int i = 0; i < count; i++)
+        cmdCompletionsVector.push_back(completions[i]);
+
+    bu_argv_free(count, (char **)completions);
+
+    return CmdCompletionsVector;
+}
+
+
+const std::vector<const char*>& CommandString::GeomCompletions(const char *seed) {
+    geomCompletionsVector.clear();
+
+    const char **completions = NULL;
+    struct bu_vls prefix = BU_VLS_INIT_ZERO;
+    int count = ged_geom_completions(&completions, &prefix, m_ged->dbip, seed);
+
+    for (int i = 0; i < count; i++)
+        geomCompletionsVector.push_back(completions[i]);
+
+    bu_argv_free(count, (char **)completions);
+
+    return GeomCompletionsVector;
 }
