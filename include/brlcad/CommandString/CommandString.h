@@ -47,8 +47,14 @@ namespace BRLCAD {
         const char* Result(size_t index) const;
         void        ClearResults(void);
 
+        const std::vector<const char*>& CmdCompletions(const char *seed);
+        const std::vector<const char*>& GeomCompletions(const char *seed);
+
     private:
         ged* m_ged;
+
+        std::vector<const char*> cmdCompletionsVector;
+        std::vector<const char*> geomCompletionsVector;
 
         CommandString(void);                                  // not implemented
         CommandString(const CommandString&);                  // not implemented
