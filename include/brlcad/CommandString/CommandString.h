@@ -1,7 +1,7 @@
 /*                    C O M M A N D S T R I N G . H
  * BRL-CAD
  *
- * Copyright (c) 2022 United States Government as represented by
+ * Copyright (c) 2022-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -46,6 +46,11 @@ namespace BRLCAD {
         size_t      NumberOfResults(void) const;
         const char* Result(size_t index) const;
         void        ClearResults(void);
+
+        void        CompleteCommand(const char*                                          pattern,
+                                    const std::function<bool(const char* commandMatch)>& callback);
+        void        CompleteObject(const char*                                         pattern,
+                                   const std::function<bool(const char* objectMatch)>& callback);
 
     private:
         ged* m_ged;

@@ -1,7 +1,7 @@
 /*                  C O M M A N D S T R I N G . C P P
  * BRL-CAD
  *
- * Copyright (c) 2022 United States Government as represented by
+ * Copyright (c) 2022-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -25,6 +25,7 @@
 
 #include "bu/malloc.h"
 #include "bu/parallel.h"
+#include "bu/str.h"
 #include "ged/commands.h"
 #include "rt/db_io.h"
 
@@ -118,4 +119,39 @@ const char* CommandString::Result
 void CommandString::ClearResults(void) {
     bu_vls_free(m_ged->ged_result_str);
     ged_results_clear(m_ged->ged_results);
+}
+
+
+void CommandString::CompleteCommand
+(
+    const char*                                          pattern,
+    const std::function<bool(const char* commandMatch)>& callback
+) {
+    const char** completions         = nullptr;
+    int          numberOfCompletions = ged_cmd_completions(&completions, pattern);
+
+    for (size_t i = 0; i < numberOfCompletions; ++i) {
+        if (!callback(completions[i]))
+            break;
+    }
+
+    bu_argv_free(numberOfCompletions, const_cast<char**>(completions));
+}
+
+
+void CommandString::CompleteObject
+(
+    const char*                                         pattern,
+    const std::function<bool(const char* objectMatch)>& callback
+) {
+    const char** completions         = nullptr;
+    bu_vls       cprefix             = BU_VLS_INIT_ZERO;
+    int          numberOfCompletions = ged_geom_completions(&completions, &cprefix, m_ged->dbip, pattern);
+
+    for (size_t i = 0; i < numberOfCompletions; ++i) {
+        if (!callback(completions[i]))
+            break;
+    }
+
+    bu_argv_free(numberOfCompletions, const_cast<char**>(completions));
 }
