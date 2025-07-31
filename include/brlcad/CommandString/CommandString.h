@@ -56,6 +56,9 @@ namespace BRLCAD {
         bool Parse(const std::vector<const char*>& arguments,
                    ParseFlag                       flag);
 
+        bool Parse(const std::vector<const char*>&            arguments,
+                   const std::function<void(ParseFlag flag)>& callback);
+
         const char* Results(void) const;
         size_t      NumberOfResults(void) const;
         const char* Result(size_t index) const;
