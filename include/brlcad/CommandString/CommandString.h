@@ -42,6 +42,20 @@ namespace BRLCAD {
 
         bool Parse(const std::vector<const char*>& arguments);
 
+        enum class ParseFlag {
+            Ok,        // Command execution was successful (no further informations)
+            Help,      // Invalid command, the Result string contains usage informations
+            More,      // Incomplete specification, the Result string will ask for more parameters
+            Quiet,     // Command won't set or modify the Result string
+            Unknown,   // Unknown command (arguments.front() not recognized)
+            Exit,      // Command is requesting a clean application shutdown
+            Override,  // Indicates settings have been overridden
+            Undefined
+        };
+
+        bool Parse(const std::vector<const char*>& arguments,
+                   ParseFlag                       flag);
+
         const char* Results(void) const;
         size_t      NumberOfResults(void) const;
         const char* Result(size_t index) const;

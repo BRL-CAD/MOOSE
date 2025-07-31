@@ -98,6 +98,49 @@ bool CommandString::Parse
 }
 
 
+bool CommandString::Parse
+(
+    const std::vector<const char*>& arguments,
+    ParseFlag                       flag
+) {
+    int ret = BRLCAD_ERROR;
+    flag = ParseFlag::Undefined;
+
+    if (m_ged != nullptr) {
+        if (!BU_SETJUMP)
+            ret = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
+        else {
+            BU_UNSETJUMP;
+
+            return 1;
+        }
+
+        BU_UNSETJUMP;
+    }
+    else
+        return 1;
+
+    if (ret == BRLCAD_OK)
+        flag = ParseFlag::Ok;
+    else {
+        if (ret & GED_HELP)
+            flag = ParseFlag::Help;
+        else if (ret & GED_MORE)
+            flag = ParseFlag::More;
+        else if (ret & GED_QUIET)
+            flag = ParseFlag::Quiet;
+        else if (ret & GED_UNKNOWN)
+            flag = ParseFlag::Unknown;
+        else if (ret & GED_EXIT)
+            flag = ParseFlag::Exit;
+        else if (ret & GED_OVERRIDE)
+            flag = ParseFlag::Override;
+    }
+
+    return 0;
+}
+
+
 const char* CommandString::Results(void) const {
     return bu_vls_cstr(m_ged->ged_result_str);
 }
