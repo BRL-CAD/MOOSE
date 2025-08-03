@@ -81,7 +81,7 @@ CommandString::~CommandString(void) {
 }
 
 
-bool CommandString::Parse
+CommandString::State CommandString::Parse
 (
     const std::vector<const char*>& arguments
 ) {
@@ -90,98 +90,35 @@ bool CommandString::Parse
     if (m_ged != nullptr) {
         if (!BU_SETJUMP)
             ret = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
-
-        BU_UNSETJUMP;
-    }
-
-    return (ret == BRLCAD_OK);
-}
-
-
-bool CommandString::Parse
-(
-    const std::vector<const char*>& arguments,
-    ParseFlag                       flag
-) {
-    int ret = BRLCAD_ERROR;
-    flag = ParseFlag::Undefined;
-
-    if (m_ged != nullptr) {
-        if (!BU_SETJUMP)
-            ret = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
         else {
             BU_UNSETJUMP;
 
-            return 1;
+            return State::InternalError;
         }
 
         BU_UNSETJUMP;
     }
     else
-        return 1;
+        return State::NoDatabase;
 
     if (ret == BRLCAD_OK)
-        flag = ParseFlag::Ok;
+        return State::Success;
     else {
-        if (ret & GED_HELP)
-            flag = ParseFlag::Help;
+        if (ret & GED_QUIET)
+            return State::SuccessQuiet;
         else if (ret & GED_MORE)
-            flag = ParseFlag::More;
-        else if (ret & GED_QUIET)
-            flag = ParseFlag::Quiet;
+            return State::Incomplete;
+        else if (ret & GED_HELP)
+            return State::SyntaxError;
         else if (ret & GED_UNKNOWN)
-            flag = ParseFlag::Unknown;
-        else if (ret & GED_EXIT)
-            flag = ParseFlag::Exit;
+            return State::UnknownCommand;
         else if (ret & GED_OVERRIDE)
-            flag = ParseFlag::Override;
-    }
-
-    return 0;
-}
-
-
-bool CommandString::Parse
-(
-    const std::vector<const char*>&            arguments,
-    const std::function<void(ParseFlag flag)>& callback
-) {
-    int ret = BRLCAD_ERROR;
-
-    if (m_ged != nullptr) {
-        if (!BU_SETJUMP)
-            ret = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
-        else {
-            BU_UNSETJUMP;
-
-            return 1;
-        }
-
-        BU_UNSETJUMP;
-    }
-    else
-        return 1;
-
-    if (ret == BRLCAD_OK)
-        callback(ParseFlag::Ok);
-    else {
-        if (ret & GED_HELP)
-            callback(ParseFlag::Help);
-        else if (ret & GED_MORE)
-            callback(ParseFlag::More);
-        else if (ret & GED_QUIET)
-            callback(ParseFlag::Quiet);
-        else if (ret & GED_UNKNOWN)
-            callback(ParseFlag::Unknown);
+            return State::OverrideSettings;
         else if (ret & GED_EXIT)
-            callback(ParseFlag::Exit);
-        else if (ret & GED_OVERRIDE)
-            callback(ParseFlag::Override);
-        else
-            callback(ParseFlag::Undefined);
+            return State::ExitRequested;
     }
 
-    return 0;
+    return State::InternalError;
 }
 
 

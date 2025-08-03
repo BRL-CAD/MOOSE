@@ -40,24 +40,19 @@ namespace BRLCAD {
         CommandString(Database& database);
         ~CommandString(void);
 
-        bool Parse(const std::vector<const char*>& arguments);
-
-        enum class ParseFlag {
-            Ok,        // Command execution was successful (no further informations)
-            Help,      // Invalid command, the Result string contains usage informations
-            More,      // Incomplete specification, the Result string will ask for more parameters
-            Quiet,     // Command won't set or modify the Result string
-            Unknown,   // Unknown command (arguments.front() not recognized)
-            Exit,      // Command is requesting a clean application shutdown
-            Override,  // Indicates settings have been overridden
-            Undefined
+        enum class State {
+            Success,
+            SuccessQuiet,     ///< the result string is not set
+            Incomplete,       ///< the result string asks for more data
+            SyntaxError,      ///< the result string contains usage information 
+            UnknownCommand,
+            OverrideSettings,
+            ExitRequested,
+            NoDatabase,
+            InternalError
         };
 
-        bool Parse(const std::vector<const char*>& arguments,
-                   ParseFlag                       flag);
-
-        bool Parse(const std::vector<const char*>&            arguments,
-                   const std::function<void(ParseFlag flag)>& callback);
+        State Parse(const std::vector<const char*>& arguments);
 
         const char* Results(void) const;
         size_t      NumberOfResults(void) const;
