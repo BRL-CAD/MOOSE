@@ -85,40 +85,39 @@ CommandString::State CommandString::Parse
 (
     const std::vector<const char*>& arguments
 ) {
-    int ret = BRLCAD_ERROR;
+    CommandString::State ret  = CommandString::State::NoDatabase;
+    int                  gret = BRLCAD_ERROR;
 
     if (m_ged != nullptr) {
         if (!BU_SETJUMP)
-            ret = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
+            gret = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
         else {
             BU_UNSETJUMP;
 
-            return State::InternalError;
+            ret = State::InternalError;
         }
 
         BU_UNSETJUMP;
     }
-    else
-        return State::NoDatabase;
 
-    if (ret == BRLCAD_OK)
-        return State::Success;
+    if (gret == BRLCAD_OK)
+        ret = State::Success;
     else {
-        if (ret & GED_QUIET)
-            return State::SuccessQuiet;
-        else if (ret & GED_MORE)
-            return State::Incomplete;
-        else if (ret & GED_HELP)
-            return State::SyntaxError;
-        else if (ret & GED_UNKNOWN)
-            return State::UnknownCommand;
-        else if (ret & GED_OVERRIDE)
-            return State::OverrideSettings;
-        else if (ret & GED_EXIT)
-            return State::ExitRequested;
+        if (gret & GED_QUIET)
+            ret = State::SuccessQuiet;
+        else if (gret & GED_MORE)
+            ret = State::Incomplete;
+        else if (gret & GED_HELP)
+            ret = State::SyntaxError;
+        else if (gret & GED_UNKNOWN)
+            ret = State::UnknownCommand;
+        else if (gret & GED_OVERRIDE)
+            ret = State::OverrideSettings;
+        else if (gret & GED_EXIT)
+            ret = State::ExitRequested;
     }
 
-    return State::InternalError;
+    return ret;
 }
 
 
