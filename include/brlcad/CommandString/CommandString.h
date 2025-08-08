@@ -42,17 +42,16 @@ namespace BRLCAD {
 
         enum class State {
             Success,
-            SuccessQuiet,     ///< the result string is not set
-            Incomplete,       ///< the result string asks for more data
-            SyntaxError,      ///< the result string contains usage information 
-            UnknownCommand,
-            OverrideSettings,
             ExitRequested,
+            Error,        ///< unspecific error
+            Incomplete,   ///< the result string asks for more data
+            SyntaxError,  ///< the result string contains usage information
+            UnknownCommand,
             NoDatabase,
-            InternalError
+            InternalError ///< like a crash, database may be corrupt
         };
 
-        State Parse(const std::vector<const char*>& arguments);
+        State       Parse(const std::vector<const char*>& arguments);
 
         const char* Results(void) const;
         size_t      NumberOfResults(void) const;
