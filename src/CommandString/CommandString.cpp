@@ -100,8 +100,6 @@ CommandString::State CommandString::Parse
             else if (gedResult == GED_EXIT)
                 ret = State::ExitRequested;
             else {
-                assert((gedResult & BRLCAD_ERROR) != 0);
-
                 ret = State::Error;
 
                 // check, if the error type is specified
