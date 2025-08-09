@@ -97,17 +97,17 @@ CommandString::State CommandString::Parse
                 ret = State::Success;
             else if (gedResult == GED_EXIT)
                 ret = State::ExitRequested;
+            else if  (gedResult & GED_MORE)
+                ret = State::Incomplete;
+            else if (gedResult & GED_HELP)
+                ret = State::SyntaxError;
             else {
                 assert((gedResult & BRLCAD_ERROR) != 0);
 
                 ret = State::Error;
 
                 // check, if the error type is specified
-                if (gedResult & GED_MORE)
-                    ret = State::Incomplete;
-                else if (gedResult & GED_HELP)
-                    ret = State::SyntaxError;
-                else if (gedResult & GED_UNKNOWN)
+                if (gedResult & GED_UNKNOWN)
                     ret = State::UnknownCommand;
                 else
                     assert(gedResult == BRLCAD_ERROR);
