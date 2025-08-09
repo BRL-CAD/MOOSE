@@ -106,7 +106,7 @@ CommandString::State CommandString::Parse
                 if (gedResult & GED_MORE)
                     ret = State::Incomplete;
                 else if (gedResult & GED_HELP)
-                    ret = State::SyntaxError;
+                    ret = State::HelpProvided;
                 else if (gedResult & GED_UNKNOWN)
                     ret = State::UnknownCommand;
                 else

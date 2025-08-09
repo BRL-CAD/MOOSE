@@ -45,7 +45,7 @@ namespace BRLCAD {
             ExitRequested,
             Error,        ///< unspecific error
             Incomplete,   ///< the result string asks for more data
-            SyntaxError,  ///< the result string contains usage information
+            HelpProvided, ///< the result string contains usage information
             UnknownCommand,
             NoDatabase,
             InternalError ///< like a crash, database may be corrupt
