@@ -35,7 +35,7 @@ int main
             BRLCAD::CommandString    parser(database);
             std::vector<const char*> arguments = {"title"};
 
-            if (parser.Parse(arguments))
+            if (parser.Parse(arguments) == BRLCAD::CommandString::State::Success)
                 std::cout << parser.Results() << std::endl;
             else {
                 ret = 3;
