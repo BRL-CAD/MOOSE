@@ -90,6 +90,8 @@ CommandString::State CommandString::Parse
     CommandString::State ret = CommandString::State::NoDatabase;
 
     if (m_ged != nullptr) {
+        ret = State::InternalError;
+
         if (!BU_SETJUMP) {
             int gedResult = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
 
@@ -113,8 +115,6 @@ CommandString::State CommandString::Parse
                     assert(gedResult == BRLCAD_ERROR);
             }
         }
-        else
-            ret = State::InternalError;
 
         BU_UNSETJUMP;
     }
