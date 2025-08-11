@@ -900,9 +900,9 @@ void ConstDatabase::SignalChange
             changeType = ChangeType::Unknown;
         }
 
-        assert(pDir != 0);
+        assert(pDir != nullptr);
 
-        if (pDir != 0)
+        if (pDir != nullptr)
             objectName = pDir->d_namep;
 
         for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
