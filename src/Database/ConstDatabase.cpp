@@ -880,7 +880,8 @@ void ConstDatabase::SignalChange
     int        mode
 ) const {
     if ((m_rtip != nullptr) && (m_rtip->rti_dbip == dbip)) {
-        ChangeType changeType;
+        ChangeType  changeType;
+        const char* objectName = nullptr;
 
         switch (mode) {
         case 0:
@@ -899,12 +900,12 @@ void ConstDatabase::SignalChange
             changeType = ChangeType::Unknown;
         }
 
-        if (!BU_SETJUMP)
-            GetInternal(pDir, [&] (const Object& object) {
-                for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
-                    (*m_changeSignalHandlers[i])(object, changeType);
-            });
+        assert(pDir != nullptr);
 
-        BU_UNSETJUMP;
+        if (pDir != nullptr)
+            objectName = pDir->d_namep;
+
+        for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
+            (*m_changeSignalHandlers[i])(objectName, changeType);
     }
 }

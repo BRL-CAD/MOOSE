@@ -181,8 +181,8 @@ namespace BRLCAD {
         };
 
         /// signal handler (to be implemented by the caller)
-        typedef std::function<void(const Object& object,
-                                   ChangeType    changeType)> ChangeSignalHandler;
+        typedef std::function<void(const char* objectName,
+                                   ChangeType  changeType)> ChangeSignalHandler;
 
         void                 RegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
         void                 DeRegisterChangeSignalHandler(ChangeSignalHandler& changeSignalHandler);
