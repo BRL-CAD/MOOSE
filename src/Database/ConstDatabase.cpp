@@ -880,8 +880,7 @@ void ConstDatabase::SignalChange
     int        mode
 ) const {
     if ((m_rtip != nullptr) && (m_rtip->rti_dbip == dbip)) {
-        ChangeType  changeType;
-        const char* objectName = nullptr;
+        ChangeType changeType;
 
         switch (mode) {
         case 0:
@@ -901,6 +900,8 @@ void ConstDatabase::SignalChange
         }
 
         assert(pDir != nullptr);
+
+        const char* objectName = nullptr;
 
         if (pDir != nullptr)
             objectName = pDir->d_namep;
