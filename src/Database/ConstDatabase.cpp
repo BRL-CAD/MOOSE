@@ -881,7 +881,7 @@ void ConstDatabase::SignalChange
 ) const {
     if ((m_rtip != nullptr) && (m_rtip->rti_dbip == dbip)) {
         ChangeType  changeType;
-        const char* objectName = 0;
+        const char* objectName = nullptr;
 
         switch (mode) {
         case 0:
