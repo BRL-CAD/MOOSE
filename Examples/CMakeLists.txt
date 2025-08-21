@@ -13,7 +13,7 @@
 #
 ################################################################################
 
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1.3)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.18)
 
 PROJECT(BrlCadMooseExamples)
 
