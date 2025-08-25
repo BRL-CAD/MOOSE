@@ -768,15 +768,49 @@ void ConstDatabase::DeRegisterChangeSignalHandler
 }
 
 
+class CallBackHooks {
+public:
+    static void DatabaseChanged(db_i*      dbip,
+                                directory* pDir,
+                                int        mode,
+                                void*      myself) {
+        if (myself != 0) {
+            ConstDatabase* constDatabase = static_cast<ConstDatabase*>(myself);
+
+            constDatabase->SignalDatabaseChange(dbip, pDir, mode);
+        }
+    }
+
+    static void ReferencesChanged(db_i*       dbip,
+                                  directory*  parentPDir,
+                                  directory*  childPDir,
+                                  const char* childName,
+                                  db_op_t     childIncludingOperation,
+                                  matp_t      matrixAboveChild,
+                                  void*       myself) {
+        if (myself != nullptr) {
+            ConstDatabase* constDatabase = static_cast<ConstDatabase*>(myself);
+
+            if ((parentPDir == nullptr) && (childPDir == nullptr) && (childName == nullptr) && (childIncludingOperation == DB_OP_SUBTRACT) && (matrixAboveChild == nullptr))
+                constDatabase->SignalChange(nullptr, ConstDatabase::ChangeType::References);
+        }
+    }
+};
+
+
 void ConstDatabase::RegisterCoreCallbacks(void) {
-    if (m_rtip != nullptr)
-        db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+    if (m_rtip != nullptr) {
+        db_add_changed_clbk(m_rtip->rti_dbip, CallBackHooks::DatabaseChanged, this);
+        db_add_update_nref_clbk(m_rtip->rti_dbip, CallBackHooks::ReferencesChanged, this);
+    }
 }
 
 
 void ConstDatabase::DeRegisterCoreCallbacks(void) {
-    if (m_rtip != nullptr)
-        db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+    if (m_rtip != nullptr) {
+        db_rm_changed_clbk(m_rtip->rti_dbip, CallBackHooks::DatabaseChanged, this);
+        db_rm_update_nref_clbk(m_rtip->rti_dbip, CallBackHooks::ReferencesChanged, this);
+    }
 }
 
 
@@ -866,21 +900,6 @@ void ConstDatabase::GetInternal
         catch(...) {}
 
         rt_db_free_internal(&intern);
-    }
-}
-
-
-void ConstDatabase::DatabaseChangedHook
-(
-    db_i*      dbip,
-    directory* pDir,
-    int        mode,
-    void*      myself
-) {
-    if (myself != 0) {
-        ConstDatabase* me = static_cast<ConstDatabase*>(myself);
-
-        me->SignalDatabaseChange(dbip, pDir, mode);
     }
 }
 

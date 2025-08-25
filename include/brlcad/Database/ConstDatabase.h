@@ -35,6 +35,7 @@
 struct rt_i;
 struct resource;
 struct directory;
+class  CallBackHooks;
 
 
 namespace BRLCAD {
@@ -177,7 +178,8 @@ namespace BRLCAD {
             Unknown,
             Modification,
             Addition,
-            Removal
+            Removal,
+            References
         };
 
         /// signal handler (to be implemented by the caller)
@@ -198,20 +200,16 @@ namespace BRLCAD {
     private:
         std::vector<ChangeSignalHandler*> m_changeSignalHandlers;
 
-        void        GetInternal(directory*                                       pDir,
-                                const std::function<void(const Object& object)>& callback) const;
+        void GetInternal(directory*                                       pDir,
+                         const std::function<void(const Object& object)>& callback) const;
 
-        static void DatabaseChangedHook(db_i*      dbip,
-                                        directory* pDir,
-                                        int        mode,
-                                        void*      myself);
+        void SignalDatabaseChange(db_i*      dbip,
+                                  directory* pDir,
+                                  int        mode) const;
+        void SignalChange(const char* objectName,
+                          ChangeType  changeType) const;
 
-        void        SignalDatabaseChange(db_i*      dbip,
-                                         directory* pDir,
-                                         int        mode) const;
-
-        void        SignalChange(const char* objectName,
-                                 ChangeType  changeType) const;
+        friend CallBackHooks;
 
         ConstDatabase(const ConstDatabase&);                  // not implemented
         const ConstDatabase& operator=(const ConstDatabase&); // not implemented
