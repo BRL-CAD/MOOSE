@@ -192,20 +192,23 @@ namespace BRLCAD {
         rt_i*     m_rtip;
         resource* m_resp;
 
+        void RegisterCoreCallbacks(void);
+        void DeRegisterCoreCallbacks(void);
+
+    private:
+        std::vector<ChangeSignalHandler*> m_changeSignalHandlers;
+
+        void        GetInternal(directory*                                       pDir,
+                                const std::function<void(const Object& object)>& callback) const;
+
         static void DatabaseChangedHook(db_i*      dbip,
                                         directory* pDir,
                                         int        mode,
                                         void*      myself);
 
-    private:
-        std::vector<ChangeSignalHandler*> m_changeSignalHandlers;
-
-        void GetInternal(directory*                                       pDir,
-                         const std::function<void(const Object& object)>& callback) const;
-
-        void  SignalChange(db_i*      dbip,
-                           directory* pDir,
-                           int        mode) const;
+        void        SignalChange(db_i*      dbip,
+                                 directory* pDir,
+                                 int        mode) const;
 
         ConstDatabase(const ConstDatabase&);                  // not implemented
         const ConstDatabase& operator=(const ConstDatabase&); // not implemented

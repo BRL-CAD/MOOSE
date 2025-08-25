@@ -78,7 +78,7 @@ ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0), m_changeSignalHandler
 ConstDatabase::~ConstDatabase(void) {
     if (m_rtip != 0) {
         if (!BU_SETJUMP) {
-            db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+            DeRegisterCoreCallbacks();
             rt_free_rti(m_rtip);
         }
 
@@ -99,7 +99,7 @@ bool ConstDatabase::Load
     if (m_resp != 0) {
         if (m_rtip != 0) {
             if (!BU_SETJUMP) {
-                db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+                DeRegisterCoreCallbacks();
                 rt_free_rti(m_rtip);
             }
 
@@ -116,13 +116,13 @@ bool ConstDatabase::Load
         if (m_rtip != 0) {
             if (!BU_SETJUMP) {
                 rt_init_resource(m_resp, 0, m_rtip);
-                db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+                RegisterCoreCallbacks();
             }
             else {
                 BU_UNSETJUMP;
 
                 if (!BU_SETJUMP) {
-                    db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+                    DeRegisterCoreCallbacks();
                     rt_free_rti(m_rtip);
                 }
 
@@ -768,18 +768,15 @@ void ConstDatabase::DeRegisterChangeSignalHandler
 }
 
 
-void ConstDatabase::DatabaseChangedHook
-(
-    db_i*      dbip,
-    directory* pDir,
-    int        mode,
-    void*      myself
-) {
-    if (myself != 0) {
-        ConstDatabase* me = static_cast<ConstDatabase*>(myself);
+void ConstDatabase::RegisterCoreCallbacks(void) {
+    if (m_rtip != nullptr)
+        db_add_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
+}
 
-        me->SignalChange(dbip, pDir, mode);
-    }
+
+void ConstDatabase::DeRegisterCoreCallbacks(void) {
+    if (m_rtip != nullptr)
+        db_rm_changed_clbk(m_rtip->rti_dbip, ConstDatabase::DatabaseChangedHook, this);
 }
 
 
@@ -869,6 +866,21 @@ void ConstDatabase::GetInternal
         catch(...) {}
 
         rt_db_free_internal(&intern);
+    }
+}
+
+
+void ConstDatabase::DatabaseChangedHook
+(
+    db_i*      dbip,
+    directory* pDir,
+    int        mode,
+    void*      myself
+) {
+    if (myself != 0) {
+        ConstDatabase* me = static_cast<ConstDatabase*>(myself);
+
+        me->SignalChange(dbip, pDir, mode);
     }
 }
 
