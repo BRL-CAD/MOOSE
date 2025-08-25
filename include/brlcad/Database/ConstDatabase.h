@@ -206,9 +206,12 @@ namespace BRLCAD {
                                         int        mode,
                                         void*      myself);
 
-        void        SignalChange(db_i*      dbip,
-                                 directory* pDir,
-                                 int        mode) const;
+        void        SignalDatabaseChange(db_i*      dbip,
+                                         directory* pDir,
+                                         int        mode) const;
+
+        void        SignalChange(const char* objectName,
+                                 ChangeType  changeType) const;
 
         ConstDatabase(const ConstDatabase&);                  // not implemented
         const ConstDatabase& operator=(const ConstDatabase&); // not implemented

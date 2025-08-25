@@ -880,12 +880,12 @@ void ConstDatabase::DatabaseChangedHook
     if (myself != 0) {
         ConstDatabase* me = static_cast<ConstDatabase*>(myself);
 
-        me->SignalChange(dbip, pDir, mode);
+        me->SignalDatabaseChange(dbip, pDir, mode);
     }
 }
 
 
-void ConstDatabase::SignalChange
+void ConstDatabase::SignalDatabaseChange
 (
     db_i*      dbip,
     directory* pDir,
@@ -918,7 +918,16 @@ void ConstDatabase::SignalChange
         if (pDir != nullptr)
             objectName = pDir->d_namep;
 
-        for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
-            (*m_changeSignalHandlers[i])(objectName, changeType);
+        SignalChange(objectName, changeType);
     }
+}
+
+
+void ConstDatabase::SignalChange
+(
+    const char* objectName,
+    ChangeType  changeType
+) const {
+    for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
+        (*m_changeSignalHandlers[i])(objectName, changeType);
 }
