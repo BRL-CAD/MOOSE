@@ -60,7 +60,7 @@
 using namespace BRLCAD;
 
 
-ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0), m_changeSignalHandlers() {
+ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0), m_changeSignalHandlers(), m_selfUpdateNref(false) {
     assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
 
     if (!BU_SETJUMP) {
@@ -209,7 +209,9 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
 
     if (m_rtip != 0) {
         if (!BU_SETJUMP) {
+            m_selfUpdateNref = true;
             db_update_nref(m_rtip->rti_dbip, m_resp);
+            m_selfUpdateNref = false;
 
             for (size_t i = 0; (i < RT_DBNHASH) && (pDirectory == 0); ++i) {
                 for (const directory* pDir = m_rtip->rti_dbip->dbi_Head[i]; pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
@@ -791,7 +793,7 @@ public:
         if (myself != nullptr) {
             ConstDatabase* constDatabase = static_cast<ConstDatabase*>(myself);
 
-            if ((parentPDir == nullptr) && (childPDir == nullptr) && (childName == nullptr) && (childIncludingOperation == DB_OP_SUBTRACT) && (matrixAboveChild == nullptr))
+            if (!constDatabase->m_selfUpdateNref && (parentPDir == nullptr) && (childPDir == nullptr) && (childName == nullptr) && (childIncludingOperation == DB_OP_SUBTRACT) && (matrixAboveChild == nullptr))
                 constDatabase->SignalChange(nullptr, ConstDatabase::ChangeType::References);
         }
     }

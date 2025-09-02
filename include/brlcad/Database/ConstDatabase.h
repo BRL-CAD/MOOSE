@@ -199,6 +199,7 @@ namespace BRLCAD {
 
     private:
         std::vector<ChangeSignalHandler*> m_changeSignalHandlers;
+        mutable bool                      m_selfUpdateNref;
 
         void GetInternal(directory*                                       pDir,
                          const std::function<void(const Object& object)>& callback) const;
