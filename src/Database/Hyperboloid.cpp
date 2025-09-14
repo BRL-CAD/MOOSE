@@ -1,7 +1,7 @@
 /*                H Y P E R B O L O I D . C P P
  * BRL-CAD
  *
- * Copyright (c) 2011-2020 United States Government as represented by
+ * Copyright (c) 2011-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or

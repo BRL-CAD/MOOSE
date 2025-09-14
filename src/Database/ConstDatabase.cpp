@@ -20,7 +20,7 @@
 /** @file ConstDatabase.cpp
  *
  *  BRL-CAD core C++ interface:
- *      implements a handle on a read-only database
+ *      implements a handle for a read-only database
  */
 
 #include <cstdlib>

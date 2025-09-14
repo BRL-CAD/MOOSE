@@ -1,7 +1,7 @@
 /*          P A R A B O L I C C Y L I N D E R . C P P
  * BRL-CAD
  *
- * Copyright (c) 2011-2020 United States Government as represented by
+ * Copyright (c) 2011-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 /** @file ParabolicCylinder.cpp
  *
  *  BRL-CAD core C++ interface:
- *      right parabolicCylinder (ID_RPC) database object implementation
+ *      right parabolic cylinder (ID_RPC) database object implementation
  */
 
 #include <cassert>

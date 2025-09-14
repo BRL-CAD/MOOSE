@@ -1,4 +1,4 @@
-/*                    V E C T O R L I S T. C P P
+/*                    V E C T O R L I S T . C P P
  * BRL-CAD
  *
  * Copyright (c) 2020-2025 United States Government as represented by

@@ -1,7 +1,7 @@
 /*                      F I L E D A T A B A S E . C P P
  * BRL-CAD
  *
- * Copyright (c) 2008-2020 United States Government as represented by
+ * Copyright (c) 2008-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 /** @file FileDatabase.cpp
  *
  *  BRL-CAD core C++ interface:
- *      implements a handle on a writable file-based database
+ *      implements a handle for a writable file-based database
  */
 
 #include "raytrace.h"

@@ -20,7 +20,7 @@
 /** @file FileDatabase.h
  *
  *  BRL-CAD core C++ interface:
- *      declares a handle on a writable file-based database
+ *      declares a handle for a writable file-based database
  */
 
 #ifndef BRLCAD_FILEDATABASE_INCLUDED

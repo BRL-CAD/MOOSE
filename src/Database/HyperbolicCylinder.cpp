@@ -1,7 +1,7 @@
 /*                H Y P E R B O L I C C Y L I N D E R . C P P
  * BRL-CAD
  *
- * Copyright (c) 2011-2020 United States Government as represented by
+ * Copyright (c) 2011-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 /** @file HyperbolicCylinder.cpp
  *
  *  BRL-CAD core C++ interface:
- *      right hyperbolicCylinder (ID_RHC) database object implementation
+ *      right hyperbolic cylinder (ID_RHC) database object implementation
  */
 
 #include <cassert>

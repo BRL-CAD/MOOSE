@@ -20,7 +20,7 @@
 /** @file MemoryDatabase.h
  *
  *  BRL-CAD core C++ interface:
- *      declares a handle on an in-memory database
+ *      declares a handle for an in-memory database
  */
 
 #ifndef BRLCAD_MEMORYDATABASE_INCLUDED

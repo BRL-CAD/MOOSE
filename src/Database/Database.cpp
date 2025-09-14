@@ -1,7 +1,7 @@
 /*                      D A T A B A S E . C P P
  * BRL-CAD
  *
- * Copyright (c) 2008-2020 United States Government as represented by
+ * Copyright (c) 2008-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 /** @file Database.cpp
  *
  *  BRL-CAD core C++ interface:
- *      implements the common part of the handles on a writable database
+ *      implements the common part of handles for writable databases
  */
 
 #include <cassert>

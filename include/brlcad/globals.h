@@ -1,7 +1,7 @@
 /*                      G L O B A L S . H
  * BRL-CAD
  *
- * Copyright (c) 2011-2020 United States Government as represented by
+ * Copyright (c) 2011-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,8 +20,7 @@
 /** @file globals.h
  *
  *  BRL-CAD core C++ interface:
- *      declares global functions which influence the behavior
- *      of the BRL-CAD core
+ *      declarations of global functions related to the BRL-CAD core
  */
 
 #ifndef BRLCAD_GLOBALS_INCLUDED

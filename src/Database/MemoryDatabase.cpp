@@ -1,7 +1,7 @@
 /*                      M E M O R Y D A T A B A S E . C P P
  * BRL-CAD
  *
- * Copyright (c) 2008-2020 United States Government as represented by
+ * Copyright (c) 2008-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 /** @file MemoryDatabase.cpp
  *
  *  BRL-CAD core C++ interface:
- *      implements a handle on an in-memory database
+ *      implements a handle for an in-memory database
  */
 
 #include <cassert>

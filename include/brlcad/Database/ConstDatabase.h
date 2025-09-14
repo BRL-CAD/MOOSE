@@ -20,7 +20,7 @@
 /** @file ConstDatabase.h
  *
  *  BRL-CAD core C++ interface:
- *      declares a handle on a read-only database
+ *      declares a handle for a read-only database
  */
 
 #ifndef BRLCAD_CONSTDATABASE_INCLUDED

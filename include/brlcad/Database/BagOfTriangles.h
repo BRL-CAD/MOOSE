@@ -1,7 +1,7 @@
 /*                      B A G O F T R I A N G L E S . H
  * BRL-CAD
  *
- * Copyright (c) 2014-2020 United States Government as represented by
+ * Copyright (c) 2014-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * This library is free software; you can redistribute it and/or
@@ -20,7 +20,7 @@
 /** @file BagOfTriangles.h
  *
  *  BRL-CAD core C++ interface:
- *      bot (ID_BOT) database object declaration
+ *      bag of triangles (ID_BOT) database object declaration
  */
 
 #ifndef BRLCAD_BAGOFTRIANGLES_INCLUDED
