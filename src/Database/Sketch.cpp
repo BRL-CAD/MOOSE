@@ -295,10 +295,10 @@ void Sketch::Segment::Destroy(void) {
 //
 
 Sketch::Segment::SegmentType Sketch::Line::Type(void) const {
-     Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
+     Sketch::Segment::SegmentType ret = Sketch::Segment::SegmentType::Null;
 
     if ((m_lineSegment != nullptr) && (m_sketch != nullptr))
-        ret = Sketch::Segment::Line;
+        ret = Sketch::Segment::SegmentType::Line;
 
     return ret;
 
@@ -418,10 +418,10 @@ void Sketch::CircularArc::SetCenter(
 
 
 Sketch::Segment::SegmentType Sketch::CircularArc::Type(void) const {
-    Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
+    Sketch::Segment::SegmentType ret = Sketch::Segment::SegmentType::Null;
 
     if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr))
-        ret = Sketch::Segment::CircularArc;
+        ret = Sketch::Segment::SegmentType::CircularArc;
 
     return ret;
 }
@@ -549,10 +549,10 @@ void Sketch::CircularArc::SetClockwiseOriented
 //
 
 Sketch::Segment::SegmentType Sketch::Nurb::Type(void) const {
-     Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
+     Sketch::Segment::SegmentType ret = Sketch::Segment::SegmentType::Null;
 
     if ((m_nurbSegment != nullptr) && (m_sketch != nullptr))
-        ret = Sketch::Segment::Nurb;
+        ret = Sketch::Segment::SegmentType::Nurb;
 
     return ret;
 }
@@ -768,10 +768,10 @@ void Sketch::Nurb::AddControlPointWeight
 //
 
  Sketch::Segment::SegmentType Sketch::Bezier::Type(void) const {
-    Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
+    Sketch::Segment::SegmentType ret = Sketch::Segment::SegmentType::Null;
 
     if ((m_bezierSegment != nullptr) && (m_sketch != nullptr))
-        ret = Sketch::Segment::Bezier;
+        ret = Sketch::Segment::SegmentType::Bezier;
 
     return ret;
 }

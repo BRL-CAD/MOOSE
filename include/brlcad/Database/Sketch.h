@@ -50,7 +50,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT Segment {
         public:
-            enum SegmentType {
+            enum class SegmentType {
                 Null,
                 Line,
                 CircularArc,

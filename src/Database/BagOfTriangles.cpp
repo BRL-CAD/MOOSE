@@ -727,19 +727,19 @@ BagOfTriangles::BotMode BagOfTriangles::Mode(void) const {
 
     switch (Internal()->mode) {
         case RT_BOT_SURFACE:
-            ret = Surface;
+            ret = BotMode::Surface;
             break;
 
         case RT_BOT_SOLID:
-            ret = Solid;
+            ret = BotMode::Solid;
             break;
 
         case RT_BOT_PLATE:
-            ret = Plate;
+            ret = BotMode::Plate;
             break;
 
         case RT_BOT_PLATE_NOCOS:
-            ret = EqualLineOfSightPlate;
+            ret = BotMode::EqualLineOfSightPlate;
     }
 
     return ret;
@@ -751,34 +751,34 @@ void BagOfTriangles::SetMode
     BotMode mode
 ) {
     switch (mode) {
-        case Surface:
+        case BotMode::Surface:
             Internal()->mode = RT_BOT_SURFACE;
             break;
 
-        case Solid:
+        case BotMode::Solid:
             Internal()->mode = RT_BOT_SOLID;
             break;
 
-        case Plate:
+        case BotMode::Plate:
             Internal()->mode = RT_BOT_PLATE;
             break;
 
-        case EqualLineOfSightPlate:
+        case BotMode::EqualLineOfSightPlate:
             Internal()->mode = RT_BOT_PLATE_NOCOS;
     }
 }
 
 
 BagOfTriangles::BotOrientation BagOfTriangles::Orientation(void) const {
-    BagOfTriangles::BotOrientation ret = BagOfTriangles::Unoriented;
+    BagOfTriangles::BotOrientation ret = BagOfTriangles::BotOrientation::Unoriented;
 
     switch (Internal()->orientation) {
         case RT_BOT_CW:
-            ret = ClockWise;
+            ret = BotOrientation::ClockWise;
             break;
 
         case RT_BOT_CCW:
-            ret = CounterClockWise;
+            ret = BotOrientation::CounterClockWise;
     }
 
     return ret;
@@ -790,15 +790,15 @@ void BagOfTriangles::SetOrientation
     BotOrientation orientation
 ) {
     switch (orientation) {
-        case Unoriented:
+        case BotOrientation::Unoriented:
             Internal()->orientation = RT_BOT_UNORIENTED;
             break;
 
-        case ClockWise:
+        case BotOrientation::ClockWise:
             Internal()->orientation = RT_BOT_CW;
             break;
 
-        case CounterClockWise:
+        case BotOrientation::CounterClockWise:
             Internal()->orientation = RT_BOT_CCW;
     }
 }

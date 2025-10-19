@@ -536,14 +536,14 @@ const char* Arb8::Type(void) const {
 
 
 bool Arb8::IsValid(void) const {
-    enum FaceType {FT_4Sided, FT_Triangle, FT_Degenerated};
+    enum class FaceType {FourSided,Triangle, Degenerated};
 
     bool                   ret                = Validate();
-    static const FaceType  faceTypes[5][6]    = {{FT_Triangle, FT_Degenerated, FT_Degenerated, FT_Triangle, FT_Triangle, FT_Triangle},
-                                                 {FT_4Sided,   FT_Degenerated, FT_Triangle,    FT_Triangle, FT_Triangle, FT_Triangle},
-                                                 {FT_4Sided,   FT_Degenerated, FT_4Sided,      FT_4Sided,   FT_Triangle, FT_Triangle},
-                                                 {FT_4Sided,   FT_Triangle,    FT_Triangle,    FT_4Sided,   FT_4Sided,   FT_4Sided},
-                                                 {FT_4Sided,   FT_4Sided,      FT_4Sided,      FT_4Sided,   FT_4Sided,   FT_4Sided}};
+    static const FaceType  faceTypes[5][6]    = {{FaceType::Triangle,  FaceType::Degenerated, FaceType::Degenerated, FaceType::Triangle,  FaceType::Triangle,  FaceType::Triangle},
+                                                 {FaceType::FourSided, FaceType::Degenerated, FaceType::Triangle,    FaceType::Triangle,  FaceType::Triangle,  FaceType::Triangle},
+                                                 {FaceType::FourSided, FaceType::Degenerated, FaceType::FourSided,   FaceType::FourSided, FaceType::Triangle,  FaceType::Triangle},
+                                                 {FaceType::FourSided, FaceType::Triangle,    FaceType::Triangle,    FaceType::FourSided, FaceType::FourSided, FaceType::FourSided},
+                                                 {FaceType::FourSided, FaceType::FourSided,   FaceType::FourSided,   FaceType::FourSided, FaceType::FourSided, FaceType::FourSided}};
     static const size_t    faceVertices[6][8] = {{1, 2, 1, 0, 0, 1, 0, 3},
                                                  {5, 4, 5, 6, 4, 7, 4, 5},
                                                  {0, 3, 0, 4, 4, 0, 4, 7},
@@ -566,7 +566,7 @@ bool Arb8::IsValid(void) const {
 
     for (size_t i = 0; (i < 6) && ret; ++i) {
         switch (faceTypes[numberOfVertices - 4][i]) {
-        case FT_4Sided: {
+        case FaceType::FourSided: {
                 vect_t diff1, diff2, normal1, normal2;
 
                 VSUB2(diff1, internalp->pt[faceVertices[i][1]], internalp->pt[faceVertices[i][0]]);
@@ -608,7 +608,7 @@ bool Arb8::IsValid(void) const {
             }
             break;
 
-        case FT_Triangle: {
+        case FaceType::Triangle: {
                 vect_t diff1, diff2, normal;
 
                 VSUB2(diff1, internalp->pt[faceVertices[i][1]], internalp->pt[faceVertices[i][0]]);
@@ -633,7 +633,7 @@ bool Arb8::IsValid(void) const {
             break;
 
 	default:;
-            // case FT_Degenerated: nothing has to be checked
+            // case FaceType::Degenerated: nothing has to be checked
         }
     }
 

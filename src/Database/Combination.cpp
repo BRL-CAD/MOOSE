@@ -39,32 +39,32 @@ static Combination::ConstTreeNode::Operator ConvertOperator
 (
     tree* brlcadTree
 ) {
-    Combination::ConstTreeNode::Operator ret = Combination::ConstTreeNode::Null;
+    Combination::ConstTreeNode::Operator ret = Combination::ConstTreeNode::Operator::Null;
 
     if (brlcadTree != nullptr) {
         switch (brlcadTree->tr_op) {
         case OP_UNION:
-            ret = Combination::ConstTreeNode::Union;
+            ret = Combination::ConstTreeNode::Operator::Union;
             break;
 
         case OP_INTERSECT:
-            ret = Combination::ConstTreeNode::Intersection;
+            ret = Combination::ConstTreeNode::Operator::Intersection;
             break;
 
         case OP_SUBTRACT:
-            ret = Combination::ConstTreeNode::Subtraction;
+            ret = Combination::ConstTreeNode::Operator::Subtraction;
             break;
 
         case OP_XOR:
-            ret = Combination::ConstTreeNode::ExclusiveOr;
+            ret = Combination::ConstTreeNode::Operator::ExclusiveOr;
             break;
 
         case OP_NOT:
-            ret = Combination::ConstTreeNode::Not;
+            ret = Combination::ConstTreeNode::Operator::Not;
             break;
 
         case OP_DB_LEAF:
-            ret = Combination::ConstTreeNode::Leaf;
+            ret = Combination::ConstTreeNode::Operator::Leaf;
             break;
 
         default:
@@ -83,27 +83,27 @@ static int ConvertOperatorBack
     int ret = 0;
 
     switch (op) {
-    case Combination::ConstTreeNode::Union:
+    case Combination::ConstTreeNode::Operator::Union:
         ret = OP_UNION;
         break;
 
-    case Combination::ConstTreeNode::Intersection:
+    case Combination::ConstTreeNode::Operator::Intersection:
         ret = OP_INTERSECT;
         break;
 
-    case Combination::ConstTreeNode::Subtraction:
+    case Combination::ConstTreeNode::Operator::Subtraction:
         ret = OP_SUBTRACT;
         break;
 
-    case Combination::ConstTreeNode::ExclusiveOr:
+    case Combination::ConstTreeNode::Operator::ExclusiveOr:
         ret = OP_XOR;
         break;
 
-    case Combination::ConstTreeNode::Not:
+    case Combination::ConstTreeNode::Operator::Not:
         ret = OP_NOT;
         break;
 
-    case Combination::ConstTreeNode::Leaf:
+    case Combination::ConstTreeNode::Operator::Leaf:
         ret = OP_DB_LEAF;
         break;
 
@@ -123,10 +123,10 @@ static tree* ParentTree
     tree* ret = nullptr;
 
     switch (ConvertOperator(rootTree)) {
-    case Combination::ConstTreeNode::Union:
-    case Combination::ConstTreeNode::Intersection:
-    case Combination::ConstTreeNode::Subtraction:
-    case Combination::ConstTreeNode::ExclusiveOr:
+    case Combination::ConstTreeNode::Operator::Union:
+    case Combination::ConstTreeNode::Operator::Intersection:
+    case Combination::ConstTreeNode::Operator::Subtraction:
+    case Combination::ConstTreeNode::Operator::ExclusiveOr:
         if (searchTree == rootTree->tr_b.tb_left)
             ret = rootTree;
         else if (searchTree == rootTree->tr_b.tb_right)
@@ -139,7 +139,7 @@ static tree* ParentTree
         }
         break;
 
-    case Combination::ConstTreeNode::Not:
+    case Combination::ConstTreeNode::Operator::Not:
         if (searchTree == rootTree->tr_b.tb_left)
             ret = rootTree;
         else
@@ -167,10 +167,10 @@ Combination::ConstTreeNode Combination::ConstTreeNode::LeftOperand(void) const {
     ConstTreeNode ret;
 
     switch (ConvertOperator(m_tree)) {
-    case Union:
-    case Intersection:
-    case Subtraction:
-    case ExclusiveOr:
+    case Operator::Union:
+    case Operator::Intersection:
+    case Operator::Subtraction:
+    case Operator::ExclusiveOr:
         ret.m_tree = m_tree->tr_b.tb_left;
         break;
 
@@ -186,10 +186,10 @@ Combination::ConstTreeNode Combination::ConstTreeNode::RightOperand(void) const 
     ConstTreeNode ret;
 
     switch (ConvertOperator(m_tree)) {
-    case Union:
-    case Intersection:
-    case Subtraction:
-    case ExclusiveOr:
+    case Operator::Union:
+    case Operator::Intersection:
+    case Operator::Subtraction:
+    case Operator::ExclusiveOr:
         ret.m_tree = m_tree->tr_b.tb_right;
         break;
 
@@ -205,7 +205,7 @@ Combination::ConstTreeNode Combination::ConstTreeNode::Operand(void) const {
     ConstTreeNode ret;
 
     switch (ConvertOperator(m_tree)) {
-    case Not:
+    case Operator::Not:
         ret.m_tree = m_tree->tr_b.tb_left;
         break;
 
@@ -221,7 +221,7 @@ const char* Combination::ConstTreeNode::Name(void) const {
     const char* ret = nullptr;
 
     switch (ConvertOperator(m_tree)) {
-    case Leaf:
+    case Operator::Leaf:
         ret = m_tree->tr_l.tl_name;
         break;
 
@@ -237,7 +237,7 @@ const double* Combination::ConstTreeNode::Matrix(void) const {
     const double* ret = nullptr;
 
     switch (ConvertOperator(m_tree)) {
-    case Leaf:
+    case Operator::Leaf:
         ret = m_tree->tr_l.tl_mat;
         break;
 
@@ -257,10 +257,10 @@ Combination::TreeNode Combination::TreeNode::LeftOperand(void) {
     TreeNode ret;
 
     switch (ConvertOperator(m_tree)) {
-    case Union:
-    case Intersection:
-    case Subtraction:
-    case ExclusiveOr:
+    case Operator::Union:
+    case Operator::Intersection:
+    case Operator::Subtraction:
+    case Operator::ExclusiveOr:
         ret.m_tree      = m_tree->tr_b.tb_left;
         ret.m_internalp = m_internalp;
         ret.m_resp      = m_resp;
@@ -278,10 +278,10 @@ Combination::TreeNode Combination::TreeNode::RightOperand(void) {
     TreeNode ret;
 
     switch (ConvertOperator(m_tree)) {
-    case Union:
-    case Intersection:
-    case Subtraction:
-    case ExclusiveOr:
+    case Operator::Union:
+    case Operator::Intersection:
+    case Operator::Subtraction:
+    case Operator::ExclusiveOr:
         ret.m_tree      = m_tree->tr_b.tb_right;
         ret.m_internalp = m_internalp;
         ret.m_resp      = m_resp;
@@ -299,7 +299,7 @@ Combination::TreeNode Combination::TreeNode::Operand(void) {
     TreeNode ret;
 
     switch (ConvertOperator(m_tree)) {
-    case Not:
+    case Operator::Not:
         ret.m_tree      = m_tree->tr_b.tb_left;
         ret.m_internalp = m_internalp;
         ret.m_resp      = m_resp;
@@ -318,7 +318,7 @@ void Combination::TreeNode::SetName
     const char* value
 ) const {
     switch (ConvertOperator(m_tree)) {
-    case Leaf:
+    case Operator::Leaf:
         if (value != nullptr) {
             if (!BU_SETJUMP) {
                 if (m_tree->tr_l.tl_name != nullptr) {
@@ -378,7 +378,7 @@ Combination::TreeNode Combination::TreeNode::Apply
 
     if (m_tree != nullptr) {
         switch (op) {
-        case Not:
+        case Operator::Not:
             tree* newNode;
 
             if (!BU_SETJUMP) {
@@ -426,10 +426,10 @@ Combination::TreeNode Combination::TreeNode::Apply
 
     if ((m_tree != nullptr) && (theOther.m_tree != nullptr)) {
         switch (op) {
-        case Union:
-        case Intersection:
-        case Subtraction:
-        case ExclusiveOr:
+        case Operator::Union:
+        case Operator::Intersection:
+        case Operator::Subtraction:
+        case Operator::ExclusiveOr:
             tree* newNode;
 
             if (!BU_SETJUMP) {
@@ -530,10 +530,10 @@ Combination::TreeNode Combination::TreeNode::Apply
 
     if ((m_tree != nullptr) && (theOther.m_tree != nullptr)) {
         switch (op) {
-        case Union:
-        case Intersection:
-        case Subtraction:
-        case ExclusiveOr:
+        case Operator::Union:
+        case Operator::Intersection:
+        case Operator::Subtraction:
+        case Operator::ExclusiveOr:
             tree* newNode;
 
             if (!BU_SETJUMP) {
@@ -643,10 +643,10 @@ void Combination::TreeNode::Delete(void) {
 
                 if (parent != nullptr) {
                     switch (ConvertOperator(parent)) {
-                    case Union:
-                    case Intersection:
-                    case Subtraction:
-                    case ExclusiveOr:
+                    case Operator::Union:
+                    case Operator::Intersection:
+                    case Operator::Subtraction:
+                    case Operator::ExclusiveOr:
                         if (m_tree == parent->tr_b.tb_left)
                             db_tree_del_lhs(parent, m_resp);
                         else {
@@ -659,7 +659,7 @@ void Combination::TreeNode::Delete(void) {
                         m_resp      = nullptr;
                         break;
 
-                    case Not:
+                    case Operator::Not:
                         m_tree = parent; // go into the next iteration
                         break;
 
@@ -865,7 +865,7 @@ void Combination::AddLeaf
         BU_UNSETJUMP;
     }
     else {
-        Tree().Apply(ConstTreeNode::Union, leafName);
+        Tree().Apply(ConstTreeNode::Operator::Union, leafName);
     }
 }
 
@@ -884,19 +884,19 @@ void Combination::SetIsRegion
 
 
 Combination::FastgenType Combination::FastgenRegion(void) const {
-    Combination::FastgenType ret = Non;
+    Combination::FastgenType ret = FastgenType::Non;
 
     switch (Internal()->is_fastgen) {
     case REGION_NON_FASTGEN:
-        ret = Non;
+        ret = FastgenType::Non;
         break;
 
     case REGION_FASTGEN_PLATE:
-        ret = Plate;
+        ret = FastgenType::Plate;
         break;
 
     case REGION_FASTGEN_VOLUME:
-        ret = Volume;
+        ret = FastgenType::Volume;
         break;
 
     default:
@@ -912,15 +912,15 @@ void Combination::SetFastgenRegion
     Combination::FastgenType value
 ) {
     switch (value) {
-    case Non:
+    case FastgenType::Non:
         Internal()->is_fastgen = REGION_NON_FASTGEN;
         break;
 
-    case Plate:
+    case FastgenType::Plate:
         Internal()->is_fastgen = REGION_FASTGEN_PLATE;
         break;
 
-    case Volume:
+    case FastgenType::Volume:
         Internal()->is_fastgen = REGION_FASTGEN_VOLUME;
         break;
 

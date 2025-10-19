@@ -46,7 +46,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT ConstTreeNode {
         public:
-            enum Operator {
+            enum class Operator {
                 Null,         ///< the empty tree of an empty combination, may signal an error too e.g. if an operand of a leaf was requested
                 Union,        ///< a binary operation, the set theoretic union set of the two operands
                 Intersection, ///< a binary operation, the set theoretic intersection set of the two operands
@@ -184,7 +184,7 @@ namespace BRLCAD {
         bool                  IsRegion(void) const;
         void                  SetIsRegion(bool value);
 
-        enum FastgenType {
+        enum class FastgenType {
             Non,   ///< not a Fastgen region
             Plate,
             Volume

@@ -36,14 +36,14 @@ struct rt_bot_internal;
 namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT BagOfTriangles : public Object {
     public:
-        enum BotMode {
+        enum class BotMode {
             Surface,
             Solid,
             Plate,
             EqualLineOfSightPlate // LOS is set equal to face thickness, not the thickness divided by the cosine of the obliquity angle
         };
 
-        enum BotOrientation {
+        enum class BotOrientation {
             Unoriented,
             ClockWise,
             CounterClockWise
