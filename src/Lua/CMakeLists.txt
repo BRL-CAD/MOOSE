@@ -2,7 +2,7 @@
 #
 #	BRL-CAD
 #
-#	Copyright (c) 2017-2020 United States Government as represented by
+#	Copyright (c) 2017-2025 United States Government as represented by
 #	the U.S. Army Research Laboratory.
 #
 #	This file is in the public domain.

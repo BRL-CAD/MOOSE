@@ -1,7 +1,7 @@
 /*                         V E C T O R 3 D . C P P
  * BRL-CAD
  *
- * Copyright (c) 2019 United States Government as represented by
+ * Copyright (c) 2019-2025 United States Government as represented by
  * the U.S. Army Research Laboratory.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
