@@ -212,7 +212,7 @@ Arb8::Arb8
 
 
 Arb8::~Arb8(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Arb8::~Arb8::m_internalp");
 }
 
@@ -511,9 +511,9 @@ const Object& Arb8::operator=
     const Object& original
 ) {
     const Arb8* arb8 = dynamic_cast<const Arb8*>(&original);
-    assert(arb8 != 0);
+    assert(arb8 != nullptr);
 
-    if (arb8 != 0)
+    if (arb8 != nullptr)
         *this = *arb8;
 
     return *this;
@@ -647,13 +647,13 @@ Arb8::Arb8
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_arb_internal* Arb8::Internal(void) const {
     const rt_arb_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_arb_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -667,7 +667,7 @@ const rt_arb_internal* Arb8::Internal(void) const {
 rt_arb_internal* Arb8::Internal(void) {
     rt_arb_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_arb_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

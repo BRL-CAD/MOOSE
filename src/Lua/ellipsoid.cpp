@@ -47,7 +47,7 @@ static BRLCAD::Ellipsoid& GetEllipsoid
     int        narg
 ) {
     BRLCAD::Ellipsoid* object = TestEllipsoid(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateEllipsoid
 (
     lua_State* luaState
 ) {
-    BRLCAD::Ellipsoid* ret = 0;
+    BRLCAD::Ellipsoid* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Ellipsoid* original = TestEllipsoid(luaState, 1);
 
-        if (original != 0) {
+        if (original != nullptr) {
             ret = new BRLCAD::Ellipsoid(*original);
         }
         else if (lua_gettop(luaState) == 4) {
@@ -88,7 +88,7 @@ int CreateEllipsoid
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Ellipsoid();
 
     return PushEllipsoid(luaState, ret, true);
@@ -101,7 +101,7 @@ static int Destruct
 ) {
     ScriptEllipsoid* scriptObject = static_cast<ScriptEllipsoid*>(luaL_testudata(luaState, 1, "BRLCAD.Ellipsoid"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -303,7 +303,7 @@ int PushEllipsoid
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptEllipsoid* scriptObject = static_cast<ScriptEllipsoid*>(lua_newuserdata(luaState, sizeof(ScriptEllipsoid)));
 
         scriptObject->object = object;
@@ -324,10 +324,10 @@ BRLCAD::Ellipsoid* TestEllipsoid
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Ellipsoid* ret          = 0;
+    BRLCAD::Ellipsoid* ret          = nullptr;
     ScriptEllipsoid*   scriptObject = static_cast<ScriptEllipsoid*>(luaL_testudata(luaState, narg, "BRLCAD.Ellipsoid"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

@@ -56,7 +56,7 @@ namespace BRLCAD {
                 Leaf          ///< actually an operand
             };
 
-            ConstTreeNode(void) : m_tree(0) {}
+            ConstTreeNode(void) : m_tree(nullptr) {}
             ConstTreeNode(const ConstTreeNode& original) : m_tree(original.m_tree) {}
             virtual ~ConstTreeNode(void) {}
 
@@ -88,7 +88,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT TreeNode : public ConstTreeNode {
         public:
-            TreeNode(void) : ConstTreeNode(), m_internalp(0), m_resp(0) {}
+            TreeNode(void) : ConstTreeNode(), m_internalp(nullptr), m_resp(nullptr) {}
             TreeNode(const TreeNode& original) : ConstTreeNode(original),
                                                          m_internalp(original.m_internalp),
                                                          m_resp(original.m_resp) {}
@@ -228,7 +228,7 @@ namespace BRLCAD {
         Combination(resource*       resp,
                     directory*      pDir,
                     rt_db_internal* ip,
-                    db_i*           dbip = 0);
+                    db_i*           dbip = nullptr);
 
         friend class ConstDatabase;
 

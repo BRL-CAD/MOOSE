@@ -50,7 +50,7 @@ namespace BRLCAD {
         Unknown(resource*       resp,
                 directory*      pDir,
                 rt_db_internal* ip,
-                db_i*           dbip = 0);
+                db_i*           dbip = nullptr);
 
         friend class ConstDatabase;
 

@@ -83,7 +83,7 @@ namespace BRLCAD {
             friend class Edge;
             friend class Shell;
 
-            Vertex(void) : m_vertex(0) {}
+            Vertex(void) : m_vertex(nullptr) {}
         };
 
 
@@ -113,7 +113,7 @@ namespace BRLCAD {
             friend class Loop;
             friend class Shell;
 
-            Edge(void) : m_edge(0) {}
+            Edge(void) : m_edge(nullptr) {}
         };
 
 
@@ -149,7 +149,7 @@ namespace BRLCAD {
             friend class Face;
             friend class Shell;
 
-            Loop(void) : m_loop(0), m_currentEdge(0) {}
+            Loop(void) : m_loop(nullptr), m_currentEdge(nullptr) {}
         };
 
 
@@ -182,7 +182,7 @@ namespace BRLCAD {
             friend class Shell;
             friend class NonManifoldGeometry;
 
-            Face(void) : m_face(0), m_currentLoop(0) {}
+            Face(void) : m_face(nullptr), m_currentLoop(nullptr) {}
         };
 
 
@@ -237,7 +237,7 @@ namespace BRLCAD {
             friend class Region;
             friend class NonManifoldGeometry;
 
-            Shell(void) : m_shell(0), m_currentFace(0), m_currentLoop(0), m_currentEdge(0), m_currentVertex(0) {}
+            Shell(void) : m_shell(nullptr), m_currentFace(nullptr), m_currentLoop(nullptr), m_currentEdge(nullptr), m_currentVertex(nullptr) {}
         };
 
 
@@ -269,7 +269,7 @@ namespace BRLCAD {
 
             friend class RegionIterator;
 
-            Region(void) : m_region(0), m_currentShell(0) {}
+            Region(void) : m_region(nullptr), m_currentShell(nullptr) {}
         };
 
 
@@ -299,7 +299,7 @@ namespace BRLCAD {
 
             friend class NonManifoldGeometry;
 
-            RegionIterator(void) : m_model(0), m_currentRegion(0) {}
+            RegionIterator(void) : m_model(nullptr), m_currentRegion(nullptr) {}
         };
 
 
@@ -387,7 +387,7 @@ namespace BRLCAD {
         NonManifoldGeometry(resource*       resp,
                             directory*      pDir,
                             rt_db_internal* ip,
-                            db_i*           dbip = 0);
+                            db_i*           dbip = nullptr);
 
         friend class ConstDatabase;
 

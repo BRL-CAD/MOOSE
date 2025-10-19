@@ -47,7 +47,7 @@ static BRLCAD::Paraboloid& GetParaboloid
     int        narg
 ) {
     BRLCAD::Paraboloid* object = TestParaboloid(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateParaboloid
 (
     lua_State* luaState
 ) {
-    BRLCAD::Paraboloid* ret = 0;
+    BRLCAD::Paraboloid* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Paraboloid* original = TestParaboloid(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::Paraboloid(*original);
         else if (lua_gettop(luaState) == 4) {
             BRLCAD::Vector3D basePoint           = GetVector3D(luaState, 1);
@@ -83,7 +83,7 @@ int CreateParaboloid
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Paraboloid();
 
     return PushParaboloid(luaState, ret, true);
@@ -96,7 +96,7 @@ static int Destruct
 ) {
     ScriptParaboloid* scriptObject = static_cast<ScriptParaboloid*>(luaL_testudata(luaState, 1, "BRLCAD.Paraboloid"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -402,7 +402,7 @@ int PushParaboloid
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptParaboloid* scriptObject = static_cast<ScriptParaboloid*>(lua_newuserdata(luaState, sizeof(ScriptParaboloid)));
 
         scriptObject->object = object;
@@ -423,10 +423,10 @@ BRLCAD::Paraboloid* TestParaboloid
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Paraboloid* ret          = 0;
+    BRLCAD::Paraboloid* ret          = nullptr;
     ScriptParaboloid*   scriptObject = static_cast<ScriptParaboloid*>(luaL_testudata(luaState, narg, "BRLCAD.Paraboloid"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

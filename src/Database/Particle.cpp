@@ -88,7 +88,7 @@ Particle::Particle
 
 
 Particle::~Particle(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Particle::~Particle::m_internalp");
 }
 
@@ -190,9 +190,9 @@ const Object& Particle::operator=
     const Object& original
 ) {
     const Particle* part = dynamic_cast<const Particle*>(&original);
-    assert(part != 0);
+    assert(part != nullptr);
 
-    if (part != 0)
+    if (part != nullptr)
         *this = *part;
 
     return *this;
@@ -248,7 +248,7 @@ Particle::Particle
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 void Particle::SetType(void) {
@@ -277,7 +277,7 @@ void Particle::SetType(void) {
 rt_part_internal* Particle::Internal(void) {
     rt_part_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_part_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -291,7 +291,7 @@ rt_part_internal* Particle::Internal(void) {
 const rt_part_internal* Particle::Internal(void) const {
     const rt_part_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_part_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

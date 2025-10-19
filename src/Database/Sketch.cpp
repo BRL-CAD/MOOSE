@@ -233,8 +233,8 @@ Sketch::Sketch
 
 
 Sketch::~Sketch(void) {
-    if (m_internalp != 0) {
-        if (m_internalp->verts != 0)
+    if (m_internalp != nullptr) {
+        if (m_internalp->verts != nullptr)
             bu_free(m_internalp->verts, "BRLCAD::Sketch::~Sketch::m_internalp->verts");
 
         rt_curve_free(&m_internalp->curve);
@@ -254,7 +254,7 @@ const Sketch& Sketch::operator=(
             rt_sketch_internal*       thisInternal     = Internal();
             const rt_sketch_internal* originalInternal = original.Internal();
 
-            if (thisInternal->verts != 0)
+            if (thisInternal->verts != nullptr)
                 bu_free(thisInternal->verts, "BRLCAD::Sketch::operator=::Internal->verts");
 
             memcpy(thisInternal, originalInternal, sizeof(rt_sketch_internal));
@@ -266,7 +266,7 @@ const Sketch& Sketch::operator=(
                     V2MOVE(thisInternal->verts[i], originalInternal->verts[i]);
             }
 
-            if (&thisInternal->curve != 0) {
+            if (&thisInternal->curve != nullptr) {
                 rt_curve_free(&thisInternal->curve);
                 rt_copy_curve(&thisInternal->curve, &originalInternal->curve);
             }
@@ -297,7 +297,7 @@ void Sketch::Segment::Destroy(void) {
 Sketch::Segment::SegmentType Sketch::Line::Type(void) const {
      Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
 
-    if ((m_lineSegment != 0) && (m_sketch != 0))
+    if ((m_lineSegment != nullptr) && (m_sketch != nullptr))
         ret = Sketch::Segment::Line;
 
     return ret;
@@ -311,12 +311,12 @@ Sketch::Segment* Sketch::Line::Clone(void) const {
 
 
 Vector2D Sketch::Line::StartPoint(void) const {
-    assert(m_lineSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_lineSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_lineSegment != 0) && (m_sketch != 0))
+    if ((m_lineSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[m_lineSegment->start]);
 
     return ret;
@@ -327,10 +327,10 @@ void Sketch::Line::SetStartPoint
 (
     const Vector2D& startPoint
 ) {
-    assert(m_lineSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_lineSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_lineSegment != 0) && (m_sketch != 0)) {
+    if ((m_lineSegment != nullptr) && (m_sketch != nullptr)) {
         if (!BU_SETJUMP)
             SwapVertex(m_lineSegment->start, startPoint.coordinates, *m_sketch);
         else
@@ -342,12 +342,12 @@ void Sketch::Line::SetStartPoint
 
 
 Vector2D Sketch::Line::EndPoint(void) const {
-    assert(m_lineSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_lineSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_lineSegment != 0) && (m_sketch != 0))
+    if ((m_lineSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[m_lineSegment->end]);
 
     return ret;
@@ -358,10 +358,10 @@ void Sketch::Line::SetEndPoint
 (
     const Vector2D& endPoint
 ) {
-    assert(m_lineSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_lineSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_lineSegment != 0) && (m_sketch != 0)) {
+    if ((m_lineSegment != nullptr) && (m_sketch != nullptr)) {
         if (!BU_SETJUMP)
             SwapVertex(m_lineSegment->end, endPoint.coordinates, *m_sketch);
         else
@@ -379,10 +379,10 @@ void Sketch::Line::SetEndPoint
 Vector3D Sketch::CircularArc::Center(void) const {
     Vector3D ret;
 
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_circularArcSegment != 0) && (m_sketch != 0)) {
+    if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr)) {
         if (m_circularArcSegment->radius <= 0.) {
             point_t center;
 
@@ -402,10 +402,10 @@ Vector3D Sketch::CircularArc::Center(void) const {
 void Sketch::CircularArc::SetCenter(
     Vector2D c
 ) {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_circularArcSegment != 0) && (m_sketch != 0)) {
+    if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr)) {
 
         if (!BU_SETJUMP)
             SwapVertex(m_circularArcSegment->center, c.coordinates, *m_sketch);
@@ -420,7 +420,7 @@ void Sketch::CircularArc::SetCenter(
 Sketch::Segment::SegmentType Sketch::CircularArc::Type(void) const {
     Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
 
-    if ((m_circularArcSegment != 0) && (m_sketch != 0))
+    if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr))
         ret = Sketch::Segment::CircularArc;
 
     return ret;
@@ -432,12 +432,12 @@ Sketch::Segment* Sketch::CircularArc::Clone(void) const {
 
 
 Vector2D Sketch::CircularArc::StartPoint(void) const {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_circularArcSegment != 0) && (m_sketch != 0))
+    if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[m_circularArcSegment->start]);
 
     return ret;
@@ -448,10 +448,10 @@ void Sketch::CircularArc::SetStartPoint
 (
     const Vector2D& startPoint
 ) {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_circularArcSegment != 0) && (m_sketch != 0)) {
+    if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr)) {
 
         if (!BU_SETJUMP)
             SwapVertex(m_circularArcSegment->start, startPoint.coordinates, *m_sketch);
@@ -472,10 +472,10 @@ void Sketch::CircularArc::SetEndPoint
 (
     const Vector2D& endPoint
 ) {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_circularArcSegment != 0) && (m_sketch != 0)) {
+    if ((m_circularArcSegment != nullptr) && (m_sketch != nullptr)) {
 
         if (!BU_SETJUMP)
             SwapVertex(m_circularArcSegment->end, endPoint.coordinates, *m_sketch);
@@ -488,8 +488,8 @@ void Sketch::CircularArc::SetEndPoint
 
 
 double Sketch::CircularArc::Radius(void) const {
-   assert(m_circularArcSegment != 0);
-   assert(m_sketch != 0);
+   assert(m_circularArcSegment != nullptr);
+   assert(m_sketch != nullptr);
 
    return m_circularArcSegment->radius;
 }
@@ -499,16 +499,16 @@ void Sketch::CircularArc::SetRadius
 (
     double Radius
 ) {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     m_circularArcSegment->radius =  Radius;
 }
 
 
 bool Sketch::CircularArc::CenterIsLeft(void) const {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return m_circularArcSegment->center_is_left;
 }
@@ -518,16 +518,16 @@ void Sketch::CircularArc::SetCenterIsLeft
 (
     bool centerIsLeft
 ) {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     m_circularArcSegment->center_is_left = centerIsLeft;
 }
 
 
 bool Sketch::CircularArc::ClockwiseOriented(void) const {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return this->m_circularArcSegment->orientation;
 }
@@ -537,8 +537,8 @@ void Sketch::CircularArc::SetClockwiseOriented
 (
     bool clockwiseOriented
 ) {
-    assert(m_circularArcSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_circularArcSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     m_circularArcSegment->orientation = clockwiseOriented;
 }
@@ -551,7 +551,7 @@ void Sketch::CircularArc::SetClockwiseOriented
 Sketch::Segment::SegmentType Sketch::Nurb::Type(void) const {
      Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
 
-    if ((m_nurbSegment != 0) && (m_sketch != 0))
+    if ((m_nurbSegment != nullptr) && (m_sketch != nullptr))
         ret = Sketch::Segment::Nurb;
 
     return ret;
@@ -564,12 +564,12 @@ Sketch::Segment* Sketch::Nurb::Clone(void) const {
 
 
 Vector2D Sketch::Nurb::StartPoint(void) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_nurbSegment != 0) && (m_sketch != 0))
+    if ((m_nurbSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[m_nurbSegment->ctl_points[0]]);
 
     return ret;
@@ -580,10 +580,10 @@ void Sketch::Nurb::SetStartPoint
 (
     const Vector2D& startPoint
 ) {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_nurbSegment != 0) && (m_sketch != 0)) {
+    if ((m_nurbSegment != nullptr) && (m_sketch != nullptr)) {
         if (!BU_SETJUMP)
             SwapVertex(m_nurbSegment->ctl_points[0], startPoint.coordinates, *m_sketch);
         else
@@ -595,12 +595,12 @@ void Sketch::Nurb::SetStartPoint
 
 
 Vector2D Sketch::Nurb::EndPoint(void) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_nurbSegment != 0) && (m_sketch != 0))
+    if ((m_nurbSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[m_nurbSegment->ctl_points[m_nurbSegment->c_size]]);
 
     return ret;
@@ -611,10 +611,10 @@ void Sketch::Nurb::SetEndPoint
 (
     const Vector2D& endPoint
 ) {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_nurbSegment != 0) && (m_sketch != 0)) {
+    if ((m_nurbSegment != nullptr) && (m_sketch != nullptr)) {
         if (!BU_SETJUMP)
             SwapVertex(m_nurbSegment->ctl_points[m_nurbSegment->c_size], endPoint.coordinates, *m_sketch);
         else
@@ -626,16 +626,16 @@ void Sketch::Nurb::SetEndPoint
 
 
 size_t Sketch::Nurb::Order(void) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return m_nurbSegment->order;
 }
 
 
 bool Sketch::Nurb::IsRational(void) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     if(m_nurbSegment->weights)
         return true;
@@ -645,8 +645,8 @@ bool Sketch::Nurb::IsRational(void) const {
 
 
 size_t Sketch::Nurb::NumberOfKnots(void) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return m_nurbSegment->k.k_size;
 }
@@ -656,16 +656,16 @@ double Sketch::Nurb::Knot
 (
     size_t index
 ) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return m_nurbSegment->k.knots[index];
 }
 
 
 size_t Sketch::Nurb::NumberOfControlPoints(void)const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return this->m_nurbSegment->c_size;
 }
@@ -675,12 +675,12 @@ Vector2D Sketch::Nurb::ControlPoint
 (
     size_t index
 ) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_nurbSegment != 0) && (m_sketch != 0))
+    if ((m_nurbSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[this->m_nurbSegment->ctl_points[index]]);
 
     return ret;
@@ -691,11 +691,11 @@ double Sketch::Nurb::ControlPointWeight
 (
     size_t index
 ) const {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     if(!IsRational())
-        return 0;
+        return 0.;
 
     return this->m_nurbSegment->weights[index];
 }
@@ -705,8 +705,8 @@ void Sketch::Nurb::SetOrder
 (
     size_t order
 ) {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     m_nurbSegment->order = static_cast<int>(order);
 }
@@ -716,8 +716,8 @@ void Sketch::Nurb::AddKnot
 (
     double knot
 ) {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     m_nurbSegment->k.k_size++;
     m_nurbSegment->k.knots                              = static_cast<double*>(bu_realloc(m_nurbSegment->k.knots, m_nurbSegment->k.k_size * sizeof(double), "BRLCAD::Sketch::Nurb::AddKnot"));
@@ -729,8 +729,8 @@ void Sketch::Nurb::AddControlPoint
 (
     const Vector2D& point
 ) {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     size_t vcount = m_sketch->vert_count;
     size_t ret    = AddToVerts(point.coordinates, *m_sketch);
@@ -751,8 +751,8 @@ void Sketch::Nurb::AddControlPointWeight
     const Vector2D& point,
     double          weight
 ) {
-    assert(m_nurbSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_nurbSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     size_t ret = AddToVerts(point.coordinates, *m_sketch);
 
@@ -770,7 +770,7 @@ void Sketch::Nurb::AddControlPointWeight
  Sketch::Segment::SegmentType Sketch::Bezier::Type(void) const {
     Sketch::Segment::SegmentType ret = Sketch::Segment::Null;
 
-    if ((m_bezierSegment != 0) && (m_sketch != 0))
+    if ((m_bezierSegment != nullptr) && (m_sketch != nullptr))
         ret = Sketch::Segment::Bezier;
 
     return ret;
@@ -783,12 +783,12 @@ Sketch::Segment* Sketch::Bezier::Clone(void) const {
 
 
 Vector2D Sketch::Bezier::StartPoint(void) const {
-    assert(m_bezierSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_bezierSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
-    if ((m_bezierSegment != 0) && (m_sketch != 0))
+    if ((m_bezierSegment != nullptr) && (m_sketch != nullptr))
         ret = Vector2D(m_sketch->verts[m_bezierSegment->ctl_points[0]]);
 
     return ret;
@@ -799,10 +799,10 @@ void Sketch::Bezier::SetStartPoint
 (
     const Vector2D& startPoint
 ) {
-    assert(m_bezierSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_bezierSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_bezierSegment != 0) && (m_sketch != 0)) {
+    if ((m_bezierSegment != nullptr) && (m_sketch != nullptr)) {
         if (!BU_SETJUMP)
             SwapVertex(m_bezierSegment->ctl_points[0], startPoint.coordinates, *m_sketch);
         else
@@ -822,10 +822,10 @@ void Sketch::Bezier::SetEndPoint
 (
     const Vector2D& endPoint
 ) {
-    assert(m_bezierSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_bezierSegment != nullptr);
+    assert(m_sketch != nullptr);
 
-    if ((m_bezierSegment != 0) && (m_sketch != 0)) {
+    if ((m_bezierSegment != nullptr) && (m_sketch != nullptr)) {
         if (!BU_SETJUMP)
             SwapVertex(m_bezierSegment->ctl_points[m_bezierSegment->degree], endPoint.coordinates, *m_sketch);
         else
@@ -837,8 +837,8 @@ void Sketch::Bezier::SetEndPoint
 
 
 size_t Sketch::Bezier::Degree(void) const {
-    assert(m_bezierSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_bezierSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     return m_bezierSegment->degree;
 }
@@ -847,8 +847,8 @@ size_t Sketch::Bezier::Degree(void) const {
 Vector2D Sketch::Bezier::ControlPoint(
     size_t index
 ) const {
-    assert(m_bezierSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_bezierSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     Vector2D ret;
 
@@ -863,8 +863,8 @@ void Sketch::Bezier::AddControlPoint
 (
     const Vector2D& Point
 ) {
-    assert(m_bezierSegment != 0);
-    assert(m_sketch != 0);
+    assert(m_bezierSegment != nullptr);
+    assert(m_sketch != nullptr);
 
     size_t vcount = m_sketch->vert_count;
     size_t ret    = AddToVerts(Point.coordinates, *m_sketch);
@@ -886,7 +886,7 @@ void Sketch::Get
     size_t                                             index,
     const std::function<void(const Segment& segment)>& callback
 ) const {
-    if (Internal() != 0) {
+    if (Internal() != nullptr) {
         if (!BU_SETJUMP) {
             const uint32_t *magic = reinterpret_cast<uint32_t*>(Internal()->curve.segment[index]);
 
@@ -933,7 +933,7 @@ void Sketch::Get
     size_t                                       index,
     const std::function<void(Segment& segment)>& callback
 ) {
-    if(Internal() != 0) {
+    if(Internal() != nullptr) {
         if(!BU_SETJUMP) {
             const uint32_t *magic = reinterpret_cast<uint32_t*>(Internal()->curve.segment[index]);
             switch (*magic) {
@@ -977,7 +977,7 @@ Sketch::Segment* Sketch::Get
 (
     size_t index
 ) const {
-    Sketch::Segment* ret = 0;
+    Sketch::Segment* ret = nullptr;
 
     Get(index, [&ret](const Segment& segment){try{ret = segment.Clone();}catch(std::bad_alloc&){}});
 
@@ -986,7 +986,7 @@ Sketch::Segment* Sketch::Get
 
 
 Sketch::Line* Sketch::AppendLine(void) {
-    Sketch::Line* ret = 0;
+    Sketch::Line* ret = nullptr;
 
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
@@ -1016,7 +1016,7 @@ Sketch::Line* Sketch::InsertLine
 (
         size_t index
 ) {
-    Sketch::Line*       ret    = 0;
+    Sketch::Line*       ret    = nullptr;
     rt_sketch_internal* sketch = Internal();
 
     if (index < sketch->curve.count) {
@@ -1045,7 +1045,7 @@ Sketch::Line* Sketch::InsertLine
 
 
 Sketch::CircularArc* Sketch::AppendArc(void) {
-    Sketch::CircularArc* ret = 0;
+    Sketch::CircularArc* ret = nullptr;
 
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
@@ -1075,7 +1075,7 @@ Sketch::CircularArc* Sketch::InsertArc
 (
         size_t index
 ) {
-    Sketch::CircularArc* ret    = 0;
+    Sketch::CircularArc* ret    = nullptr;
     rt_sketch_internal*  sketch = Internal();
 
     if (index < sketch->curve.count) {
@@ -1104,7 +1104,7 @@ Sketch::CircularArc* Sketch::InsertArc
 
 
 Sketch::Nurb* Sketch::AppendNurb(void) {
-    Sketch::Nurb* ret = 0;
+    Sketch::Nurb* ret = nullptr;
 
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
@@ -1135,7 +1135,7 @@ Sketch::Nurb* Sketch::InsertNurb
 (
         size_t index
 ) {
-    Sketch::Nurb*       ret    = 0;
+    Sketch::Nurb*       ret    = nullptr;
     rt_sketch_internal* sketch = Internal();
 
     if (index < sketch->curve.count) {
@@ -1164,7 +1164,7 @@ Sketch::Nurb* Sketch::InsertNurb
 
 
 Sketch::Bezier* Sketch::AppendBezier(void) {
-    Sketch::Bezier* ret = 0;
+    Sketch::Bezier* ret = nullptr;
 
     if (!BU_SETJUMP) {
         rt_sketch_internal* sketch = Internal();
@@ -1194,7 +1194,7 @@ Sketch::Bezier* Sketch::InsertBezier
 (
     size_t index
 ) {
-    Sketch::Bezier*     ret    = 0;
+    Sketch::Bezier*     ret    = nullptr;
     rt_sketch_internal* sketch = Internal();
 
     if (index < sketch->curve.count) {
@@ -1354,9 +1354,9 @@ const Object& Sketch::operator=
     const Object& original
 ) {
     const Sketch* sketch = dynamic_cast<const Sketch*>(&original);
-    assert(sketch != 0);
+    assert(sketch != nullptr);
 
-    if (sketch != 0)
+    if (sketch != nullptr)
         *this = *sketch;
 
     return *this;
@@ -1381,7 +1381,7 @@ const char* Sketch::Type(void) const {
 rt_sketch_internal* Sketch::Internal(void) {
     rt_sketch_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_sketch_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -1395,7 +1395,7 @@ rt_sketch_internal* Sketch::Internal(void) {
 const rt_sketch_internal* Sketch::Internal(void) const {
     const rt_sketch_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_sketch_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -1417,4 +1417,4 @@ Sketch::Sketch
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}

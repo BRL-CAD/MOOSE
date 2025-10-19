@@ -127,7 +127,7 @@ Ellipsoid::Ellipsoid
 
 
 Ellipsoid::~Ellipsoid(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Ellipsoid::~Ellipsoid::m_internalp");
 }
 
@@ -315,9 +315,9 @@ const Object& Ellipsoid::operator=
     const Object& original
 ) {
     const Ellipsoid* ell = dynamic_cast<const Ellipsoid*>(&original);
-    assert(ell != 0);
+    assert(ell != nullptr);
 
-    if (ell != 0)
+    if (ell != nullptr)
         *this = *ell;
 
     return *this;
@@ -362,13 +362,13 @@ Ellipsoid::Ellipsoid
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 rt_ell_internal* Ellipsoid::Internal(void) {
     rt_ell_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_ell_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -382,7 +382,7 @@ rt_ell_internal* Ellipsoid::Internal(void) {
 const rt_ell_internal* Ellipsoid::Internal(void) const {
     const rt_ell_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_ell_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

@@ -55,9 +55,9 @@ const Object& Unknown::operator=
     const Object& original
 ) {
     const Unknown* unknown = dynamic_cast<const Unknown*>(&original);
-    assert(unknown != 0);
+    assert(unknown != nullptr);
 
-    if (unknown != 0)
+    if (unknown != nullptr)
         *this = *unknown;
 
     return *this;

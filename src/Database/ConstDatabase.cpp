@@ -60,12 +60,12 @@
 using namespace BRLCAD;
 
 
-ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0), m_changeSignalHandlers(), m_selfUpdateNref(false) {
+ConstDatabase::ConstDatabase(void) : m_rtip(nullptr), m_resp(nullptr), m_changeSignalHandlers(), m_selfUpdateNref(false) {
     assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
 
     if (!BU_SETJUMP) {
         m_resp = static_cast<resource*>(bu_calloc(1, sizeof(resource), "BRLCAD::ConstDatabase::~ConstDatabase::m_resp"));
-        rt_init_resource(m_resp, 0, NULL);
+        rt_init_resource(m_resp, 0, nullptr);
     }
     else {
         BU_UNSETJUMP;
@@ -76,7 +76,7 @@ ConstDatabase::ConstDatabase(void) : m_rtip(0), m_resp(0), m_changeSignalHandler
 
 
 ConstDatabase::~ConstDatabase(void) {
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
             DeRegisterCoreCallbacks();
             rt_free_rti(m_rtip);
@@ -85,8 +85,8 @@ ConstDatabase::~ConstDatabase(void) {
         BU_UNSETJUMP;
     }
 
-    if (m_resp != 0) {
-        rt_clean_resource_complete(0, m_resp);
+    if (m_resp != nullptr) {
+        rt_clean_resource_complete(nullptr, m_resp);
         bu_free(m_resp, "BRLCAD::ConstDatabase::~ConstDatabase::m_resp");
     }
 }
@@ -96,8 +96,8 @@ bool ConstDatabase::Load
 (
     const char* fileName
 ) {
-    if (m_resp != 0) {
-        if (m_rtip != 0) {
+    if (m_resp != nullptr) {
+        if (m_rtip != nullptr) {
             if (!BU_SETJUMP) {
                 DeRegisterCoreCallbacks();
                 rt_free_rti(m_rtip);
@@ -105,15 +105,15 @@ bool ConstDatabase::Load
 
             BU_UNSETJUMP;
 
-            m_rtip = 0;
+            m_rtip = nullptr;
         }
 
         if (!BU_SETJUMP)
-            m_rtip = rt_dirbuild(fileName, 0, 0);
+            m_rtip = rt_dirbuild(fileName, nullptr, 0);
 
         BU_UNSETJUMP;
 
-        if (m_rtip != 0) {
+        if (m_rtip != nullptr) {
             if (!BU_SETJUMP) {
                 rt_init_resource(m_resp, 0, m_rtip);
                 RegisterCoreCallbacks();
@@ -126,21 +126,21 @@ bool ConstDatabase::Load
                     rt_free_rti(m_rtip);
                 }
 
-                m_rtip = 0;
+                m_rtip = nullptr;
             }
 
             BU_UNSETJUMP;
         }
     }
 
-    return (m_rtip != 0);
+    return (m_rtip != nullptr);
 }
 
 
 const char* ConstDatabase::Title(void) const {
-    const char* ret = 0;
+    const char* ret = nullptr;
 
-    if (m_rtip != 0)
+    if (m_rtip != nullptr)
         ret = m_rtip->rti_dbip->dbi_title;
 
     return ret;
@@ -148,7 +148,7 @@ const char* ConstDatabase::Title(void) const {
 
 
 const ConstDatabase::TopObjectIterator& ConstDatabase::TopObjectIterator::operator++(void) {
-    if (m_pDir != 0) {
+    if (m_pDir != nullptr) {
         const directory* oldPDir = m_pDir;
 
         for (const directory* pDir = m_pDir->d_forw; pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
@@ -171,7 +171,7 @@ const ConstDatabase::TopObjectIterator& ConstDatabase::TopObjectIterator::operat
         }
 
         if (m_pDir == oldPDir)
-            m_pDir = 0;
+            m_pDir = nullptr;
     }
 
     return *this;
@@ -179,16 +179,16 @@ const ConstDatabase::TopObjectIterator& ConstDatabase::TopObjectIterator::operat
 
 
 bool ConstDatabase::TopObjectIterator::Good(void) const {
-    return (m_pDir != 0);
+    return (m_pDir != nullptr);
 }
 
 
 const char* ConstDatabase::TopObjectIterator::Name(void) const {
-    assert(m_pDir != 0);
+    assert(m_pDir != nullptr);
 
-    const char* ret = 0;
+    const char* ret = nullptr;
 
-    if (m_pDir != 0)
+    if (m_pDir != nullptr)
         ret = m_pDir->d_namep;
 
     return ret;
@@ -205,15 +205,15 @@ ConstDatabase::TopObjectIterator::TopObjectIterator
 
 ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
     size_t           hashTablePosition = 0;
-    const directory* pDirectory        = 0;
+    const directory* pDirectory        = nullptr;
 
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
             m_selfUpdateNref = true;
             db_update_nref(m_rtip->rti_dbip, m_resp);
             m_selfUpdateNref = false;
 
-            for (size_t i = 0; (i < RT_DBNHASH) && (pDirectory == 0); ++i) {
+            for (size_t i = 0; (i < RT_DBNHASH) && (pDirectory == nullptr); ++i) {
                 for (const directory* pDir = m_rtip->rti_dbip->dbi_Head[i]; pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
                     if (pDir->d_nref == 0) {
                         hashTablePosition = i;
@@ -236,9 +236,9 @@ void ConstDatabase::Get
     const char*                                      objectName,
     const std::function<void(const Object& object)>& callback
 ) const {
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
-            if ((objectName != 0) && (strlen(objectName) > 0)) {
+            if ((objectName != nullptr) && (strlen(objectName) > 0)) {
                 directory* pDir = db_lookup(m_rtip->rti_dbip, objectName, LOOKUP_NOISE);
 
                 GetInternal(pDir, callback);
@@ -254,7 +254,7 @@ Object* ConstDatabase::Get
 (
     const char* objectName
 ) const {
-    Object* ret = 0;
+    Object* ret = nullptr;
 
     Get(objectName, [&ret](const Object& object){try{ret = object.Clone();}catch(std::bad_alloc&){}});
 
@@ -271,10 +271,10 @@ static tree* FacetizeRegionEnd
 ) {
     tree* ret = TREE_NULL;
 
-    if (tsp != 0)
+    if (tsp != nullptr)
         RT_CK_DBTS(tsp);
 
-    if (pathp != 0)
+    if (pathp != nullptr)
         RT_CK_FULL_PATH(pathp);
 
     tree**  facetizeTree = static_cast<tree**>(clientData);
@@ -311,9 +311,9 @@ NonManifoldGeometry* ConstDatabase::Facetize
 ) const {
     NonManifoldGeometry* ret          = new NonManifoldGeometry;
 
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
-            tree*                facetizeTree = 0;
+            tree*                facetizeTree = nullptr;
             db_tree_state        initState;
 
             db_init_db_tree_state(&initState, m_rtip->rti_dbip, m_resp);
@@ -326,11 +326,11 @@ NonManifoldGeometry* ConstDatabase::Facetize
                              &objectName,
                              1,
                              &initState,
-                             0,
+                             nullptr,
                              FacetizeRegionEnd,
                              rt_booltree_leaf_tess,
                              &facetizeTree) == 0) {
-                if (facetizeTree != 0) {
+                if (facetizeTree != nullptr) {
                     nmg_boolean(facetizeTree, ret->m_internalp, &rt_vlfree, &m_rtip->rti_tol, &rt_uniresource);
 
                     // ok, now we have a mess here: the model/region with the faces is both in ret and facetizeTree
@@ -367,8 +367,8 @@ static tree* PlotLeaf
     tree*    ret   = TREE_NULL;
     bu_list* vlist = static_cast<bu_list*>(clientData);
 
-    if (ip->idb_meth->ft_plot != 0) {
-        if (ip->idb_meth->ft_plot(vlist, ip, tsp->ts_ttol, tsp->ts_tol, 0) == 0) {
+    if (ip->idb_meth->ft_plot != nullptr) {
+        if (ip->idb_meth->ft_plot(vlist, ip, tsp->ts_ttol, tsp->ts_tol, nullptr) == 0) {
             // Indicate success by returning something other than TREE_NULL
             BU_GET(ret, tree);
             RT_TREE_INIT(ret);
@@ -385,7 +385,7 @@ void ConstDatabase::Plot
     const char* objectName,
     VectorList& vectorList
 ) const {
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
             db_tree_state initState;
 
@@ -398,8 +398,8 @@ void ConstDatabase::Plot
                          &objectName,
                          1,
                          &initState,
-                         0,
-                         0,
+                         nullptr,
+                         nullptr,
                          PlotLeaf,
                          vectorList.m_vlist);
         }
@@ -415,7 +415,7 @@ void ConstDatabase::Select
 (
     const char* objectName
 ) {
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP)
             rt_gettree(m_rtip, objectName);
 
@@ -425,7 +425,7 @@ void ConstDatabase::Select
 
 
 void ConstDatabase::UnSelectAll(void) {
-    if (m_rtip != 0) {
+    if (m_rtip != nullptr) {
         if (!BU_SETJUMP)
             rt_clean(m_rtip);
 
@@ -437,7 +437,7 @@ void ConstDatabase::UnSelectAll(void) {
 bool ConstDatabase::SelectionIsEmpty(void) const {
     bool ret = true;
 
-    if (m_rtip != 0)
+    if (m_rtip != nullptr)
         ret = m_rtip->nsolids < 1;
 
     return ret;
@@ -490,9 +490,9 @@ public:
                                                   m_region(reg),
                                                   m_inVectorsComputed(false),
                                                   m_outVectorsComputed(false) {
-        assert(m_application != 0);
-        assert(m_partition != 0);
-        assert(m_region != 0);
+        assert(m_application != nullptr);
+        assert(m_partition != nullptr);
+        assert(m_region != nullptr);
    }
 
     virtual const char* Name(void) const {
@@ -586,7 +586,7 @@ private:
         if (!m_inVectorsComputed) {
             hit* pHit = m_partition->pt_inhit;
 
-            RT_HIT_NORMAL(pHit->hit_normal, pHit, m_partition->pt_inseg->seg_stp, 0, m_partition->pt_inflip);
+            RT_HIT_NORMAL(pHit->hit_normal, pHit, m_partition->pt_inseg->seg_stp, nullptr, m_partition->pt_inflip);
             m_inVectorsComputed = true;
         }
     }
@@ -595,7 +595,7 @@ private:
         if (!m_outVectorsComputed) {
             hit* pHit = m_partition->pt_outhit;
 
-            RT_HIT_NORMAL(pHit->hit_normal, pHit, m_partition->pt_outseg->seg_stp, 0, m_partition->pt_outflip);
+            RT_HIT_NORMAL(pHit->hit_normal, pHit, m_partition->pt_outseg->seg_stp, nullptr, m_partition->pt_outflip);
             m_outVectorsComputed = true;
         }
     }
@@ -636,9 +636,9 @@ void ConstDatabase::ShootRay
         RT_APPLICATION_INIT(&ap);
 
         ap.a_hit          = HitDo;
-        ap.a_miss         = 0;
-        ap.a_overlap      = 0;
-        ap.a_multioverlap = 0;
+        ap.a_miss         = nullptr;
+        ap.a_overlap      = nullptr;
+        ap.a_multioverlap = nullptr;
         ap.a_rt_i         = m_rtip;
         ap.a_level        = 0;
         ap.a_onehit       = 0; // all hits
@@ -705,8 +705,8 @@ void ConstDatabase::ShootRay
         RT_APPLICATION_INIT(&ap);
 
         ap.a_hit      = HitDo;
-        ap.a_miss     = 0;
-        ap.a_overlap  = 0;
+        ap.a_miss     = nullptr;
+        ap.a_overlap  = nullptr;
         ap.a_rt_i     = m_rtip;
         ap.a_level    = 0;
         ap.a_onehit   = flags & StopAfterFirstHit;
@@ -717,7 +717,7 @@ void ConstDatabase::ShootRay
         if (flags & WithOverlaps)
             ap.a_multioverlap = MultioverlapDo;
         else
-            ap.a_multioverlap = 0;
+            ap.a_multioverlap = nullptr;
 
         VMOVE(ap.a_ray.r_pt, ray.origin.coordinates);
         VMOVE(ap.a_ray.r_dir, ray.direction.coordinates);
@@ -776,7 +776,7 @@ public:
                                 directory* pDir,
                                 int        mode,
                                 void*      myself) {
-        if (myself != 0) {
+        if (myself != nullptr) {
             ConstDatabase* constDatabase = static_cast<ConstDatabase*>(myself);
 
             constDatabase->SignalDatabaseChange(dbip, pDir, mode);
@@ -823,7 +823,7 @@ void ConstDatabase::GetInternal
 ) const {
     if (pDir != RT_DIR_NULL) {
         rt_db_internal intern;
-        int            id = rt_db_get_internal(&intern, pDir, m_rtip->rti_dbip, 0, m_resp);
+        int            id = rt_db_get_internal(&intern, pDir, m_rtip->rti_dbip, nullptr, m_resp);
 
         try {
             switch(id) {

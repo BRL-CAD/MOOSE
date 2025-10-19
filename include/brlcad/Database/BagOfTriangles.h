@@ -57,7 +57,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT Face {
         public:
-            Face(void) : m_bot(0), m_faceIndex(0) {}
+            Face(void) : m_bot(nullptr), m_faceIndex(0) {}
             Face(const Face& original) : m_bot(original.m_bot), m_faceIndex(original.m_faceIndex) {}
             ~Face(void) {}
 
@@ -138,7 +138,7 @@ namespace BRLCAD {
         BagOfTriangles(resource*       resp,
                        directory*      pDir,
                        rt_db_internal* ip,
-                       db_i*           dbip = 0);
+                       db_i*           dbip = nullptr);
 
         friend class ConstDatabase;
 

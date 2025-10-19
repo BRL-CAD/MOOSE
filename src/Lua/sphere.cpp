@@ -47,7 +47,7 @@ static BRLCAD::Sphere& GetSphere
     int        narg
 ) {
     BRLCAD::Sphere* object = TestSphere(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateSphere
 (
     lua_State* luaState
 ) {
-    BRLCAD::Sphere* ret = 0;
+    BRLCAD::Sphere* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Sphere* original = TestSphere(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::Sphere(*original);
         else {
             BRLCAD::Vector3D center = GetVector3D(luaState, 1);
@@ -72,7 +72,7 @@ int CreateSphere
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Sphere();
 
     return PushSphere(luaState, ret, true);
@@ -85,7 +85,7 @@ static int Destruct
 ) {
     ScriptSphere* scriptObject = static_cast<ScriptSphere*>(luaL_testudata(luaState, 1, "BRLCAD.Sphere"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -233,7 +233,7 @@ int PushSphere
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptSphere* scriptObject = static_cast<ScriptSphere*>(lua_newuserdata(luaState, sizeof(ScriptSphere)));
 
         scriptObject->object = object;
@@ -254,10 +254,10 @@ BRLCAD::Sphere* TestSphere
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Sphere* ret          = 0;
+    BRLCAD::Sphere* ret          = nullptr;
     ScriptSphere*   scriptObject = static_cast<ScriptSphere*>(luaL_testudata(luaState, narg, "BRLCAD.Sphere"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

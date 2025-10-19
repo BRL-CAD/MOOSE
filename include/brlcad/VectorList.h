@@ -75,8 +75,8 @@ namespace BRLCAD {
             bv_vlist* m_chunk;
             size_t    m_index;
 
-            Element(void) : m_chunk(0), m_index(-1) {}
-            Element(const Element& original) : m_chunk(0), m_index(-1) {}
+            Element(void) : m_chunk(nullptr), m_index(-1) {}
+            Element(const Element& original) : m_chunk(nullptr), m_index(-1) {}
             Element(bv_vlist* chunk,
                     size_t    index) : m_chunk(chunk), m_index(index) {}
 

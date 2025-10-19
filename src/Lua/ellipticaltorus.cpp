@@ -47,7 +47,7 @@ static BRLCAD::EllipticalTorus& GetEllipticalTorus
     int        narg
 ) {
     BRLCAD::EllipticalTorus* object = TestEllipticalTorus(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateEllipticalTorus
 (
     lua_State* luaState
 ) {
-    BRLCAD::EllipticalTorus* ret = 0;
+    BRLCAD::EllipticalTorus* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::EllipticalTorus* original = TestEllipticalTorus(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::EllipticalTorus(*original);
         else {
             BRLCAD::Vector3D center                      = GetVector3D(luaState, 1);
@@ -75,7 +75,7 @@ int CreateEllipticalTorus
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::EllipticalTorus();
 
     return PushEllipticalTorus(luaState, ret, true);
@@ -88,7 +88,7 @@ static int Destruct
 ) {
     ScriptEllipticalTorus* scriptObject = static_cast<ScriptEllipticalTorus*>(luaL_testudata(luaState, 1, "BRLCAD.EllipticalTorus"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -338,7 +338,7 @@ int PushEllipticalTorus
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptEllipticalTorus* scriptObject = static_cast<ScriptEllipticalTorus*>(lua_newuserdata(luaState, sizeof(ScriptEllipticalTorus)));
 
         scriptObject->object = object;
@@ -359,10 +359,10 @@ BRLCAD::EllipticalTorus* TestEllipticalTorus
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::EllipticalTorus* ret          = 0;
+    BRLCAD::EllipticalTorus* ret          = nullptr;
     ScriptEllipticalTorus*   scriptObject = static_cast<ScriptEllipticalTorus*>(luaL_testudata(luaState, narg, "BRLCAD.EllipticalTorus"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

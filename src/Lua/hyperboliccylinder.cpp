@@ -47,7 +47,7 @@ static BRLCAD::HyperbolicCylinder& GetHyperbolicCylinder
     int        narg
 ) {
     BRLCAD::HyperbolicCylinder* object = TestHyperbolicCylinder(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateHyperbolicCylinder
 (
     lua_State* luaState
 ) {
-    BRLCAD::HyperbolicCylinder* ret = 0;
+    BRLCAD::HyperbolicCylinder* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::HyperbolicCylinder* original = TestHyperbolicCylinder(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::HyperbolicCylinder(*original);
         else {
             BRLCAD::Vector3D basePoint             = GetVector3D(luaState, 1);
@@ -75,7 +75,7 @@ int CreateHyperbolicCylinder
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::HyperbolicCylinder();
 
     return PushHyperbolicCylinder(luaState, ret, true);
@@ -88,7 +88,7 @@ static int Destruct
 ) {
     ScriptHyperbolicCylinder* scriptObject = static_cast<ScriptHyperbolicCylinder*>(luaL_testudata(luaState, 1, "BRLCAD.HyperbolicCylinder"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -338,7 +338,7 @@ int PushHyperbolicCylinder
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptHyperbolicCylinder* scriptObject = static_cast<ScriptHyperbolicCylinder*>(lua_newuserdata(luaState, sizeof(ScriptHyperbolicCylinder)));
 
         scriptObject->object = object;
@@ -359,10 +359,10 @@ BRLCAD::HyperbolicCylinder* TestHyperbolicCylinder
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::HyperbolicCylinder* ret          = 0;
+    BRLCAD::HyperbolicCylinder* ret          = nullptr;
     ScriptHyperbolicCylinder*   scriptObject = static_cast<ScriptHyperbolicCylinder*>(luaL_testudata(luaState, narg, "BRLCAD.HyperbolicCylinder"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

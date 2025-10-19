@@ -218,7 +218,7 @@ static void EnsureFaceNormals
     assert(bot.num_faces >= bot.num_face_normals);
 
     if (bot.num_faces > 0) {
-        if (bot.face_normals == 0)
+        if (bot.face_normals == nullptr)
             bot.face_normals = static_cast<int*>(bu_calloc(3 * bot.num_faces, sizeof(int), "bot interface EnsureFaceNormals(): face_normals"));
         else if (bot.num_faces > bot.num_face_normals) {
             bot.face_normals = static_cast<int*>(bu_realloc(bot.face_normals, 3 * bot.num_faces * sizeof(int), "bot interface EnsureFaceNormals(): face_normals"));
@@ -242,44 +242,44 @@ static void CleanBotInternal
 (
     rt_bot_internal* bot
 ) {
-    assert(bot != 0);
+    assert(bot != nullptr);
 
     RT_BOT_CK_MAGIC(bot);
 
-    if (bot->tie != 0)
-        bot->tie = 0;
+    if (bot->tie != nullptr)
+        bot->tie = nullptr;
 
-    if (bot->vertices != 0) {
+    if (bot->vertices != nullptr) {
         bu_free(bot->vertices, "bot interface CleanBotInternal(): vertices");
-        bot->vertices     = 0;
+        bot->vertices     = nullptr;
         bot->num_vertices = 0;
     }
 
-    if (bot->faces != 0) {
+    if (bot->faces != nullptr) {
         bu_free(bot->faces, "bot interface CleanBotInternal(): faces");
-        bot->faces     = 0;
+        bot->faces     = nullptr;
         bot->num_faces = 0;
     }
 
-    if (bot->thickness != 0) {
+    if (bot->thickness != nullptr) {
         bu_free(bot->thickness, "bot interface CleanBotInternal(): thickness");
-        bot->thickness = 0;
+        bot->thickness = nullptr;
     }
 
-    if (bot->face_mode != 0) {
+    if (bot->face_mode != nullptr) {
         bu_free(bot->face_mode, "bot interface CleanBotInternal(): face_mode");
-        bot->face_mode = 0;
+        bot->face_mode = nullptr;
     }
 
-    if (bot->normals != 0) {
+    if (bot->normals != nullptr) {
         bu_free(bot->normals, "bot interface CleanBotInternal(): normals");
-        bot->normals     = 0;
+        bot->normals     = nullptr;
         bot->num_normals = 0;
     }
 
-    if (bot->face_normals != 0) {
+    if (bot->face_normals != nullptr) {
         bu_free(bot->face_normals, "bot interface CleanBotInternal(): face_normals");
-        bot->face_normals     = 0;
+        bot->face_normals     = nullptr;
         bot->num_face_normals = 0;
     }
 }
@@ -289,7 +289,7 @@ static void FreeBotInternal
 (
     rt_bot_internal* bot
 ) {
-    assert(bot != 0);
+    assert(bot != nullptr);
 
     RT_BOT_CK_MAGIC(bot);
 
@@ -310,34 +310,34 @@ static void CopyBotInternal
     CleanBotInternal(copy);
     *copy = *original;
 
-    if (original->faces != 0) {
+    if (original->faces != nullptr) {
         copy->faces =  static_cast<int*>(bu_malloc(3 * original->num_faces * sizeof(int), "bot interface CopyBotInternal(): faces"));
 
         memcpy(copy->faces, original->faces, 3 * original->num_faces * sizeof(int));
     }
 
-    if (original->vertices != 0) {
+    if (original->vertices != nullptr) {
         copy->vertices = static_cast<fastf_t*>(bu_malloc(3 * original->num_vertices * sizeof(fastf_t), "bot interface CopyBotInternal(): vertices"));
 
         memcpy(copy->vertices, original->vertices, 3 * original->num_vertices * sizeof(fastf_t));
     }
 
-    if (original->thickness != 0) {
+    if (original->thickness != nullptr) {
         copy->thickness = static_cast<fastf_t*>(bu_malloc(original->num_faces * sizeof(fastf_t), "bot interface CopyBotInternal(): thickness"));
 
         memcpy(copy->thickness, original->thickness, original->num_faces * sizeof(fastf_t));
     }
 
-    if (original->face_mode != 0)
+    if (original->face_mode != nullptr)
         copy->face_mode = bu_bitv_dup(original->face_mode);
 
-    if (original->normals != 0) {
+    if (original->normals != nullptr) {
         copy->normals = static_cast<fastf_t*>(bu_malloc(3 * original->num_normals * sizeof(fastf_t), "bot interface CopyBotInternal(): normals"));
 
         memcpy(copy->normals, original->normals, 3 * original->num_normals * sizeof(fastf_t));
     }
 
-    if (original->face_normals != 0) {
+    if (original->face_normals != nullptr) {
         copy->face_normals = static_cast<int*>(bu_malloc(3 * original->num_face_normals * sizeof(int), "bot interface CopyBotInternal(): face_normals"));
 
         memcpy(copy->face_normals, original->face_normals, 3 * original->num_face_normals * sizeof(int));
@@ -387,7 +387,7 @@ void CleanUpBotInternal
     }
 
     // remove unused normals
-    if ((bot.normals != 0) && (bot.face_normals != 0)) {
+    if ((bot.normals != nullptr) && (bot.face_normals != nullptr)) {
         int normalCount = 0;
 
         while (normalCount < bot.num_normals) {
@@ -408,31 +408,31 @@ void CleanUpBotInternal
     }
 
     if ((bot.mode == RT_BOT_SURFACE) || (bot.mode == RT_BOT_SOLID)) {
-        if (bot.thickness != 0) {
+        if (bot.thickness != nullptr) {
             bu_free(bot.thickness, "bot interface CleanUpBotInternal(): thickness");
-            bot.thickness = 0;
+            bot.thickness = nullptr;
         }
 
-        if (bot.face_mode != 0) {
+        if (bot.face_mode != nullptr) {
             bu_free(bot.face_mode, "bot interface CleanUpBotInternal(): face_mode");
-            bot.face_mode = 0;
+            bot.face_mode = nullptr;
         }
     }
 
     if (bot.bot_flags & RT_BOT_HAS_SURFACE_NORMALS)
         EnsureFaceNormals(bot);
     else {
-        if (bot.normals != 0) {
+        if (bot.normals != nullptr) {
             bu_free(bot.normals, "bot interface CleanUpBotInternal(): normals");
 
-            bot.normals     = 0;
+            bot.normals     = nullptr;
             bot.num_normals = 0;
         }
 
-        if (bot.face_normals != 0) {
+        if (bot.face_normals != nullptr) {
             bu_free(bot.face_normals, "bot interface CleanUpBotInternal(): face_normals");
 
-            bot.face_normals     = 0;
+            bot.face_normals     = nullptr;
             bot.num_face_normals = 0;
         }
     }
@@ -449,7 +449,7 @@ void RemoveFace
 
     bot.faces = static_cast<int*>(bu_realloc(bot.faces, (bot.num_faces - 1) * 3 * sizeof(int), "bot interface RemoveFace(): faces"));
 
-    if (bot.thickness != 0) {
+    if (bot.thickness != nullptr) {
         assert(bot.mode != RT_BOT_SURFACE);
         assert(bot.mode != RT_BOT_SOLID);
 
@@ -457,7 +457,7 @@ void RemoveFace
         bot.thickness = static_cast<fastf_t*>(bu_realloc(bot.thickness, (bot.num_faces - 1) * sizeof(fastf_t), "bot interface RemoveFace(): thickness"));
     }
 
-    if (bot.face_mode != 0) {
+    if (bot.face_mode != nullptr) {
         assert(bot.mode != RT_BOT_SURFACE);
         assert(bot.mode != RT_BOT_SOLID);
 
@@ -481,7 +481,7 @@ void RemoveFace
         bot.face_mode = temp;
     }
 
-    if ((bot.face_normals != 0) && (bot.num_face_normals > index)) {
+    if ((bot.face_normals != nullptr) && (bot.num_face_normals > index)) {
         if (bot.num_face_normals > (index + 1))
             memcpy(bot.face_normals + index * 3, bot.face_normals + index * 3 + 3, (bot.num_face_normals - index - 1) * 3 * sizeof(int));
 
@@ -526,7 +526,7 @@ BagOfTriangles::~BagOfTriangles
 (
     void
 ) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         FreeBotInternal(m_internalp);
 }
 
@@ -559,11 +559,11 @@ Vector3D BagOfTriangles::Face::Point
     size_t index
 ) const {
     assert(index < 3);
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
     Vector3D ret;
 
-    if ((m_bot != 0) && (index < 3)) {
+    if ((m_bot != nullptr) && (index < 3)) {
         ret.coordinates[0] = m_bot->vertices[m_bot->faces[m_faceIndex * 3 + index] * 3];
         ret.coordinates[1] = m_bot->vertices[m_bot->faces[m_faceIndex * 3 + index] * 3 + 1];
         ret.coordinates[2] = m_bot->vertices[m_bot->faces[m_faceIndex * 3 + index] * 3 + 2];
@@ -579,9 +579,9 @@ void BagOfTriangles::Face::SetPoint
     const Vector3D& point
 ) {
     assert(index < 3);
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
-    if ((m_bot != 0) && (index < 3)) {
+    if ((m_bot != nullptr) && (index < 3)) {
         point_t newPoint = {point.coordinates[0], point.coordinates[1], point.coordinates[2]};
 
         m_bot->faces[m_faceIndex * 3 + index] = SwapVertex(m_bot->faces[m_faceIndex * 3 + index], newPoint, *m_bot);
@@ -595,9 +595,9 @@ void BagOfTriangles::Face::SetPoints
     const Vector3D& point2,
     const Vector3D& point3
 ) {
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
-    if (m_bot != 0) {
+    if (m_bot != nullptr) {
         SetPoint(0, point1);
         SetPoint(1, point2);
         SetPoint(2, point3);
@@ -606,14 +606,14 @@ void BagOfTriangles::Face::SetPoints
 
 
 double BagOfTriangles::Face::Thickness(void) const {
-    assert(m_bot != 0);
-    assert(m_bot->thickness != 0);
+    assert(m_bot != nullptr);
+    assert(m_bot->thickness != nullptr);
     assert(m_bot->mode != RT_BOT_SOLID);
     assert(m_bot->mode != RT_BOT_SURFACE);
 
     double ret = 0.;
 
-    if ((m_bot != 0) && (m_bot->thickness != 0))
+    if ((m_bot != nullptr) && (m_bot->thickness != nullptr))
         ret = m_bot->thickness[m_faceIndex];
 
     return ret;
@@ -624,13 +624,13 @@ void BagOfTriangles::Face::SetThickness
 (
     double value
 ) {
-    assert(m_bot != 0);
-    assert(m_bot->thickness != 0);
+    assert(m_bot != nullptr);
+    assert(m_bot->thickness != nullptr);
     assert(m_bot->mode != RT_BOT_SOLID);
     assert(m_bot->mode != RT_BOT_SURFACE);
 
-    if (m_bot != 0) {
-        if (m_bot->thickness == 0)
+    if (m_bot != nullptr) {
+        if (m_bot->thickness == nullptr)
             m_bot->thickness = static_cast<fastf_t*>(bu_calloc(m_bot->num_faces, sizeof(fastf_t), "BRLAD::BagOfTriangles::Face::SetThickness(): thickness"));
 
         m_bot->thickness[m_faceIndex] = value;
@@ -639,11 +639,11 @@ void BagOfTriangles::Face::SetThickness
 
 
 bool BagOfTriangles::Face::ApendThickness(void) const {
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
     bool ret = false;
 
-    if ((m_bot != 0) && (m_bot->face_mode != 0))
+    if ((m_bot != nullptr) && (m_bot->face_mode != nullptr))
         ret = BU_BITTEST(m_bot->face_mode, m_faceIndex);
 
     return ret;
@@ -654,10 +654,10 @@ void BagOfTriangles::Face::SetApendThickness
 (
     bool apendThickness
 ) {
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
-    if (m_bot != 0) {
-        if (m_bot->face_mode == 0)
+    if (m_bot != nullptr) {
+        if (m_bot->face_mode == nullptr)
             m_bot->face_mode = bu_bitv_new(m_bot->num_faces);
 
         if (apendThickness)
@@ -672,11 +672,11 @@ Vector3D BagOfTriangles::Face::Normal
 (
     size_t index
 ) const {
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
     Vector3D ret;
 
-    if (m_bot != 0) {
+    if (m_bot != nullptr) {
         fastf_t tmp[3] = {m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3],
                           m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 1],
                           m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 2]};
@@ -694,9 +694,9 @@ void BagOfTriangles::Face::SetNormal
     const Vector3D& normal
 ) {
     assert(index < 3);
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
-    if ((m_bot != 0) && (index < 3)) {
+    if ((m_bot != nullptr) && (index < 3)) {
         EnsureFaceNormals(*m_bot);
 
         point_t newNormal = {normal.coordinates[0], normal.coordinates[1], normal.coordinates[2]};
@@ -712,9 +712,9 @@ void BagOfTriangles::Face::SetNormals
     const Vector3D& normal2,
     const Vector3D& normal3
 ) {
-    assert(m_bot != 0);
+    assert(m_bot != nullptr);
 
-    if (m_bot != 0) {
+    if (m_bot != nullptr) {
         SetNormal(0, normal1);
         SetNormal(1, normal2);
         SetNormal(2, normal3);
@@ -893,12 +893,12 @@ BagOfTriangles::Face BagOfTriangles::AddFace
         bot->faces[bot->num_faces * 3 + 1] = AddVertex(newPoint2, *bot);
         bot->faces[bot->num_faces * 3 + 2] = AddVertex(newPoint3, *bot);
 
-        if(Internal()->thickness != 0) {
+        if(Internal()->thickness != nullptr) {
             bot->thickness                 = static_cast<fastf_t*>(bu_realloc(bot->thickness, (bot->num_faces + 1) * sizeof(fastf_t), "BagOfTriangles::InsertFace: thickness"));
             bot->thickness[bot->num_faces] = 1.;
         }
 
-        if(Internal()->face_mode != 0) {
+        if(Internal()->face_mode != nullptr) {
             assert(bot->mode != RT_BOT_SURFACE);
             assert(bot->mode != RT_BOT_SOLID);
 
@@ -955,9 +955,9 @@ const Object& BagOfTriangles::operator=
     const Object& original
 ) {
     const BagOfTriangles* bot = dynamic_cast<const BagOfTriangles*>(&original);
-    assert(bot != 0);
+    assert(bot != nullptr);
 
-    if (bot != 0)
+    if (bot != nullptr)
         *this = *bot;
 
     return *this;
@@ -990,14 +990,14 @@ BagOfTriangles::BagOfTriangles
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 
 rt_bot_internal* BagOfTriangles::Internal(void) {
     rt_bot_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_bot_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -1011,7 +1011,7 @@ rt_bot_internal* BagOfTriangles::Internal(void) {
 const rt_bot_internal* BagOfTriangles::Internal(void) const {
     const rt_bot_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_bot_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

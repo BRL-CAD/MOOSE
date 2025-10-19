@@ -35,7 +35,7 @@ using namespace BRLCAD;
 
 
 MemoryDatabase::MemoryDatabase(void) : Database() {
-    db_i* dbip = 0;
+    db_i* dbip = nullptr;
 
     if (!BU_SETJUMP) {
         dbip = db_create_inmem();
@@ -52,7 +52,7 @@ MemoryDatabase::MemoryDatabase(void) : Database() {
     else {
         BU_UNSETJUMP;
         db_close(dbip);
-        m_rtip = 0;
+        m_rtip = nullptr;
     }
 
     BU_UNSETJUMP;
@@ -71,21 +71,21 @@ bool MemoryDatabase::Load
     bool ret = false;
 
     if (!BU_SETJUMP) {
-        rt_i* source = rt_dirbuild(fileName, 0, 0);
+        rt_i* source = rt_dirbuild(fileName, nullptr, 0);
 
-        if (source != 0) {
+        if (source != nullptr) {
             // free old database
-            if (m_rtip != 0)
+            if (m_rtip != nullptr)
                 DeRegisterCoreCallbacks();
 
-            if (m_wdbp != 0) {
+            if (m_wdbp != nullptr) {
                 wdb_close(m_wdbp);
-                m_wdbp = 0;
+                m_wdbp = nullptr;
             }
 
-            if (m_rtip != 0) {
+            if (m_rtip != nullptr) {
                 rt_free_rti(m_rtip);
-                m_rtip = 0;
+                m_rtip = nullptr;
             }
 
             // build new database
@@ -121,21 +121,21 @@ bool MemoryDatabase::Load
     bool ret = false;
 
     if (!BU_SETJUMP) {
-        rt_i* source = rt_dirbuild_inmem(data, dataSize, 0, 0);
+        rt_i* source = rt_dirbuild_inmem(data, dataSize, nullptr, 0);
 
-        if (source != 0) {
+        if (source != nullptr) {
             // free old database
-            if (m_rtip != 0)
+            if (m_rtip != nullptr)
                 DeRegisterCoreCallbacks();
 
-            if (m_wdbp != 0) {
+            if (m_wdbp != nullptr) {
                 wdb_close(m_wdbp);
-                m_wdbp = 0;
+                m_wdbp = nullptr;
             }
 
-            if (m_rtip != 0) {
+            if (m_rtip != nullptr) {
                 rt_free_rti(m_rtip);
-                m_rtip = 0;
+                m_rtip = nullptr;
             }
 
             // build new database
@@ -172,7 +172,7 @@ bool MemoryDatabase::Save
     if (!BU_SETJUMP) {
         rt_wdb* target = wdb_fopen(fileName);
 
-        if (target != 0) {
+        if (target != nullptr) {
             ret = (db_dump(target, m_wdbp->dbip) == 0);
             wdb_close(target);
         }

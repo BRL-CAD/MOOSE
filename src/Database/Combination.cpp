@@ -41,7 +41,7 @@ static Combination::ConstTreeNode::Operator ConvertOperator
 ) {
     Combination::ConstTreeNode::Operator ret = Combination::ConstTreeNode::Null;
 
-    if (brlcadTree != 0) {
+    if (brlcadTree != nullptr) {
         switch (brlcadTree->tr_op) {
         case OP_UNION:
             ret = Combination::ConstTreeNode::Union;
@@ -120,7 +120,7 @@ static tree* ParentTree
     tree* searchTree,
     tree* rootTree
 ) {
-    tree* ret = 0;
+    tree* ret = nullptr;
 
     switch (ConvertOperator(rootTree)) {
     case Combination::ConstTreeNode::Union:
@@ -134,7 +134,7 @@ static tree* ParentTree
         else {
             ret = ParentTree(searchTree, rootTree->tr_b.tb_left);
 
-            if (ret == 0)
+            if (ret == nullptr)
                 ParentTree(searchTree, rootTree->tr_b.tb_right);
         }
         break;
@@ -218,7 +218,7 @@ Combination::ConstTreeNode Combination::ConstTreeNode::Operand(void) const {
 
 
 const char* Combination::ConstTreeNode::Name(void) const {
-    const char* ret = 0;
+    const char* ret = nullptr;
 
     switch (ConvertOperator(m_tree)) {
     case Leaf:
@@ -234,7 +234,7 @@ const char* Combination::ConstTreeNode::Name(void) const {
 
 
 const double* Combination::ConstTreeNode::Matrix(void) const {
-    const double* ret = 0;
+    const double* ret = nullptr;
 
     switch (ConvertOperator(m_tree)) {
     case Leaf:
@@ -319,9 +319,9 @@ void Combination::TreeNode::SetName
 ) const {
     switch (ConvertOperator(m_tree)) {
     case Leaf:
-        if (value != 0) {
+        if (value != nullptr) {
             if (!BU_SETJUMP) {
-                if (m_tree->tr_l.tl_name != 0) {
+                if (m_tree->tr_l.tl_name != nullptr) {
                     if (strcmp(m_tree->tr_l.tl_name, value) != 0) {
                         bu_free(m_tree->tr_l.tl_name, "BRLCAD::Combination::TreeNode::SetNamem_tree->tr_l.tl_name");
                         m_tree->tr_l.tl_name = bu_strdupm(value, "BRLCAD::Combination::TreeNode::SetNamem_tree->tr_l.tl_name");
@@ -332,14 +332,14 @@ void Combination::TreeNode::SetName
             }
             else {
                 BU_UNSETJUMP;
-                m_tree->tr_l.tl_name = 0;
+                m_tree->tr_l.tl_name = nullptr;
             }
 
             BU_UNSETJUMP;
         }
-        else if (m_tree->tr_l.tl_name != 0) {
+        else if (m_tree->tr_l.tl_name != nullptr) {
             bu_free(m_tree->tr_l.tl_name, "BRLCAD::Combination::TreeNode::SetName::m_tree->tr_l.tl_name");
-            m_tree->tr_l.tl_name = 0;
+            m_tree->tr_l.tl_name = nullptr;
         }
         break;
 
@@ -353,12 +353,12 @@ void Combination::TreeNode::SetMatrix
 (
     double value[16]
 ) const {
-    if (m_tree->tr_l.tl_mat == 0) {
+    if (m_tree->tr_l.tl_mat == nullptr) {
         if (!BU_SETJUMP)
             m_tree->tr_l.tl_mat = bn_mat_dup(value);
         else {
             BU_UNSETJUMP;
-            m_tree->tr_l.tl_mat = 0;
+            m_tree->tr_l.tl_mat = nullptr;
         }
 
         BU_UNSETJUMP;
@@ -372,11 +372,11 @@ Combination::TreeNode Combination::TreeNode::Apply
 (
     Combination::ConstTreeNode::Operator op
 ) {
-    assert(m_tree != 0);
+    assert(m_tree != nullptr);
 
     TreeNode ret;
 
-    if (m_tree != 0) {
+    if (m_tree != nullptr) {
         switch (op) {
         case Not:
             tree* newNode;
@@ -419,12 +419,12 @@ Combination::TreeNode Combination::TreeNode::Apply
     Combination::ConstTreeNode::Operator op,
     const Combination::ConstTreeNode&    theOther
 ) {
-    assert(m_tree != 0);
-    assert(theOther.m_tree != 0);
+    assert(m_tree != nullptr);
+    assert(theOther.m_tree != nullptr);
 
     TreeNode ret;
 
-    if ((m_tree != 0) && (theOther.m_tree != 0)) {
+    if ((m_tree != nullptr) && (theOther.m_tree != nullptr)) {
         switch (op) {
         case Union:
         case Intersection:
@@ -479,11 +479,11 @@ Combination::TreeNode Combination::TreeNode::Apply
     Combination::ConstTreeNode::Operator op,
     const char*                          leafName
 ) {
-    assert(leafName != 0);
+    assert(leafName != nullptr);
 
     TreeNode ret;
 
-    if (leafName != 0) {
+    if (leafName != nullptr) {
         TreeNode newLeaf(*this);
 
         if (!BU_SETJUMP) {
@@ -498,7 +498,7 @@ Combination::TreeNode Combination::TreeNode::Apply
 
         newLeaf.m_tree->magic        = RT_TREE_MAGIC;
         newLeaf.m_tree->tr_op        = OP_DB_LEAF;
-        newLeaf.m_tree->tr_l.tl_mat  = 0;
+        newLeaf.m_tree->tr_l.tl_mat  = nullptr;
 
         if (!BU_SETJUMP)
             newLeaf.m_tree->tr_l.tl_name = bu_strdup(leafName);
@@ -510,7 +510,7 @@ Combination::TreeNode Combination::TreeNode::Apply
 
         ret = Apply(op, newLeaf);
 
-        if (ret.m_tree == 0) // in case of an error
+        if (ret.m_tree == nullptr) // in case of an error
             BU_PUT(newLeaf.m_tree, union tree);
     }
 
@@ -523,12 +523,12 @@ Combination::TreeNode Combination::TreeNode::Apply
     const Combination::ConstTreeNode&    theOther,
     Combination::ConstTreeNode::Operator op
 ) {
-    assert(m_tree != 0);
-    assert(theOther.m_tree != 0);
+    assert(m_tree != nullptr);
+    assert(theOther.m_tree != nullptr);
 
     TreeNode ret;
 
-    if ((m_tree != 0) && (theOther.m_tree != 0)) {
+    if ((m_tree != nullptr) && (theOther.m_tree != nullptr)) {
         switch (op) {
         case Union:
         case Intersection:
@@ -584,11 +584,11 @@ Combination::TreeNode Combination::TreeNode::Apply
     const char*                          leafName,
     Combination::ConstTreeNode::Operator op
 ) {
-    assert(leafName != 0);
+    assert(leafName != nullptr);
 
     TreeNode ret;
 
-    if (leafName != 0) {
+    if (leafName != nullptr) {
         TreeNode newLeaf(*this);
 
         if (!BU_SETJUMP) {
@@ -603,7 +603,7 @@ Combination::TreeNode Combination::TreeNode::Apply
 
         newLeaf.m_tree->magic        = RT_TREE_MAGIC;
         newLeaf.m_tree->tr_op        = OP_DB_LEAF;
-        newLeaf.m_tree->tr_l.tl_mat  = 0;
+        newLeaf.m_tree->tr_l.tl_mat  = nullptr;
 
         if (!BU_SETJUMP)
             newLeaf.m_tree->tr_l.tl_name = bu_strdup(leafName);
@@ -615,7 +615,7 @@ Combination::TreeNode Combination::TreeNode::Apply
 
         ret = Apply(newLeaf, op);
 
-        if (ret.m_tree == 0) // in case of an error
+        if (ret.m_tree == nullptr) // in case of an error
             BU_PUT(newLeaf.m_tree, union tree);
     }
 
@@ -624,24 +624,24 @@ Combination::TreeNode Combination::TreeNode::Apply
 
 
 void Combination::TreeNode::Delete(void) {
-    assert(m_tree != 0);
+    assert(m_tree != nullptr);
 
     TreeNode ret;
 
     if (!BU_SETJUMP) {
-        while (m_tree != 0) {
+        while (m_tree != nullptr) {
             if (m_tree == m_internalp->tree) {
                 db_free_tree(m_tree, m_resp);
-                m_internalp->tree = 0;
+                m_internalp->tree = nullptr;
 
-                m_tree      = 0;
-                m_internalp = 0;
-                m_resp      = 0;
+                m_tree      = nullptr;
+                m_internalp = nullptr;
+                m_resp      = nullptr;
             }
             else {
                 tree* parent = ParentTree(m_tree, m_internalp->tree);
 
-                if (parent != 0) {
+                if (parent != nullptr) {
                     switch (ConvertOperator(parent)) {
                     case Union:
                     case Intersection:
@@ -654,9 +654,9 @@ void Combination::TreeNode::Delete(void) {
                             db_tree_del_rhs(parent, m_resp);
                         }
 
-                        m_tree      = 0;
-                        m_internalp = 0;
-                        m_resp      = 0;
+                        m_tree      = nullptr;
+                        m_internalp = nullptr;
+                        m_resp      = nullptr;
                         break;
 
                     case Not:
@@ -667,17 +667,17 @@ void Combination::TreeNode::Delete(void) {
                         assert(0);
 
                         // give up
-                        m_tree      = 0;
-                        m_internalp = 0;
-                        m_resp      = 0;
+                        m_tree      = nullptr;
+                        m_internalp = nullptr;
+                        m_resp      = nullptr;
                     }
                 }
                 else {
                     assert(0); // we have a problem here: m_tree is not a child of m_internalp->tree, give up
 
-                    m_tree      = 0;
-                    m_internalp = 0;
-                    m_resp      = 0;
+                    m_tree      = nullptr;
+                    m_internalp = nullptr;
+                    m_resp      = nullptr;
                 }
             }
         }
@@ -691,7 +691,7 @@ void Combination::TreeNode::Delete(void) {
 // class Combination
 //
 
-Combination::Combination(void) : Object(), m_internalp(0) {
+Combination::Combination(void) : Object(), m_internalp(nullptr) {
     if (!BU_SETJUMP)
         m_internalp = static_cast<rt_comb_internal*>(bu_calloc(1, sizeof(rt_comb_internal), "BRLCAD::Combination::Combination::m_internalp"));
     else {
@@ -710,7 +710,7 @@ Combination::Combination(void) : Object(), m_internalp(0) {
 Combination::Combination
 (
     const Combination& original
-) : Object(original), m_internalp(0) {
+) : Object(original), m_internalp(nullptr) {
     if (&original != this) {
         Copy(original);
 
@@ -723,7 +723,7 @@ Combination::Combination
             bu_vls_init(&m_internalp->shader);
             bu_vls_init(&m_internalp->material);
 
-            if (internalFrom->tree != 0)
+            if (internalFrom->tree != nullptr)
                 m_internalp->tree = db_dup_subtree(internalFrom->tree, m_resp);
 
             m_internalp->region_flag = internalFrom->region_flag;
@@ -744,14 +744,14 @@ Combination::Combination
         else {
             BU_UNSETJUMP;
 
-            if (m_internalp != 0) {
+            if (m_internalp != nullptr) {
                 if (m_internalp->shader.vls_magic != 0)
                     bu_vls_free(&m_internalp->shader);
 
                 if (m_internalp->material.vls_magic != 0)
-                    bu_vls_free(&m_internalp->shader);
+                    bu_vls_free(&m_internalp->material);
 
-                if (m_internalp->tree != 0)
+                if (m_internalp->tree != nullptr)
                     db_free_tree(m_internalp->tree, m_resp);
 
                 bu_free(m_internalp, "BRLCAD::Combination::Combination::m_internalp");
@@ -765,8 +765,8 @@ Combination::Combination
 
 
 Combination::~Combination(void) {
-    if (m_internalp != 0) {
-        if (m_internalp->tree != 0)
+    if (m_internalp != nullptr) {
+        if (m_internalp->tree != nullptr)
             db_free_tree(m_internalp->tree, m_resp);
 
         bu_vls_free(&m_internalp->shader);
@@ -787,13 +787,13 @@ const Combination& Combination::operator=
         const rt_comb_internal* internalFrom = original.Internal();
         rt_comb_internal*       internalTo = Internal();
 
-        if (internalTo->tree != 0)
+        if (internalTo->tree != nullptr)
             db_free_tree(m_internalp->tree, m_resp);
 
-        internalTo->tree = 0;
+        internalTo->tree = nullptr;
 
         if (!BU_SETJUMP) {
-            if (internalFrom->tree != 0)
+            if (internalFrom->tree != nullptr)
                 internalTo->tree = db_dup_subtree(internalFrom->tree, m_resp);
 
             internalTo->region_flag = internalFrom->region_flag;
@@ -838,7 +838,7 @@ void Combination::AddLeaf
 ) {
     rt_comb_internal* internalp = Internal();
 
-    if (internalp->tree == 0) {
+    if (internalp->tree == nullptr) {
         if (!BU_SETJUMP) {
             BU_GET(internalp->tree, union tree);
             RT_TREE_INIT(internalp->tree);
@@ -851,14 +851,14 @@ void Combination::AddLeaf
 
         internalp->tree->magic        = RT_TREE_MAGIC;
         internalp->tree->tr_op        = OP_DB_LEAF;
-        internalp->tree->tr_l.tl_mat  = 0;
+        internalp->tree->tr_l.tl_mat  = nullptr;
 
         if (!BU_SETJUMP)
             internalp->tree->tr_l.tl_name = bu_strdup(leafName);
         else {
             BU_UNSETJUMP;
             BU_PUT(internalp->tree, union tree);
-            internalp->tree = 0;
+            internalp->tree = nullptr;
 
         }
 
@@ -1109,9 +1109,9 @@ const Object& Combination::operator=
     const Object& original
 ) {
     const Combination* comb = dynamic_cast<const Combination*>(&original);
-    assert(comb != 0);
+    assert(comb != nullptr);
 
-    if (comb != 0)
+    if (comb != nullptr)
         *this = *comb;
 
     return *this;
@@ -1159,13 +1159,13 @@ Combination::Combination
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_comb_internal* Combination::Internal(void) const {
     const rt_comb_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_comb_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -1179,7 +1179,7 @@ const rt_comb_internal* Combination::Internal(void) const {
 rt_comb_internal* Combination::Internal(void) {
     rt_comb_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_comb_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

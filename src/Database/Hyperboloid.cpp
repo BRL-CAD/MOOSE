@@ -40,7 +40,7 @@ Hyperboloid::Hyperboloid(void) : Object() {
         BU_GET(m_internalp, rt_ehy_internal);
         m_internalp->ehy_magic = RT_EHY_INTERNAL_MAGIC;
 
-        Set(Vector3D(), Vector3D(0, 0, 1), Vector3D(0, 1, 0), 1, 1);
+        Set(Vector3D(), Vector3D(0., 0., 1.), Vector3D(0., 1., 0.), 1., 1.);
     }
     else {
         BU_UNSETJUMP;
@@ -112,7 +112,7 @@ Hyperboloid::Hyperboloid
 
 
 Hyperboloid::~Hyperboloid(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Hyperboloid::~Hyperboloid::m_internalp");
 }
 
@@ -292,9 +292,9 @@ const Object& Hyperboloid::operator=
     const Object& original
 ) {
     const Hyperboloid* ehy = dynamic_cast<const Hyperboloid*>(&original);
-    assert(ehy != 0);
+    assert(ehy != nullptr);
 
-    if (ehy != 0)
+    if (ehy != nullptr)
         *this = *ehy;
 
     return *this;
@@ -339,13 +339,13 @@ Hyperboloid::Hyperboloid
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 rt_ehy_internal* Hyperboloid::Internal(void) {
     rt_ehy_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_ehy_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -359,7 +359,7 @@ rt_ehy_internal* Hyperboloid::Internal(void) {
 const rt_ehy_internal* Hyperboloid::Internal(void) const {
     const rt_ehy_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_ehy_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

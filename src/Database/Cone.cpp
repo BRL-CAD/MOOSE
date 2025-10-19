@@ -179,7 +179,7 @@ Cone::Cone
 
 
 Cone::~Cone(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Cone::~Cone::m_internalp");
 }
 
@@ -392,9 +392,9 @@ const Object& Cone::operator=
     const Object& original
 ) {
     const Cone* tgc = dynamic_cast<const Cone*>(&original);
-    assert(tgc != 0);
+    assert(tgc != nullptr);
 
-    if (tgc != 0)
+    if (tgc != nullptr)
         *this = *tgc;
 
     return *this;
@@ -451,13 +451,13 @@ Cone::Cone
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 rt_tgc_internal* Cone::Internal(void) {
     rt_tgc_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_tgc_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -471,7 +471,7 @@ rt_tgc_internal* Cone::Internal(void) {
 const rt_tgc_internal* Cone::Internal(void) const {
     const rt_tgc_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_tgc_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

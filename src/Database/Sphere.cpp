@@ -88,7 +88,7 @@ Sphere::~Sphere
 (
     void
 ) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Sphere::~Sphere::m_internalp");
 }
 
@@ -108,9 +108,9 @@ const Object& Sphere::operator=
     const Object& original
 ) {
     const Sphere* sph = dynamic_cast<const Sphere*>(&original);
-    assert(sph != 0);
+    assert(sph != nullptr);
 
-    if (sph != 0)
+    if (sph != nullptr)
         *this = *sph;
 
     return *this;
@@ -204,13 +204,13 @@ Sphere::Sphere
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_ell_internal* Sphere::Internal(void) const {
     const rt_ell_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_ell_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -224,7 +224,7 @@ const rt_ell_internal* Sphere::Internal(void) const {
 rt_ell_internal* Sphere::Internal(void) {
     rt_ell_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_ell_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

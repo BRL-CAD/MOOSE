@@ -64,7 +64,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT AttributeIterator {
         public:
-            AttributeIterator(void) : m_avs(0), m_searchKey(0), m_index(-1) {}
+            AttributeIterator(void) : m_avs(nullptr), m_searchKey(nullptr), m_index(-1) {}
             AttributeIterator(const AttributeIterator& original) : m_avs(original.m_avs),
                                                                    m_searchKey(original.m_searchKey),
                                                                    m_index(original.m_index) {}

@@ -45,7 +45,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT ControlPoint {
         public:
-            ControlPoint(void) : m_pipe(0), m_controlPoint(0) {}
+            ControlPoint(void) : m_pipe(nullptr), m_controlPoint(nullptr) {}
             ControlPoint(const ControlPoint& original) : m_pipe(original.m_pipe), m_controlPoint(original.m_controlPoint) {}
             ~ControlPoint(void) {}
 
@@ -106,7 +106,7 @@ namespace BRLCAD {
         Pipe(resource*       resp,
              directory*      pDir,
              rt_db_internal* ip,
-             db_i*           dbip = 0);
+             db_i*           dbip = nullptr);
 
         friend class ConstDatabase;
 

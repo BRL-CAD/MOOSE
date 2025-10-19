@@ -55,7 +55,7 @@ VectorList::Element::ElementType VectorList::PointDraw::Type(void) const {
 
 
 Vector3D VectorList::PointDraw::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -68,7 +68,7 @@ void VectorList::PointDraw::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -104,7 +104,7 @@ VectorList::Element::ElementType VectorList::PointSize::Type(void) const {
 
 
 double VectorList::PointSize::Size(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index][0];
     }
@@ -117,7 +117,7 @@ void VectorList::PointSize::SetSize
 (
     double size
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         m_chunk->pt[m_index][0] = size;
     }
@@ -153,7 +153,7 @@ VectorList::Element::ElementType VectorList::LineMove::Type(void) const {
 
 
 Vector3D VectorList::LineMove::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -166,7 +166,7 @@ void VectorList::LineMove::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -202,7 +202,7 @@ VectorList::Element::ElementType VectorList::LineDraw::Type(void) const {
 
 
 Vector3D VectorList::LineDraw::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -215,7 +215,7 @@ void VectorList::LineDraw::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -251,7 +251,7 @@ VectorList::Element::ElementType VectorList::LineWidth::Type(void) const {
 
 
 double VectorList::LineWidth::Width(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index][0];
     }
@@ -264,7 +264,7 @@ void VectorList::LineWidth::SetWidth
 (
     double width
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         m_chunk->pt[m_index][0] = width;
     }
@@ -300,7 +300,7 @@ VectorList::Element::ElementType VectorList::TriangleStart::Type(void) const {
 
 
 Vector3D VectorList::TriangleStart::Normal(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -313,7 +313,7 @@ void VectorList::TriangleStart::SetNormal
 (
     const Vector3D& normal
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], normal.coordinates);
     }
@@ -349,7 +349,7 @@ VectorList::Element::ElementType VectorList::TriangleMove::Type(void) const {
 
 
 Vector3D VectorList::TriangleMove::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -362,7 +362,7 @@ void VectorList::TriangleMove::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -398,7 +398,7 @@ VectorList::Element::ElementType VectorList::TriangleDraw::Type(void) const {
 
 
 Vector3D VectorList::TriangleDraw::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -411,7 +411,7 @@ void VectorList::TriangleDraw::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -447,7 +447,7 @@ VectorList::Element::ElementType VectorList::TriangleEnd::Type(void) const {
 
 
 Vector3D VectorList::TriangleEnd::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -460,7 +460,7 @@ void VectorList::TriangleEnd::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -496,7 +496,7 @@ VectorList::Element::ElementType VectorList::TriangleVertexNormal::Type(void) co
 
 
 Vector3D VectorList::TriangleVertexNormal::Normal(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -509,7 +509,7 @@ void VectorList::TriangleVertexNormal::SetNormal
 (
     const Vector3D& normal
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], normal.coordinates);
     }
@@ -545,7 +545,7 @@ VectorList::Element::ElementType VectorList::PolygonStart::Type(void) const {
 
 
 Vector3D VectorList::PolygonStart::Normal(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -558,7 +558,7 @@ void VectorList::PolygonStart::SetNormal
 (
     const Vector3D& normal
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], normal.coordinates);
     }
@@ -594,7 +594,7 @@ VectorList::Element::ElementType VectorList::PolygonMove::Type(void) const {
 
 
 Vector3D VectorList::PolygonMove::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -607,7 +607,7 @@ void VectorList::PolygonMove::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -643,7 +643,7 @@ VectorList::Element::ElementType VectorList::PolygonDraw::Type(void) const {
 
 
 Vector3D VectorList::PolygonDraw::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -656,7 +656,7 @@ void VectorList::PolygonDraw::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -692,7 +692,7 @@ VectorList::Element::ElementType VectorList::PolygonEnd::Type(void) const {
 
 
 Vector3D VectorList::PolygonEnd::Point(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -705,7 +705,7 @@ void VectorList::PolygonEnd::SetPoint
 (
     const Vector3D& point
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], point.coordinates);
     }
@@ -741,7 +741,7 @@ VectorList::Element::ElementType VectorList::PolygonVertexNormal::Type(void) con
 
 
 Vector3D VectorList::PolygonVertexNormal::Normal(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -754,7 +754,7 @@ void VectorList::PolygonVertexNormal::SetNormal
 (
     const Vector3D& normal
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], normal.coordinates);
     }
@@ -790,7 +790,7 @@ VectorList::Element::ElementType VectorList::DisplaySpace::Type(void) const {
 
 
 Vector3D VectorList::DisplaySpace::ReferencePoint(void) const {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         return m_chunk->pt[m_index];
     }
@@ -803,7 +803,7 @@ void VectorList::DisplaySpace::SetReferencePoint
 (
     const Vector3D& referencePoint
 ) {
-    if (m_chunk != 0) {
+    if (m_chunk != nullptr) {
         assert(m_index < m_chunk->nused);
         VMOVE(m_chunk->pt[m_index], referencePoint.coordinates);
     }
@@ -898,7 +898,7 @@ void VectorList::Iterate
 (
     const std::function<bool(const Element* element)>& callback
 ) const {
-    if (m_vlist != 0) {
+    if (m_vlist != nullptr) {
         bool      cont = true;
         bv_vlist* chunk;
 
@@ -1059,7 +1059,7 @@ void VectorList::Iterate
                     }
 
                     default:
-                        if (!callback(0))
+                        if (!callback(nullptr))
                             cont = false;
                 }
 
@@ -1075,7 +1075,7 @@ void VectorList::Iterate
 (
     const std::function<bool(Element* element)>& callback
 ) {
-    if (m_vlist != 0) {
+    if (m_vlist != nullptr) {
         bool      cont = true;
         bv_vlist* chunk;
 
@@ -1236,7 +1236,7 @@ void VectorList::Iterate
                     }
 
                     default:
-                        if (!callback(0))
+                        if (!callback(nullptr))
                             cont = false;
                 }
 

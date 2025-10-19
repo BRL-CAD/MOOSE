@@ -40,7 +40,7 @@ Torus::Torus(void) : Object() {
         BU_GET(m_internalp, rt_tor_internal);
         m_internalp->magic = RT_TOR_INTERNAL_MAGIC;
 
-        Set(Vector3D(), Vector3D(0,0,1), 2, 1);
+        Set(Vector3D(), Vector3D(0., 0., 1.), 2., 1.);
     }
     else {
         BU_UNSETJUMP;
@@ -88,7 +88,7 @@ Torus::Torus
 
 
 Torus::~Torus(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Torus::~Torus::m_internalp");
 }
 
@@ -186,9 +186,9 @@ const Object& Torus::operator=
     const Object& original
 ) {
     const Torus* tor = dynamic_cast<const Torus*>(&original);
-    assert(tor != 0);
+    assert(tor != nullptr);
 
-    if (tor != 0)
+    if (tor != nullptr)
         *this = *tor;
 
     return *this;
@@ -231,13 +231,13 @@ Torus::Torus
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_tor_internal* Torus::Internal(void) const {
     const rt_tor_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_tor_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -251,7 +251,7 @@ const rt_tor_internal* Torus::Internal(void) const {
 rt_tor_internal* Torus::Internal(void) {
     rt_tor_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_tor_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

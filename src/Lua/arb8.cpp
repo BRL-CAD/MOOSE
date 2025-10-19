@@ -47,7 +47,7 @@ static BRLCAD::Arb8& GetArb8
     int        narg
 ) {
     BRLCAD::Arb8* object = TestArb8(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateArb8
 (
     lua_State* luaState
 ) {
-    BRLCAD::Arb8* ret = 0;
+    BRLCAD::Arb8* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Arb8* original = TestArb8(luaState, 1);
 
-        if (original != 0) {
+        if (original != nullptr) {
             ret = new BRLCAD::Arb8(*original);
         }
         else if (lua_gettop(luaState) == 4){
@@ -117,7 +117,7 @@ int CreateArb8
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Arb8();
 
     return PushArb8(luaState, ret, true);
@@ -130,7 +130,7 @@ static int Destruct
 ) {
     ScriptArb8* scriptObject = static_cast<ScriptArb8*>(luaL_testudata(luaState, 1, "BRLCAD.Arb8"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -356,7 +356,7 @@ int PushArb8
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptArb8* scriptObject = static_cast<ScriptArb8*>(lua_newuserdata(luaState, sizeof(ScriptArb8)));
 
         scriptObject->object = object;
@@ -377,10 +377,10 @@ BRLCAD::Arb8* TestArb8
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Arb8* ret          = 0;
+    BRLCAD::Arb8* ret          = nullptr;
     ScriptArb8*   scriptObject = static_cast<ScriptArb8*>(luaL_testudata(luaState, narg, "BRLCAD.Arb8"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

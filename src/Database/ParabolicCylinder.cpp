@@ -88,7 +88,7 @@ ParabolicCylinder::ParabolicCylinder
 
 
 ParabolicCylinder::~ParabolicCylinder(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::ParabolicCylinder::~ParabolicCylinder::m_internalp");
 }
 
@@ -179,9 +179,9 @@ const Object& ParabolicCylinder::operator=
     const Object& original
 ) {
     const ParabolicCylinder* rpc = dynamic_cast<const ParabolicCylinder*>(&original);
-    assert(rpc != 0);
+    assert(rpc != nullptr);
 
-    if (rpc != 0)
+    if (rpc != nullptr)
         *this = *rpc;
 
     return *this;
@@ -224,13 +224,13 @@ ParabolicCylinder::ParabolicCylinder
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 rt_rpc_internal* ParabolicCylinder::Internal(void) {
     rt_rpc_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_rpc_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -244,7 +244,7 @@ rt_rpc_internal* ParabolicCylinder::Internal(void) {
 const rt_rpc_internal* ParabolicCylinder::Internal(void) const {
     const rt_rpc_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_rpc_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

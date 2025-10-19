@@ -47,7 +47,7 @@ static BRLCAD::Torus& GetTorus
     int        narg
 ) {
     BRLCAD::Torus* object = TestTorus(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateTorus
 (
     lua_State* luaState
 ) {
-    BRLCAD::Torus* ret = 0;
+    BRLCAD::Torus* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Torus* original = TestTorus(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::Torus(*original);
         else {
             BRLCAD::Vector3D center                      = GetVector3D(luaState, 1);
@@ -74,7 +74,7 @@ int CreateTorus
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Torus();
 
     return PushTorus(luaState, ret, true);
@@ -87,7 +87,7 @@ static int Destruct
 ) {
     ScriptTorus* scriptObject = static_cast<ScriptTorus*>(luaL_testudata(luaState, 1, "BRLCAD.Torus"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -303,7 +303,7 @@ int PushTorus
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptTorus* scriptObject = static_cast<ScriptTorus*>(lua_newuserdata(luaState, sizeof(ScriptTorus)));
 
         scriptObject->object = object;
@@ -324,10 +324,10 @@ BRLCAD::Torus* TestTorus
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Torus* ret          = 0;
+    BRLCAD::Torus* ret          = nullptr;
     ScriptTorus*   scriptObject = static_cast<ScriptTorus*>(luaL_testudata(luaState, narg, "BRLCAD.Torus"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

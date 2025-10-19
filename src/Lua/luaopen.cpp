@@ -59,7 +59,7 @@ static const luaL_Reg BrlcadEntryPoints[] = {
     {"Sphere",             CreateSphere},
     {"Torus",              CreateTorus},
     {"Vector3D",           CreateVector3D},
-    {0, 0}
+    {nullptr, nullptr}
 };
 
 

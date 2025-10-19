@@ -89,7 +89,7 @@ EllipticalTorus::EllipticalTorus
 
 
 EllipticalTorus::~EllipticalTorus(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::EllipticalTorus::~EllipticalTorus::m_internalp");
 }
 
@@ -202,9 +202,9 @@ const Object& EllipticalTorus::operator=
     const Object& original
 ) {
     const EllipticalTorus* eto = dynamic_cast<const EllipticalTorus*>(&original);
-    assert(eto != 0);
+    assert(eto != nullptr);
 
-    if (eto != 0)
+    if (eto != nullptr)
         *this = *eto;
 
     return *this;
@@ -265,13 +265,13 @@ EllipticalTorus::EllipticalTorus
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_eto_internal* EllipticalTorus::Internal(void) const {
     const rt_eto_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_eto_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -285,7 +285,7 @@ const rt_eto_internal* EllipticalTorus::Internal(void) const {
 rt_eto_internal* EllipticalTorus::Internal(void) {
     rt_eto_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_eto_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

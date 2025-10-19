@@ -73,7 +73,7 @@ namespace BRLCAD {
         protected:
             rt_sketch_internal* m_sketch;
 
-            Segment(void) : m_sketch(0)  {}
+            Segment(void) : m_sketch(nullptr)  {}
             Segment(const Segment& original) : m_sketch(original.m_sketch) {}
             Segment(rt_sketch_internal* sketch) : m_sketch(sketch) {}
 
@@ -82,7 +82,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT Line : public Segment {
         public:
-            Line(void) : Segment(), m_lineSegment(0) {}
+            Line(void) : Segment(), m_lineSegment(nullptr) {}
             Line(const Line& original) : Segment(original), m_lineSegment(original.m_lineSegment) {}
             virtual ~Line(void) {}
 
@@ -110,7 +110,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT CircularArc : public Segment {
         public:
-            CircularArc(void) : Segment(), m_circularArcSegment(0) {}
+            CircularArc(void) : Segment(), m_circularArcSegment(nullptr) {}
             CircularArc(const CircularArc& original) : Segment(original), m_circularArcSegment(original.m_circularArcSegment) {}
             virtual ~CircularArc(void) {}
 
@@ -147,7 +147,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT Nurb : public Segment {
         public:
-            Nurb(void) : Segment(), m_nurbSegment(0) {}
+            Nurb(void) : Segment(), m_nurbSegment(nullptr) {}
             Nurb(const Nurb& original) : Segment(original), m_nurbSegment(original.m_nurbSegment) {}
             virtual ~Nurb(void) {}
 
@@ -189,7 +189,7 @@ namespace BRLCAD {
 
         class BRLCAD_MOOSE_EXPORT Bezier : public Segment {
         public:
-            Bezier(void) : Segment(), m_bezierSegment(0) {}
+            Bezier(void) : Segment(), m_bezierSegment(nullptr) {}
             Bezier(const Bezier& original) : Segment(original), m_bezierSegment(original.m_bezierSegment) {}
             virtual ~Bezier(void) {}
 
@@ -261,7 +261,7 @@ namespace BRLCAD {
         Sketch(resource*       resp,
                directory*      pDir,
                rt_db_internal* ip,
-               db_i*           dbip = 0);
+               db_i*           dbip = nullptr);
 
         friend class ConstDatabase;
 

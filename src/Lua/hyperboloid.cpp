@@ -47,7 +47,7 @@ static BRLCAD::Hyperboloid& GetHyperboloid
     int        narg
 ) {
     BRLCAD::Hyperboloid* object = TestHyperboloid(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateHyperboloid
 (
     lua_State* luaState
 ) {
-    BRLCAD::Hyperboloid* ret = 0;
+    BRLCAD::Hyperboloid* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Hyperboloid* original = TestHyperboloid(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::Hyperboloid(*original);
         else if (lua_gettop(luaState) == 5) {
             BRLCAD::Vector3D basePoint             = GetVector3D(luaState, 1);
@@ -85,7 +85,7 @@ int CreateHyperboloid
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Hyperboloid();
 
     return PushHyperboloid(luaState, ret, true);
@@ -98,7 +98,7 @@ static int Destruct
 ) {
     ScriptHyperboloid* scriptObject = static_cast<ScriptHyperboloid*>(luaL_testudata(luaState, 1, "BRLCAD.Hyperboloid"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -439,7 +439,7 @@ int PushHyperboloid
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptHyperboloid* scriptObject = static_cast<ScriptHyperboloid*>(lua_newuserdata(luaState, sizeof(ScriptHyperboloid)));
 
         scriptObject->object = object;
@@ -460,10 +460,10 @@ BRLCAD::Hyperboloid* TestHyperboloid
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Hyperboloid* ret          = 0;
+    BRLCAD::Hyperboloid* ret          = nullptr;
     ScriptHyperboloid*   scriptObject = static_cast<ScriptHyperboloid*>(luaL_testudata(luaState, narg, "BRLCAD.Hyperboloid"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

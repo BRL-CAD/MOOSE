@@ -84,7 +84,7 @@ Halfspace::Halfspace
 
 
 Halfspace::~Halfspace(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::Halfspace::~Halfspace::m_internalp");
 }
 
@@ -150,9 +150,9 @@ const Object& Halfspace::operator=
     const Object& original
 ) {
     const Halfspace* half = dynamic_cast<const Halfspace*>(&original);
-    assert(half != 0);
+    assert(half != nullptr);
 
-    if (half != 0)
+    if (half != nullptr)
         *this = *half;
 
     return *this;
@@ -194,13 +194,13 @@ Halfspace::Halfspace
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_half_internal* Halfspace::Internal(void) const {
     const rt_half_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_half_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -214,7 +214,7 @@ const rt_half_internal* Halfspace::Internal(void) const {
 rt_half_internal* Halfspace::Internal(void) {
     rt_half_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_half_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

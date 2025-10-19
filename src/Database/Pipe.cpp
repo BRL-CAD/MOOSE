@@ -98,7 +98,7 @@ rt_pipe_internal* ClonePipeInternal
 (
     const rt_pipe_internal& pipe
 ) {
-    rt_pipe_internal* ret = 0;
+    rt_pipe_internal* ret = nullptr;
 
     BU_GET(ret, rt_pipe_internal);
     ret->pipe_magic = RT_PIPE_INTERNAL_MAGIC;
@@ -142,7 +142,7 @@ Pipe::~Pipe
 (
     void
 ) {
-    if (m_internalp != 0) {
+    if (m_internalp != nullptr) {
         bu_list_free(&m_internalp->pipe_segs_head);
         bu_free(m_internalp, "BRLCAD::Pipe::~Pipe::m_internalp");
     }
@@ -169,11 +169,11 @@ const Pipe& Pipe::operator=
 
 
 Vector3D Pipe::ControlPoint::Point(void) const {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
     Vector3D ret;
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         ret = Vector3D(m_controlPoint->pp_coord);
 
     return ret;
@@ -184,9 +184,9 @@ void Pipe::ControlPoint::SetPoint
 (
     const Vector3D& point
 ) {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
-    if (m_pipe != 0) {
+    if (m_pipe != nullptr) {
         for (size_t i = 0; i < 3; ++i)
             m_controlPoint->pp_coord[i] = point.coordinates[i];
     }
@@ -194,11 +194,11 @@ void Pipe::ControlPoint::SetPoint
 
 
 double Pipe::ControlPoint::InnerDiameter(void) const {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
     double ret;
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         ret = m_controlPoint->pp_id;
 
     return ret;
@@ -209,19 +209,19 @@ void Pipe::ControlPoint::SetInnerDiameter
 (
     double id
 ) {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         m_controlPoint->pp_id = id;
 }
 
 
 double Pipe::ControlPoint::OuterDiameter(void) const {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
     double ret;
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         ret = m_controlPoint->pp_od;
 
     return ret;
@@ -232,19 +232,19 @@ void Pipe::ControlPoint::SetOuterDiameter
 (
     double od
 ) {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         m_controlPoint->pp_od = od;
 }
 
 
 double Pipe::ControlPoint::BendRadius(void) const {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
     double ret;
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         ret = m_controlPoint->pp_bendradius;
 
     return ret;
@@ -255,9 +255,9 @@ void Pipe::ControlPoint::SetBendRadius
 (
     double br
 ) {
-    assert(m_pipe != 0);
+    assert(m_pipe != nullptr);
 
-    if (m_pipe != 0)
+    if (m_pipe != nullptr)
         m_controlPoint->pp_bendradius = br;
 }
 
@@ -386,9 +386,9 @@ const Object& Pipe::operator=
     const Object& original
 ) {
     const Pipe* pipe = dynamic_cast<const Pipe*>(&original);
-    assert(pipe != 0);
+    assert(pipe != nullptr);
 
-    if (pipe != 0)
+    if (pipe != nullptr)
         *this = *pipe;
 
     return *this;
@@ -425,13 +425,13 @@ Pipe::Pipe
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 const rt_pipe_internal* Pipe::Internal(void) const {
     const rt_pipe_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_pipe_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -445,7 +445,7 @@ const rt_pipe_internal* Pipe::Internal(void) const {
 rt_pipe_internal* Pipe::Internal(void) {
     rt_pipe_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<rt_pipe_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

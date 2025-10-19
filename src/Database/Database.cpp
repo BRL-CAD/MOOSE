@@ -61,7 +61,7 @@ using namespace BRLCAD;
 
 
 Database::~Database(void) {
-    if (m_wdbp != 0) {
+    if (m_wdbp != nullptr) {
         if (!BU_SETJUMP)
             wdb_close(m_wdbp);
 
@@ -74,7 +74,7 @@ void Database::SetTitle
 (
     const char* title
 ) {
-    if (m_wdbp != 0) {
+    if (m_wdbp != nullptr) {
         if (!BU_SETJUMP)
             db_update_ident(m_wdbp->dbip, title, m_wdbp->dbip->dbi_base2local);
         else {
@@ -92,17 +92,17 @@ bool Database::Add
 ) {
     bool ret = false;
 
-    if (object.IsValid() && (m_wdbp != 0)) {
+    if (object.IsValid() && (m_wdbp != nullptr)) {
         if (!BU_SETJUMP) {
             int   id         = ID_NULL;
-            void* rtInternal = 0;
+            void* rtInternal = nullptr;
 
             if (object.Type() == Torus::ClassName()) {
                 id = ID_TOR; // 1
 
                 const Torus* torus = dynamic_cast<const Torus*>(&object);
 
-                assert(torus != 0);
+                assert(torus != nullptr);
 
                 BU_GET(rtInternal, rt_tor_internal);
                 memcpy(rtInternal, torus->Internal(), sizeof(rt_tor_internal));
@@ -112,7 +112,7 @@ bool Database::Add
 
                 const Cone* cone = dynamic_cast<const Cone*>(&object);
 
-                assert(cone != 0);
+                assert(cone != nullptr);
 
                 BU_GET(rtInternal, rt_tgc_internal);
                 memcpy(rtInternal, cone->Internal(), sizeof(rt_tgc_internal));
@@ -122,7 +122,7 @@ bool Database::Add
 
                 const Ellipsoid* ellipsoid = dynamic_cast<const Ellipsoid*>(&object);
 
-                assert(ellipsoid != 0);
+                assert(ellipsoid != nullptr);
 
                 BU_GET(rtInternal, rt_ell_internal);
                 memcpy(rtInternal, ellipsoid->Internal(), sizeof(rt_ell_internal));
@@ -132,7 +132,7 @@ bool Database::Add
 
                 const Arb8* arb8 = dynamic_cast<const Arb8*>(&object);
 
-                assert(arb8 != 0);
+                assert(arb8 != nullptr);
 
                 BU_GET(rtInternal, rt_arb_internal);
                 memcpy(rtInternal, arb8->Internal(), sizeof(rt_arb_internal));
@@ -142,7 +142,7 @@ bool Database::Add
 
                 const Halfspace* halfspace = dynamic_cast<const Halfspace*>(&object);
 
-                assert(halfspace != 0);
+                assert(halfspace != nullptr);
 
                 BU_GET(rtInternal, rt_half_internal);
                 memcpy(rtInternal, halfspace->Internal(), sizeof(rt_half_internal));
@@ -152,7 +152,7 @@ bool Database::Add
 
                 const Sphere* sphere = dynamic_cast<const Sphere*>(&object);
 
-                assert(sphere != 0);
+                assert(sphere != nullptr);
 
                 BU_GET(rtInternal, rt_ell_internal);
                 memcpy(rtInternal, sphere->Internal(), sizeof(rt_ell_internal));
@@ -162,7 +162,7 @@ bool Database::Add
 
                 const NonManifoldGeometry* nmg = dynamic_cast<const NonManifoldGeometry*>(&object);
 
-                assert(nmg != 0);
+                assert(nmg != nullptr);
 
                 rtInternal = nmg_clone_model(nmg->Internal());
             }
@@ -171,7 +171,7 @@ bool Database::Add
 
                 const Pipe* pipe = dynamic_cast<const Pipe*>(&object);
 
-                assert(pipe != 0);
+                assert(pipe != nullptr);
 
                 rtInternal = ClonePipeInternal(*(pipe->Internal()));
             }
@@ -180,7 +180,7 @@ bool Database::Add
 
                 const Particle* particle = dynamic_cast<const Particle*>(&object);
 
-                assert(particle != 0);
+                assert(particle != nullptr);
 
                 BU_GET(rtInternal, rt_part_internal);
                 memcpy(rtInternal, particle->Internal(), sizeof(rt_part_internal));
@@ -190,7 +190,7 @@ bool Database::Add
 
                 const ParabolicCylinder* parabolicCylinder = dynamic_cast<const ParabolicCylinder*>(&object);
 
-                assert(parabolicCylinder != 0);
+                assert(parabolicCylinder != nullptr);
 
                 BU_GET(rtInternal, rt_rpc_internal);
                 memcpy(rtInternal, parabolicCylinder->Internal(), sizeof(rt_rpc_internal));
@@ -200,7 +200,7 @@ bool Database::Add
 
                 const HyperbolicCylinder* hyperbolicCylinder = dynamic_cast<const HyperbolicCylinder*>(&object);
 
-                assert(hyperbolicCylinder != 0);
+                assert(hyperbolicCylinder != nullptr);
 
                 BU_GET(rtInternal, rt_rhc_internal);
                 memcpy(rtInternal, hyperbolicCylinder->Internal(), sizeof(rt_rhc_internal));
@@ -210,7 +210,7 @@ bool Database::Add
 
                 const Paraboloid* paraboloid = dynamic_cast<const Paraboloid*>(&object);
 
-                assert(paraboloid != 0);
+                assert(paraboloid != nullptr);
 
                 BU_GET(rtInternal, rt_epa_internal);
                 memcpy(rtInternal, paraboloid->Internal(), sizeof(rt_epa_internal));
@@ -220,7 +220,7 @@ bool Database::Add
 
                 const Hyperboloid* hyperboloid = dynamic_cast<const Hyperboloid*>(&object);
 
-                assert(hyperboloid != 0);
+                assert(hyperboloid != nullptr);
 
                 BU_GET(rtInternal, rt_ehy_internal);
                 memcpy(rtInternal, hyperboloid->Internal(), sizeof(rt_ehy_internal));
@@ -230,7 +230,7 @@ bool Database::Add
 
                 const EllipticalTorus* ellipticalTorus = dynamic_cast<const EllipticalTorus*>(&object);
 
-                assert(ellipticalTorus != 0);
+                assert(ellipticalTorus != nullptr);
 
                 BU_GET(rtInternal, rt_eto_internal);
                 memcpy(rtInternal, ellipticalTorus->Internal(), sizeof(rt_eto_internal));
@@ -240,7 +240,7 @@ bool Database::Add
 
                 const Sketch* sketch = dynamic_cast<const Sketch*>(&object);
 
-                assert(sketch != 0);
+                assert(sketch != nullptr);
 
                 rtInternal = rt_copy_sketch(sketch->Internal());
             }
@@ -249,7 +249,7 @@ bool Database::Add
 
                 const BagOfTriangles* bagOfTriangles = dynamic_cast<const BagOfTriangles*>(&object);
 
-                assert(bagOfTriangles != 0);
+                assert(bagOfTriangles != nullptr);
 
                 rt_bot_internal* bot = CloneBotInternal(*(bagOfTriangles->Internal()));
                 CleanUpBotInternal(*bot);
@@ -261,7 +261,7 @@ bool Database::Add
 
                 const Combination* combination = dynamic_cast<const Combination*>(&object);
 
-                assert(combination != 0);
+                assert(combination != nullptr);
 
                 const rt_comb_internal* internalFrom = combination->Internal();
 
@@ -270,7 +270,7 @@ bool Database::Add
 
                 rt_comb_internal* internalTo = static_cast<rt_comb_internal*>(rtInternal);
 
-                if (internalFrom->tree != 0)
+                if (internalFrom->tree != nullptr)
                     internalTo->tree = db_dup_subtree(internalFrom->tree, object.m_resp);
 
                 bu_vls_init(&internalTo->shader);
@@ -281,19 +281,19 @@ bool Database::Add
 
             const char* objectName = object.Name();
 
-            if ((id != ID_NULL) && (objectName != 0) && (strlen(objectName) > 0)) {
+            if ((id != ID_NULL) && (objectName != nullptr) && (strlen(objectName) > 0)) {
                 ret = (wdb_export(m_wdbp, objectName, rtInternal, id, 1.) == 0);
 
                 // copy attributes
                 if (ret) {
                     const bu_attribute_value_set* origAvs = object.GetAvs();
 
-                    if ((origAvs != 0) && (origAvs->count > 0)) {
+                    if ((origAvs != nullptr) && (origAvs->count > 0)) {
                         directory* pDir = db_lookup(m_rtip->rti_dbip, object.Name(), LOOKUP_NOISE);
 
-                        assert(pDir != 0);
+                        assert(pDir != nullptr);
 
-                        if (pDir != 0) {
+                        if (pDir != nullptr) {
                             bu_attribute_value_set avs;
                             bu_avs_init(&avs, origAvs->count, "BRLCAD::Database::Add");
 
@@ -319,7 +319,7 @@ void Database::Delete
 (
     const char* objectName
 ) {
-    if (m_wdbp != 0) {
+    if (m_wdbp != nullptr) {
         if (!BU_SETJUMP) {
             directory* pDir = db_lookup(m_rtip->rti_dbip, objectName, LOOKUP_NOISE);
 
@@ -376,4 +376,4 @@ bool Database::Set
 }
 
 
-Database::Database(void) : ConstDatabase(), m_wdbp(0) {}
+Database::Database(void) : ConstDatabase(), m_wdbp(nullptr) {}

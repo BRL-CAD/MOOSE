@@ -46,7 +46,7 @@ static int NullLogger
 static struct BrlCadGlobal {
     BrlCadGlobal() {
         if (!BU_SETJUMP)
-            bu_log_add_hook(NullLogger, 0);
+            bu_log_add_hook(NullLogger, nullptr);
 
         BU_UNSETJUMP;
     }

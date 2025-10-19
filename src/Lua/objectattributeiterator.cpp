@@ -40,7 +40,7 @@ static BRLCAD::Object::AttributeIterator& GetObjectAttributeIterator
 ) {
     BRLCAD::Object::AttributeIterator** object = static_cast<BRLCAD::Object::AttributeIterator**>(luaL_testudata(luaState, narg, "BRLCAD.ObjectAttributeIterator"));
 
-    assert((object != 0) && (*object != 0));
+    assert((object != nullptr) && (*object != nullptr));
 
     return **object;
 }
@@ -52,7 +52,7 @@ static int Destruct
 ) {
     BRLCAD::Object::AttributeIterator** object = static_cast<BRLCAD::Object::AttributeIterator**>(luaL_testudata(luaState, 1, "BRLCAD.ObjectAttributeIterator"));
 
-    if ((object != 0) && (*object != 0))
+    if ((object != nullptr) && (*object != nullptr))
         delete *object;
 
     return 0;

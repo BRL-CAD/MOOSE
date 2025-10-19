@@ -47,7 +47,7 @@ static BRLCAD::Halfspace& GetHalfspace
     int        narg
 ) {
     BRLCAD::Halfspace* object = TestHalfspace(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateHalfspace
 (
     lua_State* luaState
 ) {
-    BRLCAD::Halfspace* ret = 0;
+    BRLCAD::Halfspace* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Halfspace* original = TestHalfspace(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::Halfspace(*original);
         else {
             BRLCAD::Vector3D normal             = GetVector3D(luaState, 1);
@@ -72,7 +72,7 @@ int CreateHalfspace
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Halfspace();
 
     return PushHalfspace(luaState, ret, true);
@@ -85,7 +85,7 @@ static int Destruct
 ) {
     ScriptHalfspace* scriptObject = static_cast<ScriptHalfspace*>(luaL_testudata(luaState, 1, "BRLCAD.Halfspace"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -233,7 +233,7 @@ int PushHalfspace
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptHalfspace* scriptObject = static_cast<ScriptHalfspace*>(lua_newuserdata(luaState, sizeof(ScriptHalfspace)));
 
         scriptObject->object = object;
@@ -254,10 +254,10 @@ BRLCAD::Halfspace* TestHalfspace
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Halfspace* ret          = 0;
+    BRLCAD::Halfspace* ret          = nullptr;
     ScriptHalfspace*   scriptObject = static_cast<ScriptHalfspace*>(luaL_testudata(luaState, narg, "BRLCAD.Halfspace"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

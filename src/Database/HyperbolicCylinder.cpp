@@ -89,7 +89,7 @@ HyperbolicCylinder::HyperbolicCylinder
 
 
 HyperbolicCylinder::~HyperbolicCylinder(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         bu_free(m_internalp, "BRLCAD::HyperbolicCylinder::~HyperbolicCylinder::m_internalp");
 }
 
@@ -195,9 +195,9 @@ const Object& HyperbolicCylinder::operator=
     const Object& original
 ) {
     const HyperbolicCylinder* rhc = dynamic_cast<const HyperbolicCylinder*>(&original);
-    assert(rhc != 0);
+    assert(rhc != nullptr);
 
-    if (rhc != 0)
+    if (rhc != nullptr)
         *this = *rhc;
 
     return *this;
@@ -241,13 +241,13 @@ HyperbolicCylinder::HyperbolicCylinder
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
 
 
 rt_rhc_internal* HyperbolicCylinder::Internal(void) {
     rt_rhc_internal* ret;
 
-    if(m_ip != 0)
+    if(m_ip != nullptr)
         ret = static_cast<rt_rhc_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -261,7 +261,7 @@ rt_rhc_internal* HyperbolicCylinder::Internal(void) {
 const rt_rhc_internal* HyperbolicCylinder::Internal(void) const {
     const rt_rhc_internal* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const rt_rhc_internal*>(m_ip->idb_ptr);
     else
         ret = m_internalp;

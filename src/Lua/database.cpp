@@ -40,10 +40,10 @@ static BRLCAD::MemoryDatabase* TestDatabase
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::MemoryDatabase*  ret      = 0;
+    BRLCAD::MemoryDatabase*  ret      = nullptr;
     BRLCAD::MemoryDatabase** database = static_cast<BRLCAD::MemoryDatabase**>(luaL_testudata(luaState, narg, "BRLCAD.Database"));
 
-    if (database != 0)
+    if (database != nullptr)
         ret = *database;
 
     return ret;
@@ -55,7 +55,7 @@ static BRLCAD::MemoryDatabase& GetDatabase
     lua_State* luaState
 ) {
     BRLCAD::MemoryDatabase* object = TestDatabase(luaState, 1);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -67,9 +67,9 @@ static int Destruct
 ) {
     BRLCAD::MemoryDatabase** database = static_cast<BRLCAD::MemoryDatabase**>(luaL_testudata(luaState, 1, "BRLCAD.Database"));
 
-    if ((database != 0) && (*database != 0)) {
+    if ((database != nullptr) && (*database != nullptr)) {
         delete *database;
-        *database = 0;
+        *database = nullptr;
     }
 
     return 0;
@@ -242,7 +242,7 @@ int CreateDatabase
     BRLCAD::MemoryDatabase* database = new BRLCAD::MemoryDatabase();
 
 
-    if (database != 0) {
+    if (database != nullptr) {
         BRLCAD::MemoryDatabase** scriptDatabase = static_cast<BRLCAD::MemoryDatabase**>(lua_newuserdata(luaState, sizeof(BRLCAD::MemoryDatabase*)));
 
         *scriptDatabase = database;

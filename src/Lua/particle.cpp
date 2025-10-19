@@ -47,7 +47,7 @@ static BRLCAD::Particle& GetParticle
     int        narg
 ) {
     BRLCAD::Particle* object = TestParticle(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateParticle
 (
     lua_State* luaState
 ) {
-    BRLCAD::Particle* ret = 0;
+    BRLCAD::Particle* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::Particle* original = TestParticle(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::Particle(*original);
         else {
             BRLCAD::Vector3D basePoint  = GetVector3D(luaState, 1);
@@ -74,7 +74,7 @@ int CreateParticle
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::Particle();
 
     return PushParticle(luaState, ret, true);
@@ -87,7 +87,7 @@ static int Destruct
 ) {
     ScriptParticle* scriptObject = static_cast<ScriptParticle*>(luaL_testudata(luaState, 1, "BRLCAD.Particle"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -299,7 +299,7 @@ int PushParticle
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptParticle* scriptObject = static_cast<ScriptParticle*>(lua_newuserdata(luaState, sizeof(ScriptParticle)));
 
         scriptObject->object = object;
@@ -320,10 +320,10 @@ BRLCAD::Particle* TestParticle
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::Particle* ret          = 0;
+    BRLCAD::Particle* ret          = nullptr;
     ScriptParticle*   scriptObject = static_cast<ScriptParticle*>(luaL_testudata(luaState, narg, "BRLCAD.Particle"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

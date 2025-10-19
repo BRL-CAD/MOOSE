@@ -44,23 +44,23 @@ bool FileDatabase::Load
 ) {
     bool ret = false;
 
-    if (m_resp != 0) {
-        if (m_rtip != 0) {
+    if (m_resp != nullptr) {
+        if (m_rtip != nullptr) {
             if (!BU_SETJUMP) {
                 DeRegisterCoreCallbacks();
                 rt_free_rti(m_rtip);
             }
 
             BU_UNSETJUMP;
-            m_rtip = 0;
+            m_rtip = nullptr;
         }
 
-        if (m_wdbp != 0) {
+        if (m_wdbp != nullptr) {
             if (!BU_SETJUMP)
                 wdb_close(m_wdbp);
 
             BU_UNSETJUMP;
-            m_wdbp = 0;
+            m_wdbp = nullptr;
         }
 
         if (!BU_SETJUMP) {
@@ -78,17 +78,17 @@ bool FileDatabase::Load
             if (dbip != DBI_NULL) {
                 m_wdbp = wdb_dbopen(dbip, RT_WDB_TYPE_DB_DISK); // takes ownership of dbip
 
-                if (m_wdbp != 0) {
+                if (m_wdbp != nullptr) {
                     m_rtip = rt_new_rti(m_wdbp->dbip);          // clones dbip
 
-                    if (m_rtip != 0) {
+                    if (m_rtip != nullptr) {
                         rt_init_resource(m_resp, 0, m_rtip);
                         RegisterCoreCallbacks();
                         ret = true;
                     }
                     else {
                         wdb_close(m_wdbp);
-                        m_wdbp = 0;
+                        m_wdbp = nullptr;
                     }
                 }
                 else
@@ -96,8 +96,8 @@ bool FileDatabase::Load
             }
         }
         else {
-            m_wdbp = 0;
-            m_rtip = 0;
+            m_wdbp = nullptr;
+            m_rtip = nullptr;
         }
 
         BU_UNSETJUMP;

@@ -47,7 +47,7 @@ static BRLCAD::ParabolicCylinder& GetParabolicCylinder
     int        narg
 ) {
     BRLCAD::ParabolicCylinder* object = TestParabolicCylinder(luaState, narg);
-    assert(object != 0);
+    assert(object != nullptr);
 
     return *object;
 }
@@ -57,12 +57,12 @@ int CreateParabolicCylinder
 (
     lua_State* luaState
 ) {
-    BRLCAD::ParabolicCylinder* ret = 0;
+    BRLCAD::ParabolicCylinder* ret = nullptr;
 
     if (lua_gettop(luaState) > 0) {
         BRLCAD::ParabolicCylinder* original = TestParabolicCylinder(luaState, 1);
 
-        if (original != 0)
+        if (original != nullptr)
             ret = new BRLCAD::ParabolicCylinder(*original);
         else {
             BRLCAD::Vector3D basePoint = GetVector3D(luaState, 1);
@@ -74,7 +74,7 @@ int CreateParabolicCylinder
         }
     }
 
-    if (ret == 0)
+    if (ret == nullptr)
         ret = new BRLCAD::ParabolicCylinder();
 
     return PushParabolicCylinder(luaState, ret, true);
@@ -87,7 +87,7 @@ static int Destruct
 ) {
     ScriptParabolicCylinder* scriptObject = static_cast<ScriptParabolicCylinder*>(luaL_testudata(luaState, 1, "BRLCAD.ParabolicCylinder"));
 
-    if ((scriptObject != 0) && (scriptObject->object != 0) && scriptObject->own)
+    if ((scriptObject != nullptr) && (scriptObject->object != nullptr) && scriptObject->own)
         scriptObject->object->Destroy();
 
     return 0;
@@ -303,7 +303,7 @@ int PushParabolicCylinder
 ) {
     int ret = 0;
 
-    if (object != 0) {
+    if (object != nullptr) {
         ScriptParabolicCylinder* scriptObject = static_cast<ScriptParabolicCylinder*>(lua_newuserdata(luaState, sizeof(ScriptParabolicCylinder)));
 
         scriptObject->object = object;
@@ -324,10 +324,10 @@ BRLCAD::ParabolicCylinder* TestParabolicCylinder
     lua_State* luaState,
     int        narg
 ) {
-    BRLCAD::ParabolicCylinder* ret          = 0;
+    BRLCAD::ParabolicCylinder* ret          = nullptr;
     ScriptParabolicCylinder*   scriptObject = static_cast<ScriptParabolicCylinder*>(luaL_testudata(luaState, narg, "BRLCAD.ParabolicCylinder"));
 
-    if (scriptObject != 0)
+    if (scriptObject != nullptr)
         ret = scriptObject->object;
 
     return ret;

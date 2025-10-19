@@ -41,13 +41,13 @@ using namespace BRLCAD;
 Vector3D NonManifoldGeometry::Vertex::Point(void) const {
     Vector3D ret;
 
-    if (m_vertex != 0) {
+    if (m_vertex != nullptr) {
         NMG_CK_VERTEXUSE(m_vertex);
 
-        if (m_vertex->v_p != 0) {
+        if (m_vertex->v_p != nullptr) {
             NMG_CK_VERTEX(m_vertex->v_p);
 
-            if (m_vertex->v_p->vg_p != 0) {
+            if (m_vertex->v_p->vg_p != nullptr) {
                 NMG_CK_VERTEX_G(m_vertex->v_p->vg_p);
 
                 ret = Vector3D(m_vertex->v_p->vg_p->coord);
@@ -66,10 +66,10 @@ Vector3D NonManifoldGeometry::Vertex::Point(void) const {
 NonManifoldGeometry::Vertex NonManifoldGeometry::Edge::ForwardVertex(void) const {
     Vertex ret;
 
-    if (m_edge != 0) {
+    if (m_edge != nullptr) {
         NMG_CK_EDGEUSE(m_edge);
 
-        if (m_edge->vu_p != 0) {
+        if (m_edge->vu_p != nullptr) {
             NMG_CK_VERTEXUSE(m_edge->vu_p);
 
             ret.m_vertex = m_edge->vu_p;
@@ -83,13 +83,13 @@ NonManifoldGeometry::Vertex NonManifoldGeometry::Edge::ForwardVertex(void) const
 NonManifoldGeometry::Vertex NonManifoldGeometry::Edge::BackwardVertex(void) const {
     Vertex ret;
 
-    if (m_edge != 0) {
+    if (m_edge != nullptr) {
         NMG_CK_EDGEUSE(m_edge);
 
-        if (m_edge->eumate_p != 0) {
+        if (m_edge->eumate_p != nullptr) {
             NMG_CK_EDGEUSE(m_edge->eumate_p);
 
-            if (m_edge->eumate_p->vu_p != 0) {
+            if (m_edge->eumate_p->vu_p != nullptr) {
                 NMG_CK_VERTEXUSE(m_edge->eumate_p->vu_p);
 
                 ret.m_vertex = m_edge->eumate_p->vu_p;
@@ -108,7 +108,7 @@ NonManifoldGeometry::Vertex NonManifoldGeometry::Edge::BackwardVertex(void) cons
 bool NonManifoldGeometry::Loop::IsHole(void) const {
     bool ret = false;
 
-    if (m_loop != 0) {
+    if (m_loop != nullptr) {
         NMG_CK_LOOPUSE(m_loop);
 
         if (m_loop->orientation == OT_OPPOSITE)
@@ -120,29 +120,29 @@ bool NonManifoldGeometry::Loop::IsHole(void) const {
 
 
 void NonManifoldGeometry::Loop::GotoFirstEdge(void) {
-    m_currentEdge = 0;
+    m_currentEdge = nullptr;
 
-    if (m_loop != 0) {
+    if (m_loop != nullptr) {
         NMG_CK_LOOPUSE(m_loop);
 
         if (BU_LIST_FIRST_MAGIC(&m_loop->down_hd) == NMG_EDGEUSE_MAGIC) {
             m_currentEdge = BU_LIST_FIRST(edgeuse, &m_loop->down_hd);
 
-            if ((m_currentEdge == 0) || BU_LIST_IS_HEAD(m_currentEdge, &m_loop->down_hd))
-                m_currentEdge = 0;
+            if ((m_currentEdge != nullptr) && BU_LIST_IS_HEAD(m_currentEdge, &m_loop->down_hd))
+                m_currentEdge = nullptr;
         }
     }
 }
 
 
 const NonManifoldGeometry::Loop& NonManifoldGeometry::Loop::operator++(void) {
-    if ((m_loop != 0) && (m_currentEdge != 0)) {
+    if ((m_loop != nullptr) && (m_currentEdge != nullptr)) {
         NMG_CK_LOOPUSE(m_loop);
 
         m_currentEdge = BU_LIST_PNEXT(edgeuse, m_currentEdge);
 
-        if ((m_currentEdge == 0) || BU_LIST_IS_HEAD(m_currentEdge, &m_loop->down_hd))
-            m_currentEdge = 0;
+        if ((m_currentEdge != nullptr) && BU_LIST_IS_HEAD(m_currentEdge, &m_loop->down_hd))
+            m_currentEdge = nullptr;
     }
 
     return *this;
@@ -152,7 +152,7 @@ const NonManifoldGeometry::Loop& NonManifoldGeometry::Loop::operator++(void) {
 NonManifoldGeometry::Edge NonManifoldGeometry::Loop::CurrentEdge(void) const {
     Edge ret;
 
-    if (m_currentEdge != 0) {
+    if (m_currentEdge != nullptr) {
         NMG_CK_EDGEUSE(m_currentEdge);
 
         ret.m_edge = m_currentEdge;
@@ -167,27 +167,27 @@ NonManifoldGeometry::Edge NonManifoldGeometry::Loop::CurrentEdge(void) const {
 //
 
 void NonManifoldGeometry::Face::GotoFirstLoop(void){
-    m_currentLoop = 0;
+    m_currentLoop = nullptr;
 
-    if (m_face != 0) {
+    if (m_face != nullptr) {
         NMG_CK_FACEUSE(m_face);
 
         m_currentLoop = BU_LIST_FIRST(loopuse, &m_face->lu_hd);
 
-        if ((m_currentLoop == 0) || BU_LIST_IS_HEAD(m_currentLoop, &m_face->lu_hd))
-            m_currentLoop = 0;
+        if ((m_currentLoop != nullptr) && BU_LIST_IS_HEAD(m_currentLoop, &m_face->lu_hd))
+            m_currentLoop = nullptr;
     }
 }
 
 
 const NonManifoldGeometry::Face& NonManifoldGeometry::Face::operator++(void) {
-    if ((m_face != 0) && (m_currentLoop != 0)) {
+    if ((m_face != nullptr) && (m_currentLoop != nullptr)) {
         NMG_CK_FACEUSE(m_face);
 
         m_currentLoop = BU_LIST_PNEXT(loopuse, m_currentLoop);
 
-        if ((m_currentLoop == 0) || BU_LIST_IS_HEAD(m_currentLoop, &m_face->lu_hd))
-            m_currentLoop = 0;
+        if ((m_currentLoop != nullptr) && BU_LIST_IS_HEAD(m_currentLoop, &m_face->lu_hd))
+            m_currentLoop = nullptr;
     }
 
     return *this;
@@ -197,7 +197,7 @@ const NonManifoldGeometry::Face& NonManifoldGeometry::Face::operator++(void) {
 NonManifoldGeometry::Loop NonManifoldGeometry::Face::CurrentLoop(void) const {
     Loop ret;
 
-    if (m_currentLoop != 0) {
+    if (m_currentLoop != nullptr) {
         NMG_CK_LOOPUSE(m_currentLoop);
 
         ret.m_loop = m_currentLoop;
@@ -212,21 +212,21 @@ NonManifoldGeometry::Loop NonManifoldGeometry::Face::CurrentLoop(void) const {
 //
 
 void NonManifoldGeometry::Shell::GotoFirstFace(void) {
-    m_currentFace = 0;
+    m_currentFace = nullptr;
 
-    if (m_shell != 0) {
+    if (m_shell != nullptr) {
         NMG_CK_SHELL(m_shell);
 
         m_currentFace = BU_LIST_FIRST(faceuse, &m_shell->fu_hd);
 
-        if ((m_currentFace == 0) || BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
-            m_currentFace = 0;
+        if ((m_currentFace != nullptr) && BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
+            m_currentFace = nullptr;
         else {
-            while ((m_currentFace != 0) && (m_currentFace->orientation != OT_SAME)) {
+            while ((m_currentFace != nullptr) && (m_currentFace->orientation != OT_SAME)) {
                 m_currentFace = BU_LIST_PNEXT(faceuse, m_currentFace);
 
-                if ((m_currentFace == 0) || BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
-                    m_currentFace = 0;
+                if ((m_currentFace != nullptr) && BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
+                    m_currentFace = nullptr;
             }
         }
     }
@@ -234,19 +234,19 @@ void NonManifoldGeometry::Shell::GotoFirstFace(void) {
 
 
 const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextFace(void) {
-    if ((m_shell != 0) && (m_currentFace != 0)) {
+    if ((m_shell != nullptr) && (m_currentFace != nullptr)) {
         NMG_CK_SHELL(m_shell);
 
         m_currentFace = BU_LIST_PNEXT(faceuse, m_currentFace);
 
-        if ((m_currentFace == 0) || BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
-            m_currentFace = 0;
+        if ((m_currentFace != nullptr) && BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
+            m_currentFace = nullptr;
         else {
-            while ((m_currentFace != 0) && (m_currentFace->orientation != OT_SAME)) {
+            while ((m_currentFace != nullptr) && (m_currentFace->orientation != OT_SAME)) {
                 m_currentFace = BU_LIST_PNEXT(faceuse, m_currentFace);
 
-                if ((m_currentFace == 0) || BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
-                    m_currentFace = 0;
+                if ((m_currentFace != nullptr) && BU_LIST_IS_HEAD(m_currentFace, &m_shell->fu_hd))
+                    m_currentFace = nullptr;
             }
         }
     }
@@ -258,7 +258,7 @@ const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextFace(void)
 NonManifoldGeometry::Face NonManifoldGeometry::Shell::CurrentFace(void) const {
     Face ret;
 
-    if (m_currentFace != 0) {
+    if (m_currentFace != nullptr) {
         NMG_CK_FACEUSE(m_currentFace);
 
         ret.m_face = m_currentFace;
@@ -269,27 +269,27 @@ NonManifoldGeometry::Face NonManifoldGeometry::Shell::CurrentFace(void) const {
 
 
 void NonManifoldGeometry::Shell::GotoFirstLoop(void) {
-    m_currentLoop = 0;
+    m_currentLoop = nullptr;
 
-    if (m_shell != 0) {
+    if (m_shell != nullptr) {
         NMG_CK_SHELL(m_shell);
 
         m_currentLoop = BU_LIST_FIRST(loopuse, &m_shell->lu_hd);
 
-        if ((m_currentLoop == 0) || BU_LIST_IS_HEAD(m_currentLoop, &m_shell->lu_hd))
-            m_currentLoop = 0;
+        if ((m_currentLoop != nullptr) && BU_LIST_IS_HEAD(m_currentLoop, &m_shell->lu_hd))
+            m_currentLoop = nullptr;
     }
 }
 
 
 const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextLoop(void) {
-    if ((m_shell != 0) && (m_currentLoop != 0)) {
+    if ((m_shell != nullptr) && (m_currentLoop != nullptr)) {
         NMG_CK_SHELL(m_shell);
 
         m_currentLoop = BU_LIST_PNEXT(loopuse, m_currentLoop);
 
-        if ((m_currentLoop == 0) || BU_LIST_IS_HEAD(m_currentLoop, &m_shell->lu_hd))
-            m_currentLoop = 0;
+        if ((m_currentLoop != nullptr) && BU_LIST_IS_HEAD(m_currentLoop, &m_shell->lu_hd))
+            m_currentLoop = nullptr;
     }
 
     return *this;
@@ -299,7 +299,7 @@ const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextLoop(void)
 NonManifoldGeometry::Loop NonManifoldGeometry::Shell::CurrentLoop(void) const {
     Loop ret;
 
-    if (m_currentLoop != 0) {
+    if (m_currentLoop != nullptr) {
         NMG_CK_LOOPUSE(m_currentLoop);
 
         ret.m_loop = m_currentLoop;
@@ -310,27 +310,27 @@ NonManifoldGeometry::Loop NonManifoldGeometry::Shell::CurrentLoop(void) const {
 
 
 void NonManifoldGeometry::Shell::GotoFirstEdge(void) {
-    m_currentEdge = 0;
+    m_currentEdge = nullptr;
 
-    if (m_shell != 0) {
+    if (m_shell != nullptr) {
         NMG_CK_SHELL(m_shell);
 
         m_currentEdge = BU_LIST_FIRST(edgeuse, &m_shell->eu_hd);
 
-        if ((m_currentEdge == 0) || BU_LIST_IS_HEAD(m_currentEdge, &m_shell->eu_hd))
-            m_currentEdge = 0;
+        if ((m_currentEdge != nullptr) && BU_LIST_IS_HEAD(m_currentEdge, &m_shell->eu_hd))
+            m_currentEdge = nullptr;
     }
 }
 
 
 const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextEdge(void) {
-    if ((m_shell != 0) && (m_currentEdge != 0)) {
+    if ((m_shell != nullptr) && (m_currentEdge != nullptr)) {
         NMG_CK_SHELL(m_shell);
 
         m_currentEdge = BU_LIST_PNEXT(edgeuse, m_currentEdge);
 
-        if ((m_currentEdge == 0) || BU_LIST_IS_HEAD(m_currentEdge, &m_shell->eu_hd))
-            m_currentEdge = 0;
+        if ((m_currentEdge != nullptr) && BU_LIST_IS_HEAD(m_currentEdge, &m_shell->eu_hd))
+            m_currentEdge = nullptr;
     }
 
     return *this;
@@ -340,7 +340,7 @@ const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextEdge(void)
 NonManifoldGeometry::Edge NonManifoldGeometry::Shell::CurrentEdge(void) const {
     Edge ret;
 
-    if (m_currentEdge != 0) {
+    if (m_currentEdge != nullptr) {
         NMG_CK_EDGEUSE(m_currentEdge);
 
         ret.m_edge = m_currentEdge;
@@ -351,9 +351,9 @@ NonManifoldGeometry::Edge NonManifoldGeometry::Shell::CurrentEdge(void) const {
 
 
 void NonManifoldGeometry::Shell::GotoFirstVertex(void) {
-    m_currentVertex = 0;
+    m_currentVertex = nullptr;
 
-    if (m_shell != 0) {
+    if (m_shell != nullptr) {
         NMG_CK_SHELL(m_shell);
 
         m_currentVertex = m_shell->vu_p;
@@ -362,7 +362,7 @@ void NonManifoldGeometry::Shell::GotoFirstVertex(void) {
 
 
 const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextVertex(void) {
-    m_currentVertex = 0;
+    m_currentVertex = nullptr;
 
     return *this;
 }
@@ -371,7 +371,7 @@ const NonManifoldGeometry::Shell& NonManifoldGeometry::Shell::GotoNextVertex(voi
 NonManifoldGeometry::Vertex NonManifoldGeometry::Shell::CurrentVertex(void) const {
     Vertex ret;
 
-    if (m_currentVertex != 0) {
+    if (m_currentVertex != nullptr) {
         NMG_CK_VERTEXUSE(m_currentVertex);
 
         ret.m_vertex = m_currentVertex;
@@ -386,27 +386,27 @@ NonManifoldGeometry::Vertex NonManifoldGeometry::Shell::CurrentVertex(void) cons
 //
 
 void NonManifoldGeometry::Region::GotoFirstShell(void) {
-    m_currentShell = 0;
+    m_currentShell = nullptr;
 
-    if (m_region != 0) {
+    if (m_region != nullptr) {
         NMG_CK_REGION(m_region);
 
         m_currentShell = BU_LIST_FIRST(shell, &m_region->s_hd);
 
-        if ((m_currentShell == 0) || BU_LIST_IS_HEAD(m_currentShell, &m_region->s_hd))
-            m_currentShell = 0;
+        if ((m_currentShell != nullptr) && BU_LIST_IS_HEAD(m_currentShell, &m_region->s_hd))
+            m_currentShell = nullptr;
     }
 }
 
 
 const NonManifoldGeometry::Region& NonManifoldGeometry::Region::operator++(void) {
-    if ((m_region != 0) && (m_currentShell != 0)) {
+    if ((m_region != nullptr) && (m_currentShell != nullptr)) {
         NMG_CK_REGION(m_region);
 
         m_currentShell = BU_LIST_PNEXT(shell, m_currentShell);
 
-        if ((m_currentShell == 0) || BU_LIST_IS_HEAD(m_currentShell, &m_region->s_hd))
-            m_currentShell = 0;
+        if ((m_currentShell != nullptr) && BU_LIST_IS_HEAD(m_currentShell, &m_region->s_hd))
+            m_currentShell = nullptr;
     }
 
     return *this;
@@ -416,7 +416,7 @@ const NonManifoldGeometry::Region& NonManifoldGeometry::Region::operator++(void)
 NonManifoldGeometry::Shell NonManifoldGeometry::Region::CurrentShell(void) const {
     Shell ret;
 
-    if (m_currentShell != 0) {
+    if (m_currentShell != nullptr) {
         NMG_CK_SHELL(m_currentShell);
 
         ret.m_shell = m_currentShell;
@@ -431,27 +431,27 @@ NonManifoldGeometry::Shell NonManifoldGeometry::Region::CurrentShell(void) const
 //
 
 void NonManifoldGeometry::RegionIterator::GotoFirstRegion(void) {
-    m_currentRegion = 0;
+    m_currentRegion = nullptr;
 
-    if (m_model != 0) {
+    if (m_model != nullptr) {
         NMG_CK_MODEL(m_model);
 
         m_currentRegion = BU_LIST_FIRST(nmgregion, &m_model->r_hd);
 
-        if ((m_currentRegion == 0) || BU_LIST_IS_HEAD(m_currentRegion, &m_model->r_hd))
-            m_currentRegion = 0;
+        if ((m_currentRegion != nullptr) && BU_LIST_IS_HEAD(m_currentRegion, &m_model->r_hd))
+            m_currentRegion = nullptr;
     }
 }
 
 
 const NonManifoldGeometry::RegionIterator& NonManifoldGeometry::RegionIterator::operator++(void) {
-    if ((m_model != 0) && (m_currentRegion != 0)) {
+    if ((m_model != nullptr) && (m_currentRegion != nullptr)) {
         NMG_CK_MODEL(m_model);
 
         m_currentRegion = BU_LIST_PNEXT(nmgregion, m_currentRegion);
 
-        if ((m_currentRegion == 0) || BU_LIST_IS_HEAD(m_currentRegion, &m_model->r_hd))
-            m_currentRegion = 0;
+        if ((m_currentRegion != nullptr) && BU_LIST_IS_HEAD(m_currentRegion, &m_model->r_hd))
+            m_currentRegion = nullptr;
     }
 
     return *this;
@@ -461,7 +461,7 @@ const NonManifoldGeometry::RegionIterator& NonManifoldGeometry::RegionIterator::
 NonManifoldGeometry::Region NonManifoldGeometry::RegionIterator::CurrentRegion(void) const {
     Region ret;
 
-    if (m_currentRegion != 0) {
+    if (m_currentRegion != nullptr) {
         NMG_CK_REGION(m_currentRegion);
 
         ret.m_region = m_currentRegion;
@@ -475,7 +475,7 @@ NonManifoldGeometry::Region NonManifoldGeometry::RegionIterator::CurrentRegion(v
 // class NonManifoldGeometry
 //
 
-NonManifoldGeometry::NonManifoldGeometry(void) : Object(), m_internalp(0) {
+NonManifoldGeometry::NonManifoldGeometry(void) : Object(), m_internalp(nullptr) {
     assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
 
     if (!BU_SETJUMP)
@@ -491,7 +491,7 @@ NonManifoldGeometry::NonManifoldGeometry(void) : Object(), m_internalp(0) {
 NonManifoldGeometry::NonManifoldGeometry
 (
     const NonManifoldGeometry& original
-) : Object(original), m_internalp(0) {
+) : Object(original), m_internalp(nullptr) {
     Copy(original);
 
     if (!BU_SETJUMP)
@@ -505,7 +505,7 @@ NonManifoldGeometry::NonManifoldGeometry
 
 
 NonManifoldGeometry::~NonManifoldGeometry(void) {
-    if (m_internalp != 0)
+    if (m_internalp != nullptr)
         nmg_km(m_internalp);
 }
 
@@ -519,7 +519,7 @@ const NonManifoldGeometry& NonManifoldGeometry::operator=
 
         model* nmgModel = Internal();
 
-        if (nmgModel != 0)
+        if (nmgModel != nullptr)
             nmg_km(nmgModel);
 
         if (!BU_SETJUMP)
@@ -530,7 +530,7 @@ const NonManifoldGeometry& NonManifoldGeometry::operator=
 
         BU_UNSETJUMP;
 
-        if (m_ip != 0)
+        if (m_ip != nullptr)
             m_ip->idb_ptr = nmgModel;
         else
             m_internalp = nmgModel;
@@ -616,9 +616,9 @@ const Object& NonManifoldGeometry::operator=
     const Object& original
 ) {
     const NonManifoldGeometry* nmg = dynamic_cast<const NonManifoldGeometry*>(&original);
-    assert(nmg != 0);
+    assert(nmg != nullptr);
 
-    if (nmg != 0)
+    if (nmg != nullptr)
         *this = *nmg;
 
     return *this;
@@ -663,7 +663,7 @@ NonManifoldGeometry::NonManifoldGeometry
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(0) {
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {
     assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
 }
 
@@ -671,7 +671,7 @@ NonManifoldGeometry::NonManifoldGeometry
 const model* NonManifoldGeometry::Internal(void) const {
     const model* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<const model*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
@@ -685,7 +685,7 @@ const model* NonManifoldGeometry::Internal(void) const {
 model* NonManifoldGeometry::Internal(void) {
     model* ret;
 
-    if (m_ip != 0)
+    if (m_ip != nullptr)
         ret = static_cast<model*>(m_ip->idb_ptr);
     else
         ret = m_internalp;
