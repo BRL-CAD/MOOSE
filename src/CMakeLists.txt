@@ -78,7 +78,19 @@ SET(MooseHeaders
     ${MOOSE_BINARY_DIR}/include/brlcad/version.h
 )
 
+SET(VERSION_MAJOR 0)
+SET(VERSION_MINOR 1)
+SET(VERSION_PATCH 0)
+
 IF(MSVC)
+    STRING(TIMESTAMP COMPILATION_YEAR "%Y" UTC)
+    SET(BRLCAD_ICON "${BRLCAD_BASE_DIR}/share/doc/html/manuals/BRL-CAD_gear_logo.ico")
+    CONFIGURE_FILE(brlcad.rc.in "${CMAKE_CURRENT_BINARY_DIR}/brlcad.rc")
+    SET(MooseSources
+        ${MooseSources}
+        "${CMAKE_CURRENT_BINARY_DIR}/brlcad.rc"
+    )
+
     ADD_DEFINITIONS("-DBRLCAD_MOOSE_EXPORT=__declspec(dllexport)")
     SET(MSVC_LIBRARIES
         Ws2_32
