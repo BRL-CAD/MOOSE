@@ -60,7 +60,7 @@
 using namespace BRLCAD;
 
 
-ConstDatabase::ConstDatabase(void) : m_rtip(nullptr), m_resp(nullptr), m_changeSignalHandlers(), m_selfUpdateNref(false) {
+ConstDatabase::ConstDatabase(void) : m_rtip(nullptr), m_resp(nullptr), m_changeSignalHandlers(nullptr), m_selfUpdateNref(false) {
     assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
 
     if (!BU_SETJUMP) {
@@ -76,6 +76,9 @@ ConstDatabase::ConstDatabase(void) : m_rtip(nullptr), m_resp(nullptr), m_changeS
 
 
 ConstDatabase::~ConstDatabase(void) {
+    if (m_changeSignalHandlers != nullptr)
+        free(m_changeSignalHandlers);
+
     if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
             DeRegisterCoreCallbacks();
@@ -741,17 +744,27 @@ void ConstDatabase::RegisterChangeSignalHandler
 (
     ChangeSignalHandler& changeSignalHandler
 ) {
-    size_t i = 0;
+    if (m_changeSignalHandlers != nullptr) {
+        size_t i = 0;
 
-    while (i < m_changeSignalHandlers.size()) {
-        if (m_changeSignalHandlers[i] == &changeSignalHandler)
-            break;
+        while (m_changeSignalHandlers[i] != nullptr) {
+            if (m_changeSignalHandlers[i] == &changeSignalHandler)
+                break;
 
-        ++i;
+            ++i;
+        }
+
+        if (m_changeSignalHandlers[i] == nullptr) {
+            m_changeSignalHandlers        = static_cast<ChangeSignalHandler**>(realloc(m_changeSignalHandlers, (i + 2) * sizeof(ChangeSignalHandler*)));
+            m_changeSignalHandlers[i]     = &changeSignalHandler;
+            m_changeSignalHandlers[i + 1] = nullptr;
+        }
     }
-
-    if (i == m_changeSignalHandlers.size())
-        m_changeSignalHandlers.push_back(&changeSignalHandler);
+    else {
+        m_changeSignalHandlers    = static_cast<ChangeSignalHandler**>(malloc(2 * sizeof(ChangeSignalHandler*)));
+        m_changeSignalHandlers[0] = &changeSignalHandler;
+        m_changeSignalHandlers[1] = nullptr;
+    }
 }
 
 
@@ -759,13 +772,24 @@ void ConstDatabase::DeRegisterChangeSignalHandler
 (
     ChangeSignalHandler& changeSignalHandler
 ) {
-    std::vector<ChangeSignalHandler*>::iterator it = m_changeSignalHandlers.begin();
+    if (m_changeSignalHandlers != nullptr) {
+        size_t i = 0;
 
-    while (it != m_changeSignalHandlers.end()) {
-        if (*it == &changeSignalHandler)
-            it = m_changeSignalHandlers.erase(it);
-        else
-            ++it;
+        while (m_changeSignalHandlers[i] != nullptr) {
+            if (m_changeSignalHandlers[i] == &changeSignalHandler)
+                break;
+
+            ++i;
+        }
+
+        if (m_changeSignalHandlers[i] != nullptr) {
+            while (m_changeSignalHandlers[i] != nullptr) {
+                m_changeSignalHandlers[i] = m_changeSignalHandlers[i + 1];
+                ++i;
+            }
+
+            m_changeSignalHandlers = static_cast<ChangeSignalHandler**>(realloc(m_changeSignalHandlers, (i + 1) * sizeof(ChangeSignalHandler*)));
+        }
     }
 }
 
@@ -949,6 +973,8 @@ void ConstDatabase::SignalChange
     const char* objectName,
     ChangeType  changeType
 ) const {
-    for (size_t i = 0; i < m_changeSignalHandlers.size(); ++i)
-        (*m_changeSignalHandlers[i])(objectName, changeType);
+    if (m_changeSignalHandlers != nullptr) {
+        for (size_t i = 0; m_changeSignalHandlers[i] != nullptr; ++i)
+            (*m_changeSignalHandlers[i])(objectName, changeType);
+    }
 }

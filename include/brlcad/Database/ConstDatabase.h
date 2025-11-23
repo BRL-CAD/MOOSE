@@ -26,8 +26,6 @@
 #ifndef BRLCAD_CONSTDATABASE_INCLUDED
 #define BRLCAD_CONSTDATABASE_INCLUDED
 
-#include <vector>
-
 #include <brlcad/VectorList.h>
 #include <brlcad/Database/Object.h>
 
@@ -198,8 +196,8 @@ namespace BRLCAD {
         void DeRegisterCoreCallbacks(void);
 
     private:
-        std::vector<ChangeSignalHandler*> m_changeSignalHandlers;
-        mutable bool                      m_selfUpdateNref;
+        ChangeSignalHandler** m_changeSignalHandlers;
+        mutable bool          m_selfUpdateNref;
 
         void GetInternal(directory*                                       pDir,
                          const std::function<void(const Object& object)>& callback) const;
