@@ -85,7 +85,8 @@ CommandString::~CommandString(void) {
 
 CommandString::State CommandString::Parse
 (
-    const std::vector<const char*>& arguments
+    size_t      argc,
+    const char* argv[]
 ) {
     CommandString::State ret = CommandString::State::NoDatabase;
 
@@ -93,7 +94,7 @@ CommandString::State CommandString::Parse
         ret = State::InternalError;
 
         if (!BU_SETJUMP) {
-            int gedResult = ged_exec(m_ged, arguments.size(), const_cast<const char**>(arguments.data()));
+            int gedResult = ged_exec(m_ged, argc, argv);
 
             if (gedResult == BRLCAD_OK)
                 ret = State::Success;

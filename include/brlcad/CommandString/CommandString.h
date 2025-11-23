@@ -26,8 +26,6 @@
 #ifndef BRLCAD_COMMANDSTRING_INCLUDED
 #define BRLCAD_COMMANDSTRING_INCLUDED
 
-#include <vector>
-
 #include <brlcad/Database/Database.h>
 
 
@@ -51,7 +49,8 @@ namespace BRLCAD {
             InternalError ///< like a crash, database may be corrupt
         };
 
-        State       Parse(const std::vector<const char*>& arguments);
+        State       Parse(size_t      argc,
+                          const char* argv[]);
 
         const char* Results(void) const;
         size_t      NumberOfResults(void) const;
