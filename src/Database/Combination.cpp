@@ -316,7 +316,7 @@ Combination::TreeNode Combination::TreeNode::Operand(void) {
 void Combination::TreeNode::SetName
 (
     const char* value
-) const {
+) {
     switch (ConvertOperator(m_tree)) {
     case Operator::Leaf:
         if (value != nullptr) {
@@ -351,8 +351,8 @@ void Combination::TreeNode::SetName
 
 void Combination::TreeNode::SetMatrix
 (
-    double value[16]
-) const {
+    const double value[16]
+) {
     if (m_tree->tr_l.tl_mat == nullptr) {
         if (!BU_SETJUMP)
             m_tree->tr_l.tl_mat = bn_mat_dup(value);

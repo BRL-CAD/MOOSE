@@ -106,8 +106,8 @@ namespace BRLCAD {
             TreeNode        LeftOperand(void);                 ///< the left operand of a binary operation
             TreeNode        RightOperand(void);                ///< the right operand of a binary operation
             TreeNode        Operand(void);                     ///< the operand of a unary operation
-            void            SetName(const char* value) const;  ///< sets the name of the operand object in a leaf
-            void            SetMatrix(double value[16]) const; ///< sets the transformation matrix of the operand object in a leaf
+            void            SetName(const char* value);        ///< sets the name of the operand object in a leaf
+            void            SetMatrix(const double value[16]); ///< sets the transformation matrix of the operand object in a leaf
 
             /// applies an operator to this node
             /** - it creates a new node
