@@ -88,14 +88,14 @@ namespace BRLCAD {
             PointDraw(void) : Element(), m_point() {}
             PointDraw(const PointDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
             PointDraw(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PointDraw(void) {}
+            ~PointDraw(void) override {}
 
-            const PointDraw&    operator=(const PointDraw& original);
+            const PointDraw& operator=(const PointDraw& original);
 
-            virtual ElementType Type(void) const;
+            ElementType      Type(void) const override;
 
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
+            Vector3D         Point(void) const;
+            void             SetPoint(const Vector3D& point);
 
         private:
             Vector3D m_point;
@@ -111,14 +111,14 @@ namespace BRLCAD {
             PointSize(void) : Element(), m_size(1.) {}
             PointSize(const PointSize& original) : VectorList::Element(original), m_size(original.m_size) {}
             PointSize(double size) : Element(), m_size(size) {}
-            virtual ~PointSize(void) {}
+            ~PointSize(void) override {}
 
-            const PointSize&    operator=(const PointSize& original);
+            const PointSize& operator=(const PointSize& original);
 
-            virtual ElementType Type(void) const;
+            ElementType      Type(void) const override;
 
-            double              Size(void) const;
-            void                SetSize(double size);
+            double           Size(void) const;
+            void             SetSize(double size);
 
         private:
             double m_size;
@@ -134,14 +134,14 @@ namespace BRLCAD {
             LineMove(void) : Element(), m_point() {}
             LineMove(const LineMove& original) : VectorList::Element(original), m_point(original.m_point) {}
             LineMove(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~LineMove(void) {}
+            ~LineMove(void) override {}
 
-            const LineMove&     operator=(const LineMove& original);
+            const LineMove& operator=(const LineMove& original);
 
-            virtual ElementType Type(void) const;
+            ElementType     Type(void) const override;
 
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
+            Vector3D        Point(void) const;
+            void            SetPoint(const Vector3D& point);
 
         private:
             Vector3D m_point;
@@ -157,14 +157,14 @@ namespace BRLCAD {
             LineDraw(void) : Element(), m_point() {}
             LineDraw(const LineDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
             LineDraw(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~LineDraw(void) {}
+            ~LineDraw(void) override {}
 
-            const LineDraw&     operator=(const LineDraw& original);
+            const LineDraw& operator=(const LineDraw& original);
 
-            virtual ElementType Type(void) const;
+            ElementType     Type(void) const override;
 
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
+            Vector3D        Point(void) const;
+            void            SetPoint(const Vector3D& point);
 
         private:
             Vector3D m_point;
@@ -180,14 +180,14 @@ namespace BRLCAD {
             LineWidth(void) : Element(), m_width(1.) {}
             LineWidth(const LineWidth& original) : VectorList::Element(original), m_width(original.m_width) {}
             LineWidth(double width) : Element(), m_width(width) {}
-            virtual ~LineWidth(void) {}
+            ~LineWidth(void) override {}
 
-            const LineWidth&    operator=(const LineWidth& original);
+            const LineWidth& operator=(const LineWidth& original);
 
-            virtual ElementType Type(void) const;
+            ElementType      Type(void) const override;
 
-            double              Width(void) const;
-            void                SetWidth(double width);
+            double           Width(void) const;
+            void             SetWidth(double width);
 
         private:
             double m_width;
@@ -203,11 +203,11 @@ namespace BRLCAD {
             TriangleStart(void) : Element(), m_normal() {}
             TriangleStart(const TriangleStart& original) : VectorList::Element(original), m_normal(original.m_normal) {}
             TriangleStart(const Vector3D& normal) : Element(), m_normal(normal) {}
-            virtual ~TriangleStart(void) {}
+            ~TriangleStart(void) override {}
 
             const TriangleStart& operator=(const TriangleStart& original);
 
-            virtual ElementType  Type(void) const;
+            ElementType          Type(void) const override;
 
             Vector3D             Normal(void) const;
             void                 SetNormal(const Vector3D& normal);
@@ -226,11 +226,11 @@ namespace BRLCAD {
             TriangleMove(void) : Element(), m_point() {}
             TriangleMove(const TriangleMove& original) : VectorList::Element(original), m_point(original.m_point) {}
             TriangleMove(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~TriangleMove(void) {}
+            ~TriangleMove(void) override {}
 
             const TriangleMove& operator=(const TriangleMove& original);
 
-            virtual ElementType Type(void) const;
+            ElementType         Type(void) const override;
 
             Vector3D            Point(void) const;
             void                SetPoint(const Vector3D& point);
@@ -249,11 +249,11 @@ namespace BRLCAD {
             TriangleDraw(void) : Element(), m_point() {}
             TriangleDraw(const TriangleDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
             TriangleDraw(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~TriangleDraw(void) {}
+            ~TriangleDraw(void) override {}
 
             const TriangleDraw& operator=(const TriangleDraw& original);
 
-            virtual ElementType Type(void) const;
+            ElementType         Type(void) const override;
 
             Vector3D            Point(void) const;
             void                SetPoint(const Vector3D& point);
@@ -272,14 +272,14 @@ namespace BRLCAD {
             TriangleEnd(void) : Element(), m_point() {}
             TriangleEnd(const TriangleEnd& original) : VectorList::Element(original), m_point(original.m_point) {}
             TriangleEnd(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~TriangleEnd(void) {}
+            ~TriangleEnd(void) override {}
 
-            const TriangleEnd&  operator=(const TriangleEnd& original);
+            const TriangleEnd& operator=(const TriangleEnd& original);
 
-            virtual ElementType Type(void) const;
+            ElementType        Type(void) const override;
 
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
+            Vector3D           Point(void) const;
+            void               SetPoint(const Vector3D& point);
 
         private:
             Vector3D m_point;
@@ -295,11 +295,11 @@ namespace BRLCAD {
             TriangleVertexNormal(void) : Element(), m_normal() {}
             TriangleVertexNormal(const TriangleVertexNormal& original) : VectorList::Element(original), m_normal(original.m_normal) {}
             TriangleVertexNormal(const Vector3D& normal) : Element(), m_normal(normal) {}
-            virtual ~TriangleVertexNormal(void) {}
+            ~TriangleVertexNormal(void) override {}
 
             const TriangleVertexNormal& operator=(const TriangleVertexNormal& original);
 
-            virtual ElementType         Type(void) const;
+            ElementType                 Type(void) const override;
 
             Vector3D                    Normal(void) const;
             void                        SetNormal(const Vector3D& normal);
@@ -318,11 +318,11 @@ namespace BRLCAD {
             PolygonStart(void) : Element(), m_normal() {}
             PolygonStart(const PolygonStart& original) : VectorList::Element(original), m_normal(original.m_normal) {}
             PolygonStart(const Vector3D& normal) : Element(), m_normal(normal) {}
-            virtual ~PolygonStart(void) {}
+            ~PolygonStart(void) override {}
 
             const PolygonStart& operator=(const PolygonStart& original);
 
-            virtual ElementType Type(void) const;
+            ElementType         Type(void) const override;
 
             Vector3D            Normal(void) const;
             void                SetNormal(const Vector3D& normal);
@@ -341,11 +341,11 @@ namespace BRLCAD {
             PolygonMove(void) : Element(), m_point() {}
             PolygonMove(const PolygonMove& original) : VectorList::Element(original), m_point(original.m_point) {}
             PolygonMove(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PolygonMove(void) {}
+            ~PolygonMove(void) override {}
 
             const PolygonMove&  operator=(const PolygonMove& original);
 
-            virtual ElementType Type(void) const;
+            ElementType         Type(void) const override;
 
             Vector3D            Point(void) const;
             void                SetPoint(const Vector3D& point);
@@ -364,14 +364,14 @@ namespace BRLCAD {
             PolygonDraw(void) : Element(), m_point() {}
             PolygonDraw(const PolygonDraw& original) : VectorList::Element(original), m_point(original.m_point) {}
             PolygonDraw(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PolygonDraw(void) {}
+            ~PolygonDraw(void) override {}
 
-            const PolygonDraw&  operator=(const PolygonDraw& original);
+            const PolygonDraw& operator=(const PolygonDraw& original);
 
-            virtual ElementType Type(void) const;
+            ElementType        Type(void) const override;
 
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
+            Vector3D           Point(void) const;
+            void               SetPoint(const Vector3D& point);
 
         private:
             Vector3D m_point;
@@ -387,14 +387,14 @@ namespace BRLCAD {
             PolygonEnd(void) : Element(), m_point() {}
             PolygonEnd(const PolygonEnd& original) : VectorList::Element(original), m_point(original.m_point) {}
             PolygonEnd(const Vector3D& point) : Element(), m_point(point) {}
-            virtual ~PolygonEnd(void) {}
+            ~PolygonEnd(void) override {}
 
-            const PolygonEnd&   operator=(const PolygonEnd& original);
+            const PolygonEnd& operator=(const PolygonEnd& original);
 
-            virtual ElementType Type(void) const;
+            ElementType       Type(void) const override;
 
-            Vector3D            Point(void) const;
-            void                SetPoint(const Vector3D& point);
+            Vector3D          Point(void) const;
+            void              SetPoint(const Vector3D& point);
 
         private:
             Vector3D m_point;
@@ -410,11 +410,11 @@ namespace BRLCAD {
             PolygonVertexNormal(void) : Element(), m_normal() {}
             PolygonVertexNormal(const PolygonVertexNormal& original) : VectorList::Element(original), m_normal(original.m_normal) {}
             PolygonVertexNormal(const Vector3D& normal) : Element(), m_normal(normal) {}
-            virtual ~PolygonVertexNormal(void) {}
+            ~PolygonVertexNormal(void) override {}
 
             const PolygonVertexNormal& operator=(const PolygonVertexNormal& original);
 
-            virtual ElementType        Type(void) const;
+            ElementType                Type(void) const override;
 
             Vector3D                   Normal(void) const;
             void                       SetNormal(const Vector3D& normal);
@@ -433,11 +433,11 @@ namespace BRLCAD {
             DisplaySpace(void) : Element(), m_referencePoint() {}
             DisplaySpace(const DisplaySpace& original) : VectorList::Element(original), m_referencePoint(original.m_referencePoint) {}
             DisplaySpace(const Vector3D& referencePoint) : Element(), m_referencePoint(referencePoint) {}
-            virtual ~DisplaySpace(void) {}
+            ~DisplaySpace(void) override {}
 
             const DisplaySpace& operator=(const DisplaySpace& original);
 
-            virtual ElementType Type(void) const;
+            ElementType         Type(void) const override;
 
             Vector3D            ReferencePoint(void) const;
             void                SetReferencePoint(const Vector3D& referencePoint);
@@ -455,11 +455,11 @@ namespace BRLCAD {
         public:
             ModelSpace(void) : Element() {}
             ModelSpace(const ModelSpace& original) : VectorList::Element(original) {}
-            virtual ~ModelSpace(void) {}
+            ~ModelSpace(void) override {}
 
             const ModelSpace& operator=(const ModelSpace& original);
 
-            virtual ElementType Type(void) const;
+            ElementType       Type(void) const override;
 
         private:
             ModelSpace(bv_vlist* chunk,

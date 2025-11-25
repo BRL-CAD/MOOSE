@@ -38,9 +38,9 @@ namespace BRLCAD {
     public:
         Combination(void);
         Combination(const Combination& original);
-        virtual ~Combination(void);
+        ~Combination(void) override;
 
-        const Combination&    operator=(const Combination& original);
+        const Combination& operator=(const Combination& original);
 
         class TreeNode; // part 1/2 of a work-around a bug in i686-apple-darwin9-gcc-4.0.1 (GCC) 4.0.1 (Apple Inc. build 5465)
 
@@ -92,7 +92,7 @@ namespace BRLCAD {
             TreeNode(const TreeNode& original) : ConstTreeNode(original),
                                                          m_internalp(original.m_internalp),
                                                          m_resp(original.m_resp) {}
-            virtual ~TreeNode(void) {}
+            ~TreeNode(void) override {}
 
             const TreeNode& operator=(const TreeNode& original) {
                 ConstTreeNode::operator=(original);
@@ -174,15 +174,15 @@ namespace BRLCAD {
         };
 
 
-        ConstTreeNode         Tree(void) const;
-        TreeNode              Tree(void);
+        ConstTreeNode      Tree(void) const;
+        TreeNode           Tree(void);
 
         /// adds a leaf to the tree
         /** If the tree's root node is not \a Null \a Tree().Apply(Union, leafName) will be performed */
-        void                  AddLeaf(const char* leafName);
+        void               AddLeaf(const char* leafName);
 
-        bool                  IsRegion(void) const;
-        void                  SetIsRegion(bool value);
+        bool               IsRegion(void) const;
+        void               SetIsRegion(bool value);
 
         enum class FastgenType {
             Non,   ///< not a Fastgen region
@@ -190,39 +190,39 @@ namespace BRLCAD {
             Volume
         };
 
-        FastgenType           FastgenRegion(void) const;
-        void                  SetFastgenRegion(FastgenType value);
-        int                   RegionId(void) const;
-        void                  SetRegionId(int value);
-        int                   Aircode(void) const;
-        void                  SetAircode(int value);
-        int                   GiftMaterial(void) const;
-        void                  SetGiftMaterial(int value);
-        int                   LineOfSight(void) const;
-        void                  SetLineOfSight(int value);
-        bool                  HasColor(void) const;
-        void                  SetHasColor(bool value);
-        double                Red(void) const;
-        void                  SetRed(double value);
-        double                Green(void) const;
-        void                  SetGreen(double value);
-        double                Blue(void) const;
-        void                  SetBlue(double value);
-        const char*           Shader(void) const;
-        void                  SetShader(const char* value);
-        bool                  Inherit(void) const; ///< override lower nodes color and shader
-        void                  SetInherit(bool value);
-        const char*           Material(void) const;
-        void                  SetMaterial(const char* value);
-        double                Temperature(void) const;
-        void                  SetTemperature(double value);
+        FastgenType        FastgenRegion(void) const;
+        void               SetFastgenRegion(FastgenType value);
+        int                RegionId(void) const;
+        void               SetRegionId(int value);
+        int                Aircode(void) const;
+        void               SetAircode(int value);
+        int                GiftMaterial(void) const;
+        void               SetGiftMaterial(int value);
+        int                LineOfSight(void) const;
+        void               SetLineOfSight(int value);
+        bool               HasColor(void) const;
+        void               SetHasColor(bool value);
+        double             Red(void) const;
+        void               SetRed(double value);
+        double             Green(void) const;
+        void               SetGreen(double value);
+        double             Blue(void) const;
+        void               SetBlue(double value);
+        const char*        Shader(void) const;
+        void               SetShader(const char* value);
+        bool               Inherit(void) const; ///< override lower nodes color and shader
+        void               SetInherit(bool value);
+        const char*        Material(void) const;
+        void               SetMaterial(const char* value);
+        double             Temperature(void) const;
+        void               SetTemperature(double value);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;
 
     protected:
         Combination(resource*       resp,
@@ -236,8 +236,8 @@ namespace BRLCAD {
         // holds Objects's content if not connected to a database
         rt_comb_internal* m_internalp;
 
-        const rt_comb_internal*   Internal(void) const;
-        virtual rt_comb_internal* Internal(void);
+        const rt_comb_internal* Internal(void) const;
+        rt_comb_internal*       Internal(void);
 
         friend class Database;
     };

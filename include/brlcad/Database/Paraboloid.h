@@ -47,46 +47,46 @@ namespace BRLCAD {
                    double          semiMajorAxisLength,
                    double          semiMinorAxisLength); ///< semi major axis will be unitized and length of semi major axis is given by semiMajorAxisLength
         Paraboloid(const Paraboloid& original);
-        virtual ~Paraboloid(void);
+        ~Paraboloid(void) override;
 
-        const Paraboloid&     operator=(const Paraboloid& original);
+        const Paraboloid&  operator=(const Paraboloid& original);
 
-        Vector3D              BasePoint(void) const;
-        void                  SetBasePoint(const Vector3D& point);
+        Vector3D           BasePoint(void) const;
+        void               SetBasePoint(const Vector3D& point);
 
-        Vector3D              Height(void) const;
-        void                  SetHeight(const Vector3D& height);
+        Vector3D           Height(void) const;
+        void               SetHeight(const Vector3D& height);
 
-        Vector3D              SemiMajorAxis(void) const;
-        void                  SetSemiMajorAxis(const Vector3D& axis);
-        void                  SetSemiMajorAxis(const Vector3D& direction,
-                                               double          length);
+        Vector3D           SemiMajorAxis(void) const;
+        void               SetSemiMajorAxis(const Vector3D& axis);
+        void               SetSemiMajorAxis(const Vector3D& direction,
+                                            double          length);
 
-        Vector3D              SemiMajorAxisDirection(void) const;
-        void                  SetSemiMajorAxisDirection(const Vector3D& direction);
+        Vector3D           SemiMajorAxisDirection(void) const;
+        void               SetSemiMajorAxisDirection(const Vector3D& direction);
 
-        double                SemiMajorAxisLength(void) const;
-        void                  SetSemiMajorAxisLength(double length);
+        double             SemiMajorAxisLength(void) const;
+        void               SetSemiMajorAxisLength(double length);
 
-        double                SemiMinorAxisLength(void) const;
-        void                  SetSemiMinorAxisLength(double length);
+        double             SemiMinorAxisLength(void) const;
+        void               SetSemiMinorAxisLength(double length);
 
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  const Vector3D& semiMajorAxis,
-                                  double          semiMinorAxisLength);
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  const Vector3D& semiMajorAxisDirection,
-                                  double          semiMajorAxisLength,
-                                  double          semiMinorAxisLength);
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               const Vector3D& semiMajorAxis,
+                               double          semiMinorAxisLength);
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               const Vector3D& semiMajorAxisDirection,
+                               double          semiMajorAxisLength,
+                               double          semiMinorAxisLength);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const; ///< checks for positive height, unit length of internal semi major axis vector, semi minor axis is not longer than semi major axis, both are nonzero and height and semi major axis are perpendicular
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override; ///< checks for positive height, unit length of internal semi major axis vector, semi minor axis is not longer than semi major axis, both are nonzero and height and semi major axis are perpendicular
 
     protected:
         Paraboloid(resource*       resp,

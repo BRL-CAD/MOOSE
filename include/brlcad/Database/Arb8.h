@@ -40,25 +40,25 @@ namespace BRLCAD {
         Arb8(const Vector3D& point1,
              const Vector3D& point2,
              const Vector3D& point3,
-             const Vector3D& point4); ///< arb4 constructor
+             const Vector3D& point4);                         ///< arb4 constructor
         Arb8(const Vector3D& point1,
              const Vector3D& point2,
              const Vector3D& point3,
              const Vector3D& point4,
-             const Vector3D& point5); ///< arb5 constructor
+             const Vector3D& point5);                         ///< arb5 constructor
         Arb8(const Vector3D& point1,
              const Vector3D& point2,
              const Vector3D& point3,
              const Vector3D& point4,
              const Vector3D& point5,
-             const Vector3D& point6); ///< arb6 constructor
+             const Vector3D& point6);                         ///< arb6 constructor
         Arb8(const Vector3D& point1,
              const Vector3D& point2,
              const Vector3D& point3,
              const Vector3D& point4,
              const Vector3D& point5,
              const Vector3D& point6,
-             const Vector3D& point7); ///< arb7 constructor
+             const Vector3D& point7);                         ///< arb7 constructor
         Arb8(const Vector3D& point1,
              const Vector3D& point2,
              const Vector3D& point3,
@@ -66,71 +66,71 @@ namespace BRLCAD {
              const Vector3D& point5,
              const Vector3D& point6,
              const Vector3D& point7,
-             const Vector3D& point8); ///< arb8 constructor
+             const Vector3D& point8);                         ///< arb8 constructor
         Arb8(const Vector3D& point1,
-             const Vector3D& point2); ///< rectangular parallel piped constructor
+             const Vector3D& point2);                         ///< rectangular parallel piped constructor
         Arb8(const Arb8& original);
-        virtual ~Arb8(void);
+        ~Arb8(void) override;
 
-        const Arb8&           operator=(const Arb8& original);
+        const Arb8&        operator=(const Arb8& original);
 
         /// number of effective vertices
         /** returns 0 in case of en error */
-        size_t                NumberOfVertices(void) const;
+        size_t             NumberOfVertices(void) const;
 
         /** The argument is the number (1..8) of the vertex as used in the documentation,
             not the index at the storage-structure of an arb8.
             E.g. with an arb4 "number = 3" returns the vertex with index 2
             and "number = 4" returns the vertex with index 4.
         */
-        Vector3D              Point(size_t number) const;
-        void                  SetPoint(size_t    number,
-                                       Vector3D& point);
+        Vector3D           Point(size_t number) const;
+        void               SetPoint(size_t    number,
+                                    Vector3D& point);
 
         /** for convenience one can access the internal storage-structure too */
-        Vector3D              RawPoint(size_t index) const;
-        void                  SetRawPoint(size_t    index,
-                                          Vector3D& point);
+        Vector3D           RawPoint(size_t index) const;
+        void               SetRawPoint(size_t    index,
+                                       Vector3D& point);
 
-        void                  SetPoints(const Vector3D& point1,
-                                        const Vector3D& point2,
-                                        const Vector3D& point3,
-                                        const Vector3D& point4); ///< this becomes an arb4
-        void                  SetPoints(const Vector3D& point1,
-                                        const Vector3D& point2,
-                                        const Vector3D& point3,
-                                        const Vector3D& point4,
-                                        const Vector3D& point5); ///< this becomes an arb5
-        void                  SetPoints(const Vector3D& point1,
-                                        const Vector3D& point2,
-                                        const Vector3D& point3,
-                                        const Vector3D& point4,
-                                        const Vector3D& point5,
-                                        const Vector3D& point6); ///< this becomes an arb6
-        void                  SetPoints(const Vector3D& point1,
-                                        const Vector3D& point2,
-                                        const Vector3D& point3,
-                                        const Vector3D& point4,
-                                        const Vector3D& point5,
-                                        const Vector3D& point6,
-                                        const Vector3D& point7); ///< this becomes an arb7
-        void                  SetPoints(const Vector3D& point1,
-                                        const Vector3D& point2,
-                                        const Vector3D& point3,
-                                        const Vector3D& point4,
-                                        const Vector3D& point5,
-                                        const Vector3D& point6,
-                                        const Vector3D& point7,
-                                        const Vector3D& point8); ///< this becomes an arb8
-        void                  SetPoints(const Vector3D& point1,
-                                        const Vector3D& point2); ///< this becomes an rectangular parallel piped
+        void               SetPoints(const Vector3D& point1,
+                                     const Vector3D& point2,
+                                     const Vector3D& point3,
+                                     const Vector3D& point4); ///< this becomes an arb4
+        void               SetPoints(const Vector3D& point1,
+                                     const Vector3D& point2,
+                                     const Vector3D& point3,
+                                     const Vector3D& point4,
+                                     const Vector3D& point5); ///< this becomes an arb5
+        void               SetPoints(const Vector3D& point1,
+                                     const Vector3D& point2,
+                                     const Vector3D& point3,
+                                     const Vector3D& point4,
+                                     const Vector3D& point5,
+                                     const Vector3D& point6); ///< this becomes an arb6
+        void               SetPoints(const Vector3D& point1,
+                                     const Vector3D& point2,
+                                     const Vector3D& point3,
+                                     const Vector3D& point4,
+                                     const Vector3D& point5,
+                                     const Vector3D& point6,
+                                     const Vector3D& point7); ///< this becomes an arb7
+        void               SetPoints(const Vector3D& point1,
+                                     const Vector3D& point2,
+                                     const Vector3D& point3,
+                                     const Vector3D& point4,
+                                     const Vector3D& point5,
+                                     const Vector3D& point6,
+                                     const Vector3D& point7,
+                                     const Vector3D& point8); ///< this becomes an arb8
+        void               SetPoints(const Vector3D& point1,
+                                     const Vector3D& point2); ///< this becomes an rectangular parallel piped
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const; ///< checks for planarity of faces and direction of face normals
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;      ///< checks for planarity of faces and direction of face normals
 
     protected:
         Arb8(resource*       resp,

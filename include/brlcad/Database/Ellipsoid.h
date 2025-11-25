@@ -36,48 +36,48 @@ struct rt_ell_internal;
 namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT Ellipsoid : public Object {
     public:
-        Ellipsoid(void);                               ///< constructs the unit circle around the origin
+        Ellipsoid(void);                                 ///< constructs the unit circle around the origin
         Ellipsoid(const Vector3D& center,
                   const Vector3D& semiPrincipalAxisA,
                   const Vector3D& semiPrincipalAxisB,
-                  const Vector3D& semiPrincipalAxisC); ///< center and three perpendicular semi-principal-axes
+                  const Vector3D& semiPrincipalAxisC);   ///< center and three perpendicular semi-principal-axes
         Ellipsoid(const Vector3D& center,
                   const Vector3D& semiPrincipalAxis,
-                  double          radius);             ///< center, one semi-principal-axis and radius (body of revolution)
+                  double          radius);               ///< center, one semi-principal-axis and radius (body of revolution)
         Ellipsoid(const Vector3D& center,
-                  double          radius);             ///< sphere with center and radius
+                  double          radius);               ///< sphere with center and radius
         Ellipsoid(const Ellipsoid& original);
-        virtual ~Ellipsoid(void);
+        ~Ellipsoid(void) override;
 
-        const Ellipsoid&      operator=(const Ellipsoid& original);
+        const Ellipsoid&   operator=(const Ellipsoid& original);
 
-        Vector3D              Center(void) const;
-        void                  SetCenter(const Vector3D& center);
+        Vector3D           Center(void) const;
+        void               SetCenter(const Vector3D& center);
 
         /// semi principal axes are accessed by their index (0/1/2 for the vectos a/b/c)*/
-        Vector3D              SemiPrincipalAxis(size_t index) const;
-        void                  SetSemiPrincipalAxis(size_t          index,
-                                                   const Vector3D& semiPrincipalAxis);
+        Vector3D           SemiPrincipalAxis(size_t index) const;
+        void               SetSemiPrincipalAxis(size_t          index,
+                                                const Vector3D& semiPrincipalAxis);
 
-        void                  Set(const Vector3D& center,
-                                  const Vector3D& semiPrincipalAxisA,
-                                  const Vector3D& semiPrincipalAxisB,
-                                  const Vector3D& semiPrincipalAxisC);
-        void                  Set(const Vector3D& center,
-                                  const Vector3D& semiPrincipalAxis,
-                                  double          radius);
-        void                  SetFocals(const Vector3D& focalA,
-                                        const Vector3D& focalB,
-                                        double          majorAxisLength);
-        void                  SetSphere(const Vector3D& center,
-                                        double          radius);
+        void               Set(const Vector3D& center,
+                               const Vector3D& semiPrincipalAxisA,
+                               const Vector3D& semiPrincipalAxisB,
+                               const Vector3D& semiPrincipalAxisC);
+        void               Set(const Vector3D& center,
+                               const Vector3D& semiPrincipalAxis,
+                               double          radius);
+        void               SetFocals(const Vector3D& focalA,
+                                     const Vector3D& focalB,
+                                     double          majorAxisLength);
+        void               SetSphere(const Vector3D& center,
+                                     double          radius);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const; ///< checks if semi-principal axes are perpendicular and if they have positive length
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override; ///< checks if semi-principal axes are perpendicular and if they have positive length
 
     protected:
         Ellipsoid(resource*       resp,

@@ -33,16 +33,16 @@ namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT Unknown : public Object {
     public:
         Unknown(const Unknown& original);
-        virtual ~Unknown(void);
+        ~Unknown(void) override;
 
-        const Unknown&        operator=(const Unknown& original);
+        const Unknown&     operator=(const Unknown& original);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;
 
         // there is nothing special with BRLCAD::Unknown
 

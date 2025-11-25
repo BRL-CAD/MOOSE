@@ -36,14 +36,14 @@ struct rt_rhc_internal;
 namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT HyperbolicCylinder : public Object {
     public:
-        HyperbolicCylinder(void); ///< constructs a hyperbolic cylinder at origin with unit height, unit depth in x direction, unit half width and apex to asymptotes distance of 1
+        HyperbolicCylinder(void);                               ///< constructs a hyperbolic cylinder at origin with unit height, unit depth in x direction, unit half width and apex to asymptotes distance of 1
         HyperbolicCylinder(const Vector3D& basePoint,
                            const Vector3D& height,
                            const Vector3D& depth,
                            double          halfWidth,
                            double          apexAsymptoteDistance);
         HyperbolicCylinder(const HyperbolicCylinder& original);
-        virtual ~HyperbolicCylinder(void);
+        ~HyperbolicCylinder(void) override;
 
         const HyperbolicCylinder& operator=(const HyperbolicCylinder& original);
 
@@ -69,11 +69,11 @@ namespace BRLCAD {
                                       double          apexAsymptoteDistance);
 
         // inherited from BRLCAD::Object
-        virtual const Object&     operator=(const Object& original);
-        virtual Object*           Clone(void) const;
+        const Object&             operator=(const Object& original) override;
+        Object*                   Clone(void) const override;
         static const char*        ClassName(void);
-        virtual const char*       Type(void) const;
-        virtual bool              IsValid(void) const; ///< checks for positive length of height and depth, positive values of half width and apex to asymptotes distance and that height and depth are perpendicular
+        const char*               Type(void) const override;
+        bool                      IsValid(void) const override; ///< checks for positive length of height and depth, positive values of half width and apex to asymptotes distance and that height and depth are perpendicular
 
     protected:
         HyperbolicCylinder(resource*       resp,

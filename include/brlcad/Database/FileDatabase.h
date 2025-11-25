@@ -35,12 +35,12 @@ namespace BRLCAD {
         /// creates a dysfunctional database
         /** Use Load() to enable this object. */
         FileDatabase(void);
-        virtual ~FileDatabase(void);
+        ~FileDatabase(void) override;
 
         /// loads a BRL-CAD database file (*.g)
         /** If the file doesn't exist it will becreated
          *  All changes to the database will be immediately written to this file. */
-        virtual bool Load(const char* fileName);
+        bool Load(const char* fileName) override;
 
     private:
         FileDatabase(const FileDatabase&);                  // not implemented

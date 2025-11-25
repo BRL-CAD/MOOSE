@@ -36,74 +36,74 @@ struct rt_tgc_internal;
 namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT Cone : public Object {
     public:
-        Cone(void);                               ///< constructs a cone at the origin with unit radius and unit height
+        Cone(void);                                                 ///< constructs a cone at the origin with unit radius and unit height
         Cone(const Vector3D& basePoint,
              const Vector3D& height,
              const Vector3D& semiPrincipalAxisA,
              const Vector3D& semiPrincipalAxisB,
              double          ratioCtoA,
-             double          ratioDtoB);          ///< tgc: basePoint, height, two perpendicular semi principal axes of base face and two scalars for the semi principal axes of top face
+             double          ratioDtoB);                            ///< tgc: basePoint, height, two perpendicular semi principal axes of base face and two scalars for the semi principal axes of top face
         Cone(const Vector3D& basePoint,
              const Vector3D& height,
              const Vector3D& semiPrincipalAxisA,
              const Vector3D& semiPrincipalAxisB,
-             double          scale);              ///< tec: basePoint, height, two perpendicular semi principal axes of base face and one ratio for scaling the semi principal axes of top face
+             double          scale);                                ///< tec: basePoint, height, two perpendicular semi principal axes of base face and one ratio for scaling the semi principal axes of top face
         Cone(const Vector3D& basePoint,
              const Vector3D& height,
              const Vector3D& semiPrincipalAxisA,
-             const Vector3D& semiPrincipalAxisB); ///< rec: basePoint, height, two perpendicular semi principal axes of base and top face
+             const Vector3D& semiPrincipalAxisB);                   ///< rec: basePoint, height, two perpendicular semi principal axes of base and top face
         Cone(const Vector3D& basePoint,
              const Vector3D& height,
              double          radiusBase,
-             double          radiusTop);          ///< trc: basePoint, height and two radii for base and top face respectively
+             double          radiusTop);                            ///< trc: basePoint, height and two radii for base and top face respectively
         Cone(const Vector3D& basePoint,
              const Vector3D& height,
-             double          radius);             ///< rcc: basePoint, height and one radius for base and top face
+             double          radius);                               ///< rcc: basePoint, height and one radius for base and top face
         Cone(const Cone& original);
-        virtual ~Cone(void);
+        ~Cone(void) override;
 
-        const Cone&           operator=(const Cone& original);
+        const Cone&        operator=(const Cone& original);
 
-        Vector3D              BasePoint(void) const;
-        void                  SetBasePoint(const Vector3D& basePoint);
+        Vector3D           BasePoint(void) const;
+        void               SetBasePoint(const Vector3D& basePoint);
 
-        Vector3D              Height(void) const;
-        void                  SetHeight(const Vector3D& height);
+        Vector3D           Height(void) const;
+        void               SetHeight(const Vector3D& height);
 
         /// semi principal axes (base and top face) are accessed by their index (0/1/2/3 for the vectos a/b/c/d)
-        Vector3D              SemiPrincipalAxis(size_t index) const;
-        void                  SetSemiPrincipalAxis(size_t          index,
-                                                   const Vector3D& semiPrincipalAxis);
+        Vector3D           SemiPrincipalAxis(size_t index) const;
+        void               SetSemiPrincipalAxis(size_t          index,
+                                                const Vector3D& semiPrincipalAxis);
 
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  const Vector3D& semiPrincipalAxisA,
-                                  const Vector3D& semiPrincipalAxisB,
-                                  double          ratioCtoA,
-                                  double          ratioDtoB);          ///< truncated general cone (tgc)
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  const Vector3D& semiPrincipalAxisA,
-                                  const Vector3D& semiPrincipalAxisB,
-                                  double          scale);              ///< truncated elliptical cone (tec)
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  const Vector3D& semiPrincipalAxisA,
-                                  const Vector3D& semiPrincipalAxisB); ///< right elliptical cylinder (rec)
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  double          radiusBase,
-                                  double          radiusTop);          ///< truncated right cone (trc)
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  double          radius);             ///< right circular cylinder (rcc)
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               const Vector3D& semiPrincipalAxisA,
+                               const Vector3D& semiPrincipalAxisB,
+                               double          ratioCtoA,
+                               double          ratioDtoB);          ///< truncated general cone (tgc)
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               const Vector3D& semiPrincipalAxisA,
+                               const Vector3D& semiPrincipalAxisB,
+                               double          scale);              ///< truncated elliptical cone (tec)
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               const Vector3D& semiPrincipalAxisA,
+                               const Vector3D& semiPrincipalAxisB); ///< right elliptical cylinder (rec)
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               double          radiusBase,
+                               double          radiusTop);          ///< truncated right cone (trc)
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               double          radius);             ///< right circular cylinder (rcc)
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;                     ///< checks if semi-principal axes are perpendicular, if the ones at the base have positive length, if height has positive length and is not in the plane of semi-principal axes and if corresponding base and top semi principal axes are parallel and pointing to the same direction
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;            ///< checks if semi-principal axes are perpendicular, if the ones at the base have positive length, if height has positive length and is not in the plane of semi-principal axes and if corresponding base and top semi principal axes are parallel and pointing to the same direction
 
     protected:
         Cone(resource*       resp,

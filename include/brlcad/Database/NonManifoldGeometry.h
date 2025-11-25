@@ -44,7 +44,7 @@ namespace BRLCAD {
     public:
         NonManifoldGeometry(void);
         NonManifoldGeometry(const NonManifoldGeometry& original);
-        virtual ~NonManifoldGeometry(void);
+        ~NonManifoldGeometry(void) override;
 
         const NonManifoldGeometry& operator=(const NonManifoldGeometry& original);
 
@@ -377,11 +377,11 @@ namespace BRLCAD {
         RegionIterator             Regions(void) const;
 
         // inherited from BRLCAD::Object
-        virtual const Object&      operator=(const Object& original);
-        virtual Object*            Clone(void) const;
+        const Object&              operator=(const Object& original) override;
+        Object*                    Clone(void) const override;
         static const char*         ClassName(void);
-        virtual const char*        Type(void) const;
-        virtual bool               IsValid(void) const;
+        const char*                Type(void) const override;
+        bool                       IsValid(void) const override;
 
     protected:
         NonManifoldGeometry(resource*       resp,

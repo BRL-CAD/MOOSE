@@ -39,9 +39,9 @@ namespace BRLCAD {
     public:
         Pipe(void);
         Pipe(const Pipe& original);
-        virtual ~Pipe(void);
+        ~Pipe(void) override;
 
-        const Pipe&           operator=(const Pipe& original);
+        const Pipe&        operator=(const Pipe& original);
 
         class BRLCAD_MOOSE_EXPORT ControlPoint {
         public:
@@ -82,25 +82,25 @@ namespace BRLCAD {
             friend class Pipe;
         };
 
-        size_t                NumberOfControlPoints(void) const;
-        ControlPoint          GetControlPoint(size_t index);
-        ControlPoint          AppendControlPoint(const Vector3D& point,
-                                                 double          innerDiameter,
-                                                 double          outerDiameter,
-                                                 double          bendRadius);
-        ControlPoint          InsertControlPoint(size_t          index,
-                                                 const Vector3D& point,
-                                                 double          innerDiameter,
-                                                 double          outerDiameter,
-                                                 double          bendRadius);
-        void                  DeleteControlPoint(size_t index);
+        size_t             NumberOfControlPoints(void) const;
+        ControlPoint       GetControlPoint(size_t index);
+        ControlPoint       AppendControlPoint(const Vector3D& point,
+                                              double          innerDiameter,
+                                              double          outerDiameter,
+                                              double          bendRadius);
+        ControlPoint       InsertControlPoint(size_t          index,
+                                              const Vector3D& point,
+                                              double          innerDiameter,
+                                              double          outerDiameter,
+                                              double          bendRadius);
+        void               DeleteControlPoint(size_t index);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;
 
     protected:
         Pipe(resource*       resp,

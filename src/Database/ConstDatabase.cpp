@@ -498,39 +498,39 @@ public:
         assert(m_region != nullptr);
    }
 
-    virtual const char* Name(void) const {
+    const char* Name(void) const override {
         return m_region->reg_name;
     }
 
-    virtual double      DistanceIn(void) const {
+    double      DistanceIn(void) const override {
         return m_partition->pt_inhit->hit_dist;
     }
 
-    virtual double      DistanceOut(void) const {
+    double      DistanceOut(void) const override {
         return m_partition->pt_outhit->hit_dist;
     }
 
-    virtual Vector3D    PointIn(void) const {
+    Vector3D    PointIn(void) const override {
         ComputeInVectors();
         return m_partition->pt_inhit->hit_point;
     }
 
-    virtual Vector3D    PointOut(void) const {
+    Vector3D    PointOut(void) const override {
         ComputeOutVectors();
         return m_partition->pt_outhit->hit_point;
     }
 
-    virtual Vector3D    SurfaceNormalIn(void) const {
+    Vector3D    SurfaceNormalIn(void) const override {
         ComputeInVectors();
         return m_partition->pt_inhit->hit_normal;
     }
 
-    virtual Vector3D    SurfaceNormalOut(void) const {
+    Vector3D    SurfaceNormalOut(void) const override {
         ComputeOutVectors();
         return m_partition->pt_outhit->hit_normal;
     }
 
-    virtual Curvature3D SurfaceCurvatureIn(void) const {
+    Curvature3D SurfaceCurvatureIn(void) const override {
         ComputeInVectors();
 
         curvature curv;
@@ -539,7 +539,7 @@ public:
         return Curvature3D(curv.crv_pdir, curv.crv_c1, curv.crv_c2);
     }
 
-    virtual Curvature3D SurfaceCurvatureOut(void) const {
+    Curvature3D SurfaceCurvatureOut(void) const override {
         ComputeOutVectors();
 
         curvature curv;
@@ -548,33 +548,33 @@ public:
         return Curvature3D(curv.crv_pdir, curv.crv_c1, curv.crv_c2);
     }
 
-    virtual Mapping2D   Surface2DMappingIn(void) const {
+    Mapping2D   Surface2DMappingIn(void) const override {
         uvcoord uv;
         RT_HIT_UVCOORD(m_application, m_partition->pt_inseg->seg_stp, m_partition->pt_inhit, &uv);
 
         return Mapping2D(Vector2D(uv.uv_u, uv.uv_v), Vector2D(uv.uv_du, uv.uv_dv));
     }
 
-    virtual Mapping2D   Surface2DMappingOut(void) const {
+    Mapping2D   Surface2DMappingOut(void) const override {
         uvcoord uv;
         RT_HIT_UVCOORD(m_application, m_partition->pt_outseg->seg_stp, m_partition->pt_outhit, &uv);
 
         return Mapping2D(Vector2D(uv.uv_u, uv.uv_v), Vector2D(uv.uv_du, uv.uv_dv));
     }
 
-    virtual bool        HasColor(void) const {
+    bool        HasColor(void) const override {
         return (m_region->reg_mater.ma_color_valid != 0);
     }
 
-    virtual double      Red(void) const {
+    double      Red(void) const override {
         return m_region->reg_mater.ma_color[0];
     }
 
-    virtual double      Green(void) const {
+    double      Green(void) const override {
         return m_region->reg_mater.ma_color[1];
     }
 
-    virtual double      Blue(void) const {
+    double      Blue(void) const override {
         return m_region->reg_mater.ma_color[2];
     }
 

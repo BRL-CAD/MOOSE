@@ -36,13 +36,13 @@ struct rt_rpc_internal;
 namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT ParabolicCylinder : public Object {
     public:
-        ParabolicCylinder(void); ///< Constructs a parabolic cylinder at origin with unit height unit depth and unit half width
+        ParabolicCylinder(void);                               ///< Constructs a parabolic cylinder at origin with unit height unit depth and unit half width
         ParabolicCylinder(const Vector3D& basePoint,
                           const Vector3D& height,
                           const Vector3D& depth,
                           double          halfWidth);
         ParabolicCylinder(const ParabolicCylinder& original);
-        virtual ~ParabolicCylinder(void);
+        ~ParabolicCylinder(void) override;
 
         const ParabolicCylinder& operator=(const ParabolicCylinder& original);
 
@@ -64,11 +64,11 @@ namespace BRLCAD {
                                      double          halfWidth);
 
         // inherited from BRLCAD::Object
-        virtual const Object&    operator=(const Object& original);
-        virtual Object*          Clone(void) const;
+        const Object&            operator=(const Object& original) override;
+        Object*                  Clone(void) const override;
         static const char*       ClassName(void);
-        virtual const char*      Type(void) const;
-        virtual bool             IsValid(void) const; ///< checks for positive length of height and depth, positive value of half width and that height and depth are perpendicular
+        const char*              Type(void) const override;
+        bool                     IsValid(void) const override; ///< checks for positive length of height and depth, positive value of half width and that height and depth are perpendicular
 
     protected:
         ParabolicCylinder(resource*       resp,

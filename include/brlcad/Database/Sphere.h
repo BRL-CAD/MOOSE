@@ -40,23 +40,23 @@ namespace BRLCAD {
         Sphere(const  Vector3D& center,
                double radius);
         Sphere(const Sphere& original);
-        virtual ~Sphere(void);
+        ~Sphere(void) override;
 
-        const Sphere&         operator=(const Sphere& original);
+        const Sphere&      operator=(const Sphere& original);
 
-        Vector3D              Center(void) const;
-        void                  SetCenter(const Vector3D& normal);
-        double                Radius(void) const;
-        void                  SetRadius(double distance);
-        void                  Set(const Vector3D& center,
-                                  double          radius);
+        Vector3D           Center(void) const;
+        void               SetCenter(const Vector3D& normal);
+        double             Radius(void) const;
+        void               SetRadius(double distance);
+        void               Set(const Vector3D& center,
+                               double          radius);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;
 
     protected:
         Sphere(resource*       resp,

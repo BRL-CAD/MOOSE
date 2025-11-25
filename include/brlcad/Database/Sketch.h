@@ -44,9 +44,9 @@ namespace BRLCAD {
     public:
         Sketch(void);
         Sketch(const Sketch& original);
-        virtual ~Sketch(void);
+        ~Sketch(void) override;
 
-        const Sketch&           operator=(const Sketch& original);
+        const Sketch&      operator=(const Sketch& original);
 
         class BRLCAD_MOOSE_EXPORT Segment {
         public:
@@ -84,21 +84,21 @@ namespace BRLCAD {
         public:
             Line(void) : Segment(), m_lineSegment(nullptr) {}
             Line(const Line& original) : Segment(original), m_lineSegment(original.m_lineSegment) {}
-            virtual ~Line(void) {}
+            ~Line(void) override {}
 
-            const Line&         operator=(const Line& original) {
+            const Line& operator=(const Line& original) {
                 Segment::operator=(original);
                 m_lineSegment = original.m_lineSegment;
                 return *this;
             }
 
-            virtual SegmentType Type(void) const;
-            virtual Segment*    Clone(void) const;
+            SegmentType Type(void) const override;
+            Segment*    Clone(void) const override;
 
-            virtual Vector2D    StartPoint(void) const;
-            void                SetStartPoint(const Vector2D& startPoint);
-            virtual Vector2D    EndPoint(void) const;
-            void                SetEndPoint(const Vector2D& endPoint);
+            Vector2D    StartPoint(void) const override;
+            void        SetStartPoint(const Vector2D& startPoint);
+            Vector2D    EndPoint(void) const override;
+            void        SetEndPoint(const Vector2D& endPoint);
 
         private:
             line_seg* m_lineSegment;
@@ -112,30 +112,30 @@ namespace BRLCAD {
         public:
             CircularArc(void) : Segment(), m_circularArcSegment(nullptr) {}
             CircularArc(const CircularArc& original) : Segment(original), m_circularArcSegment(original.m_circularArcSegment) {}
-            virtual ~CircularArc(void) {}
+            ~CircularArc(void) override {}
 
-            const CircularArc&  operator=(const CircularArc& original) {
+            const CircularArc& operator=(const CircularArc& original) {
                 Segment::operator=(original);
                 m_circularArcSegment = original.m_circularArcSegment;
                 return *this;
             }
 
-            virtual SegmentType Type(void) const;
-            virtual Segment*    Clone(void) const;
+            SegmentType        Type(void) const override;
+            Segment*           Clone(void) const override;
 
-            virtual Vector2D    StartPoint(void) const;
-            void                SetStartPoint(const Vector2D& startPoint);
-            virtual Vector2D    EndPoint(void) const;
-            void                SetEndPoint(const Vector2D& endPoint);
+            Vector2D           StartPoint(void) const override;
+            void               SetStartPoint(const Vector2D& startPoint);
+            Vector2D           EndPoint(void) const override;
+            void               SetEndPoint(const Vector2D& endPoint);
 
-            Vector3D            Center(void) const;
-            void                SetCenter(Vector2D c);
-            double              Radius(void) const;
-            void                SetRadius(double radius);
-            bool                CenterIsLeft(void) const;
-            void                SetCenterIsLeft(bool centerIsLeft);
-            bool                ClockwiseOriented(void) const;
-            void                SetClockwiseOriented(bool clockwiseOriented);
+            Vector3D           Center(void) const;
+            void               SetCenter(Vector2D c);
+            double             Radius(void) const;
+            void               SetRadius(double radius);
+            bool               CenterIsLeft(void) const;
+            void               SetCenterIsLeft(bool centerIsLeft);
+            bool               ClockwiseOriented(void) const;
+            void               SetClockwiseOriented(bool clockwiseOriented);
 
         private:
             carc_seg* m_circularArcSegment;
@@ -149,34 +149,34 @@ namespace BRLCAD {
         public:
             Nurb(void) : Segment(), m_nurbSegment(nullptr) {}
             Nurb(const Nurb& original) : Segment(original), m_nurbSegment(original.m_nurbSegment) {}
-            virtual ~Nurb(void) {}
+            ~Nurb(void) override {}
 
-            const Nurb&         operator=(const Nurb& original) {
+            const Nurb& operator=(const Nurb& original) {
                 Segment::operator=(original);
                 m_nurbSegment = original.m_nurbSegment;
                 return *this;
             }
 
-            virtual SegmentType Type(void) const;
-            virtual Segment*    Clone(void) const;
+            SegmentType Type(void) const override;
+            Segment*    Clone(void) const override;
 
-            virtual Vector2D    StartPoint(void) const;
-            void                SetStartPoint(const Vector2D& startPoint);
-            virtual Vector2D    EndPoint(void) const;
-            void                SetEndPoint(const Vector2D& endPoint);
+            Vector2D    StartPoint(void) const override;
+            void        SetStartPoint(const Vector2D& startPoint);
+            Vector2D    EndPoint(void) const override;
+            void        SetEndPoint(const Vector2D& endPoint);
 
-            size_t              Order(void) const;
-            bool                IsRational(void) const;
-            size_t              NumberOfKnots(void) const;
-            double              Knot(size_t index) const;
-            size_t              NumberOfControlPoints(void) const;
-            Vector2D            ControlPoint(size_t index) const;
-            double              ControlPointWeight(size_t index) const;
+            size_t      Order(void) const;
+            bool        IsRational(void) const;
+            size_t      NumberOfKnots(void) const;
+            double      Knot(size_t index) const;
+            size_t      NumberOfControlPoints(void) const;
+            Vector2D    ControlPoint(size_t index) const;
+            double      ControlPointWeight(size_t index) const;
 
-            void                SetOrder(size_t order);
-            void                AddKnot(double knot);
-            void                AddControlPoint(const Vector2D& Point);
-            void                AddControlPointWeight(const Vector2D& Point, double weight);
+            void        SetOrder(size_t order);
+            void        AddKnot(double knot);
+            void        AddControlPoint(const Vector2D& Point);
+            void        AddControlPointWeight(const Vector2D& Point, double weight);
 
         private:
             nurb_seg* m_nurbSegment;
@@ -191,25 +191,25 @@ namespace BRLCAD {
         public:
             Bezier(void) : Segment(), m_bezierSegment(nullptr) {}
             Bezier(const Bezier& original) : Segment(original), m_bezierSegment(original.m_bezierSegment) {}
-            virtual ~Bezier(void) {}
+            ~Bezier(void) override {}
 
-            const Bezier&       operator=(const Bezier& original) {
+            const Bezier& operator=(const Bezier& original) {
                 Segment::operator=(original);
                 m_bezierSegment = original.m_bezierSegment;
                 return *this;
             }
 
-            virtual SegmentType Type(void) const;
-            virtual Segment*    Clone(void) const;
+            SegmentType   Type(void) const override;
+            Segment*      Clone(void) const override;
 
-            virtual Vector2D    StartPoint(void) const;
-            void                SetStartPoint(const Vector2D& startPoint);
-            virtual Vector2D    EndPoint(void) const;
-            void                SetEndPoint(const Vector2D& endPoint);
+            Vector2D      StartPoint(void) const override;
+            void          SetStartPoint(const Vector2D& startPoint);
+            Vector2D      EndPoint(void) const override;
+            void          SetEndPoint(const Vector2D& endPoint);
 
-            size_t              Degree(void) const;
-            Vector2D            ControlPoint(size_t index) const;
-            void                AddControlPoint(const Vector2D& Point);
+            size_t        Degree(void) const;
+            Vector2D      ControlPoint(size_t index) const;
+            void          AddControlPoint(const Vector2D& Point);
 
         private:
             bezier_seg* m_bezierSegment;
@@ -220,42 +220,42 @@ namespace BRLCAD {
             friend class Sketch;
         };
 
-        size_t                NumberOfSegments(void) const;
+        size_t             NumberOfSegments(void) const;
 
         /// selects a single object and hand it over to an SegmentCallback
-        void                  Get(size_t                                             index,
-                                  const std::function<void(const Segment& segment)>& callback) const;
-        void                  Get(size_t                                       index,
-                                  const std::function<void(Segment& segment)>& callback);
+        void               Get(size_t                                             index,
+                               const std::function<void(const Segment& segment)>& callback) const;
+        void               Get(size_t                                       index,
+                               const std::function<void(Segment& segment)>& callback);
 
         /// overloaded member function, provided for convenience: selects a single segment and and returns it
         /** Do not forget to BRLCAD::Sketch::Segment::Destroy() the copy when you are finished with it! */
-        Segment*              Get(size_t index) const;
+        Segment*           Get(size_t index) const;
 
-        Line*                 AppendLine(void);
-        Line*                 InsertLine(size_t index);
-        CircularArc*          AppendArc(void);
-        CircularArc*          InsertArc(size_t index);
-        Nurb*                 AppendNurb(void);
-        Nurb*                 InsertNurb(size_t index);
-        Bezier*               AppendBezier(void);
-        Bezier*               InsertBezier(size_t index);
+        Line*              AppendLine(void);
+        Line*              InsertLine(size_t index);
+        CircularArc*       AppendArc(void);
+        CircularArc*       InsertArc(size_t index);
+        Nurb*              AppendNurb(void);
+        Nurb*              InsertNurb(size_t index);
+        Bezier*            AppendBezier(void);
+        Bezier*            InsertBezier(size_t index);
 
-        void                  DeleteSegment(size_t index);
+        void               DeleteSegment(size_t index);
 
-        Vector3D              EmbeddingPlaneX(void) const;
-        Vector3D              EmbeddingPlaneY(void) const;
-        void                  SetEmbeddingPlaneX(Vector3D& u);
-        void                  SetEmbeddingPlaneY(Vector3D& v);
-        Vector3D              EmbeddingPlaneOrigin(void) const;
-        void                  SetEmbeddingPlaneOrigin(Vector3D& point);
+        Vector3D           EmbeddingPlaneX(void) const;
+        Vector3D           EmbeddingPlaneY(void) const;
+        void               SetEmbeddingPlaneX(Vector3D& u);
+        void               SetEmbeddingPlaneY(Vector3D& v);
+        Vector3D           EmbeddingPlaneOrigin(void) const;
+        void               SetEmbeddingPlaneOrigin(Vector3D& point);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;
 
     protected:
         Sketch(resource*       resp,

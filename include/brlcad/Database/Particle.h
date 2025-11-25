@@ -36,39 +36,39 @@ struct rt_part_internal;
 namespace BRLCAD {
     class BRLCAD_MOOSE_EXPORT Particle : public Object {
     public:
-        Particle(void);  ///< constructs a particle at the origin with hight (0, 0, 1) and radii 1
+        Particle(void);                                  ///< constructs a particle at the origin with hight (0, 0, 1) and radii 1
         Particle(const Vector3D& basePoint,
                  const Vector3D& height,
                  double          baseRadius,
                  double          topRadius);
         Particle(const Particle& original);
-        virtual ~Particle(void);
+        ~Particle(void) override;
 
-        const Particle&       operator=(const Particle& original);
+        const Particle&    operator=(const Particle& original);
 
-        Vector3D              BasePoint(void) const;
-        void                  SetBasePoint(const Vector3D& basePoint);
+        Vector3D           BasePoint(void) const;
+        void               SetBasePoint(const Vector3D& basePoint);
 
-        Vector3D              Height(void) const;
-        void                  SetHeight(const Vector3D& height);
+        Vector3D           Height(void) const;
+        void               SetHeight(const Vector3D& height);
 
-        double                BaseRadius(void) const;
-        void                  SetBaseRadius(double baseRadius);
+        double             BaseRadius(void) const;
+        void               SetBaseRadius(double baseRadius);
 
-        double                TopRadius(void) const;
-        void                  SetTopRadius(double topRadius);
+        double             TopRadius(void) const;
+        void               SetTopRadius(double topRadius);
 
-        void                  Set(const Vector3D& basePoint,
-                                  const Vector3D& height,
-                                  double          baseRadius,
-                                  double          topRadius);
+        void               Set(const Vector3D& basePoint,
+                               const Vector3D& height,
+                               double          baseRadius,
+                               double          topRadius);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const; ///< checks for positive radii, one radius > 0 and if the height is 0 the radii have to be equal
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override; ///< checks for positive radii, one radius > 0 and if the height is 0 the radii have to be equal
 
     protected:
         Particle(resource*       resp,

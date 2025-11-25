@@ -49,7 +49,7 @@ namespace BRLCAD {
                     double          semiMinorAxisLength,
                     double          apexAsymptoteDistance); ///< semi major axis will be unitized and length of semi major axis is given by semiMajorAxisLength
         Hyperboloid(const Hyperboloid& original);
-        virtual ~Hyperboloid(void);
+        ~Hyperboloid(void) override;
 
         const Hyperboloid&    operator=(const Hyperboloid& original);
 
@@ -89,11 +89,11 @@ namespace BRLCAD {
                                   double          apexAsymptoteDistance);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
+        const Object& operator=(const Object& original) override;
+        Object*       Clone(void) const override;
         static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const; ///< checks for positive height, unit length of internal semi major axis vector, semi minor axis is not longer than semi major axis, both are nonzero, nonzero apex distance, and height and semi major axis are perpendicular
+        const char*   Type(void) const override;
+        bool          IsValid(void) const override;         ///< checks for positive height, unit length of internal semi major axis vector, semi minor axis is not longer than semi major axis, both are nonzero, nonzero apex distance, and height and semi major axis are perpendicular
 
     protected:
         Hyperboloid(resource*       resp,

@@ -51,7 +51,7 @@ namespace BRLCAD {
 
         BagOfTriangles(void);
         BagOfTriangles(const BagOfTriangles& original);
-        virtual ~BagOfTriangles(void);
+        ~BagOfTriangles(void) override;
 
         const BagOfTriangles& operator=(const BagOfTriangles& original);
 
@@ -128,11 +128,11 @@ namespace BRLCAD {
         void                  DeleteFace(size_t index);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
+        const Object&         operator=(const Object& original) override;
+        Object*               Clone(void) const override;
         static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const char*           Type(void) const override;
+        bool                  IsValid(void) const override;
 
     protected:
         BagOfTriangles(resource*       resp,

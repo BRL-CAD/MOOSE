@@ -43,7 +43,7 @@ namespace BRLCAD {
                         const Vector3D& tubeSemiMajorAxis,
                         double          tubeSemiMinorAxisLength); ///< center, normal of unit length (will be unitized of not of unit length), radius of revolution, semi-major axis of ellipse, length semi-minor axis of ellipse
         EllipticalTorus(const EllipticalTorus& original);
-        virtual ~EllipticalTorus(void);
+        ~EllipticalTorus(void) override;
 
         const EllipticalTorus& operator=(const EllipticalTorus& original);
 
@@ -69,11 +69,11 @@ namespace BRLCAD {
                                    double          tubeSemiMinorAxisLength);
 
         // inherited from BRLCAD::Object
-        virtual const Object&  operator=(const Object& original);
-        virtual Object*        Clone(void) const;
+        const Object&          operator=(const Object& original) override;
+        Object*                Clone(void) const override;
         static const char*     ClassName(void);
-        virtual const char*    Type(void) const;
-        virtual bool           IsValid(void) const; ///< checks if normal has positive length, if radii are not 0 and if ellipse not overlap itself when revolved
+        const char*            Type(void) const override;
+        bool                   IsValid(void) const override;      ///< checks if normal has positive length, if radii are not 0 and if ellipse not overlap itself when revolved
 
     protected:
         EllipticalTorus(resource*       resp,

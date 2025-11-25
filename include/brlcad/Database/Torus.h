@@ -42,33 +42,33 @@ namespace BRLCAD {
               double          tubeCenterLineRadius,
               double          tubeRadius); ///< center, normal of unit length (will be unitized of not of unit length), radius and radius of tube
         Torus(const Torus& original);
-        virtual ~Torus(void);
+        ~Torus(void) override;
 
-        const Torus&          operator=(const Torus& original);
+        const Torus&       operator=(const Torus& original);
 
-        Vector3D              Center(void) const;
-        void                  SetCenter(const Vector3D& center);
+        Vector3D           Center(void) const;
+        void               SetCenter(const Vector3D& center);
 
-        Vector3D              Normal(void) const;
-        void                  SetNormal(const Vector3D& normal);
+        Vector3D           Normal(void) const;
+        void               SetNormal(const Vector3D& normal);
 
-        double                TubeCenterLineRadius(void) const;
-        void                  SetTubeCenterLineRadius(double radius);
+        double             TubeCenterLineRadius(void) const;
+        void               SetTubeCenterLineRadius(double radius);
 
-        double                TubeRadius(void) const;
-        void                  SetTubeRadius(double radius);
+        double             TubeRadius(void) const;
+        void               SetTubeRadius(double radius);
 
-        void                  Set(const Vector3D& center,
-                                  const Vector3D& normalToTubeCenterLinePlane,
-                                  double          tubeCenterLineRadius,
-                                  double          tubeRadius);
+        void               Set(const Vector3D& center,
+                               const Vector3D& normalToTubeCenterLinePlane,
+                               double          tubeCenterLineRadius,
+                               double          tubeRadius);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const; ///< checks if normal has length 1, if radii are positive and if tubeCenterLineRadius is at least tubeRadius
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override; ///< checks if normal has length 1, if radii are positive and if tubeCenterLineRadius is at least tubeRadius
 
     protected:
         Torus(resource*       resp,

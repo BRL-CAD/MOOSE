@@ -40,25 +40,25 @@ namespace BRLCAD {
         Halfspace(const  Vector3D& normal,
                   double           distanceFromOrigin);
         Halfspace(const Halfspace& original);
-        virtual ~Halfspace(void);
+        ~Halfspace(void) override;
 
-        const Halfspace&      operator=(const Halfspace& original);
+        const Halfspace&   operator=(const Halfspace& original);
 
-        Vector3D              Normal(void) const;
-        void                  SetNormal(const Vector3D& normal);
+        Vector3D           Normal(void) const;
+        void               SetNormal(const Vector3D& normal);
 
-        double                DistanceFromOrigin(void) const;
-        void                  SetDistanceFromOrigin(double distance);
+        double             DistanceFromOrigin(void) const;
+        void               SetDistanceFromOrigin(double distance);
 
-        void                  Set(const Vector3D& normal,
-                                  double          distanceFromOrigin);
+        void               Set(const Vector3D& normal,
+                               double          distanceFromOrigin);
 
         // inherited from BRLCAD::Object
-        virtual const Object& operator=(const Object& original);
-        virtual Object*       Clone(void) const;
-        static const char*    ClassName(void);
-        virtual const char*   Type(void) const;
-        virtual bool          IsValid(void) const;
+        const Object&      operator=(const Object& original) override;
+        Object*            Clone(void) const override;
+        static const char* ClassName(void);
+        const char*        Type(void) const override;
+        bool               IsValid(void) const override;
 
     protected:
         Halfspace(resource*       resp,

@@ -34,15 +34,15 @@ namespace BRLCAD {
     public:
         /// creates a new in-memory database with default _GLOBAL object
         MemoryDatabase(void);
-        virtual ~MemoryDatabase(void);
+        ~MemoryDatabase(void) override;
 
         /// loads a BRL-CAD database file (*.g) into the memory
         /** The old content of the in-memory database will be discarded.
             The file will be opened for reading only and closed after finishing the operation. */
-        virtual bool Load(const char* fileName);
-        bool         Load(const void* data,
-                          size_t      dataSize);
-        bool         Save(const char* fileName);
+        bool Load(const char* fileName) override;
+        bool Load(const void* data,
+                  size_t      dataSize);
+        bool Save(const char* fileName);
 
     private:
         MemoryDatabase(const MemoryDatabase&);                  // not implemented
