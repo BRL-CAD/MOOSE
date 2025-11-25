@@ -72,7 +72,6 @@ SET(MooseSources
 
 SET(MooseHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/globals.h
-    ${MOOSE_SOURCE_DIR}/include/brlcad/memory.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/vector.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/VectorList.h
     ${MOOSE_BINARY_DIR}/include/brlcad/version.h
