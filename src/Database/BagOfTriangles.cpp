@@ -246,9 +246,6 @@ static void CleanBotInternal
 
     RT_BOT_CK_MAGIC(bot);
 
-    if (bot->tie != nullptr)
-        bot->tie = nullptr;
-
     if (bot->vertices != nullptr) {
         bu_free(bot->vertices, "bot interface CleanBotInternal(): vertices");
         bot->vertices     = nullptr;
