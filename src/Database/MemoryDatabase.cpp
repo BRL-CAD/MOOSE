@@ -44,20 +44,32 @@ MemoryDatabase::MemoryDatabase(void) : Database() {
 
     BU_UNSETJUMP;
 
-    if (!BU_SETJUMP) {
-        m_rtip = rt_new_rti(dbip); // clones dbip
-        rt_init_resource(m_resp, 0, m_rtip);
-        RegisterCoreCallbacks();
-    }
-    else {
+    if (dbip != DBI_NULL) {
+        if (!BU_SETJUMP) {
+            m_wdbp = wdb_dbopen(dbip, RT_WDB_TYPE_DB_INMEM); // takes ownership of dbip
+
+            if (m_wdbp != nullptr) {
+                m_rtip = rt_new_rti(m_wdbp->dbip);           // clones dbip
+
+                if (m_rtip != nullptr) {
+                    rt_init_resource(m_resp, 0, m_rtip);
+                    RegisterCoreCallbacks();
+                }
+                else {
+                    wdb_close(m_wdbp);
+                    m_wdbp = nullptr;
+                }
+            }
+            else
+                db_close(dbip);
+        }
+        else {
+            m_rtip = nullptr;
+            m_wdbp = nullptr;
+        }
+
         BU_UNSETJUMP;
-        db_close(dbip);
-        m_rtip = nullptr;
     }
-
-    BU_UNSETJUMP;
-
-    m_wdbp = dbip->dbi_wdbp_inmem; // takes ownership of dbip
 }
 
 
@@ -92,16 +104,28 @@ bool MemoryDatabase::Load
             db_i* dbip = db_open_inmem();
             RT_CK_DBI(dbip);
 
-            m_rtip = rt_new_rti(dbip);
-            rt_init_resource(m_resp, 0, m_rtip);
-            m_wdbp = dbip->dbi_wdbp_inmem;
+            m_wdbp = wdb_dbopen(dbip, RT_WDB_TYPE_DB_INMEM);
 
-            // fill database
-            ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
+            if (m_wdbp != nullptr) {
+                m_rtip = rt_new_rti(m_wdbp->dbip);
 
-            assert(m_wdbp->dbip == m_rtip->rti_dbip);
-            db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
-            RegisterCoreCallbacks();
+                if (m_rtip != nullptr) {
+                    rt_init_resource(m_resp, 0, m_rtip);
+
+                    // fill database
+                    ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
+
+                    assert(m_wdbp->dbip == m_rtip->rti_dbip);
+                    db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
+                    RegisterCoreCallbacks();
+                }
+                else {
+                    wdb_close(m_wdbp);
+                    m_wdbp = nullptr;
+                }
+            }
+            else
+                db_close(dbip);
 
             rt_free_rti(source);
         }
@@ -142,16 +166,28 @@ bool MemoryDatabase::Load
             db_i* dbip = db_open_inmem();
             RT_CK_DBI(dbip);
 
-            m_rtip = rt_new_rti(dbip);
-            rt_init_resource(m_resp, 0, m_rtip);
-            m_wdbp = dbip->dbi_wdbp_inmem;
+            m_wdbp = wdb_dbopen(dbip, RT_WDB_TYPE_DB_INMEM);
 
-            // fill database
-            ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
+            if (m_wdbp != nullptr) {
+                m_rtip = rt_new_rti(m_wdbp->dbip);
 
-            assert(m_wdbp->dbip == m_rtip->rti_dbip);
-            db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
-            RegisterCoreCallbacks();
+                if (m_rtip != nullptr) {
+                    rt_init_resource(m_resp, 0, m_rtip);
+
+                    // fill database
+                    ret = (db_dump(m_wdbp, source->rti_dbip) == 0);
+
+                    assert(m_wdbp->dbip == m_rtip->rti_dbip);
+                    db_update_ident(m_wdbp->dbip, source->rti_dbip->dbi_title, source->rti_dbip->dbi_base2local);
+                    RegisterCoreCallbacks();
+                }
+                else {
+                    wdb_close(m_wdbp);
+                    m_wdbp = nullptr;
+                }
+            }
+            else
+                db_close(dbip);
 
             rt_free_rti(source);
         }
