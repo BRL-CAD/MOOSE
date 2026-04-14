@@ -163,7 +163,7 @@ const ConstDatabase::TopObjectIterator& ConstDatabase::TopObjectIterator::operat
 
         if (m_pDir == oldPDir) {
             for (size_t i = m_hashTablePosition + 1; (i < RT_DBNHASH) && (m_pDir == oldPDir); ++i) {
-                for (const directory* pDir = m_rtip->rti_dbip->dbi_Head[i]; pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
+                for (const directory* pDir = db_dirptr(m_rtip->rti_dbip, i); pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
                     if (pDir->d_nref == 0) {
                         m_hashTablePosition = i;
                         m_pDir              = pDir;
@@ -217,7 +217,7 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
             m_selfUpdateNref = false;
 
             for (size_t i = 0; (i < RT_DBNHASH) && (pDirectory == nullptr); ++i) {
-                for (const directory* pDir = m_rtip->rti_dbip->dbi_Head[i]; pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
+                for (const directory* pDir = db_dirptr(m_rtip->rti_dbip, i); pDir != RT_DIR_NULL; pDir = pDir->d_forw) {
                     if (pDir->d_nref == 0) {
                         hashTablePosition = i;
                         pDirectory        = pDir;
