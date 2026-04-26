@@ -114,7 +114,7 @@ Object::~Object(void) {
     }
 
     if (m_pDir == nullptr) {
-        rt_clean_resource_complete(nullptr, m_resp);
+        rt_clean_resource_basic(nullptr, m_resp);
         bu_free(m_resp, "BRLCAD::Object::~Object::m_resp");
     }
 }

@@ -450,7 +450,7 @@ Combination::TreeNode Combination::TreeNode::Apply
             ret.m_tree->tr_b.tb_left  = newNode;
 
             if (!BU_SETJUMP)
-                ret.m_tree->tr_b.tb_right = db_dup_subtree(theOther.m_tree, m_resp);
+                ret.m_tree->tr_b.tb_right = db_dup_subtree(theOther.m_tree);
             else {
                 BU_UNSETJUMP;
                 BU_PUT(newNode, union tree);
@@ -553,7 +553,7 @@ Combination::TreeNode Combination::TreeNode::Apply
             ret.m_tree->tr_op         = ConvertOperatorBack(op);
 
             if (!BU_SETJUMP)
-                ret.m_tree->tr_b.tb_left = db_dup_subtree(theOther.m_tree, m_resp);
+                ret.m_tree->tr_b.tb_left = db_dup_subtree(theOther.m_tree);
             else {
                 BU_UNSETJUMP;
                 BU_PUT(newNode, union tree);
@@ -631,7 +631,7 @@ void Combination::TreeNode::Delete(void) {
     if (!BU_SETJUMP) {
         while (m_tree != nullptr) {
             if (m_tree == m_internalp->tree) {
-                db_free_tree(m_tree, m_resp);
+                db_free_tree(m_tree);
                 m_internalp->tree = nullptr;
 
                 m_tree      = nullptr;
@@ -648,10 +648,10 @@ void Combination::TreeNode::Delete(void) {
                     case Operator::Subtraction:
                     case Operator::ExclusiveOr:
                         if (m_tree == parent->tr_b.tb_left)
-                            db_tree_del_lhs(parent, m_resp);
+                            db_tree_del_lhs(parent);
                         else {
                             assert(m_tree == parent->tr_b.tb_right);
-                            db_tree_del_rhs(parent, m_resp);
+                            db_tree_del_rhs(parent);
                         }
 
                         m_tree      = nullptr;
@@ -724,7 +724,7 @@ Combination::Combination
             bu_vls_init(&m_internalp->material);
 
             if (internalFrom->tree != nullptr)
-                m_internalp->tree = db_dup_subtree(internalFrom->tree, m_resp);
+                m_internalp->tree = db_dup_subtree(internalFrom->tree);
 
             m_internalp->region_flag = internalFrom->region_flag;
             m_internalp->is_fastgen  = internalFrom->is_fastgen;
@@ -752,7 +752,7 @@ Combination::Combination
                     bu_vls_free(&m_internalp->material);
 
                 if (m_internalp->tree != nullptr)
-                    db_free_tree(m_internalp->tree, m_resp);
+                    db_free_tree(m_internalp->tree);
 
                 bu_free(m_internalp, "BRLCAD::Combination::Combination::m_internalp");
             }
@@ -767,7 +767,7 @@ Combination::Combination
 Combination::~Combination(void) {
     if (m_internalp != nullptr) {
         if (m_internalp->tree != nullptr)
-            db_free_tree(m_internalp->tree, m_resp);
+            db_free_tree(m_internalp->tree);
 
         bu_vls_free(&m_internalp->shader);
         bu_vls_free(&m_internalp->material);
@@ -788,13 +788,13 @@ const Combination& Combination::operator=
         rt_comb_internal*       internalTo = Internal();
 
         if (internalTo->tree != nullptr)
-            db_free_tree(m_internalp->tree, m_resp);
+            db_free_tree(m_internalp->tree);
 
         internalTo->tree = nullptr;
 
         if (!BU_SETJUMP) {
             if (internalFrom->tree != nullptr)
-                internalTo->tree = db_dup_subtree(internalFrom->tree, m_resp);
+                internalTo->tree = db_dup_subtree(internalFrom->tree);
 
             internalTo->region_flag = internalFrom->region_flag;
             internalTo->is_fastgen  = internalFrom->is_fastgen;

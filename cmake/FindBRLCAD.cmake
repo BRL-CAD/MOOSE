@@ -230,6 +230,7 @@ SET(BRL-CAD_SRC_OTHER_REQUIRED
     stepdai
     stepeditor
     steputils
+	 mmesh
 )
 
 FOREACH(ext_lib ${BRL-CAD_SRC_OTHER_REQUIRED})
