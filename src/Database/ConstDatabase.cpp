@@ -213,7 +213,7 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
     if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
             m_selfUpdateNref = true;
-            db_update_nref(m_rtip->rti_dbip, m_resp);
+            db_update_nref(m_rtip->rti_dbip);
             m_selfUpdateNref = false;
 
             for (size_t i = 0; (i < RT_DBNHASH) && (pDirectory == nullptr); ++i) {
