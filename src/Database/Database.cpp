@@ -271,7 +271,7 @@ bool Database::Add
                 rt_comb_internal* internalTo = static_cast<rt_comb_internal*>(rtInternal);
 
                 if (internalFrom->tree != nullptr)
-                    internalTo->tree = db_dup_subtree(internalFrom->tree, object.m_resp);
+                    internalTo->tree = db_dup_subtree(internalFrom->tree);
 
                 bu_vls_init(&internalTo->shader);
                 bu_vls_strcpy(&internalTo->shader, bu_vls_addr(&internalFrom->shader));
@@ -352,8 +352,7 @@ bool Database::Get
             if (!BU_SETJUMP)
                 success = (rt_db_put_internal(objectIntern.m_pDir,
                                               objectIntern.m_dbip,
-                                              objectIntern.m_ip,
-                                              objectIntern.m_resp) == 0);
+                                              objectIntern.m_ip) == 0);
 
             BU_UNSETJUMP;
 

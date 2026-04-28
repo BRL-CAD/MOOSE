@@ -213,7 +213,7 @@ ConstDatabase::TopObjectIterator ConstDatabase::FirstTopObject(void) const {
     if (m_rtip != nullptr) {
         if (!BU_SETJUMP) {
             m_selfUpdateNref = true;
-            db_update_nref(m_rtip->rti_dbip, m_resp);
+            db_update_nref(m_rtip->rti_dbip);
             m_selfUpdateNref = false;
 
             for (size_t i = 0; (i < RT_DBNHASH) && (pDirectory == nullptr); ++i) {
@@ -319,7 +319,7 @@ NonManifoldGeometry* ConstDatabase::Facetize
             tree*                facetizeTree = nullptr;
             db_tree_state        initState;
 
-            db_init_db_tree_state(&initState, m_rtip->rti_dbip, m_resp);
+            db_init_db_tree_state(&initState, m_rtip->rti_dbip);
             initState.ts_ttol = &m_rtip->rti_ttol;
             initState.ts_tol  = &m_rtip->rti_tol;
             initState.ts_m    = &ret->m_internalp;
@@ -334,7 +334,7 @@ NonManifoldGeometry* ConstDatabase::Facetize
                              rt_booltree_leaf_tess,
                              &facetizeTree) == 0) {
                 if (facetizeTree != nullptr) {
-                    nmg_boolean(facetizeTree, ret->m_internalp, &rt_vlfree, &m_rtip->rti_tol, &rt_uniresource);
+                    nmg_boolean(facetizeTree, ret->m_internalp, &rt_vlfree, &m_rtip->rti_tol);
 
                     // ok, now we have a mess here: the model/region with the faces is both in ret and facetizeTree
                     // freeing facetizeTree would destroy the ret too
@@ -344,7 +344,7 @@ NonManifoldGeometry* ConstDatabase::Facetize
                     model* messedModel = ret->m_internalp;
                     ret->m_internalp   = nmg_clone_model(messedModel);
 
-                    db_free_tree(facetizeTree, &rt_uniresource);
+                    db_free_tree(facetizeTree);
                     nmg_km(messedModel);
                 }
             }
@@ -392,7 +392,7 @@ void ConstDatabase::Plot
         if (!BU_SETJUMP) {
             db_tree_state initState;
 
-            db_init_db_tree_state(&initState, m_rtip->rti_dbip, m_resp);
+            db_init_db_tree_state(&initState, m_rtip->rti_dbip);
             initState.ts_ttol = &m_rtip->rti_ttol;
             initState.ts_tol  = &m_rtip->rti_tol;
 
@@ -847,7 +847,7 @@ void ConstDatabase::GetInternal
 ) const {
     if (pDir != RT_DIR_NULL) {
         rt_db_internal intern;
-        int            id = rt_db_get_internal(&intern, pDir, m_rtip->rti_dbip, nullptr, m_resp);
+        int            id = rt_db_get_internal(&intern, pDir, m_rtip->rti_dbip, nullptr);
 
         try {
             switch(id) {
