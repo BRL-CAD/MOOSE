@@ -224,8 +224,13 @@ ENDFOREACH(brl_lib ${BRL-CAD_LIBS_SEARCH_LIST})
 SET(BRL-CAD_SRC_OTHER_REQUIRED
     exppp
     express
+    jpeg
     lmdb
+    manifold
+    mmesh
+    netpbm
     openNURBS
+    png
     stepcore
     stepdai
     stepeditor
