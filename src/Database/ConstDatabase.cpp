@@ -441,7 +441,7 @@ bool ConstDatabase::SelectionIsEmpty(void) const {
     bool ret = true;
 
     if (m_rtip != nullptr)
-        ret = m_rtip->nsolids < 1;
+        ret = m_rtip->stats.nsolids < 1;
 
     return ret;
 }
