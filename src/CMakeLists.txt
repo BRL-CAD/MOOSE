@@ -74,6 +74,14 @@ IF(NOT BRLCAD_STATIC_LINK)
     SET(CMAKE_INSTALL_RPATH "${BRLCAD_LIB_DIR}")
 ENDIF(NOT BRLCAD_STATIC_LINK)
 
+# Module: C
+SET(CSources "")
+OPTION(MODULE_C "Build the simplified C module" OFF)
+IF(MODULE_C)
+    ADD_SUBDIRECTORY(C)
+    GET_DIRECTORY_PROPERTY(CSources DIRECTORY C DEFINITION CSources)
+ENDIF(MODULE_C)
+
 # Module: Lua
 SET(LuaSources "")
 OPTION(MODULE_LUA "Build the Lua module" OFF)
@@ -87,6 +95,7 @@ ENDIF(MODULE_LUA)
 SET(MooseSources
     ${DatabaseSources}
     ${CommandStringSources}
+    ${CSourcs}
     ${LuaSources}
     globals.cpp
     VectorList.cpp
