@@ -26,8 +26,9 @@
 #ifndef BRLCAD_C_CONSTDATABASE_INCLUDED
 #define BRLCAD_C_CONSTDATABASE_INCLUDED
 
-
+#ifdef __cplusplus
 extern "C" {
+#endif
 
 
 typedef void* BrlConstDatabase;
@@ -42,7 +43,8 @@ BRLCAD_MOOSE_EXPORT int              BrlConstDatabaseLoad(BrlConstDatabase db,
 BRLCAD_MOOSE_EXPORT const char*      BrlConstDatabaseTitle(BrlConstDatabase db);
 
 
+#ifdef __cplusplus
 }
-
+#endif
 
 #endif // BRLCAD_C_CONSTDATABASE_INCLUDED
