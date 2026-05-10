@@ -32,7 +32,7 @@ int main
 
             if (database != 0) {
 
-                if (BrlConstDatabaseLoad(database, "gettitle.g")) {
+                if (BrlConstDatabaseLoad(database, "gettitle.g") == 0) {
                     if (strcmp(BrlConstDatabaseTitle(database), "get title") == 0)
                         ret = 0;
                 }
