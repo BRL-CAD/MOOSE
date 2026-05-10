@@ -42,7 +42,7 @@ void BrlDeleteConstDatabase
     BrlConstDatabase db
 ) {
     if (db != nullptr) {
-        ConstDatabase* constDatabase = dynamic_cast<ConstDatabase*>(db);
+        ConstDatabase* constDatabase = reinterpret_cast<ConstDatabase*>(db);
 
         assert(constDatabase != nullptr);
 
@@ -60,7 +60,7 @@ int BrlConstDatabaseLoad
     int ret = 1;
 
     if (db != nullptr) {
-        ConstDatabase* constDatabase = dynamic_cast<ConstDatabase*>(db);
+        ConstDatabase* constDatabase = reinterpret_cast<ConstDatabase*>(db);
 
         assert(constDatabase != nullptr);
 
@@ -79,7 +79,7 @@ const char* BrlConstDatabaseTitle
     const char* ret = nullptr;
 
     if (db != nullptr) {
-        ConstDatabase* constDatabase = dynamic_cast<ConstDatabase*>(db);
+        ConstDatabase* constDatabase = reinterpret_cast<ConstDatabase*>(db);
 
         assert(constDatabase != nullptr);
 
