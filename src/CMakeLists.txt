@@ -95,7 +95,7 @@ ENDIF(MODULE_LUA)
 SET(MooseSources
     ${DatabaseSources}
     ${CommandStringSources}
-    ${CSourcs}
+    ${CSources}
     ${LuaSources}
     globals.cpp
     VectorList.cpp

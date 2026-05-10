@@ -84,7 +84,7 @@ const char* BrlConstDatabaseTitle
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = constDatabase->Title(fileName);
+            ret = constDatabase->Title();
     }
 
     return ret;
