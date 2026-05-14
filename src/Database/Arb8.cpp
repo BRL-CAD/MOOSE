@@ -42,10 +42,15 @@
 #include <brlcad/Database/Arb8.h>
 
 
+const char* const BRLCAD::Arb8Magic = "BRLCAD::Arb8";
+
+
 using namespace BRLCAD;
 
 
 Arb8::Arb8(void) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -67,6 +72,8 @@ Arb8::Arb8
     const Vector3D& point3,
     const Vector3D& point4
 ) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -89,6 +96,8 @@ Arb8::Arb8
     const Vector3D& point4,
     const Vector3D& point5
 ) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -113,6 +122,8 @@ Arb8::Arb8
     const Vector3D& point5,
     const Vector3D& point6
 ) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -137,6 +148,8 @@ Arb8::Arb8
     const Vector3D& point6,
     const Vector3D& point7
 ) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -162,6 +175,8 @@ Arb8::Arb8
     const Vector3D& point7,
     const Vector3D& point8
 ) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -181,6 +196,8 @@ Arb8::Arb8
     const Vector3D& point1,
     const Vector3D& point2
 ) : Object() {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         m_internalp->magic = RT_ARB_INTERNAL_MAGIC;
@@ -199,6 +216,8 @@ Arb8::Arb8
 (
     const Arb8& original
 ) : Object(original) {
+    m_magic = Arb8Magic;
+
     if (!BU_SETJUMP) {
         BU_GET(m_internalp, rt_arb_internal);
         memcpy(m_internalp, original.Internal(), sizeof(rt_arb_internal));
@@ -647,7 +666,9 @@ Arb8::Arb8
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {}
+) : Object(resp, pDir, ip, dbip), m_internalp(nullptr) {
+    m_magic = Arb8Magic;
+}
 
 
 const rt_arb_internal* Arb8::Internal(void) const {

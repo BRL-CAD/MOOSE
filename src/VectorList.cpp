@@ -32,6 +32,9 @@
 #include <brlcad/VectorList.h>
 
 
+const char* const BRLCAD::VectorListMagic = "BRLCAD::VectorList";
+
+
 using namespace BRLCAD;
 
 
@@ -845,7 +848,7 @@ VectorList::ModelSpace::ModelSpace
 //
 // BRLCAD::VectorList
 //
-VectorList::VectorList(void) {
+VectorList::VectorList(void) : Handle(VectorListMagic) {
     assert(BU_LIST_IS_INITIALIZED(&rt_vlfree));
 
     m_vlist = new bu_list;
@@ -856,7 +859,7 @@ VectorList::VectorList(void) {
 VectorList::VectorList
 (
     const VectorList& original
-) {
+) : Handle(VectorListMagic) {
     m_vlist = new bu_list;
     BU_LIST_INIT(m_vlist);
 

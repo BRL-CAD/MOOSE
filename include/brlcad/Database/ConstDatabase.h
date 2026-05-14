@@ -40,7 +40,7 @@ namespace BRLCAD {
     class NonManifoldGeometry;
 
 
-    class BRLCAD_MOOSE_EXPORT ConstDatabase {
+    class BRLCAD_MOOSE_EXPORT ConstDatabase : public Handle {
     public:
         ConstDatabase(void);
         virtual ~ConstDatabase(void);
@@ -59,8 +59,8 @@ namespace BRLCAD {
         class BRLCAD_MOOSE_EXPORT TopObjectIterator {
         public:
             TopObjectIterator(const TopObjectIterator& original) : m_hashTablePosition(original.m_hashTablePosition),
-                                                                           m_pDir(original.m_pDir),
-                                                                           m_rtip(original.m_rtip) {}
+                                                                   m_pDir(original.m_pDir),
+                                                                   m_rtip(original.m_rtip) {}
 
             ~TopObjectIterator(void) {}
 
