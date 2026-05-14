@@ -24,6 +24,7 @@
 
 
 SET(CSources
+    C/casts.cpp
     C/ConstDatabase.cpp
 )
 

@@ -25,8 +25,9 @@
 
 #include <cassert>
 
-#include <brlcad/Database/ConstDatabase.h>
 #include <brlcad/C/ConstDatabase.h>
+
+#include "casts.h"
 
 
 using namespace BRLCAD;
@@ -42,7 +43,7 @@ void BrlDeleteConstDatabase
     BrlConstDatabase db
 ) {
     if (db != nullptr) {
-        ConstDatabase* constDatabase = reinterpret_cast<ConstDatabase*>(db);
+        ConstDatabase* constDatabase = CastConstDatabase(db);
 
         assert(constDatabase != nullptr);
 
@@ -60,7 +61,7 @@ int BrlConstDatabaseLoad
     int ret = 1;
 
     if (db != nullptr) {
-        ConstDatabase* constDatabase = reinterpret_cast<ConstDatabase*>(db);
+        ConstDatabase* constDatabase = CastConstDatabase(db);
 
         assert(constDatabase != nullptr);
 
@@ -79,7 +80,7 @@ const char* BrlConstDatabaseTitle
     const char* ret = nullptr;
 
     if (db != nullptr) {
-        ConstDatabase* constDatabase = reinterpret_cast<ConstDatabase*>(db);
+        ConstDatabase* constDatabase = CastConstDatabase(db);
 
         assert(constDatabase != nullptr);
 
