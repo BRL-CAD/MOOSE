@@ -17,7 +17,7 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file Object.h
+/** @file Handle.h
  *
  *  BRL-CAD core C++ interface:
  *      declares the base for all classes, which shall get a handle
