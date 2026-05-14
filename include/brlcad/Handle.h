@@ -33,7 +33,7 @@ namespace BRLCAD {
     public:
         Handle(void);
         Handle(const char* magic);
-        ~Handle(void);
+        virtual ~Handle(void);
 
     protected:
         const char* m_magic;
