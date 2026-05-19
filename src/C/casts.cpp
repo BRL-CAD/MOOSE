@@ -28,7 +28,6 @@
 
 using namespace BRLCAD;
 
-
 static const char* Magic
 (
     void* handle
@@ -58,7 +57,11 @@ ConstDatabase* CastConstDatabase
 ) {
     ConstDatabase* ret = nullptr;
 
-    if (Magic(handle) == ConstDatabaseMagic)
+    const char* handleMagic = Magic(handle);
+
+    if (handleMagic == ConstDatabaseMagic || 
+        handleMagic == FileDatabaseMagic || 
+        handleMagic == MemoryDatabaseMagic)
         ret = static_cast<ConstDatabase*>(handle);
 
     return ret;
