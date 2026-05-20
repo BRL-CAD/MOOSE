@@ -39,4 +39,6 @@ Handle::Handle
 ) : m_magic(magic) {}
 
 
-Handle::~Handle(void) {}
+Handle::~Handle(void) {
+    m_magic = nullptr;
+}
