@@ -27,8 +27,8 @@
 #ifndef BRLCAD_HANDLE_INCLUDED
 #define BRLCAD_HANDLE_INCLUDED
 
-
 namespace BRLCAD {
+
     class Handle {
     public:
         Handle(void);
@@ -41,6 +41,8 @@ namespace BRLCAD {
 
     extern const char* const Arb8Magic;
     extern const char* const ConstDatabaseMagic;
+    extern const char* const FileDatabaseMagic;
+    extern const char* const MemoryDatabaseMagic;
     extern const char* const ObjectMagic;
     extern const char* const VectorListMagic;
 }

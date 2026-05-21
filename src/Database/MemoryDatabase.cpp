@@ -31,10 +31,14 @@
 #include <brlcad/Database/MemoryDatabase.h>
 
 
+const char* const BRLCAD::MemoryDatabaseMagic = "BRLCAD::MemoryDatabase";
+
+
 using namespace BRLCAD;
 
 
 MemoryDatabase::MemoryDatabase(void) : Database() {
+    m_magic = MemoryDatabaseMagic;
     db_i* dbip = nullptr;
 
     if (!BU_SETJUMP) {
