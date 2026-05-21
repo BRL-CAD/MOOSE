@@ -29,24 +29,12 @@
 
 #include "casts.h"
 
-#include <brlcad/Database/FileDatabase.h>
-
-#include <brlcad/Database/MemoryDatabase.h>
-
 
 using namespace BRLCAD;
 
 
 BrlConstDatabase BrlNewConstDatabase(void) {
-    return reinterpret_cast<BrlConstDatabase>(new BRLCAD::ConstDatabase());
-}
-
-BrlConstDatabase BrlNewFileDatabase(void) {
-    return reinterpret_cast<BrlConstDatabase>(new BRLCAD::FileDatabase());
-}
-
-BrlConstDatabase BrlNewMemoryDatabase(void) {
-    return reinterpret_cast<BrlConstDatabase>(new BRLCAD::MemoryDatabase());
+    return new ConstDatabase;
 }
 
 
