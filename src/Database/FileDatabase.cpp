@@ -31,6 +31,7 @@
 
 const char* const BRLCAD::FileDatabaseMagic = "BRLCAD::FileDatabase";
 
+
 using namespace BRLCAD;
 
 

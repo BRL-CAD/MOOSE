@@ -59,9 +59,9 @@ ConstDatabase* CastConstDatabase
 
     const char* handleMagic = Magic(handle);
 
-    if (handleMagic == ConstDatabaseMagic || 
-        handleMagic == FileDatabaseMagic || 
-        handleMagic == MemoryDatabaseMagic)
+    if ((handleMagic == ConstDatabaseMagic) ||
+        (handleMagic == FileDatabaseMagic) ||
+        (handleMagic == MemoryDatabaseMagic))
         ret = static_cast<ConstDatabase*>(handle);
 
     return ret;

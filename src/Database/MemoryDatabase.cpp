@@ -39,6 +39,7 @@ using namespace BRLCAD;
 
 MemoryDatabase::MemoryDatabase(void) : Database() {
     m_magic = MemoryDatabaseMagic;
+
     db_i* dbip = nullptr;
 
     if (!BU_SETJUMP) {
