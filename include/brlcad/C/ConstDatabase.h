@@ -36,10 +36,6 @@ typedef void* BrlConstDatabase;
 
 BRLCAD_MOOSE_EXPORT BrlConstDatabase BrlNewConstDatabase(void);
 
-BRLCAD_MOOSE_EXPORT BrlConstDatabase BrlNewFileDatabase(void);
-
-BRLCAD_MOOSE_EXPORT BrlConstDatabase BrlNewMemoryDatabase(void);
-
 BRLCAD_MOOSE_EXPORT void             BrlDeleteConstDatabase(BrlConstDatabase db);
 
 BRLCAD_MOOSE_EXPORT int              BrlConstDatabaseLoad(BrlConstDatabase db,
