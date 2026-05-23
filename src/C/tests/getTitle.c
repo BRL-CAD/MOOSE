@@ -15,7 +15,9 @@
 #include <string.h>
 
 #include <brlcad/C/constDatabase.h>
+#include <brlcad/C/fileDatabase.h>
 #include <brlcad/C/handle.h>
+#include <brlcad/C/memoryDatabase.h>
 
 
 int main
@@ -32,7 +34,38 @@ int main
             BrlConstDatabase database = BrlNewConstDatabase();
 
             if (database != 0) {
+                if (BrlConstDatabaseLoad(database, "gettitle.g") == 0) {
+                    if (strcmp(BrlConstDatabaseTitle(database), "get title") == 0)
+                        ret = 0;
+                }
+                else
+                    fprintf(stderr, "Could not load file gettitle.g");
 
+                BrlDeleteHandle(database);
+            }
+            else
+                fprintf(stderr, "Could not create BrlConstDatabase");
+        }
+        if (strcmp(argv[1], "file") == 0) {
+            BrlFileDatabase database = BrlNewFileDatabase();
+
+            if (database != 0) {
+                if (BrlConstDatabaseLoad(database, "gettitle.g") == 0) {
+                    if (strcmp(BrlConstDatabaseTitle(database), "get title") == 0)
+                        ret = 0;
+                }
+                else
+                    fprintf(stderr, "Could not load file gettitle.g");
+
+                BrlDeleteHandle(database);
+            }
+            else
+                fprintf(stderr, "Could not create BrlConstDatabase");
+        }
+        if (strcmp(argv[1], "memory") == 0) {
+            BrlMemoryDatabase database = BrlNewMemoryDatabase();
+
+            if (database != 0) {
                 if (BrlConstDatabaseLoad(database, "gettitle.g") == 0) {
                     if (strcmp(BrlConstDatabaseTitle(database), "get title") == 0)
                         ret = 0;
