@@ -46,7 +46,7 @@ int main
             else
                 fprintf(stderr, "Could not create BrlConstDatabase");
         }
-        if (strcmp(argv[1], "file") == 0) {
+        else if (strcmp(argv[1], "file") == 0) {
             BrlFileDatabase database = BrlNewFileDatabase();
 
             if (database != 0) {
@@ -62,7 +62,7 @@ int main
             else
                 fprintf(stderr, "Could not create BrlConstDatabase");
         }
-        if (strcmp(argv[1], "memory") == 0) {
+        else if (strcmp(argv[1], "memory") == 0) {
             BrlMemoryDatabase database = BrlNewMemoryDatabase();
 
             if (database != 0) {
