@@ -28,6 +28,7 @@
 
 using namespace BRLCAD;
 
+
 static const char* Magic
 (
     void* handle
@@ -51,6 +52,26 @@ static const char* Magic
 }
 
 
+Handle* CastHandle
+(
+    void* handle
+) {
+    Handle* ret = nullptr;
+
+    const char* handleMagic = Magic(handle);
+
+    if ((handleMagic == Arb8Magic) ||
+        (handleMagic == ConstDatabaseMagic) ||
+        (handleMagic == FileDatabaseMagic) ||
+        (handleMagic == MemoryDatabaseMagic) ||
+        (handleMagic == ObjectMagic) ||
+        (handleMagic == VectorListMagic))
+        ret = static_cast<Handle*>(handle);
+
+    return ret;
+}
+
+
 ConstDatabase* CastConstDatabase
 (
     void* handle
@@ -60,6 +81,7 @@ ConstDatabase* CastConstDatabase
     const char* handleMagic = Magic(handle);
 
     if ((handleMagic == ConstDatabaseMagic) ||
+        (handleMagic == DatabaseMagic) ||
         (handleMagic == FileDatabaseMagic) ||
         (handleMagic == MemoryDatabaseMagic))
         ret = static_cast<ConstDatabase*>(handle);

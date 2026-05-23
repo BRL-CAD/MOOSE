@@ -15,6 +15,7 @@
 #include <string.h>
 
 #include <brlcad/C/constDatabase.h>
+#include <brlcad/C/handle.h>
 
 
 int main
@@ -39,7 +40,7 @@ int main
                 else
                     fprintf(stderr, "Could not load file gettitle.g");
 
-                BrlDeleteConstDatabase(database);
+                BrlDeleteHandle(database);
             }
             else
                 fprintf(stderr, "Could not create BrlConstDatabase");

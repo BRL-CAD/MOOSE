@@ -1,4 +1,4 @@
-/*                      C O N S T D A T A B A S E . H
+/*                         H A N D L E . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,33 +17,32 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file constDatabase.h
+/** @file handle.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      declares a handle and functions for a read-only database
+ *      implements the basic handle's and destructor function
  */
 
-#ifndef BRLCAD_C_CONSTDATABASE_INCLUDED
-#define BRLCAD_C_CONSTDATABASE_INCLUDED
+#include <cassert>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <brlcad/C/handle.h>
 
-
-typedef void* BrlConstDatabase;
+#include "casts.h"
 
 
-BRLCAD_MOOSE_EXPORT BrlConstDatabase BrlNewConstDatabase(void);
-
-BRLCAD_MOOSE_EXPORT int              BrlConstDatabaseLoad(BrlConstDatabase db,
-                                                          const char*      fileName);
-
-BRLCAD_MOOSE_EXPORT const char*      BrlConstDatabaseTitle(BrlConstDatabase db);
+using namespace BRLCAD;
 
 
-#ifdef __cplusplus
+void BrlDeleteHandle
+(
+    BrlHandle handle
+) {
+    if (handle != nullptr) {
+        Handle* hd = CastHandle(handle);
+
+        assert(hd != nullptr);
+
+        if (hd != nullptr)
+            delete hd;
+    }
 }
-#endif
-
-#endif // BRLCAD_C_CONSTDATABASE_INCLUDED

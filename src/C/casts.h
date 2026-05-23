@@ -29,6 +29,8 @@
 #include <brlcad/Database/ConstDatabase.h>
 
 
+BRLCAD::Handle*        CastHandle(void* handle);
+
 BRLCAD::ConstDatabase* CastConstDatabase(void* handle);
 
 
