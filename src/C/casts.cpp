@@ -23,6 +23,8 @@
  *      implements helper functions to cast void* handles to the correct C++ class
  */
 
+#include "bu/log.h"
+
 #include "casts.h"
 
 
@@ -67,6 +69,8 @@ Handle* CastHandle
         (handleMagic == ObjectMagic) ||
         (handleMagic == VectorListMagic))
         ret = static_cast<Handle*>(handle);
+    else if (handle != nullptr)
+        bu_log("CastHandle: invalid handle");
 
     return ret;
 }
@@ -85,6 +89,8 @@ ConstDatabase* CastConstDatabase
         (handleMagic == FileDatabaseMagic) ||
         (handleMagic == MemoryDatabaseMagic))
         ret = static_cast<ConstDatabase*>(handle);
+    else if (handle != nullptr)
+        bu_log("CastConstDatabase: wrong handle");
 
     return ret;
 }
