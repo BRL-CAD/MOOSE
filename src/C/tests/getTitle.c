@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <brlcad/C/ConstDatabase.h>
+#include <brlcad/C/constDatabase.h>
 
 
 int main

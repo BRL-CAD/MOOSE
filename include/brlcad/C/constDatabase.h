@@ -17,7 +17,7 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file ConstDatabase.h
+/** @file constDatabase.h
  *
  *  BRL-CAD core simplified C interface:
  *      declares a handle and functions for a read-only database

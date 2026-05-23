@@ -17,7 +17,7 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file ConstDatabase.cpp
+/** @file constDatabase.cpp
  *
  *  BRL-CAD core simplified C interface:
  *      implements a handle and functions for a read-only database
@@ -25,7 +25,7 @@
 
 #include <cassert>
 
-#include <brlcad/C/ConstDatabase.h>
+#include <brlcad/C/constDatabase.h>
 
 #include "casts.h"
 
