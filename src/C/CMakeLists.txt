@@ -26,12 +26,16 @@
 SET(CSources
     C/casts.cpp
     C/constDatabase.cpp
+    C/fileDatabase.cpp
     C/handle.cpp
+    C/memoryDatabase.cpp
 )
 
 SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/constDatabase.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/fileDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/handle.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
 )
 
 INSTALL(FILES ${CHeaders} DESTINATION include/brlcad/C)
