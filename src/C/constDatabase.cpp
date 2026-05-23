@@ -25,9 +25,9 @@
 
 #include <cassert>
 
-#include <brlcad/C/constDatabase.h>
-
 #include "casts.h"
+
+#include <brlcad/C/constDatabase.h>
 
 
 using namespace BRLCAD;
