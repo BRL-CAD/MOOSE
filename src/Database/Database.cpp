@@ -57,7 +57,7 @@
 #endif
 
 
-const char* const BRLCAD::ConstDatabaseMagic = "BRLCAD::Database";
+const char* const BRLCAD::DatabaseMagic = "BRLCAD::Database";
 
 
 using namespace BRLCAD;
