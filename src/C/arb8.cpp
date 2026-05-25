@@ -20,7 +20,8 @@
 /** @file arb8.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      implements a handle and functions for a read-only database
+ *      implements wrappers for constructing Arb8 geometry objects
+ *      from a box diagonal or from 8 explicit points
  */
 
 #include <brlcad/C/arb8.h>

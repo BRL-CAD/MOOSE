@@ -20,7 +20,7 @@
 /** @file arb8.h
  *
  *  BRL-CAD core simplified C interface:
- *      declares a handle and functions for a read-only database
+ *      declares a handle and functions for Arb8 geometry construction
  */
 
 #ifndef BRLCAD_C_ARB8_INCLUDED
