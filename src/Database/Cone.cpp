@@ -431,9 +431,9 @@ bool Cone::IsValid(void) const {
         double magC = MAGNITUDE(internalp->c);
         double magD = MAGNITUDE(internalp->d);
 
-        if ((((magC * magD) <= SMALL) || NEAR_ZERO(VDOT(internalp->c, internalp->d), RT_DOT_TOL)) &&
-            ((magC <= SMALL) || NEAR_ZERO(1. - VDOT(internalp->a, internalp->c) / (magA * magC), RT_DOT_TOL)) &&
-            ((magD <= SMALL) || NEAR_ZERO(1. - VDOT(internalp->b, internalp->d) / (magB * magD), RT_DOT_TOL))) {
+        if ((((magC * magD) <= SQRT_SMALL_FASTF) || NEAR_ZERO(VDOT(internalp->c, internalp->d), RT_DOT_TOL)) &&
+            ((magC <= SQRT_SMALL_FASTF) || NEAR_ZERO(1. - VDOT(internalp->a, internalp->c) / (magA * magC), RT_DOT_TOL)) &&
+            ((magD <= SQRT_SMALL_FASTF) || NEAR_ZERO(1. - VDOT(internalp->b, internalp->d) / (magB * magD), RT_DOT_TOL))) {
             vect_t aCrossB;
             VCROSS(aCrossB, internalp->a, internalp->b );
 
