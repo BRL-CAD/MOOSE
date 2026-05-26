@@ -32,12 +32,31 @@
 extern "C" {
 #endif
 
-// Creates an Arb8 by passing 2 points (diagonals for a box)
-BRLCAD_MOOSE_EXPORT BrlHandle BrlNewArb8FromBox(const double* p1, const double* p2);
 
-// Creates an Arb8 by passing all 8 points (24 numbers total)
-BRLCAD_MOOSE_EXPORT BrlHandle BrlNewArb8FromPoints(const double* flatPoints24);
+typedef BrlHandle BrlArb8;
 
+
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8FromBoxCoords(
+	double p1x, double p1y, double p1z,
+	double p2x, double p2y, double p2z);
+
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From4Points(
+	double p1x, double p1y, double p1z,
+	double p2x, double p2y, double p2z,
+	double p3x, double p3y, double p3z,
+	double p4x, double p4y, double p4z);
+
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From8Points(
+	double p1x, double p1y, double p1z,
+	double p2x, double p2y, double p2z,
+	double p3x, double p3y, double p3z,
+	double p4x, double p4y, double p4z,
+	double p5x, double p5y, double p5z,
+	double p6x, double p6y, double p6z,
+	double p7x, double p7y, double p7z,
+	double p8x, double p8y, double p8z);
+
+    
 #ifdef __cplusplus
 }
 #endif

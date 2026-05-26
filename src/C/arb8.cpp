@@ -34,34 +34,56 @@
 using namespace BRLCAD;
 
 
-BrlHandle BrlNewArb8FromBox
+//box coordinates as separate doubles
+BrlArb8 BrlNewArb8FromBoxCoords
 (
-    const double* p1, const double* p2
+    double p1x, double p1y, double p1z,
+    double p2x, double p2y, double p2z
 ) {
-    if (!p1 || !p2) return nullptr;
-    
-    Vector3D vec1(p1[0], p1[1], p1[2]);
-    Vector3D vec2(p2[0], p2[1], p2[2]);
-        BrlHandle arb_handle = nullptr;
-        arb_handle = static_cast<BrlHandle>(new Arb8(vec1, vec2));
-        return arb_handle;
+    Vector3D v1(p1x, p1y, p1z);
+    Vector3D v2(p2x, p2y, p2z);
+    BrlArb8 arb_handle = nullptr;
+    arb_handle = static_cast<BrlArb8>(new Arb8(v1, v2));
+    return arb_handle;
 }
 
-BrlHandle BrlNewArb8FromPoints
+//four points (12 doubles)
+BrlArb8 BrlNewArb8From4Points
 (
-    const double* flatPoints24
+    double p1x, double p1y, double p1z,
+    double p2x, double p2y, double p2z,
+    double p3x, double p3y, double p3z,
+    double p4x, double p4y, double p4z
 ) {
-    if (!flatPoints24) return nullptr;
-    
-    // Unpack the 24 flat doubles into 8 Vector3D objects
-    Vector3D pts[8];
-    int idx = 0;
-    for(int i = 0; i < 8; ++i) {
-        pts[i] = Vector3D(flatPoints24[idx], flatPoints24[idx+1], flatPoints24[idx+2]);
-        idx += 3;
-    }
-        BrlHandle arb_handle = nullptr;
-        arb_handle = static_cast<BrlHandle>(new Arb8(pts[0], pts[1], pts[2], pts[3],
-                                                   pts[4], pts[5], pts[6], pts[7]));
-        return arb_handle;
+    Vector3D p1(p1x, p1y, p1z);
+    Vector3D p2(p2x, p2y, p2z);
+    Vector3D p3(p3x, p3y, p3z);
+    Vector3D p4(p4x, p4y, p4z);
+    BrlArb8 arb_handle = nullptr;
+    arb_handle = static_cast<BrlArb8>(new Arb8(p1, p2, p3, p4));
+    return arb_handle;
+}
+
+//eight points (24 doubles)
+BrlArb8 BrlNewArb8From8Points
+(
+    double p1x, double p1y, double p1z,
+    double p2x, double p2y, double p2z,
+    double p3x, double p3y, double p3z,
+    double p4x, double p4y, double p4z,
+    double p5x, double p5y, double p5z,
+    double p6x, double p6y, double p6z,
+    double p7x, double p7y, double p7z,
+    double p8x, double p8y, double p8z
+) {
+    Vector3D pts[8] = {
+        Vector3D(p1x,p1y,p1z), Vector3D(p2x,p2y,p2z),
+        Vector3D(p3x,p3y,p3z), Vector3D(p4x,p4y,p4z),
+        Vector3D(p5x,p5y,p5z), Vector3D(p6x,p6y,p6z),
+        Vector3D(p7x,p7y,p7z), Vector3D(p8x,p8y,p8z)
+    };
+    BrlArb8 arb_handle = nullptr;
+    arb_handle = static_cast<BrlArb8>(new Arb8(pts[0], pts[1], pts[2], pts[3],
+                                               pts[4], pts[5], pts[6], pts[7]));
+    return arb_handle;
 }
