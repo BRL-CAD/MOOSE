@@ -20,29 +20,17 @@
 /** @file arb8.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      implements wrappers for constructing Arb8 geometry objects
+ *      implements a handle and functions for Arb8 solid handling
  */
+
+#include <brlcad/Database/Arb8.h>
 
 #include <brlcad/C/arb8.h>
 
-#include <brlcad/Database/Arb8.h>
 
 using namespace BRLCAD;
 
 
-// two points (6 doubles)
-BrlArb8 BrlNewArb8From2Points
-(
-    double point1X, double point1Y, double point1Z,
-    double point2X, double point2Y, double point2Z
-) {
-    Vector3D point1(point1X, point1Y, point1Z);
-    Vector3D point2(point2X, point2Y, point2Z);
-
-    return new Arb8(point1, point2);
-}
-
-// four points (12 doubles)
 BrlArb8 BrlNewArb8From4Points
 (
     double point1X, double point1Y, double point1Z,
@@ -54,11 +42,11 @@ BrlArb8 BrlNewArb8From4Points
     Vector3D point2(point2X, point2Y, point2Z);
     Vector3D point3(point3X, point3Y, point3Z);
     Vector3D point4(point4X, point4Y, point4Z);
-    
+
     return new Arb8(point1, point2, point3, point4);
 }
 
-// eight points (24 doubles)
+
 BrlArb8 BrlNewArb8From8Points
 (
     double point1X, double point1Y, double point1Z,
@@ -79,6 +67,17 @@ BrlArb8 BrlNewArb8From8Points
     Vector3D point7(point7X, point7Y, point7Z);
     Vector3D point8(point8X, point8Y, point8Z);
 
-    return new Arb8(point1, point2, point3, point4,
-                    point5, point6, point7, point8);
+    return new Arb8(point1, point2, point3, point4, point5, point6, point7, point8);
+}
+
+
+BrlArb8 BrlNewArb8From2Points
+(
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z
+) {
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+
+    return new Arb8(point1, point2);
 }

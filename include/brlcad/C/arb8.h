@@ -20,7 +20,7 @@
 /** @file arb8.h
  *
  *  BRL-CAD core simplified C interface:
- *      declares a handle and functions for Arb8 geometry construction
+ *      declares a handle and functions for Arb8 solid handling
  */
 
 #ifndef BRLCAD_C_ARB8_INCLUDED
@@ -34,27 +34,22 @@ extern "C" {
 typedef void* BrlArb8;
 
 
-BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From2Points(
-	double point1X, double point1Y, double point1Z,
-    double point2X, double point2Y, double point2Z);
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From4Points(double point1X, double point1Y, double point1Z,
+                                                  double point2X, double point2Y, double point2Z,
+                                                  double point3X, double point3Y, double point3Z,
+                                                  double point4X, double point4Y, double point4Z);
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From8Points(double point1X, double point1Y, double point1Z,
+                                                  double point2X, double point2Y, double point2Z,
+                                                  double point3X, double point3Y, double point3Z,
+                                                  double point4X, double point4Y, double point4Z,
+                                                  double point5X, double point5Y, double point5Z,
+                                                  double point6X, double point6Y, double point6Z,
+                                                  double point7X, double point7Y, double point7Z,
+                                                  double point8X, double point8Y, double point8Z);
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From2Points(double point1X, double point1Y, double point1Z,
+                                                  double point2X, double point2Y, double point2Z);
 
-BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From4Points(
-	double point1X, double point1Y, double point1Z,
-    double point2X, double point2Y, double point2Z,
-    double point3X, double point3Y, double point3Z,
-    double point4X, double point4Y, double point4Z);
 
-BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From8Points(
-	double point1X, double point1Y, double point1Z,
-    double point2X, double point2Y, double point2Z,
-    double point3X, double point3Y, double point3Z,
-    double point4X, double point4Y, double point4Z,
-    double point5X, double point5Y, double point5Z,
-    double point6X, double point6Y, double point6Z,
-    double point7X, double point7Y, double point7Z,
-    double point8X, double point8Y, double point8Z);
-
-    
 #ifdef __cplusplus
 }
 #endif
