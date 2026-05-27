@@ -26,35 +26,33 @@
 #ifndef BRLCAD_C_ARB8_INCLUDED
 #define BRLCAD_C_ARB8_INCLUDED
 
-#include <brlcad/C/handle.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef BrlHandle BrlArb8;
+typedef void* BrlArb8;
 
 
-BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8FromBoxCoords(
-	double p1x, double p1y, double p1z,
-	double p2x, double p2y, double p2z);
+BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From2Points(
+	double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z);
 
 BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From4Points(
-	double p1x, double p1y, double p1z,
-	double p2x, double p2y, double p2z,
-	double p3x, double p3y, double p3z,
-	double p4x, double p4y, double p4z);
+	double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z);
 
 BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From8Points(
-	double p1x, double p1y, double p1z,
-	double p2x, double p2y, double p2z,
-	double p3x, double p3y, double p3z,
-	double p4x, double p4y, double p4z,
-	double p5x, double p5y, double p5z,
-	double p6x, double p6y, double p6z,
-	double p7x, double p7y, double p7z,
-	double p8x, double p8y, double p8z);
+	double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z,
+    double point5X, double point5Y, double point5Z,
+    double point6X, double point6Y, double point6Z,
+    double point7X, double point7Y, double point7Z,
+    double point8X, double point8Y, double point8Z);
 
     
 #ifdef __cplusplus

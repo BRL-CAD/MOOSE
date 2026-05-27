@@ -21,69 +21,64 @@
  *
  *  BRL-CAD core simplified C interface:
  *      implements wrappers for constructing Arb8 geometry objects
- *      from a box diagonal or from 8 explicit points
  */
 
 #include <brlcad/C/arb8.h>
 
 #include <brlcad/Database/Arb8.h>
 
-#include <brlcad/vector.h>
-
-
 using namespace BRLCAD;
 
 
-//box coordinates as separate doubles
-BrlArb8 BrlNewArb8FromBoxCoords
+// two points (6 doubles)
+BrlArb8 BrlNewArb8From2Points
 (
-    double p1x, double p1y, double p1z,
-    double p2x, double p2y, double p2z
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z
 ) {
-    Vector3D v1(p1x, p1y, p1z);
-    Vector3D v2(p2x, p2y, p2z);
-    BrlArb8 arb_handle = nullptr;
-    arb_handle = static_cast<BrlArb8>(new Arb8(v1, v2));
-    return arb_handle;
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+
+    return new Arb8(point1, point2);
 }
 
-//four points (12 doubles)
+// four points (12 doubles)
 BrlArb8 BrlNewArb8From4Points
 (
-    double p1x, double p1y, double p1z,
-    double p2x, double p2y, double p2z,
-    double p3x, double p3y, double p3z,
-    double p4x, double p4y, double p4z
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z
 ) {
-    Vector3D p1(p1x, p1y, p1z);
-    Vector3D p2(p2x, p2y, p2z);
-    Vector3D p3(p3x, p3y, p3z);
-    Vector3D p4(p4x, p4y, p4z);
-    BrlArb8 arb_handle = nullptr;
-    arb_handle = static_cast<BrlArb8>(new Arb8(p1, p2, p3, p4));
-    return arb_handle;
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+    Vector3D point3(point3X, point3Y, point3Z);
+    Vector3D point4(point4X, point4Y, point4Z);
+    
+    return new Arb8(point1, point2, point3, point4);
 }
 
-//eight points (24 doubles)
+// eight points (24 doubles)
 BrlArb8 BrlNewArb8From8Points
 (
-    double p1x, double p1y, double p1z,
-    double p2x, double p2y, double p2z,
-    double p3x, double p3y, double p3z,
-    double p4x, double p4y, double p4z,
-    double p5x, double p5y, double p5z,
-    double p6x, double p6y, double p6z,
-    double p7x, double p7y, double p7z,
-    double p8x, double p8y, double p8z
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z,
+    double point5X, double point5Y, double point5Z,
+    double point6X, double point6Y, double point6Z,
+    double point7X, double point7Y, double point7Z,
+    double point8X, double point8Y, double point8Z
 ) {
-    Vector3D pts[8] = {
-        Vector3D(p1x,p1y,p1z), Vector3D(p2x,p2y,p2z),
-        Vector3D(p3x,p3y,p3z), Vector3D(p4x,p4y,p4z),
-        Vector3D(p5x,p5y,p5z), Vector3D(p6x,p6y,p6z),
-        Vector3D(p7x,p7y,p7z), Vector3D(p8x,p8y,p8z)
-    };
-    BrlArb8 arb_handle = nullptr;
-    arb_handle = static_cast<BrlArb8>(new Arb8(pts[0], pts[1], pts[2], pts[3],
-                                               pts[4], pts[5], pts[6], pts[7]));
-    return arb_handle;
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+    Vector3D point3(point3X, point3Y, point3Z);
+    Vector3D point4(point4X, point4Y, point4Z);
+    Vector3D point5(point5X, point5Y, point5Z);
+    Vector3D point6(point6X, point6Y, point6Z);
+    Vector3D point7(point7X, point7Y, point7Z);
+    Vector3D point8(point8X, point8Y, point8Z);
+
+    return new Arb8(point1, point2, point3, point4,
+                    point5, point6, point7, point8);
 }
