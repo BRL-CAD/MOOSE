@@ -70,7 +70,7 @@ Handle* CastHandle
         (handleMagic == VectorListMagic))
         ret = static_cast<Handle*>(handle);
     else if (handle != nullptr)
-        bu_log("CastHandle: wrong handle");
+        bu_log("CastHandle: invalid handle");
 
     return ret;
 }
