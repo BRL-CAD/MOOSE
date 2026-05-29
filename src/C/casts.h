@@ -27,11 +27,17 @@
 #define BRLCAD_C_CASTS_INCLUDED
 
 #include <brlcad/Database/ConstDatabase.h>
+#include <brlcad/Database/Database.h>
+#include <brlcad/Database/Object.h>
 
 
 BRLCAD::Handle*        CastHandle(void* handle);
 
 BRLCAD::ConstDatabase* CastConstDatabase(void* handle);
+
+BRLCAD::Database*      CastDatabase(void* handle);
+
+BRLCAD::Object*        CastObject(void* handle);
 
 
 #endif // BRLCAD_C_CASTS_INCLUDED

@@ -1,4 +1,4 @@
-/*                      D A T A B A S E . H
+/*                           O B J E C T . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,29 +17,29 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file Database.h
+/** @file object.h
  *
  *  BRL-CAD core simplified C interface:
- *      declares functions for a writable database
+ *      database object declaration
  */
 
-#ifndef BRLCAD_C_DATABASE_INCLUDED
-#define BRLCAD_C_DATABASE_INCLUDED
+#ifndef BRLCAD_C_OBJECT_INCLUDED
+#define BRLCAD_C_OBJECT_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlDatabase;
+typedef void* BrlObject;
 
 
-BRLCAD_MOOSE_EXPORT void BrlDatabaseSetTitle(BrlDatabase db,
-                                             const char* title);
+BRLCAD_MOOSE_EXPORT void BrlObjectSetName(BrlObject   object,
+										  const char* name);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // BRLCAD_C_DATABASE_INCLUDED
+#endif // BRLCAD_C_OBJECT_INCLUDED

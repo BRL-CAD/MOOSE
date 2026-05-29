@@ -1,4 +1,4 @@
-/*                  O B J E C T . C P P
+/*                      D A T A B A S E . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,33 +17,29 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file Object.cpp
+/** @file database.h
  *
  *  BRL-CAD core simplified C interface:
- *      implements database objects
+ *      declares functions for a writable database
  */
 
-#include <cassert>
+#ifndef BRLCAD_C_DATABASE_INCLUDED
+#define BRLCAD_C_DATABASE_INCLUDED
 
-#include <brlcad/Database/Object.h>
-
-#include <brlcad/C/Object.h>
-
-
-using namespace BRLCAD;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
-void BrlObjectSetName
-(
-	BrlObject object,
-	const char* name
-) {
-	if (object != nullptr) {
-		Object* objectIntern = static_cast<Object*>(object);
+typedef void* BrlDatabase;
 
-		assert(objectIntern != nullptr);
 
-		if (objectIntern != nullptr)
-			objectIntern->SetName(name);
-	}
+BRLCAD_MOOSE_EXPORT void BrlDatabaseSetTitle(BrlDatabase db,
+                                             const char* title);
+
+
+#ifdef __cplusplus
 }
+#endif
+
+#endif // BRLCAD_C_DATABASE_INCLUDED

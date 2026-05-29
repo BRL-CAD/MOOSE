@@ -27,23 +27,23 @@ SET(CSources
     C/arb8.cpp
     C/casts.cpp
     C/constDatabase.cpp
-    C/Database.cpp
+    C/database.cpp
     C/fileDatabase.cpp
     C/globals.cpp
     C/handle.cpp
     C/memoryDatabase.cpp
-    C/Object.cpp
+    C/object.cpp
 )
 
 SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/arb8.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/constDatabase.h
-    ${MOOSE_SOURCE_DIR}/include/brlcad/C/Database.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/database.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/fileDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/globals.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/handle.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
-    ${MOOSE_SOURCE_DIR}/include/brlcad/C/Object.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h
 )
 
 INSTALL(FILES ${CHeaders} DESTINATION include/brlcad/C)

@@ -1,4 +1,4 @@
-/*                           O B J E C T . H
+/*                  O B J E C T . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,29 +17,29 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file Object.h
+/** @file object.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      database object declaration
+ *      implements database objects
  */
 
-#ifndef BRLCAD_C_OBJECT_INCLUDED
-#define BRLCAD_C_OBJECT_INCLUDED
+#include <brlcad/Database/Object.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <brlcad/C/object.h>
 
-
-typedef void* BrlObject;
+#include "casts.h"
 
 
-BRLCAD_MOOSE_EXPORT void BrlObjectSetName(BrlObject   object,
-										  const char* name);
+using namespace BRLCAD;
 
 
-#ifdef __cplusplus
+void BrlObjectSetName
+(
+	BrlObject object,
+	const char* name
+) {
+	Object* objectIntern = CastObject(object);
+
+	if (objectIntern != nullptr)
+		objectIntern->SetName(name);
 }
-#endif
-
-#endif // BRLCAD_C_OBJECT_INCLUDED

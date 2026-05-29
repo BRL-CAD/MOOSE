@@ -17,17 +17,17 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file Database.cpp
+/** @file database.cpp
  *
  *  BRL-CAD core simplified C interface:
  *      implements functions for a database
  */
 
-#include <cassert>
-
 #include <brlcad/Database/Database.h>
 
-#include <brlcad/C/Database.h>
+#include <brlcad/C/database.h>
+
+#include "casts.h"
 
 
 using namespace BRLCAD;
@@ -38,12 +38,9 @@ void BrlDatabaseSetTitle
     BrlDatabase db,
     const char* title
 ) {
-    if (db != nullptr) {
-        Database* database = static_cast<Database*>(db);
+    ConstDatabase* constDb = CastConstDatabase(db);
+    Database* database = static_cast<Database*>(constDb);
 
-        assert(database != nullptr);
-
-        if (database != nullptr)
-            database->SetTitle(title);
-    }
+    if (database != nullptr)
+        database->SetTitle(title);
 }
