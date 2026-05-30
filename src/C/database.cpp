@@ -23,13 +23,11 @@
  *      implements functions for a database
  */
 
-#include <brlcad/Database/Database.h>
-
-#include <brlcad/C/database.h>
+#include <cassert>
 
 #include "casts.h"
 
-#include <cassert>
+#include <brlcad/C/database.h>
 
 
 using namespace BRLCAD;

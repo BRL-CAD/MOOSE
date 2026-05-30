@@ -23,13 +23,11 @@
  *      implements database objects
  */
 
-#include <brlcad/Database/Object.h>
-
-#include <brlcad/C/object.h>
+#include <cassert>
 
 #include "casts.h"
 
-#include <cassert>
+#include <brlcad/C/object.h>
 
 
 using namespace BRLCAD;
@@ -37,15 +35,15 @@ using namespace BRLCAD;
 
 void BrlObjectSetName
 (
-	BrlObject object,
-	const char* name
+    BrlObject   object,
+    const char* name
 ) {
-	if (object != nullptr) {
+    if (object != nullptr) {
         Object* objectIntern = CastObject(object);
 
         assert(objectIntern != nullptr);
 
-		if (objectIntern != nullptr)
+        if (objectIntern != nullptr)
             objectIntern->SetName(name);
-	}
+    }
 }
