@@ -1,4 +1,4 @@
-/*                         C A S T S . H
+/*                      D A T A B A S E . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,29 +17,29 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file casts.h
+/** @file database.h
  *
  *  BRL-CAD core simplified C interface:
- *      declares helper functions to cast void* handles to the correct C++ class
+ *      declares functions for a writable database
  */
 
-#ifndef BRLCAD_C_CASTS_INCLUDED
-#define BRLCAD_C_CASTS_INCLUDED
+#ifndef BRLCAD_C_DATABASE_INCLUDED
+#define BRLCAD_C_DATABASE_INCLUDED
 
-#include <brlcad/Database/ConstDatabase.h>
-
-#include <brlcad/Database/Database.h>
-
-#include <brlcad/Database/Object.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 
-BRLCAD::Handle*        CastHandle(void* handle);
-
-BRLCAD::ConstDatabase* CastConstDatabase(void* handle);
-
-BRLCAD::Database*      CastDatabase(void* handle);
-
-BRLCAD::Object*        CastObject(void* handle);
+typedef void* BrlDatabase;
 
 
-#endif // BRLCAD_C_CASTS_INCLUDED
+BRLCAD_MOOSE_EXPORT void BrlDatabaseSetTitle(BrlDatabase db,
+                                             const char* title);
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // BRLCAD_C_DATABASE_INCLUDED

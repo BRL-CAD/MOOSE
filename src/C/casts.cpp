@@ -1,4 +1,4 @@
-/*                         C A S T S . H
+/*                         C A S T S . C P P 
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -91,6 +91,44 @@ ConstDatabase* CastConstDatabase
         ret = static_cast<ConstDatabase*>(handle);
     else if (handle != nullptr)
         bu_log("CastConstDatabase: wrong handle");
+
+    return ret;
+}
+
+
+Database* CastDatabase
+(
+    void* handle
+) {
+    Database* ret = nullptr;
+
+    const char* handleMagic = Magic(handle);
+
+    // Only accept writable database types (NOT ConstDatabaseMagic)
+    if ((handleMagic == DatabaseMagic) ||
+        (handleMagic == FileDatabaseMagic) ||
+        (handleMagic == MemoryDatabaseMagic))
+        ret = static_cast<Database*>(handle);
+    else if (handle != nullptr)
+        bu_log("CastDatabase: wrong handle or read-only database");
+
+    return ret;
+}
+
+
+Object* CastObject
+(
+    void* handle
+) {
+    Object* ret = nullptr;
+
+    const char* handleMagic = Magic(handle);
+
+    if ((handleMagic == Arb8Magic) ||
+        (handleMagic == ObjectMagic))
+        ret = static_cast<Object*>(handle);
+    else if (handle != nullptr)
+        bu_log("CastObject: wrong handle");
 
     return ret;
 }
