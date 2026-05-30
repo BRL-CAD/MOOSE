@@ -29,6 +29,8 @@
 
 #include "casts.h"
 
+#include <cassert>
+
 
 using namespace BRLCAD;
 
@@ -38,9 +40,12 @@ void BrlDatabaseSetTitle
     BrlDatabase db,
     const char* title
 ) {
-    ConstDatabase* constDb = CastConstDatabase(db);
-    Database* database = static_cast<Database*>(constDb);
+    if (db != nullptr) {
+        Database* database = CastDatabase(db);
 
-    if (database != nullptr)
-        database->SetTitle(title);
+        assert(database != nullptr);
+
+        if (database != nullptr)
+            database->SetTitle(title);
+    }
 }

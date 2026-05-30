@@ -35,7 +35,7 @@ typedef void* BrlObject;
 
 
 BRLCAD_MOOSE_EXPORT void BrlObjectSetName(BrlObject   object,
-										  const char* name);
+                                          const char* name);
 
 
 #ifdef __cplusplus

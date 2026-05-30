@@ -29,6 +29,8 @@
 
 #include "casts.h"
 
+#include <cassert>
+
 
 using namespace BRLCAD;
 
@@ -38,8 +40,12 @@ void BrlObjectSetName
 	BrlObject object,
 	const char* name
 ) {
-	Object* objectIntern = CastObject(object);
+	if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
 
-	if (objectIntern != nullptr)
-		objectIntern->SetName(name);
+        assert(objectIntern != nullptr);
+
+		if (objectIntern != nullptr)
+            objectIntern->SetName(name);
+	}
 }
