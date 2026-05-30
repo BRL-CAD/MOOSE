@@ -26,8 +26,6 @@
 #ifndef BRLCAD_C_CASTS_INCLUDED
 #define BRLCAD_C_CASTS_INCLUDED
 
-#include <brlcad/Database/ConstDatabase.h>
-
 #include <brlcad/Database/Database.h>
 
 #include <brlcad/Database/Object.h>
