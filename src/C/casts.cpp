@@ -104,7 +104,6 @@ Database* CastDatabase
 
     const char* handleMagic = Magic(handle);
 
-    // Only accept writable database types (NOT ConstDatabaseMagic)
     if ((handleMagic == DatabaseMagic) ||
         (handleMagic == FileDatabaseMagic) ||
         (handleMagic == MemoryDatabaseMagic))
@@ -129,6 +128,23 @@ Object* CastObject
         ret = static_cast<Object*>(handle);
     else if (handle != nullptr)
         bu_log("CastObject: wrong handle");
+
+    return ret;
+}
+
+
+VectorList* CastVectorList
+(
+    void* handle
+) {
+    VectorList* ret = nullptr;
+
+    const char* handleMagic = Magic(handle);
+
+    if (handleMagic == VectorListMagic)
+        ret = static_cast<VectorList*>(handle);
+    else if (handle != nullptr)
+        bu_log("CastVectorList: wrong handle");
 
     return ret;
 }

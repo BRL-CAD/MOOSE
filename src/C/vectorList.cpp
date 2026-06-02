@@ -1,4 +1,4 @@
-/*                         C A S T S . H
+/*                      V E C T O R L I S T . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,30 +17,55 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file casts.h
+/** @file vectorList.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      declares helper functions to cast void* handles to the correct C++ class
+ *      implementation for VectorList opaque wrapper
  */
 
-#ifndef BRLCAD_C_CASTS_INCLUDED
-#define BRLCAD_C_CASTS_INCLUDED
+#include <cassert>
 
-#include <brlcad/Database/Database.h>
 #include <brlcad/VectorList.h>
 
-#include <brlcad/Database/Object.h>
+#include <brlcad/C/vectorList.h>
+#include "casts.h"
+
+using namespace BRLCAD;
 
 
-BRLCAD::Handle*        CastHandle(void* handle);
-
-BRLCAD::ConstDatabase* CastConstDatabase(void* handle);
-
-BRLCAD::Database*      CastDatabase(void* handle);
-
-BRLCAD::Object*        CastObject(void* handle);
-
-BRLCAD::VectorList*    CastVectorList(void* handle);
+BrlVectorList BrlNewVectorList
+(
+    void
+) {
+    return new VectorList();
+}
 
 
-#endif // BRLCAD_C_CASTS_INCLUDED
+void BrlDeleteVectorList
+(
+    BrlVectorList vlist
+) {
+    if (vlist != nullptr) {
+        VectorList* vl = CastVectorList(vlist);
+
+        assert(vl != nullptr);
+
+        if (vl != nullptr)
+            delete vl;
+    }
+}
+
+
+void BrlVectorListClear
+(
+    BrlVectorList vlist
+) {
+    if (vlist != nullptr) {
+        VectorList* vl = CastVectorList(vlist);
+
+        assert(vl != nullptr);
+
+        if (vl != nullptr)
+            vl->Clear();
+    }
+}
