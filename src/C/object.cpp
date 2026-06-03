@@ -47,18 +47,3 @@ void BrlObjectSetName
             objectIntern->SetName(name);
     }
 }
-
-
-void BrlObjectDestroy
-(
-    BrlObject object
-) {
-    if (object != nullptr) {
-        Object* objectIntern = CastObject(object);
-
-        assert(objectIntern != nullptr);
-
-        if (objectIntern != nullptr)
-            objectIntern->Destroy();
-    }
-}

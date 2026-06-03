@@ -1,4 +1,4 @@
-/*                           O B J E C T . H
+/*                  N O N M A N I F O L D G E O M E T R Y . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,29 +17,25 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file object.h
+/** @file nonManifoldGeometry.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      database object declaration
+ *      declares a handle type for a non-manifold geometry mesh
  */
 
-#ifndef BRLCAD_C_OBJECT_INCLUDED
-#define BRLCAD_C_OBJECT_INCLUDED
+#ifndef BRLCAD_C_NONMANIFOLDGEOMETRY_INCLUDED
+#define BRLCAD_C_NONMANIFOLDGEOMETRY_INCLUDED
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlObject;
-
-
-BRLCAD_MOOSE_EXPORT void BrlObjectSetName(BrlObject   object,
-                                          const char* name);
+typedef void* BrlNonManifoldGeometry;
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // BRLCAD_C_OBJECT_INCLUDED
+#endif // BRLCAD_C_NONMANIFOLDGEOMETRY_INCLUDED

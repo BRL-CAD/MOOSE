@@ -20,7 +20,7 @@
 /** @file vectorList.h
  *
  *  BRL-CAD core simplified C interface:
- *       header for VectorList opaque wrapper 
+ *       header for VectorList opaque wrapper
  */
 
 #ifndef BRLCAD_C_VECTORLIST_INCLUDED

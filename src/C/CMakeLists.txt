@@ -44,6 +44,7 @@ SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/globals.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/handle.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/nonManifoldGeometry.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/vectorList.h
 )
