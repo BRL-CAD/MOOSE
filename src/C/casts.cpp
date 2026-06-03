@@ -148,3 +148,20 @@ VectorList* CastVectorList
 
     return ret;
 }
+
+
+NonManifoldGeometry* CastNonManifoldGeometry
+(
+    void* handle
+) {
+    NonManifoldGeometry* ret = nullptr;
+
+    const char* handleMagic = Magic(handle);
+
+    if (handleMagic == ObjectMagic)
+        ret = static_cast<NonManifoldGeometry*>(handle);
+    else if (handle != nullptr)
+        bu_log("CastNonManifoldGeometry: wrong handle type");
+
+    return ret;
+}

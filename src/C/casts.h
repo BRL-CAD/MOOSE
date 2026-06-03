@@ -32,15 +32,17 @@
 #include <brlcad/Database/Object.h>
 
 
-BRLCAD::Handle*        CastHandle(void* handle);
+BRLCAD::Handle*              CastHandle(void* handle);
 
-BRLCAD::ConstDatabase* CastConstDatabase(void* handle);
+BRLCAD::ConstDatabase*       CastConstDatabase(void* handle);
 
-BRLCAD::Database*      CastDatabase(void* handle);
+BRLCAD::Database*            CastDatabase(void* handle);
 
-BRLCAD::Object*        CastObject(void* handle);
+BRLCAD::Object*              CastObject(void* handle);
 
-BRLCAD::VectorList*    CastVectorList(void* handle);
+BRLCAD::VectorList*          CastVectorList(void* handle);
+
+BRLCAD::NonManifoldGeometry* CastNonManifoldGeometry(void* handle);
 
 
 #endif // BRLCAD_C_CASTS_INCLUDED

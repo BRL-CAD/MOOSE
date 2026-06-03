@@ -64,7 +64,7 @@ BRLCAD_MOOSE_EXPORT const char*            BrlTopObjectIteratorName(BrlTopObject
 BRLCAD_MOOSE_EXPORT void                   BrlDeleteTopObjectIterator(BrlTopObjectIterator it);
 
 BRLCAD_MOOSE_EXPORT BrlObject              BrlConstDatabaseGet(BrlConstDatabase db,
-                                                             const char       *objectName);
+                                                               const char       *objectName);
 
 BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometry BrlConstDatabaseFacetize(BrlConstDatabase db,
                                                                     const char       *objectName);
