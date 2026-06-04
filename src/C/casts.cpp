@@ -31,103 +31,27 @@
 using namespace BRLCAD;
 
 
-static const char* Magic
-(
-    void* handle
-) {
-    const char* ret = nullptr;
-
-    class HandleMagic : public Handle {
-    public:
-        const char* Magic(void) const {
-            return m_magic;
-        }
-    };
-
-    if (handle != nullptr) {
-        HandleMagic* testClass = static_cast<HandleMagic*>(handle);
-
-        ret = testClass->Magic();
-    }
-
-    return ret;
-}
-
-
 Handle* CastHandle
 (
     void* handle
 ) {
     Handle* ret = nullptr;
 
-    const char* handleMagic = Magic(handle);
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
 
-    if ((handleMagic == Arb8Magic) ||
-        (handleMagic == ConstDatabaseMagic) ||
-        (handleMagic == FileDatabaseMagic) ||
-        (handleMagic == MemoryDatabaseMagic) ||
-        (handleMagic == ObjectMagic) ||
-        (handleMagic == VectorListMagic))
-        ret = static_cast<Handle*>(handle);
-    else if (handle != nullptr)
-        bu_log("CastHandle: invalid handle");
+        const char* handleMagic = testHandle->Magic();
 
-    return ret;
-}
-
-
-ConstDatabase* CastConstDatabase
-(
-    void* handle
-) {
-    ConstDatabase* ret = nullptr;
-
-    const char* handleMagic = Magic(handle);
-
-    if ((handleMagic == ConstDatabaseMagic) ||
-        (handleMagic == DatabaseMagic) ||
-        (handleMagic == FileDatabaseMagic) ||
-        (handleMagic == MemoryDatabaseMagic))
-        ret = static_cast<ConstDatabase*>(handle);
-    else if (handle != nullptr)
-        bu_log("CastConstDatabase: wrong handle");
-
-    return ret;
-}
-
-
-Database* CastDatabase
-(
-    void* handle
-) {
-    Database* ret = nullptr;
-
-    const char* handleMagic = Magic(handle);
-
-    if ((handleMagic == DatabaseMagic) ||
-        (handleMagic == FileDatabaseMagic) ||
-        (handleMagic == MemoryDatabaseMagic))
-        ret = static_cast<Database*>(handle);
-    else if (handle != nullptr)
-        bu_log("CastDatabase: wrong handle or read-only database");
-
-    return ret;
-}
-
-
-Object* CastObject
-(
-    void* handle
-) {
-    Object* ret = nullptr;
-
-    const char* handleMagic = Magic(handle);
-
-    if ((handleMagic == Arb8Magic) ||
-        (handleMagic == ObjectMagic))
-        ret = static_cast<Object*>(handle);
-    else if (handle != nullptr)
-        bu_log("CastObject: wrong handle");
+        if ((handleMagic == VectorListMagic) ||
+            (handleMagic == ConstDatabaseMagic) ||
+            (handleMagic == FileDatabaseMagic) ||
+            (handleMagic == MemoryDatabaseMagic) ||
+            (handleMagic == Arb8Magic) ||
+            (handleMagic == NonManifoldGeometryMagic))
+            ret = testHandle;
+        else
+            bu_log("CastHandle: invalid handle");
+    }
 
     return ret;
 }
@@ -139,12 +63,150 @@ VectorList* CastVectorList
 ) {
     VectorList* ret = nullptr;
 
-    const char* handleMagic = Magic(handle);
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
 
-    if (handleMagic == VectorListMagic)
-        ret = static_cast<VectorList*>(handle);
-    else if (handle != nullptr)
-        bu_log("CastVectorList: wrong handle");
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == VectorListMagic)
+            ret = static_cast<VectorListHandle*>(handle)->Pointer();
+        else
+            bu_log("CastVectorList: wrong handle");
+    }
+
+    return ret;
+}
+
+
+ConstDatabase* CastConstDatabase
+(
+    void* handle
+) {
+    ConstDatabase* ret = nullptr;
+
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
+
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == ConstDatabaseMagic)
+            ret = static_cast<ConstDatabaseHandle*>(handle)->Pointer();
+        else if (handleMagic == FileDatabaseMagic)
+            ret = static_cast<FileDatabaseHandle*>(handle)->Pointer();
+        else if (handleMagic == MemoryDatabaseMagic)
+            ret = static_cast<MemoryDatabaseHandle*>(handle)->Pointer();
+        else
+            bu_log("CastConstDatabase: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Database* CastDatabase
+(
+    void* handle
+) {
+    Database* ret = nullptr;
+
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
+
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == FileDatabaseMagic)
+            ret = static_cast<FileDatabaseHandle*>(handle)->Pointer();
+        else if (handleMagic == MemoryDatabaseMagic)
+            ret = static_cast<MemoryDatabaseHandle*>(handle)->Pointer();
+        else
+            bu_log("CastDatabase: wrong handle or read-only database");
+    }
+
+    return ret;
+}
+
+
+FileDatabase* CastFileDatabase
+(
+    void* handle
+) {
+    FileDatabase* ret = nullptr;
+
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
+
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == FileDatabaseMagic)
+            ret = static_cast<FileDatabaseHandle*>(handle)->Pointer();
+        else
+            bu_log("CastFileDatabase: wrong handle or read-only database");
+    }
+
+    return ret;
+}
+
+
+MemoryDatabase* CastMemoryDatabase
+(
+    void* handle
+) {
+    MemoryDatabase* ret = nullptr;
+
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
+
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == MemoryDatabaseMagic)
+            ret = static_cast<MemoryDatabaseHandle*>(handle)->Pointer();
+        else
+            bu_log("CastMemoryDatabase: wrong handle or read-only database");
+    }
+
+    return ret;
+}
+
+
+Object* CastObject
+(
+    void* handle
+) {
+    Object* ret = nullptr;
+
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
+
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == Arb8Magic)
+            ret = static_cast<Arb8Handle*>(handle)->Pointer();
+        else if (handleMagic == NonManifoldGeometryMagic)
+            ret = static_cast<NonManifoldGeometryHandle*>(handle)->Pointer();
+        else
+            bu_log("CastObject: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Arb8* CastArb8
+(
+    void* handle
+) {
+    Arb8* ret = nullptr;
+
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
+
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == Arb8Magic)
+            ret = static_cast<Arb8Handle*>(handle)->Pointer();
+        else
+            bu_log("CastArb8: wrong handle");
+    }
 
     return ret;
 }
@@ -156,12 +218,16 @@ NonManifoldGeometry* CastNonManifoldGeometry
 ) {
     NonManifoldGeometry* ret = nullptr;
 
-    const char* handleMagic = Magic(handle);
+    if (handle != nullptr) {
+        Handle* testHandle = static_cast<Handle*>(handle);
 
-    if (handleMagic == ObjectMagic)
-        ret = static_cast<NonManifoldGeometry*>(handle);
-    else if (handle != nullptr)
-        bu_log("CastNonManifoldGeometry: wrong handle type");
+        const char* handleMagic = testHandle->Magic();
+
+        if (handleMagic == NonManifoldGeometryMagic)
+            ret = static_cast<NonManifoldGeometryHandle*>(handle)->Pointer();
+        else
+            bu_log("NonManifoldGeometry: wrong handle");
+    }
 
     return ret;
 }

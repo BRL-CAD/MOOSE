@@ -25,9 +25,9 @@
 
 #include <cassert>
 
-#include "casts.h"
-
 #include <brlcad/C/object.h>
+
+#include "casts.h"
 
 
 using namespace BRLCAD;

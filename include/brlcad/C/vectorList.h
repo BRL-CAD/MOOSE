@@ -36,9 +36,8 @@ typedef void* BrlVectorList;
 
 BRLCAD_MOOSE_EXPORT BrlVectorList BrlNewVectorList(void);
 
-BRLCAD_MOOSE_EXPORT void          BrlDeleteVectorList(BrlVectorList vlist);
-
 BRLCAD_MOOSE_EXPORT void          BrlVectorListClear(BrlVectorList vlist);
+
 
 #ifdef __cplusplus
 }

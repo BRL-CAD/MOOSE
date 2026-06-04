@@ -28,7 +28,9 @@
 #include <brlcad/VectorList.h>
 
 #include <brlcad/C/vectorList.h>
+
 #include "casts.h"
+
 
 using namespace BRLCAD;
 
@@ -37,22 +39,7 @@ BrlVectorList BrlNewVectorList
 (
     void
 ) {
-    return new VectorList();
-}
-
-
-void BrlDeleteVectorList
-(
-    BrlVectorList vlist
-) {
-    if (vlist != nullptr) {
-        VectorList* vl = CastVectorList(vlist);
-
-        assert(vl != nullptr);
-
-        if (vl != nullptr)
-            delete vl;
-    }
+    return new VectorListHandle(new VectorList());
 }
 
 

@@ -25,34 +25,19 @@
 
 #include <cassert>
 
-#include "casts.h"
-
-#include <brlcad/C/constDatabase.h>
+#include <brlcad/Database/NonManifoldGeometry.h>
 
 #include <brlcad/C/vectorList.h>
+#include <brlcad/C/constDatabase.h>
 
-#include <brlcad/Database/NonManifoldGeometry.h>
+#include "casts.h"
+
 
 using namespace BRLCAD;
 
 
 BrlConstDatabase BrlNewConstDatabase(void) {
-    return new ConstDatabase;
-}
-
-
-void BrlDeleteConstDatabase
-(
-    BrlConstDatabase db
-) {
-    if (db != nullptr) {
-        ConstDatabase* constDatabase = CastConstDatabase(db);
-
-        assert(constDatabase != nullptr);
-
-        if (constDatabase != nullptr)
-            delete constDatabase;
-    }
+    return new ConstDatabaseHandle(new ConstDatabase);
 }
 
 
@@ -233,23 +218,10 @@ BrlNonManifoldGeometry BrlConstDatabaseFacetize
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = constDatabase->Facetize(objectName);
+            ret = new NonManifoldGeometryHandle(constDatabase->Facetize(objectName));
     }
 
     return ret;
-}
-
-
-void BrlDeleteNonManifoldGeometry
-(
-    BrlNonManifoldGeometry nm
-) {
-    if (nm != nullptr) {
-        BRLCAD::NonManifoldGeometry* p =
-            static_cast<BRLCAD::NonManifoldGeometry*>(nm);
-
-        delete p;
-    }
 }
 
 

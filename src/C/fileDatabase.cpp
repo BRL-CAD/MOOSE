@@ -28,10 +28,12 @@
 
 #include <brlcad/C/fileDatabase.h>
 
+#include "Handle.h"
+
 
 using namespace BRLCAD;
 
 
 BrlFileDatabase BrlNewFileDatabase(void) {
-    return new FileDatabase;
+    return new FileDatabaseHandle(new FileDatabase);
 }

@@ -28,8 +28,6 @@
 
 #include <cstddef>
 
-#include <brlcad/Handle.h>
-
 
 struct resource;
 struct directory;
@@ -39,7 +37,7 @@ struct bu_attribute_value_set;
 
 
 namespace BRLCAD {
-    class BRLCAD_MOOSE_EXPORT Object : public Handle {
+    class BRLCAD_MOOSE_EXPORT Object {
     public:
         virtual ~Object(void);
 

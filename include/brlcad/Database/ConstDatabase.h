@@ -40,7 +40,7 @@ namespace BRLCAD {
     class NonManifoldGeometry;
 
 
-    class BRLCAD_MOOSE_EXPORT ConstDatabase : public Handle {
+    class BRLCAD_MOOSE_EXPORT ConstDatabase {
     public:
         ConstDatabase(void);
         virtual ~ConstDatabase(void);

@@ -29,7 +29,6 @@
 #include <cstddef>
 
 #include <brlcad/globals.h>
-#include <brlcad/Handle.h>
 #include <brlcad/vector.h>
 
 
@@ -38,7 +37,7 @@ struct bv_vlist;
 
 
 namespace BRLCAD {
-    class BRLCAD_MOOSE_EXPORT VectorList : public Handle {
+    class BRLCAD_MOOSE_EXPORT VectorList {
     public:
         VectorList(void);
         VectorList(const VectorList& original);

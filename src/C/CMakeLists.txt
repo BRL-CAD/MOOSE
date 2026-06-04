@@ -30,7 +30,6 @@ SET(CSources
     C/database.cpp
     C/fileDatabase.cpp
     C/globals.cpp
-    C/handle.cpp
     C/memoryDatabase.cpp
     C/object.cpp
     C/vectorList.cpp
@@ -42,7 +41,6 @@ SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/database.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/fileDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/globals.h
-    ${MOOSE_SOURCE_DIR}/include/brlcad/C/handle.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/nonManifoldGeometry.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h

@@ -57,9 +57,6 @@
 #endif
 
 
-const char* const BRLCAD::DatabaseMagic = "BRLCAD::Database";
-
-
 using namespace BRLCAD;
 
 
@@ -378,6 +375,4 @@ bool Database::Set
 }
 
 
-Database::Database(void) : ConstDatabase(), m_wdbp(nullptr) {
-    m_magic = DatabaseMagic;
-}
+Database::Database(void) : ConstDatabase(), m_wdbp(nullptr) {}

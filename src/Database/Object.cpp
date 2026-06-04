@@ -32,9 +32,6 @@
 #include <brlcad/Database/Object.h>
 
 
-const char* const BRLCAD::ObjectMagic = "BRLCAD::Object";
-
-
 using namespace BRLCAD;
 
 
@@ -316,7 +313,7 @@ void Object::ClearAttributes(void) {
 }
 
 
-Object::Object(void) : Handle(ObjectMagic), m_pDir(nullptr), m_ip(nullptr), m_dbip(nullptr), m_name(nullptr), m_avs(nullptr) {
+Object::Object(void) : m_pDir(nullptr), m_ip(nullptr), m_dbip(nullptr), m_name(nullptr), m_avs(nullptr) {
     if (!BU_SETJUMP) {
         m_resp = static_cast<resource*>(bu_calloc(1, sizeof(resource), "BRLCAD::Object::Object::m_resp"));
         rt_init_resource(m_resp, 0, NULL);
@@ -335,7 +332,7 @@ Object::Object
     directory*      pDir,
     rt_db_internal* ip,
     db_i*           dbip
-) : Handle(ObjectMagic), m_resp(resp), m_pDir(pDir), m_ip(ip), m_dbip(dbip), m_name(nullptr), m_avs(nullptr) {
+) : m_resp(resp), m_pDir(pDir), m_ip(ip), m_dbip(dbip), m_name(nullptr), m_avs(nullptr) {
     assert(m_pDir != nullptr);
 }
 
@@ -343,7 +340,7 @@ Object::Object
 Object::Object
 (
     const Object& original
-) : Handle(ObjectMagic), m_resp(nullptr), m_pDir(nullptr), m_ip(nullptr), m_dbip(nullptr), m_name(nullptr), m_avs(nullptr) {
+) : m_resp(nullptr), m_pDir(nullptr), m_ip(nullptr), m_dbip(nullptr), m_name(nullptr), m_avs(nullptr) {
     if (!BU_SETJUMP) {
         m_resp = static_cast<resource*>(bu_calloc(1, sizeof(resource), "BRLCAD::Object::Object::m_resp"));
         rt_init_resource(m_resp, 0, NULL);

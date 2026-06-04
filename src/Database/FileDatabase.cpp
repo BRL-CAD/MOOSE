@@ -29,15 +29,10 @@
 #include <brlcad/Database/FileDatabase.h>
 
 
-const char* const BRLCAD::FileDatabaseMagic = "BRLCAD::FileDatabase";
-
-
 using namespace BRLCAD;
 
 
-FileDatabase::FileDatabase(void) : Database() {
-    m_magic = FileDatabaseMagic;
-}
+FileDatabase::FileDatabase(void) : Database() {}
 
 
 FileDatabase::~FileDatabase(void) {}

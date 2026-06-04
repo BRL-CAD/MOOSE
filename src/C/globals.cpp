@@ -20,14 +20,17 @@
 /** @file globals.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      implementation of general functions
+ *      implementation of general stuff
  */
 
+#include <cassert>
 #include <map>
 
 #include <brlcad/globals.h>
 
 #include <brlcad/C/globals.h>
+
+#include "casts.h"
 
 
 using namespace BRLCAD;
@@ -45,6 +48,29 @@ int BrlMinorVersion(void) {
 
 int BrlPatchVersion(void) {
     return PatchVersion();
+}
+
+
+const char* const VectorListMagic          = "BRLCAD::VectorList";
+const char* const ConstDatabaseMagic       = "BRLCAD::ConstDatabase";
+const char* const FileDatabaseMagic        = "BRLCAD::FileDatabase";
+const char* const MemoryDatabaseMagic      = "BRLCAD::MemoryDatabase";
+const char* const Arb8Magic                = "BRLCAD::Arb8";
+const char* const NonManifoldGeometryMagic = "BRLCAD::NonManifoldGeometry";
+
+
+void BrlDeleteHandle
+(
+    BrlHandle handle
+) {
+    if (handle != nullptr) {
+        Handle* hd = CastHandle(handle);
+
+        assert(hd != nullptr);
+
+        if (hd != nullptr)
+            delete hd;
+    }
 }
 
 

@@ -57,13 +57,10 @@
 #endif
 
 
-const char* const BRLCAD::ConstDatabaseMagic = "BRLCAD::ConstDatabase";
-
-
 using namespace BRLCAD;
 
 
-ConstDatabase::ConstDatabase(void) : Handle(ConstDatabaseMagic), m_rtip(nullptr), m_resp(nullptr), m_changeSignalHandlers(nullptr), m_selfUpdateNref(false) {
+ConstDatabase::ConstDatabase(void) : m_rtip(nullptr), m_resp(nullptr), m_changeSignalHandlers(nullptr), m_selfUpdateNref(false) {
     assert(rt_uniresource.re_magic == RESOURCE_MAGIC);
 
     if (!BU_SETJUMP) {

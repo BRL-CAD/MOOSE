@@ -26,10 +26,8 @@
 #ifndef BRLCAD_C_CONSTDATABASE_INCLUDED
 #define BRLCAD_C_CONSTDATABASE_INCLUDED
 
-#include <brlcad/C/object.h>
-
 #include <brlcad/C/vectorList.h>
-
+#include <brlcad/C/object.h>
 #include <brlcad/C/nonManifoldGeometry.h>
 
 #ifdef __cplusplus
@@ -45,13 +43,13 @@ typedef void* BrlTopObjectIterator;
 BRLCAD_MOOSE_EXPORT BrlConstDatabase       BrlNewConstDatabase(void);
 
 BRLCAD_MOOSE_EXPORT int                    BrlConstDatabaseLoad(BrlConstDatabase db,
-                                                                const char       *fileName);
+                                                                const char*      fileName);
 
 BRLCAD_MOOSE_EXPORT const char*            BrlConstDatabaseTitle(BrlConstDatabase db);
 
 BRLCAD_MOOSE_EXPORT void                   BrlConstDatabasePlot(BrlConstDatabase db,
-                                                                const char       *objectName,
-                                                                BrlVectorList    vlist);
+                                                                const char*      objectName,
+                                                                BrlVectorList    vectorList);
 
 BRLCAD_MOOSE_EXPORT BrlTopObjectIterator   BrlConstDatabaseFirstTopObject(BrlConstDatabase db);
 
@@ -64,27 +62,23 @@ BRLCAD_MOOSE_EXPORT const char*            BrlTopObjectIteratorName(BrlTopObject
 BRLCAD_MOOSE_EXPORT void                   BrlDeleteTopObjectIterator(BrlTopObjectIterator it);
 
 BRLCAD_MOOSE_EXPORT BrlObject              BrlConstDatabaseGet(BrlConstDatabase db,
-                                                               const char       *objectName);
+                                                               const char*      objectName);
 
 BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometry BrlConstDatabaseFacetize(BrlConstDatabase db,
-                                                                    const char       *objectName);
-
-BRLCAD_MOOSE_EXPORT void                   BrlDeleteNonManifoldGeometry(BrlNonManifoldGeometry nm);
+                                                                    const char*      objectName);
 
 BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseSelect(BrlConstDatabase db,
-                                                                  const char       *objectName);
-
+                                                                  const char*      objectName);
 BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseUnSelectAll(BrlConstDatabase db);
-
 BRLCAD_MOOSE_EXPORT int                    BrlConstDatabaseSelectionIsEmpty(BrlConstDatabase db);
 
 BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseBoundingBoxMinima(BrlConstDatabase db,
                                                                              double *x, double *y,
                                                                              double *z);
-
 BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseBoundingBoxMaxima(BrlConstDatabase db,
                                                                              double *x, double *y,
                                                                              double *z);
+
 
 #ifdef __cplusplus
 }

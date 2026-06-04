@@ -20,7 +20,7 @@
 /** @file globals.h
  *
  *  BRL-CAD core simplified C interface:
- *      declarations of general functions
+ *      declarations of general types and functions
  */
 
 #ifndef BRLCAD_C_GLOBALS_INCLUDED
@@ -34,6 +34,11 @@ extern "C" {
 BRLCAD_MOOSE_EXPORT int BrlMajorVersion(void);
 BRLCAD_MOOSE_EXPORT int BrlMinorVersion(void);
 BRLCAD_MOOSE_EXPORT int BrlPatchVersion(void);
+
+
+typedef void* BrlHandle;
+
+BRLCAD_MOOSE_EXPORT void  BrlDeleteHandle(BrlHandle handle);
 
 
 typedef void (*BrlLogHandler)(const char* logString,
