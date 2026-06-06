@@ -197,7 +197,7 @@ BrlObject BrlConstDatabaseGet
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = constDatabase->Get(objectName);
+            ret = new ObjectHandle(constDatabase->Get(objectName));
     }
 
     return ret;

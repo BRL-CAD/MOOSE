@@ -55,6 +55,7 @@ const char* const VectorListMagic          = "BRLCAD::VectorList";
 const char* const ConstDatabaseMagic       = "BRLCAD::ConstDatabase";
 const char* const FileDatabaseMagic        = "BRLCAD::FileDatabase";
 const char* const MemoryDatabaseMagic      = "BRLCAD::MemoryDatabase";
+const char* const ObjectMagic              = "BRLCAD::Object";
 const char* const Arb8Magic                = "BRLCAD::Arb8";
 const char* const NonManifoldGeometryMagic = "BRLCAD::NonManifoldGeometry";
 

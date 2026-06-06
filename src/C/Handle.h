@@ -60,6 +60,7 @@ extern const char* const VectorListMagic;
 extern const char* const ConstDatabaseMagic;
 extern const char* const FileDatabaseMagic;
 extern const char* const MemoryDatabaseMagic;
+extern const char* const ObjectMagic;
 extern const char* const Arb8Magic;
 extern const char* const NonManifoldGeometryMagic;
 
@@ -113,6 +114,12 @@ public:
 class MemoryDatabaseHandle : public PointerHandle<BRLCAD::MemoryDatabase> {
 public:
     MemoryDatabaseHandle(BRLCAD::MemoryDatabase* pointer) : PointerHandle(MemoryDatabaseMagic, pointer) {}
+};
+
+
+class ObjectHandle : public PointerHandle<BRLCAD::Object> {
+public:
+    ObjectHandle(BRLCAD::Object* pointer) : PointerHandle(ObjectMagic, pointer) {}
 };
 
 

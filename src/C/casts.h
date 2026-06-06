@@ -26,21 +26,23 @@
 #ifndef BRLCAD_C_CASTS_INCLUDED
 #define BRLCAD_C_CASTS_INCLUDED
 
+#include <brlcad/C/globals.h>
+
 #include "Handle.h"
 
 
-Handle*                      CastHandle(void* handle);
+Handle*                      CastHandle(BrlHandle handle);
 
-BRLCAD::VectorList*          CastVectorList(void* handle);
+BRLCAD::VectorList*          CastVectorList(BrlHandle handle);
 
-BRLCAD::ConstDatabase*       CastConstDatabase(void* handle);
-BRLCAD::Database*            CastDatabase(void* handle);
-BRLCAD::FileDatabase*        CastFileDatabase(void* handle);
-BRLCAD::MemoryDatabase*      CastMemoryDatabase(void* handle);
+BRLCAD::ConstDatabase*       CastConstDatabase(BrlHandle handle);
+BRLCAD::Database*            CastDatabase(BrlHandle handle);
+BRLCAD::FileDatabase*        CastFileDatabase(BrlHandle handle);
+BRLCAD::MemoryDatabase*      CastMemoryDatabase(BrlHandle handle);
 
-BRLCAD::Object*              CastObject(void* handle);
-BRLCAD::Arb8*                CastArb8(void* handle);
-BRLCAD::NonManifoldGeometry* CastNonManifoldGeometry(void* handle);
+BRLCAD::Object*              CastObject(BrlHandle handle);
+BRLCAD::Arb8*                CastArb8(BrlHandle handle);
+BRLCAD::NonManifoldGeometry* CastNonManifoldGeometry(BrlHandle handle);
 
 
 #endif // BRLCAD_C_CASTS_INCLUDED

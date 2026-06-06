@@ -36,7 +36,7 @@ BRLCAD_MOOSE_EXPORT int BrlMinorVersion(void);
 BRLCAD_MOOSE_EXPORT int BrlPatchVersion(void);
 
 
-typedef void* BrlHandle;
+typedef struct Handle* BrlHandle;
 
 BRLCAD_MOOSE_EXPORT void  BrlDeleteHandle(BrlHandle handle);
 

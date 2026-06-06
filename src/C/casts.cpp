@@ -33,7 +33,7 @@ using namespace BRLCAD;
 
 Handle* CastHandle
 (
-    void* handle
+    BrlHandle handle
 ) {
     Handle* ret = nullptr;
 
@@ -59,7 +59,7 @@ Handle* CastHandle
 
 VectorList* CastVectorList
 (
-    void* handle
+    BrlHandle handle
 ) {
     VectorList* ret = nullptr;
 
@@ -80,7 +80,7 @@ VectorList* CastVectorList
 
 ConstDatabase* CastConstDatabase
 (
-    void* handle
+    BrlHandle handle
 ) {
     ConstDatabase* ret = nullptr;
 
@@ -105,7 +105,7 @@ ConstDatabase* CastConstDatabase
 
 Database* CastDatabase
 (
-    void* handle
+    BrlHandle handle
 ) {
     Database* ret = nullptr;
 
@@ -128,7 +128,7 @@ Database* CastDatabase
 
 FileDatabase* CastFileDatabase
 (
-    void* handle
+    BrlHandle handle
 ) {
     FileDatabase* ret = nullptr;
 
@@ -149,7 +149,7 @@ FileDatabase* CastFileDatabase
 
 MemoryDatabase* CastMemoryDatabase
 (
-    void* handle
+    BrlHandle handle
 ) {
     MemoryDatabase* ret = nullptr;
 
@@ -170,7 +170,7 @@ MemoryDatabase* CastMemoryDatabase
 
 Object* CastObject
 (
-    void* handle
+    BrlHandle handle
 ) {
     Object* ret = nullptr;
 
@@ -193,7 +193,7 @@ Object* CastObject
 
 Arb8* CastArb8
 (
-    void* handle
+    BrlHandle handle
 ) {
     Arb8* ret = nullptr;
 
@@ -214,7 +214,7 @@ Arb8* CastArb8
 
 NonManifoldGeometry* CastNonManifoldGeometry
 (
-    void* handle
+    BrlHandle handle
 ) {
     NonManifoldGeometry* ret = nullptr;
 
