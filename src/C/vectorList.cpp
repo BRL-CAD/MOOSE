@@ -39,7 +39,7 @@ BrlVectorList BrlNewVectorList
 (
     void
 ) {
-    return new VectorListHandle(new VectorList());
+    return new VectorListData(new VectorList());
 }
 
 

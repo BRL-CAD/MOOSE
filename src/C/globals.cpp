@@ -65,12 +65,12 @@ void BrlDeleteHandle
     BrlHandle handle
 ) {
     if (handle != nullptr) {
-        Handle* hd = CastHandle(handle);
+        BrlData* data = CastHandle(handle);
 
-        assert(hd != nullptr);
+        assert(data != nullptr);
 
-        if (hd != nullptr)
-            delete hd;
+        if (data != nullptr)
+            delete data;
     }
 }
 

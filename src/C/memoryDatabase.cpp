@@ -27,12 +27,12 @@
 
 #include <brlcad/C/memoryDatabase.h>
 
-#include "Handle.h"
+#include "BrlData.h"
 
 
 using namespace BRLCAD;
 
 
 BrlMemoryDatabase BrlNewMemoryDatabase(void) {
-    return new MemoryDatabaseHandle(new MemoryDatabase);
+    return new MemoryDatabaseData(new MemoryDatabase);
 }

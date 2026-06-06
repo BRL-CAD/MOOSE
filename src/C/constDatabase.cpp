@@ -36,7 +36,7 @@ using namespace BRLCAD;
 
 
 BrlConstDatabase BrlNewConstDatabase(void) {
-    return new ConstDatabaseHandle(new ConstDatabase);
+    return new ConstDatabaseData(new ConstDatabase);
 }
 
 
@@ -197,7 +197,7 @@ BrlObject BrlConstDatabaseGet
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = new ObjectHandle(constDatabase->Get(objectName));
+            ret = new ObjectData(constDatabase->Get(objectName));
     }
 
     return ret;
@@ -217,7 +217,7 @@ BrlNonManifoldGeometry BrlConstDatabaseFacetize
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = new NonManifoldGeometryHandle(constDatabase->Facetize(objectName));
+            ret = new NonManifoldGeometryData(constDatabase->Facetize(objectName));
     }
 
     return ret;

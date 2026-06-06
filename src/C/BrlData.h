@@ -1,4 +1,4 @@
-/*                      H A N D L E . H
+/*                      B R L D A T A . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,14 +17,14 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file Handle.h
+/** @file BrlData.h
  *
  *  BRL-CAD core simplified C interface:
  *      declares the base for all handles
  */
 
-#ifndef BRLCAD_C_HANDLE_INCLUDED
-#define BRLCAD_C_HANDLE_INCLUDED
+#ifndef BRLCAD_C_BRLDATA_INCLUDED
+#define BRLCAD_C_BRLDATA_INCLUDED
 
 #include <brlcad/VectorList.h>
 #include <brlcad/Database/FileDatabase.h>
@@ -33,13 +33,13 @@
 #include <brlcad/Database/NonManifoldGeometry.h>
 
 
-class Handle {
+class BrlData {
 public:
-    Handle(void) : m_magic(nullptr) {}
+    BrlData(void) : m_magic(nullptr) {}
 
-    Handle(const char* magic) : m_magic(magic) {}
+    BrlData(const char* magic) : m_magic(magic) {}
 
-    virtual ~Handle(void) {
+    virtual ~BrlData(void) {
         m_magic = nullptr;
     }
 
@@ -51,8 +51,8 @@ protected:
     const char* m_magic;
 
     // protect not implemented methods
-    Handle(const Handle& original);
-    const Handle& operator=(const Handle& original);
+    BrlData(const BrlData& original);
+    const BrlData& operator=(const BrlData& original);
 };
 
 
@@ -65,12 +65,12 @@ extern const char* const Arb8Magic;
 extern const char* const NonManifoldGeometryMagic;
 
 
-template<class PointerType> class PointerHandle : public Handle {
+template<class PointerType> class PointerData : public BrlData {
 public:
-    PointerHandle(const char*  magic,
-                  PointerType* pointer) : Handle(magic), m_pointer(pointer) {}
+    PointerData(const char*  magic,
+                PointerType* pointer) : BrlData(magic), m_pointer(pointer) {}
 
-    ~PointerHandle(void) override {
+    ~PointerData(void) override {
         if (m_pointer != nullptr)
             delete m_pointer;
     }
@@ -87,52 +87,52 @@ private:
     PointerType* m_pointer;
 
     // protect not implemented methods
-    PointerHandle(void);
-    PointerHandle(const PointerHandle& original);
-    const PointerHandle& operator=(const PointerHandle& original);
+    PointerData(void);
+    PointerData(const PointerData& original);
+    const PointerData& operator=(const PointerData& original);
 };
 
 
-class VectorListHandle : public PointerHandle<BRLCAD::VectorList> {
+class VectorListData : public PointerData<BRLCAD::VectorList> {
 public:
-    VectorListHandle(BRLCAD::VectorList* pointer) : PointerHandle(VectorListMagic, pointer) {}
+    VectorListData(BRLCAD::VectorList* pointer) : PointerData(VectorListMagic, pointer) {}
 };
 
 
-class ConstDatabaseHandle : public PointerHandle<BRLCAD::ConstDatabase> {
+class ConstDatabaseData : public PointerData<BRLCAD::ConstDatabase> {
 public:
-    ConstDatabaseHandle(BRLCAD::ConstDatabase* pointer) : PointerHandle(ConstDatabaseMagic, pointer) {}
+    ConstDatabaseData(BRLCAD::ConstDatabase* pointer) : PointerData(ConstDatabaseMagic, pointer) {}
 };
 
 
-class FileDatabaseHandle : public PointerHandle<BRLCAD::FileDatabase> {
+class FileDatabaseData : public PointerData<BRLCAD::FileDatabase> {
 public:
-    FileDatabaseHandle(BRLCAD::FileDatabase* pointer) : PointerHandle(FileDatabaseMagic, pointer) {}
+    FileDatabaseData(BRLCAD::FileDatabase* pointer) : PointerData(FileDatabaseMagic, pointer) {}
 };
 
 
-class MemoryDatabaseHandle : public PointerHandle<BRLCAD::MemoryDatabase> {
+class MemoryDatabaseData : public PointerData<BRLCAD::MemoryDatabase> {
 public:
-    MemoryDatabaseHandle(BRLCAD::MemoryDatabase* pointer) : PointerHandle(MemoryDatabaseMagic, pointer) {}
+    MemoryDatabaseData(BRLCAD::MemoryDatabase* pointer) : PointerData(MemoryDatabaseMagic, pointer) {}
 };
 
 
-class ObjectHandle : public PointerHandle<BRLCAD::Object> {
+class ObjectData : public PointerData<BRLCAD::Object> {
 public:
-    ObjectHandle(BRLCAD::Object* pointer) : PointerHandle(ObjectMagic, pointer) {}
+    ObjectData(BRLCAD::Object* pointer) : PointerData(ObjectMagic, pointer) {}
 };
 
 
-class Arb8Handle : public PointerHandle<BRLCAD::Arb8> {
+class Arb8Data : public PointerData<BRLCAD::Arb8> {
 public:
-    Arb8Handle(BRLCAD::Arb8* pointer) : PointerHandle(Arb8Magic, pointer) {}
+    Arb8Data(BRLCAD::Arb8* pointer) : PointerData(Arb8Magic, pointer) {}
 };
 
 
-class NonManifoldGeometryHandle : public PointerHandle<BRLCAD::NonManifoldGeometry> {
+class NonManifoldGeometryData : public PointerData<BRLCAD::NonManifoldGeometry> {
 public:
-    NonManifoldGeometryHandle(BRLCAD::NonManifoldGeometry* pointer) : PointerHandle(NonManifoldGeometryMagic, pointer) {}
+    NonManifoldGeometryData(BRLCAD::NonManifoldGeometry* pointer) : PointerData(NonManifoldGeometryMagic, pointer) {}
 };
 
 
-#endif // BRLCAD_C_HANDLE_INCLUDED
+#endif // BRLCAD_C_BRLDATA_INCLUDED

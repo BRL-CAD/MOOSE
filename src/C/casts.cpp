@@ -31,24 +31,23 @@
 using namespace BRLCAD;
 
 
-Handle* CastHandle
+BrlData* CastHandle
 (
     BrlHandle handle
 ) {
-    Handle* ret = nullptr;
+    BrlData* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if ((handleMagic == VectorListMagic) ||
             (handleMagic == ConstDatabaseMagic) ||
             (handleMagic == FileDatabaseMagic) ||
             (handleMagic == MemoryDatabaseMagic) ||
+            (handleMagic == ObjectMagic) ||
             (handleMagic == Arb8Magic) ||
             (handleMagic == NonManifoldGeometryMagic))
-            ret = testHandle;
+            ret = handle;
         else
             bu_log("CastHandle: invalid handle");
     }
@@ -64,12 +63,10 @@ VectorList* CastVectorList
     VectorList* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == VectorListMagic)
-            ret = static_cast<VectorListHandle*>(handle)->Pointer();
+            ret = static_cast<VectorListData*>(handle)->Pointer();
         else
             bu_log("CastVectorList: wrong handle");
     }
@@ -85,16 +82,14 @@ ConstDatabase* CastConstDatabase
     ConstDatabase* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == ConstDatabaseMagic)
-            ret = static_cast<ConstDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<ConstDatabaseData*>(handle)->Pointer();
         else if (handleMagic == FileDatabaseMagic)
-            ret = static_cast<FileDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<FileDatabaseData*>(handle)->Pointer();
         else if (handleMagic == MemoryDatabaseMagic)
-            ret = static_cast<MemoryDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<MemoryDatabaseData*>(handle)->Pointer();
         else
             bu_log("CastConstDatabase: wrong handle");
     }
@@ -110,14 +105,12 @@ Database* CastDatabase
     Database* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == FileDatabaseMagic)
-            ret = static_cast<FileDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<FileDatabaseData*>(handle)->Pointer();
         else if (handleMagic == MemoryDatabaseMagic)
-            ret = static_cast<MemoryDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<MemoryDatabaseData*>(handle)->Pointer();
         else
             bu_log("CastDatabase: wrong handle or read-only database");
     }
@@ -133,12 +126,10 @@ FileDatabase* CastFileDatabase
     FileDatabase* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == FileDatabaseMagic)
-            ret = static_cast<FileDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<FileDatabaseData*>(handle)->Pointer();
         else
             bu_log("CastFileDatabase: wrong handle or read-only database");
     }
@@ -154,12 +145,10 @@ MemoryDatabase* CastMemoryDatabase
     MemoryDatabase* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == MemoryDatabaseMagic)
-            ret = static_cast<MemoryDatabaseHandle*>(handle)->Pointer();
+            ret = static_cast<MemoryDatabaseData*>(handle)->Pointer();
         else
             bu_log("CastMemoryDatabase: wrong handle or read-only database");
     }
@@ -175,14 +164,14 @@ Object* CastObject
     Object* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
+        const char* handleMagic = handle->Magic();
 
-        const char* handleMagic = testHandle->Magic();
-
-        if (handleMagic == Arb8Magic)
-            ret = static_cast<Arb8Handle*>(handle)->Pointer();
+        if (handleMagic == ObjectMagic)
+            ret = static_cast<ObjectData*>(handle)->Pointer();
+        else if (handleMagic == Arb8Magic)
+            ret = static_cast<Arb8Data*>(handle)->Pointer();
         else if (handleMagic == NonManifoldGeometryMagic)
-            ret = static_cast<NonManifoldGeometryHandle*>(handle)->Pointer();
+            ret = static_cast<NonManifoldGeometryData*>(handle)->Pointer();
         else
             bu_log("CastObject: wrong handle");
     }
@@ -198,12 +187,10 @@ Arb8* CastArb8
     Arb8* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == Arb8Magic)
-            ret = static_cast<Arb8Handle*>(handle)->Pointer();
+            ret = static_cast<Arb8Data*>(handle)->Pointer();
         else
             bu_log("CastArb8: wrong handle");
     }
@@ -219,12 +206,10 @@ NonManifoldGeometry* CastNonManifoldGeometry
     NonManifoldGeometry* ret = nullptr;
 
     if (handle != nullptr) {
-        Handle* testHandle = static_cast<Handle*>(handle);
-
-        const char* handleMagic = testHandle->Magic();
+        const char* handleMagic = handle->Magic();
 
         if (handleMagic == NonManifoldGeometryMagic)
-            ret = static_cast<NonManifoldGeometryHandle*>(handle)->Pointer();
+            ret = static_cast<NonManifoldGeometryData*>(handle)->Pointer();
         else
             bu_log("NonManifoldGeometry: wrong handle");
     }

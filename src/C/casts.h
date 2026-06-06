@@ -28,10 +28,10 @@
 
 #include <brlcad/C/globals.h>
 
-#include "Handle.h"
+#include "BrlData.h"
 
 
-Handle*                      CastHandle(BrlHandle handle);
+BrlData*                     CastHandle(BrlHandle handle);
 
 BRLCAD::VectorList*          CastVectorList(BrlHandle handle);
 
