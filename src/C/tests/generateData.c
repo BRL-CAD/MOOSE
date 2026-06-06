@@ -15,9 +15,9 @@
 #include <string.h>
 
 #include <brlcad/C/constDatabase.h>
+#include <brlcad/C/database.h>
 #include <brlcad/C/fileDatabase.h>
 #include <brlcad/C/globals.h>
-#include <brlcad/C/memoryDatabase.h>
 
 
 int main
@@ -30,29 +30,13 @@ int main
     if ((argc < 2) || (argv[1] == 0))
         printf("Usage: %s <test type>", argv[0]);
     else {
-        if (strcmp(argv[1], "const") == 0) {
-            BrlConstDatabase database = BrlNewConstDatabase();
-
-            if (database != 0) {
-                if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
-                    if (strcmp(BrlConstDatabaseTitle(database), "get title C") == 0)
-                        ret = 0;
-                }
-                else
-                    fprintf(stderr, "Could not load file gettitleC.g");
-
-                BrlDeleteHandle(database);
-            }
-            else
-                fprintf(stderr, "Could not create BrlConstDatabase");
-        }
-        else if (strcmp(argv[1], "file") == 0) {
+        if (strcmp(argv[1], "getTitleC") == 0) {
             BrlFileDatabase database = BrlNewFileDatabase();
 
             if (database != 0) {
                 if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
-                    if (strcmp(BrlConstDatabaseTitle(database), "get title C") == 0)
-                        ret = 0;
+                    BrlDatabaseSetTitle(database, "get title C");
+                    ret = 0;
                 }
                 else
                     fprintf(stderr, "Could not load file gettitleC.g");
@@ -61,22 +45,6 @@ int main
             }
             else
                 fprintf(stderr, "Could not create BrlFileDatabase");
-        }
-        else if (strcmp(argv[1], "memory") == 0) {
-            BrlMemoryDatabase database = BrlNewMemoryDatabase();
-
-            if (database != 0) {
-                if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
-                    if (strcmp(BrlConstDatabaseTitle(database), "get title C") == 0)
-                        ret = 0;
-                }
-                else
-                    fprintf(stderr, "Could not load file gettitleC.g");
-
-                BrlDeleteHandle(database);
-            }
-            else
-                fprintf(stderr, "Could not create BrlMemoryDatabase");
         }
         else
             fprintf(stderr, "Unknown test type: %s", argv[1]);
