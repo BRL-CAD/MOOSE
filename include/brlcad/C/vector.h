@@ -1,4 +1,4 @@
-/*                           V E C T O R L I S T . H
+/*                      V E C T O R . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,32 +17,32 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file vectorList.h
+/** @file vector.h
  *
  *  BRL-CAD core simplified C interface:
- *       header for VectorList opaque wrapper
+ *      declarations of vector data types
  */
 
-#ifndef BRLCAD_C_VECTORLIST_INCLUDED
-#define BRLCAD_C_VECTORLIST_INCLUDED
+#ifndef BRLCAD_C_VECTOR_INCLUDED
+#define BRLCAD_C_VECTOR_INCLUDED
 
-#include <brlcad/C/vector.h>
+#include <brlcad/C/globals.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef BrlHandle BrlVectorList;
+typedef BrlHandle BrlVector3D;
 
 
-BRLCAD_MOOSE_EXPORT BrlVectorList BrlNewVectorList(void);
-
-BRLCAD_MOOSE_EXPORT void          BrlVectorListClear(BrlVectorList vlist);
+double BrlVector3DX(BrlVector3D vector);
+double BrlVector3DY(BrlVector3D vector);
+double BrlVector3DZ(BrlVector3D vector);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // BRLCAD_C_VECTORLIST_INCLUDED
+#endif // BRLCAD_C_GLOBALS_INCLUDED

@@ -71,12 +71,8 @@ BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseSelect(BrlConstDataba
 BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseUnSelectAll(BrlConstDatabase db);
 BRLCAD_MOOSE_EXPORT int                    BrlConstDatabaseSelectionIsEmpty(BrlConstDatabase db);
 
-BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseBoundingBoxMinima(BrlConstDatabase db,
-                                                                             double *x, double *y,
-                                                                             double *z);
-BRLCAD_MOOSE_EXPORT void                   BrlConstDatabaseBoundingBoxMaxima(BrlConstDatabase db,
-                                                                             double *x, double *y,
-                                                                             double *z);
+BRLCAD_MOOSE_EXPORT BrlVector3D            BrlConstDatabaseBoundingBoxMinima(BrlConstDatabase db);
+BRLCAD_MOOSE_EXPORT BrlVector3D            BrlConstDatabaseBoundingBoxMaxima(BrlConstDatabase db);
 
 
 #ifdef __cplusplus

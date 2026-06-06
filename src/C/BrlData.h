@@ -56,6 +56,7 @@ protected:
 };
 
 
+extern const char* const Vector3DMagic;
 extern const char* const VectorListMagic;
 extern const char* const ConstDatabaseMagic;
 extern const char* const FileDatabaseMagic;
@@ -63,6 +64,31 @@ extern const char* const MemoryDatabaseMagic;
 extern const char* const ObjectMagic;
 extern const char* const Arb8Magic;
 extern const char* const NonManifoldGeometryMagic;
+
+
+template<class ValueType> class ValueData : public BrlData {
+public:
+    ValueData(const char*      magic,
+              const ValueType& value) : BrlData(magic), m_value(value) {}
+
+    ~ValueData(void) override {}
+
+    const ValueType& Value(void) const {
+        return m_value;
+    }
+
+    ValueType&       Value(void) {
+        return m_value;
+    }
+
+private:
+    ValueType m_value;
+
+    // protect not implemented methods
+    ValueData(void);
+    ValueData(const ValueData& original);
+    const ValueData& operator=(const ValueData& original);
+};
 
 
 template<class PointerType> class PointerData : public BrlData {
@@ -90,6 +116,12 @@ private:
     PointerData(void);
     PointerData(const PointerData& original);
     const PointerData& operator=(const PointerData& original);
+};
+
+
+class Vector3DData : public ValueData<BRLCAD::Vector3D> {
+public:
+    Vector3DData(const BRLCAD::Vector3D& value) : ValueData(Vector3DMagic, value) {}
 };
 
 

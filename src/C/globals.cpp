@@ -51,6 +51,7 @@ int BrlPatchVersion(void) {
 }
 
 
+const char* const Vector3DMagic            = "BRLCAD::Vector3D";
 const char* const VectorListMagic          = "BRLCAD::VectorList";
 const char* const ConstDatabaseMagic       = "BRLCAD::ConstDatabase";
 const char* const FileDatabaseMagic        = "BRLCAD::FileDatabase";

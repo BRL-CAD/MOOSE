@@ -33,6 +33,7 @@
 
 BrlData*                     CastHandle(BrlHandle handle);
 
+BRLCAD::Vector3D*            CastVector3D(BrlHandle handle);
 BRLCAD::VectorList*          CastVectorList(BrlHandle handle);
 
 BRLCAD::ConstDatabase*       CastConstDatabase(BrlHandle handle);

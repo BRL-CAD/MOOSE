@@ -274,47 +274,39 @@ int BrlConstDatabaseSelectionIsEmpty
 }
 
 
-void BrlConstDatabaseBoundingBoxMinima
+BrlVector3D BrlConstDatabaseBoundingBoxMinima
 (
-    BrlConstDatabase db,
-    double*          x,
-    double*          y,
-    double*          z
+    BrlConstDatabase db
 ) {
-    if ((db != nullptr) && (x != nullptr) && (y != nullptr) && (z != nullptr)) {
+    BrlVector3D ret = nullptr;
+
+    if (db != nullptr) {
         ConstDatabase* constDatabase = CastConstDatabase(db);
 
         assert(constDatabase != nullptr);
 
-        if (constDatabase != nullptr) {
-            BRLCAD::Vector3D v = constDatabase->BoundingBoxMinima();
-
-            *x = v.coordinates[0];
-            *y = v.coordinates[1];
-            *z = v.coordinates[2];
-        }
+        if (constDatabase != nullptr)
+            ret = new Vector3DData(constDatabase->BoundingBoxMinima());
     }
+
+    return ret;
 }
 
 
-void BrlConstDatabaseBoundingBoxMaxima
+BrlVector3D BrlConstDatabaseBoundingBoxMaxima
 (
-    BrlConstDatabase db,
-    double*          x,
-    double*          y,
-    double*          z
+    BrlConstDatabase db
 ) {
-    if ((db != nullptr) && (x != nullptr) && (y != nullptr) && (z != nullptr)) {
+    BrlVector3D ret = nullptr;
+
+    if (db != nullptr) {
         ConstDatabase* constDatabase = CastConstDatabase(db);
 
         assert(constDatabase != nullptr);
 
-        if (constDatabase != nullptr) {
-            BRLCAD::Vector3D v = constDatabase->BoundingBoxMaxima();
-
-            *x = v.coordinates[0];
-            *y = v.coordinates[1];
-            *z = v.coordinates[2];
-        }
+        if (constDatabase != nullptr)
+            ret = new Vector3DData(constDatabase->BoundingBoxMaxima());
     }
+
+    return ret;
 }

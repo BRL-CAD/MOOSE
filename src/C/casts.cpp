@@ -40,7 +40,8 @@ BrlData* CastHandle
     if (handle != nullptr) {
         const char* handleMagic = handle->Magic();
 
-        if ((handleMagic == VectorListMagic) ||
+        if ((handleMagic == Vector3DMagic) ||
+            (handleMagic == VectorListMagic) ||
             (handleMagic == ConstDatabaseMagic) ||
             (handleMagic == FileDatabaseMagic) ||
             (handleMagic == MemoryDatabaseMagic) ||
@@ -50,6 +51,25 @@ BrlData* CastHandle
             ret = handle;
         else
             bu_log("CastHandle: invalid handle");
+    }
+
+    return ret;
+}
+
+
+Vector3D* CastVector3D
+(
+    BrlHandle handle
+) {
+    Vector3D* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == Vector3DMagic)
+            ret = &static_cast<Vector3DData*>(handle)->Value();
+        else
+            bu_log("CastVectorList: wrong handle");
     }
 
     return ret;
