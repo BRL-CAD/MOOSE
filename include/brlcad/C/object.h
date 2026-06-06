@@ -26,12 +26,14 @@
 #ifndef BRLCAD_C_OBJECT_INCLUDED
 #define BRLCAD_C_OBJECT_INCLUDED
 
+#include <brlcad/C/globals.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlObject;
+typedef BrlHandle BrlObject;
 
 
 BRLCAD_MOOSE_EXPORT void BrlObjectSetName(BrlObject   object,

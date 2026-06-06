@@ -26,12 +26,14 @@
 #ifndef BRLCAD_C_VECTORLIST_INCLUDED
 #define BRLCAD_C_VECTORLIST_INCLUDED
 
+#include <brlcad/C/globals.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlVectorList;
+typedef BrlHandle BrlVectorList;
 
 
 BRLCAD_MOOSE_EXPORT BrlVectorList BrlNewVectorList(void);

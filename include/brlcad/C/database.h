@@ -26,12 +26,14 @@
 #ifndef BRLCAD_C_DATABASE_INCLUDED
 #define BRLCAD_C_DATABASE_INCLUDED
 
+#include <brlcad/C/constDatabase.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlDatabase;
+typedef BrlConstDatabase BrlDatabase;
 
 
 BRLCAD_MOOSE_EXPORT void BrlDatabaseSetTitle(BrlDatabase db,

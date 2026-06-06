@@ -26,12 +26,14 @@
 #ifndef BRLCAD_C_NONMANIFOLDGEOMETRY_INCLUDED
 #define BRLCAD_C_NONMANIFOLDGEOMETRY_INCLUDED
 
+#include <brlcad/C/object.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlNonManifoldGeometry;
+typedef BrlObject BrlNonManifoldGeometry;
 
 
 #ifdef __cplusplus

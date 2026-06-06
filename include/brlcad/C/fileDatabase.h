@@ -27,12 +27,14 @@
 #ifndef BRLCAD_C_FILEDATABASE_INCLUDED
 #define BRLCAD_C_FILEDATABASE_INCLUDED
 
+#include <brlcad/C/database.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlFileDatabase;
+typedef BrlDatabase BrlFileDatabase;
 
 
 BRLCAD_MOOSE_EXPORT BrlFileDatabase BrlNewFileDatabase(void);

@@ -26,12 +26,14 @@
 #ifndef BRLCAD_C_ARB8_INCLUDED
 #define BRLCAD_C_ARB8_INCLUDED
 
+#include <brlcad/C/object.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlArb8;
+typedef BrlObject BrlArb8;
 
 
 BRLCAD_MOOSE_EXPORT BrlArb8 BrlNewArb8From4Points(double point1X, double point1Y, double point1Z,

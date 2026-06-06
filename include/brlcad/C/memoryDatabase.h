@@ -26,12 +26,14 @@
 #ifndef BRLCAD_C_MEMORYDATABASE_INCLUDED
 #define BRLCAD_C_MEMORYDATABASE_INCLUDED
 
+#include <brlcad/C/database.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef void* BrlMemoryDatabase;
+typedef BrlDatabase BrlMemoryDatabase;
 
 
 BRLCAD_MOOSE_EXPORT BrlMemoryDatabase BrlNewMemoryDatabase(void);

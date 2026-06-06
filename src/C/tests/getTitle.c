@@ -14,9 +14,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <brlcad/C/constDatabase.h>
 #include <brlcad/C/fileDatabase.h>
-#include <brlcad/C/globals.h>
 #include <brlcad/C/memoryDatabase.h>
 
 

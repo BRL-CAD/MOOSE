@@ -27,7 +27,6 @@
 
 #include <brlcad/Database/NonManifoldGeometry.h>
 
-#include <brlcad/C/vectorList.h>
 #include <brlcad/C/constDatabase.h>
 
 #include "casts.h"

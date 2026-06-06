@@ -27,7 +27,6 @@
 #define BRLCAD_C_CONSTDATABASE_INCLUDED
 
 #include <brlcad/C/vectorList.h>
-#include <brlcad/C/object.h>
 #include <brlcad/C/nonManifoldGeometry.h>
 
 #ifdef __cplusplus
@@ -35,9 +34,9 @@ extern "C" {
 #endif
 
 
-typedef void* BrlConstDatabase;
+typedef BrlHandle BrlConstDatabase;
 
-typedef void* BrlTopObjectIterator;
+typedef void*     BrlTopObjectIterator;
 
 
 BRLCAD_MOOSE_EXPORT BrlConstDatabase       BrlNewConstDatabase(void);
