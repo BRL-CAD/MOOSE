@@ -1,4 +1,4 @@
-/*                      E L L I P S O I D . h
+/*                      E L L I P S O I D . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,7 +17,7 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file ellipsoid
+/** @file ellipsoid.h
  *
  *  BRL-CAD core simplified C interface:
  *      Declares a handle and functions for Ellipsoid solid handling
