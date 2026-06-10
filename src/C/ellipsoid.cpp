@@ -39,6 +39,14 @@ using namespace BRLCAD;
 
 BrlEllipsoid BrlNewEllipsoid
 (
+    void
+) {
+    return new EllipsoidData(new Ellipsoid());
+}
+
+
+BrlEllipsoid BrlNewEllipsoidFromAxis
+(
     double centerX, double centerY, double centerZ,
     double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
     double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
@@ -49,11 +57,11 @@ BrlEllipsoid BrlNewEllipsoid
     Vector3D semiPrincipalAxisB(semiPrincipalAxisBX, semiPrincipalAxisBY, semiPrincipalAxisBZ);
     Vector3D semiPrincipalAxisC(semiPrincipalAxisCX, semiPrincipalAxisCY, semiPrincipalAxisCZ);
 
-    return new EllipsoidData(new BRLCAD::Ellipsoid(center, semiPrincipalAxisA, semiPrincipalAxisB, semiPrincipalAxisC));
+    return new EllipsoidData(new Ellipsoid(center, semiPrincipalAxisA, semiPrincipalAxisB, semiPrincipalAxisC));
 }
 
 
-BrlEllipsoid BrlNewEllipsoidFromAxisRadius
+BrlEllipsoid BrlNewEllipsoidAsEllipsoidHyperboloid
 (
     double centerX, double centerY, double centerZ,
     double semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
@@ -62,18 +70,18 @@ BrlEllipsoid BrlNewEllipsoidFromAxisRadius
     Vector3D center(centerX, centerY, centerZ);
     Vector3D semiPrincipalAxis(semiPrincipalAxisX, semiPrincipalAxisY, semiPrincipalAxisZ);
 
-    return new EllipsoidData(new BRLCAD::Ellipsoid(center, semiPrincipalAxis, radius));
+    return new EllipsoidData(new Ellipsoid(center, semiPrincipalAxis, radius));
 }
 
 
-BrlEllipsoid BrlNewEllipsoidSphere
+BrlEllipsoid BrlNewEllipsoidAsSphere
 (
     double centerX, double centerY, double centerZ,
     double radius
 ) {
     Vector3D center(centerX, centerY, centerZ);
 
-    return new EllipsoidData(new BRLCAD::Ellipsoid(center, radius));
+    return new EllipsoidData(new Ellipsoid(center, radius));
 }
 
 
@@ -113,7 +121,7 @@ void BrlEllipsoidSetCenter
 BrlVector3D BrlEllipsoidSemiPrincipalAxis
 (
     BrlEllipsoid ellipsoid, 
-    size_t index
+    int index
 ) {
     BrlVector3D ret = nullptr;
     if (ellipsoid != nullptr) {
@@ -131,7 +139,7 @@ BrlVector3D BrlEllipsoidSemiPrincipalAxis
 void BrlEllipsoidSetSemiPrincipalAxis
 (
     BrlEllipsoid ellipsoid, 
-    size_t index, 
+    int index, 
     double axisX, double axisY, double axisZ
 ) {
     if (ellipsoid != nullptr) {
@@ -200,36 +208,4 @@ void BrlEllipsoidSetSphere
             static_cast<EllipsoidData*>(data)->Pointer()->SetSphere(cpp_center, radius);
         }
     }
-}
-
-
-int BrlEllipsoidIsValid
-(
-    BrlEllipsoid ellipsoid
-) {
-    int ret = 0;
-    if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            ret = static_cast<EllipsoidData*>(data)->Pointer()->IsValid() ? 1 : 0;
-        }
-    }
-    return ret;
-}
-
-
-const char* BrlEllipsoidType
-(
-    BrlEllipsoid ellipsoid
-) {
-    const char* ret = "";
-    if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            ret = static_cast<EllipsoidData*>(data)->Pointer()->Type();
-        }
-    }
-    return ret;
 }

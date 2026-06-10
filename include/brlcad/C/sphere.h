@@ -34,11 +34,14 @@
 extern "C" {
 #endif
 
+
 typedef BrlObject BrlSphere;
 
 
-BRLCAD_MOOSE_EXPORT BrlSphere   BrlNewSphere(double centerX, double centerY, double centerZ, 
-                                             double radius);
+BRLCAD_MOOSE_EXPORT BrlSphere   BrlNewSphere(void);
+
+BRLCAD_MOOSE_EXPORT BrlSphere   BrlNewSphereFromCenterRadius(double centerX, double centerY, double centerZ, 
+                                                             double radius);
 
 BRLCAD_MOOSE_EXPORT double      BrlSphereRadius(BrlSphere sphere);
 
@@ -52,10 +55,6 @@ BRLCAD_MOOSE_EXPORT void        BrlSphereSetCenter(BrlSphere sphere,
 BRLCAD_MOOSE_EXPORT void        BrlSphereSet(BrlSphere sphere, 
                                              double centerX, double centerY, double centerZ, 
                                              double radius);
-
-BRLCAD_MOOSE_EXPORT int         BrlSphereIsValid(BrlSphere sphere);
-
-BRLCAD_MOOSE_EXPORT const char* BrlSphereType(BrlSphere sphere);
 
 
 #ifdef __cplusplus

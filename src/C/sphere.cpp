@@ -39,11 +39,19 @@ using namespace BRLCAD;
 
 BrlSphere BrlNewSphere
 (
+    void
+) {
+    return new SphereData(new Sphere());
+}
+
+
+BrlSphere BrlNewSphereFromCenterRadius
+(
     double centerX, double centerY, double centerZ,
     double radius
 ) {
     Vector3D center(centerX, centerY, centerZ);
-    return new SphereData(new BRLCAD::Sphere(center, radius));
+    return new SphereData(new Sphere(center, radius));
 }
 
 
@@ -126,31 +134,3 @@ void BrlSphereSet
 }
 
 
-int BrlSphereIsValid
-(
-    BrlSphere sphere
-) {
-    int ret = 0;
-    if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic)
-            ret = static_cast<SphereData*>(data)->Pointer()->IsValid() ? 1 : 0;
-    }
-    return ret;
-}
-
-
-const char* BrlSphereType
-(
-    BrlSphere sphere
-) {
-    const char* ret = "";
-    if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic)
-            ret = static_cast<SphereData*>(data)->Pointer()->Type();
-    }
-    return ret;
-}

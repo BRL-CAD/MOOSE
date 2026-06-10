@@ -39,6 +39,14 @@ using namespace BRLCAD;
 
 BrlCone BrlNewCone
 (
+    void
+) {
+    return new ConeData(new Cone());
+}
+
+
+BrlCone BrlNewConeAsTruncatedGeneralCone
+(
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
     double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
@@ -55,7 +63,7 @@ BrlCone BrlNewCone
 }
 
 
-BrlCone BrlNewConeScaled
+BrlCone BrlNewConeAsScaledTruncatedGeneralCone
 (
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
@@ -72,7 +80,7 @@ BrlCone BrlNewConeScaled
 }
 
 
-BrlCone BrlNewConeUnscaled
+BrlCone BrlNewConeAsUnscaledTruncatedGeneralCone
 (
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
@@ -88,7 +96,7 @@ BrlCone BrlNewConeUnscaled
 }
 
 
-BrlCone BrlNewConeRadii
+BrlCone BrlNewConeAsRightEllipticCone
 (
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
@@ -102,7 +110,7 @@ BrlCone BrlNewConeRadii
 }
 
 
-BrlCone BrlNewConeCylinder
+BrlCone BrlNewConeAsRightCircularCylinder
 (
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
@@ -184,7 +192,7 @@ void BrlConeSetHeight
 BrlVector3D BrlConeSemiPrincipalAxis
 (
     BrlCone cone,
-    size_t index
+    int index
 ) {
     BrlVector3D ret = nullptr;
     if (cone != nullptr) {
@@ -202,7 +210,7 @@ BrlVector3D BrlConeSemiPrincipalAxis
 void BrlConeSetSemiPrincipalAxis
 (
     BrlCone cone,
-    size_t index,
+    int index,
     double axisX, double axisY, double axisZ
 ) {
     if (cone != nullptr) {
@@ -321,36 +329,4 @@ void BrlConeSetCylinder
             static_cast<ConeData*>(data)->Pointer()->Set(cpp_basePoint, cpp_height, radius);
         }
     }
-}
-
-
-int BrlConeIsValid
-(
-    BrlCone cone
-) {
-    int ret = 0;
-    if (cone != nullptr) {
-        BrlData* data = CastHandle(cone);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == ConeMagic) {
-            ret = static_cast<ConeData*>(data)->Pointer()->IsValid() ? 1 : 0;
-        }
-    }
-    return ret;
-}
-
-
-const char* BrlConeType
-(
-    BrlCone cone
-) {
-    const char* ret = "";
-    if (cone != nullptr) {
-        BrlData* data = CastHandle(cone);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == ConeMagic) {
-            ret = static_cast<ConeData*>(data)->Pointer()->Type();
-        }
-    }
-    return ret;
 }

@@ -23,7 +23,6 @@
  *      Declares a handle and functions for Ellipsoid solid handling
  */
 
-
 #ifndef BRLCAD_C_ELLIPSOID_INCLUDED
 #define BRLCAD_C_ELLIPSOID_INCLUDED
 
@@ -34,30 +33,33 @@
 extern "C" {
 #endif
 
+
 typedef BrlObject BrlEllipsoid;
 
 
-BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoid(double centerX, double centerY, double centerZ,
-                                                 double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
-                                                 double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
-                                                 double semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ);
+BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoid(void);
 
-BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidFromAxisRadius(double centerX, double centerY, double centerZ,
-                                                               double semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
-                                                               double radius);
+BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidFromAxis(double centerX, double centerY, double centerZ,
+                                                         double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
+                                                         double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
+                                                         double semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ);
 
-BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidSphere(double centerX, double centerY, double centerZ,
-                                                       double radius);
+BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidAsEllipsoidHyperboloid(double centerX, double centerY, double centerZ,
+                                                                       double semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
+                                                                       double radius);
+
+BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidAsSphere(double centerX, double centerY, double centerZ,
+                                                         double radius);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D BrlEllipsoidCenter(BrlEllipsoid ellipsoid);
 
 BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetCenter(BrlEllipsoid ellipsoid, 
                                                       double centerX, double centerY, double centerZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlEllipsoidSemiPrincipalAxis(BrlEllipsoid ellipsoid, size_t index);
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlEllipsoidSemiPrincipalAxis(BrlEllipsoid ellipsoid, int index);
 
 BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetSemiPrincipalAxis(BrlEllipsoid ellipsoid, 
-                                                                 size_t index, 
+                                                                 int index, 
                                                                  double axisX, double axisY, double axisZ);
 
 BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSet(BrlEllipsoid ellipsoid,
@@ -74,10 +76,6 @@ BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetFocals(BrlEllipsoid ellipsoid,
 BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetSphere(BrlEllipsoid ellipsoid,
                                                       double centerX, double centerY, double centerZ,
                                                       double radius);
-
-BRLCAD_MOOSE_EXPORT int         BrlEllipsoidIsValid(BrlEllipsoid ellipsoid);
-
-BRLCAD_MOOSE_EXPORT const char* BrlEllipsoidType(BrlEllipsoid ellipsoid);
 
 
 #ifdef __cplusplus
