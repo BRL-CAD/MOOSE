@@ -63,7 +63,7 @@ BrlCone BrlNewConeAsTruncatedGeneralCone
 }
 
 
-BrlCone BrlNewConeAsScaledTruncatedGeneralCone
+BrlCone BrlNewConeAsTruncatedErectedCone
 (
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
@@ -80,7 +80,7 @@ BrlCone BrlNewConeAsScaledTruncatedGeneralCone
 }
 
 
-BrlCone BrlNewConeAsUnscaledTruncatedGeneralCone
+BrlCone BrlNewConeAsRightEllipticalCylinder
 (
     double baseX, double baseY, double baseZ,
     double heightX, double heightY, double heightZ,
@@ -137,6 +137,114 @@ BrlVector3D BrlConeBasePoint
         }
     }
     return ret;
+}
+
+
+void BrlConeSetAsTruncatedGeneralCone
+(
+    BrlCone cone,
+    double baseX, double baseY, double baseZ,
+    double heightX, double heightY, double heightZ,
+    double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
+    double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
+    double          ratioCtoA,
+    double          ratioDtoB
+) {
+    if (cone != nullptr) {
+        BrlData* data = CastHandle(cone);
+        assert(data != nullptr);
+        if (data != nullptr && data->Magic() == ConeMagic) {
+            Vector3D cpp_basePoint(baseX, baseY, baseZ);
+            Vector3D cpp_height(heightX, heightY, heightZ);
+            Vector3D cpp_semiPrincipalAxisA(semiPrincipalAxisAX, semiPrincipalAxisAY, semiPrincipalAxisAZ);
+            Vector3D cpp_semiPrincipalAxisB(semiPrincipalAxisBX, semiPrincipalAxisBY, semiPrincipalAxisBZ);
+            static_cast<ConeData*>(data)->Pointer()->Set(cpp_basePoint, cpp_height, cpp_semiPrincipalAxisA, cpp_semiPrincipalAxisB, ratioCtoA, ratioDtoB);
+        }
+    }
+}
+
+
+void BrlConeSetAsTruncatedErectedCone
+(
+    BrlCone cone,
+    double baseX, double baseY, double baseZ,
+    double heightX, double heightY, double heightZ,
+    double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
+    double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
+    double          scale
+) {
+    if (cone != nullptr) {
+        BrlData* data = CastHandle(cone);
+        assert(data != nullptr);
+        if (data != nullptr && data->Magic() == ConeMagic) {
+            Vector3D cpp_basePoint(baseX, baseY, baseZ);
+            Vector3D cpp_height(heightX, heightY, heightZ);
+            Vector3D cpp_semiPrincipalAxisA(semiPrincipalAxisAX, semiPrincipalAxisAY, semiPrincipalAxisAZ);
+            Vector3D cpp_semiPrincipalAxisB(semiPrincipalAxisBX, semiPrincipalAxisBY, semiPrincipalAxisBZ);
+            static_cast<ConeData*>(data)->Pointer()->Set(cpp_basePoint, cpp_height, cpp_semiPrincipalAxisA, cpp_semiPrincipalAxisB, scale);
+        }
+    }
+}
+
+
+void BrlConeSetAsRightEllipticalCylinder
+(
+    BrlCone cone,
+    double baseX, double baseY, double baseZ,
+    double heightX, double heightY, double heightZ,
+    double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
+    double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ
+) {
+    if (cone != nullptr) {
+        BrlData* data = CastHandle(cone);
+        assert(data != nullptr);
+        if (data != nullptr && data->Magic() == ConeMagic) {
+            Vector3D cpp_basePoint(baseX, baseY, baseZ);
+            Vector3D cpp_height(heightX, heightY, heightZ);
+            Vector3D cpp_semiPrincipalAxisA(semiPrincipalAxisAX, semiPrincipalAxisAY, semiPrincipalAxisAZ);
+            Vector3D cpp_semiPrincipalAxisB(semiPrincipalAxisBX, semiPrincipalAxisBY, semiPrincipalAxisBZ);
+            static_cast<ConeData*>(data)->Pointer()->Set(cpp_basePoint, cpp_height, cpp_semiPrincipalAxisA, cpp_semiPrincipalAxisB);
+        }
+    }
+}
+
+
+void BrlConeSetAsRightEllipticCone
+(
+    BrlCone cone,
+    double baseX, double baseY, double baseZ,
+    double heightX, double heightY, double heightZ,
+    double          radiusBase,
+    double          radiusTop
+) {
+    if (cone != nullptr) {
+        BrlData* data = CastHandle(cone);
+        assert(data != nullptr);
+        if (data != nullptr && data->Magic() == ConeMagic) {
+            Vector3D cpp_basePoint(baseX, baseY, baseZ);
+            Vector3D cpp_height(heightX, heightY, heightZ);
+            static_cast<ConeData*>(data)->Pointer()->Set(cpp_basePoint, cpp_height, radiusBase, radiusTop);
+        }
+    }
+}
+
+
+void BrlConeSetAsRightCircularCylinder
+(
+    BrlCone cone,
+    double baseX, double baseY, double baseZ,
+    double heightX, double heightY, double heightZ,
+    double          radius
+) {
+    if (cone != nullptr) {
+        BrlData* data = CastHandle(cone);
+        assert(data != nullptr);
+        if (data != nullptr && data->Magic() == ConeMagic) {
+            Vector3D cpp_basePoint(baseX, baseY, baseZ);
+            Vector3D cpp_height(heightX, heightY, heightZ);
+            static_cast<ConeData*>(data)->Pointer()->Set(cpp_basePoint, cpp_height, radius);
+        }
+    }
 }
 
 
