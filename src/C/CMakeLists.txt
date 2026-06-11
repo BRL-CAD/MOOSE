@@ -27,23 +27,29 @@ SET(CSources
     C/arb8.cpp
     C/casts.cpp
     C/constDatabase.cpp
+    C/cone.cpp
     C/database.cpp
+    C/ellipsoid.cpp
     C/fileDatabase.cpp
     C/globals.cpp
     C/memoryDatabase.cpp
     C/object.cpp
+    C/sphere.cpp
     C/vectorList.cpp
 )
 
 SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/arb8.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/constDatabase.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/cone.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/database.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/ellipsoid.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/fileDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/globals.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/nonManifoldGeometry.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/sphere.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/vectorList.h
 )
 

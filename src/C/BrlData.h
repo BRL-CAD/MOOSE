@@ -31,6 +31,9 @@
 #include <brlcad/Database/MemoryDatabase.h>
 #include <brlcad/Database/Arb8.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
+#include <brlcad/Database/Sphere.h>
+#include <brlcad/Database/Ellipsoid.h>
+#include <brlcad/Database/Cone.h>
 
 
 class BrlData {
@@ -63,6 +66,9 @@ extern const char* const FileDatabaseMagic;
 extern const char* const MemoryDatabaseMagic;
 extern const char* const ObjectMagic;
 extern const char* const Arb8Magic;
+extern const char* const SphereMagic;
+extern const char* const EllipsoidMagic;
+extern const char* const ConeMagic;
 extern const char* const NonManifoldGeometryMagic;
 
 
@@ -160,6 +166,23 @@ public:
     Arb8Data(BRLCAD::Arb8* pointer) : PointerData(Arb8Magic, pointer) {}
 };
 
+
+class SphereData : public PointerData<BRLCAD::Sphere> {
+public:
+    SphereData(BRLCAD::Sphere* pointer) : PointerData(SphereMagic, pointer) {}
+};
+
+
+class EllipsoidData : public PointerData<BRLCAD::Ellipsoid> {
+public:
+    EllipsoidData(BRLCAD::Ellipsoid* pointer) : PointerData(EllipsoidMagic, pointer) {}
+};
+
+
+class ConeData : public PointerData<BRLCAD::Cone> {
+public:
+    ConeData(BRLCAD::Cone* pointer) : PointerData(ConeMagic, pointer) {}
+};
 
 class NonManifoldGeometryData : public PointerData<BRLCAD::NonManifoldGeometry> {
 public:
