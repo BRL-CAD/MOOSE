@@ -38,148 +38,69 @@ typedef BrlObject BrlCone;
 
 
 BRLCAD_MOOSE_EXPORT BrlCone     BrlNewCone(void);
-
-BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsTruncatedGeneralCone(double baseX, double baseY, double baseZ,
-                                                                 double heightX, double heightY, double heightZ,
+BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsTruncatedGeneralCone(double baseX,               double baseY,               double baseZ,
+                                                                 double heightX,             double heightY,             double heightZ,
                                                                  double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
                                                                  double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
-                                                                 double ratioCtoA, double ratioDtoB);
-
-BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsTruncatedErectedCone(double baseX, double baseY, double baseZ,
-                                                                 double heightX, double heightY, double heightZ,
+                                                                 double ratioCtoA,
+                                                                 double ratioDtoB);
+BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsTruncatedErectedCone(double baseX,               double baseY,               double baseZ,
+                                                                 double heightX,             double heightY,             double heightZ,
                                                                  double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
                                                                  double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
                                                                  double scale);
-
-BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsRightEllipticalCylinder(double baseX, double baseY, double baseZ,
-                                                                    double heightX, double heightY, double heightZ,
+BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsRightEllipticalCylinder(double baseX,               double baseY,               double baseZ,
+                                                                    double heightX,             double heightY,             double heightZ,
                                                                     double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
                                                                     double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ);
-
-BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsRightEllipticCone(double baseX, double baseY, double baseZ,
-                                                              double heightX, double heightY, double heightZ,
-                                                              double radiusBase, double radiusTop);
-
-BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsRightCircularCylinder(double baseX, double baseY, double baseZ,
+BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsTruncatedRightCircularCone(double baseX,   double baseY,   double baseZ,
+                                                                       double heightX, double heightY, double heightZ,
+                                                                       double radiusBase,
+                                                                       double radiusTop);
+BRLCAD_MOOSE_EXPORT BrlCone     BrlNewConeAsRightCircularCylinder(double baseX,   double baseY,   double baseZ,
                                                                   double heightX, double heightY, double heightZ,
                                                                   double radius);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D BrlConeBasePoint(BrlCone cone);
-
 BRLCAD_MOOSE_EXPORT void        BrlConeSetBasePoint(BrlCone cone, 
-                                                    double baseX, double baseY, double baseZ);
+                                                    double  baseX, double baseY, double baseZ);
+
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlConeHeight(BrlCone cone);
+BRLCAD_MOOSE_EXPORT void        BrlConeSetHeight(BrlCone cone,
+                                                 double  heightX, double heightY, double heightZ);
+
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlConeSemiPrincipalAxis(BrlCone cone, int index);
+BRLCAD_MOOSE_EXPORT void        BrlConeSetSemiPrincipalAxis(BrlCone cone,
+                                                            int     index,
+                                                            double  axisX, double axisY, double axisZ);
 
 BRLCAD_MOOSE_EXPORT void        BrlConeSetAsTruncatedGeneralCone(BrlCone cone,
-                                                                 double  baseX, double baseY, double baseZ,
-                                                                 double  heightX, double heightY, double heightZ,
+                                                                 double  baseX,               double baseY,               double baseZ,
+                                                                 double  heightX,             double heightY,             double heightZ,
                                                                  double  semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
                                                                  double  semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
-                                                                 double  ratioCtoA, double ratioDtoB);
-
+                                                                 double  ratioCtoA,
+                                                                 double  ratioDtoB);
 BRLCAD_MOOSE_EXPORT void        BrlConeSetAsTruncatedErectedCone(BrlCone cone,
-                                                                 double  baseX,double baseY, double baseZ,
-                                                                 double  heightX, double heightY, double heightZ,
+                                                                 double  baseX,               double baseY,               double baseZ,
+                                                                 double  heightX,             double heightY,             double heightZ,
                                                                  double  semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
                                                                  double  semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
                                                                  double  scale);
-
 BRLCAD_MOOSE_EXPORT void        BrlConeSetAsRightEllipticalCylinder(BrlCone cone,
-                                                                    double  baseX, double baseY, double baseZ,
-                                                                    double  heightX, double heightY, double heightZ,
+                                                                    double  baseX,               double baseY,               double baseZ,
+                                                                    double  heightX,             double heightY,             double heightZ,
                                                                     double  semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
                                                                     double  semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ);
-
-BRLCAD_MOOSE_EXPORT void        BrlConeSetAsRightEllipticCone(BrlCone cone,
-                                                            double baseX, double baseY, double baseZ,
-                                                            double  heightX, double heightY, double heightZ,
-                                                            double  radiusBase, double  radiusTop);
-
+BRLCAD_MOOSE_EXPORT void        BrlConeSetAsTruncatedRightCircularCone(BrlCone cone,
+                                                                       double  baseX,   double baseY,   double baseZ,
+                                                                       double  heightX, double heightY, double heightZ,
+                                                                       double  radiusBase,
+                                                                       double  radiusTop);
 BRLCAD_MOOSE_EXPORT void        BrlConeSetAsRightCircularCylinder(BrlCone cone,
                                                                   double  baseX,   double baseY,   double baseZ,
                                                                   double  heightX, double heightY, double heightZ,
                                                                   double  radius);
-
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlConeHeight(BrlCone cone);
-
-BRLCAD_MOOSE_EXPORT void        BrlConeSetHeight(BrlCone cone, double heightX, double heightY, double heightZ);
-
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlConeSemiPrincipalAxis(BrlCone cone, int index);
-
-BRLCAD_MOOSE_EXPORT void        BrlConeSetSemiPrincipalAxis(BrlCone cone, int index, double axisX, double axisY, double axisZ);
-
-BRLCAD_MOOSE_EXPORT void BrlConeSet(
-    BrlCone         cone,
-    double          baseX,
-    double          baseY,
-    double          baseZ,
-    double          heightX,
-    double          heightY,
-    double          heightZ,
-    double          semiPrincipalAxisAX,
-    double          semiPrincipalAxisAY,
-    double          semiPrincipalAxisAZ,
-    double          semiPrincipalAxisBX,
-    double          semiPrincipalAxisBY,
-    double          semiPrincipalAxisBZ,
-    double          ratioCtoA,
-    double          ratioDtoB
-);
-
-BRLCAD_MOOSE_EXPORT void BrlConeSetScaled(
-    BrlCone         cone,
-    double          baseX,
-    double          baseY,
-    double          baseZ,
-    double          heightX,
-    double          heightY,
-    double          heightZ,
-    double          semiPrincipalAxisAX,
-    double          semiPrincipalAxisAY,
-    double          semiPrincipalAxisAZ,
-    double          semiPrincipalAxisBX,
-    double          semiPrincipalAxisBY,
-    double          semiPrincipalAxisBZ,
-    double          scale
-);
-
-BRLCAD_MOOSE_EXPORT void BrlConeSetUnscaled(
-    BrlCone         cone,
-    double          baseX,
-    double          baseY,
-    double          baseZ,
-    double          heightX,
-    double          heightY,
-    double          heightZ,
-    double          semiPrincipalAxisAX,
-    double          semiPrincipalAxisAY,
-    double          semiPrincipalAxisAZ,
-    double          semiPrincipalAxisBX,
-    double          semiPrincipalAxisBY,
-    double          semiPrincipalAxisBZ
-);
-
-BRLCAD_MOOSE_EXPORT void BrlConeSetRadii(
-    BrlCone         cone,
-    double          baseX,
-    double          baseY,
-    double          baseZ,
-    double          heightX,
-    double          heightY,
-    double          heightZ,
-    double          radiusBase,
-    double          radiusTop
-);
-
-BRLCAD_MOOSE_EXPORT void BrlConeSetCylinder(
-    BrlCone         cone,
-    double          baseX,
-    double          baseY,
-    double          baseZ,
-    double          heightX,
-    double          heightY,
-    double          heightZ,
-    double          radius
-);
 
 
 #ifdef __cplusplus

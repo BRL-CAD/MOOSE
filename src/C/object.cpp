@@ -33,6 +33,44 @@
 using namespace BRLCAD;
 
 
+const char* BrlObjectType
+(
+    BrlObject object
+) {
+    const char* ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = objectIntern->Type();
+    }
+
+    return ret;
+}
+
+
+int BrlObjectIsValid
+(
+    BrlObject object
+) {
+    int ret = 0;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = objectIntern->IsValid() ? 1 : 0;
+    }
+
+    return ret;
+}
+
+
 void BrlObjectSetName
 (
     BrlObject   object,
@@ -47,34 +85,3 @@ void BrlObjectSetName
             objectIntern->SetName(name);
     }
 }
-
-
-int BrlObjectIsValid
-(
-    BrlObject object
-) {
-    int ret = 0;
-    if (object != nullptr) {
-        Object* objectIntern = CastObject(object);
-        assert(objectIntern != nullptr);
-        if (objectIntern != nullptr)
-            ret = objectIntern->IsValid() ? 1 : 0;
-    }
-    return ret;
-}
-
-
-const char* BrlObjectType
-(
-    BrlObject object
-) {
-    const char* ret = "";
-    if (object != nullptr) {
-        Object* objectIntern = CastObject(object);
-        assert(objectIntern != nullptr);
-        if (objectIntern != nullptr)
-            ret = objectIntern->Type();
-    }
-    return ret;
-}
-

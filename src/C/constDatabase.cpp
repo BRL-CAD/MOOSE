@@ -45,7 +45,7 @@ int BrlConstDatabaseLoad
     BrlConstDatabase db,
     const char*      fileName
 ) {
-    int ret = 1;
+    int ret = 0;
 
     if (db != nullptr) {
         ConstDatabase* constDatabase = CastConstDatabase(db);
@@ -53,7 +53,7 @@ int BrlConstDatabaseLoad
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = constDatabase->Load(fileName) ? 0 : 1;
+            ret = constDatabase->Load(fileName) ? 1 : 0;
     }
 
     return ret;

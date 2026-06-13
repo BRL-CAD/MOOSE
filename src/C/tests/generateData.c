@@ -31,7 +31,7 @@ int main
             BrlFileDatabase database = BrlNewFileDatabase();
 
             if (database != 0) {
-                if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
+                if (BrlConstDatabaseLoad(database, "gettitleC.g")) {
                     BrlDatabaseSetTitle(database, "get title C");
                     ret = 0;
                 }

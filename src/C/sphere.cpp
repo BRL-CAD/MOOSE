@@ -29,8 +29,6 @@
 
 #include <brlcad/C/sphere.h>
 
-#include "BrlData.h"
-
 #include "casts.h"
 
 
@@ -45,42 +43,14 @@ BrlSphere BrlNewSphere
 }
 
 
-BrlSphere BrlNewSphereFromCenterRadius
+BrlSphere BrlNewSphereAsSphere
 (
     double centerX, double centerY, double centerZ,
     double radius
 ) {
     Vector3D center(centerX, centerY, centerZ);
+
     return new SphereData(new Sphere(center, radius));
-}
-
-
-double BrlSphereRadius
-(
-    BrlSphere sphere
-) {
-    double ret = 0.0;
-    if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic)
-            ret = static_cast<SphereData*>(data)->Pointer()->Radius();
-    }
-    return ret;
-}
-
-
-void BrlSphereSetRadius
-(
-    BrlSphere sphere, 
-    double radius
-) {
-    if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic)
-            static_cast<SphereData*>(data)->Pointer()->SetRadius(radius);
-    }
 }
 
 
@@ -89,13 +59,14 @@ BrlVector3D BrlSphereCenter
     BrlSphere sphere
 ) {
     BrlVector3D ret = nullptr;
+
     if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic) {
-            Vector3D centerPoint = static_cast<SphereData*>(data)->Pointer()->Center();
-            ret = new Vector3DData(centerPoint);
-        }
+        Sphere* sphr = CastSphere(sphere);
+
+        assert(sphr != nullptr);
+
+        if (sphr != nullptr)
+            ret = new Vector3DData(sphr->Center());
     }
     return ret;
 }
@@ -104,33 +75,72 @@ BrlVector3D BrlSphereCenter
 void BrlSphereSetCenter
 (
     BrlSphere sphere, 
-    double centerX, double centerY, double centerZ
+    double    centerX, double centerY, double centerZ
 ) {
     if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic) {
-            Vector3D newCenter(centerX, centerY, centerZ);
-            static_cast<SphereData*>(data)->Pointer()->SetCenter(newCenter);
+        Sphere* sphr = CastSphere(sphere);
+
+        assert(sphr != nullptr);
+
+        if (sphr != nullptr) {
+            Vector3D center(centerX, centerY, centerZ);
+
+            sphr->SetCenter(center);
         }
+    }
+}
+
+
+double BrlSphereRadius
+(
+    BrlSphere sphere
+) {
+    double ret = 0.;
+
+    if (sphere != nullptr) {
+        Sphere* sphr = CastSphere(sphere);
+
+        assert(sphr != nullptr);
+
+        if (sphr != nullptr)
+            ret = sphr->Radius();
+    }
+
+    return ret;
+}
+
+
+void BrlSphereSetRadius
+(
+    BrlSphere sphere,
+    double    radius
+) {
+    if (sphere != nullptr) {
+        Sphere* sphr = CastSphere(sphere);
+
+        assert(sphr != nullptr);
+
+        if (sphr != nullptr)
+            sphr->SetRadius(radius);
     }
 }
 
 
 void BrlSphereSet
 (
-    BrlSphere sphere, 
-    double centerX, double centerY, double centerZ, 
-    double radius
+    BrlSphere sphere,
+    double    centerX, double centerY, double centerZ,
+    double    radius
 ) {
     if (sphere != nullptr) {
-        BrlData* data = CastHandle(sphere);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == SphereMagic) {
+        Sphere* sphr = CastSphere(sphere);
+
+        assert(sphr != nullptr);
+
+        if (sphr != nullptr) {
             Vector3D center(centerX, centerY, centerZ);
-            static_cast<SphereData*>(data)->Pointer()->Set(center, radius);
+
+            sphr->Set(center, radius);
         }
     }
 }
-
-

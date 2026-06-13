@@ -39,22 +39,17 @@ typedef BrlObject BrlSphere;
 
 
 BRLCAD_MOOSE_EXPORT BrlSphere   BrlNewSphere(void);
-
-BRLCAD_MOOSE_EXPORT BrlSphere   BrlNewSphereFromCenterRadius(double centerX, double centerY, double centerZ, 
-                                                             double radius);
-
-BRLCAD_MOOSE_EXPORT double      BrlSphereRadius(BrlSphere sphere);
-
-BRLCAD_MOOSE_EXPORT void        BrlSphereSetRadius(BrlSphere sphere, double radius);
+BRLCAD_MOOSE_EXPORT BrlSphere   BrlNewSphereAsSphere(double centerX, double centerY, double centerZ,
+                                                     double radius);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D BrlSphereCenter(BrlSphere sphere);
-
-BRLCAD_MOOSE_EXPORT void        BrlSphereSetCenter(BrlSphere sphere, 
-                                                   double centerX, double centerY, double centerZ);
-
-BRLCAD_MOOSE_EXPORT void        BrlSphereSet(BrlSphere sphere, 
-                                             double centerX, double centerY, double centerZ, 
-                                             double radius);
+BRLCAD_MOOSE_EXPORT void        BrlSphereSetCenter(BrlSphere sphere,
+                                                   double    centerX, double centerY, double centerZ);
+BRLCAD_MOOSE_EXPORT double      BrlSphereRadius(BrlSphere sphere);
+BRLCAD_MOOSE_EXPORT void        BrlSphereSetRadius(BrlSphere sphere, double radius);
+BRLCAD_MOOSE_EXPORT void        BrlSphereSet(BrlSphere sphere,
+                                             double    centerX, double centerY, double centerZ,
+                                             double    radius);
 
 
 #ifdef __cplusplus

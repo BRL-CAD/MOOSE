@@ -32,7 +32,7 @@ int main
             BrlConstDatabase database = BrlNewConstDatabase();
 
             if (database != 0) {
-                if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
+                if (BrlConstDatabaseLoad(database, "gettitleC.g")) {
                     if (strcmp(BrlConstDatabaseTitle(database), "get title C") == 0)
                         ret = 0;
                 }
@@ -48,7 +48,7 @@ int main
             BrlFileDatabase database = BrlNewFileDatabase();
 
             if (database != 0) {
-                if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
+                if (BrlConstDatabaseLoad(database, "gettitleC.g")) {
                     if (strcmp(BrlConstDatabaseTitle(database), "get title C") == 0)
                         ret = 0;
                 }
@@ -64,7 +64,7 @@ int main
             BrlMemoryDatabase database = BrlNewMemoryDatabase();
 
             if (database != 0) {
-                if (BrlConstDatabaseLoad(database, "gettitleC.g") == 0) {
+                if (BrlConstDatabaseLoad(database, "gettitleC.g")) {
                     if (strcmp(BrlConstDatabaseTitle(database), "get title C") == 0)
                         ret = 0;
                 }

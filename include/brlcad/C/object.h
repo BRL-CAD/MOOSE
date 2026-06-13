@@ -36,13 +36,12 @@ extern "C" {
 typedef BrlHandle BrlObject;
 
 
-BRLCAD_MOOSE_EXPORT void        BrlObjectSetName(BrlObject   object,
-                                                 const char* name);
+BRLCAD_MOOSE_EXPORT const char* BrlObjectType(BrlObject object);
 
 BRLCAD_MOOSE_EXPORT int         BrlObjectIsValid(BrlObject object);
 
-BRLCAD_MOOSE_EXPORT const char* BrlObjectType(BrlObject object);
-
+BRLCAD_MOOSE_EXPORT void        BrlObjectSetName(BrlObject   object,
+                                                 const char* name);
 
 
 #ifdef __cplusplus

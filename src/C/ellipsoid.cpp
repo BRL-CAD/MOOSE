@@ -29,8 +29,6 @@
 
 #include <brlcad/C/ellipsoid.h>
 
-#include "BrlData.h"
-
 #include "casts.h"
 
 
@@ -45,9 +43,9 @@ BrlEllipsoid BrlNewEllipsoid
 }
 
 
-BrlEllipsoid BrlNewEllipsoidFromAxis
+BrlEllipsoid BrlNewEllipsoidAsGeneralEllipsoid
 (
-    double centerX, double centerY, double centerZ,
+    double centerX,             double centerY,             double centerZ,
     double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
     double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
     double semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ
@@ -61,9 +59,9 @@ BrlEllipsoid BrlNewEllipsoidFromAxis
 }
 
 
-BrlEllipsoid BrlNewEllipsoidAsEllipsoidHyperboloid
+BrlEllipsoid BrlNewEllipsoidAsEllipsoid1
 (
-    double centerX, double centerY, double centerZ,
+    double centerX,            double centerY,            double centerZ,
     double semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
     double radius
 ) {
@@ -90,13 +88,14 @@ BrlVector3D BrlEllipsoidCenter
     BrlEllipsoid ellipsoid
 ) {
     BrlVector3D ret = nullptr;
+
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D center = static_cast<EllipsoidData*>(data)->Pointer()->Center();
-            ret = new Vector3DData(center);
-        }
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr)
+            ret = new Vector3DData(ell->Center());
     }
     return ret;
 }
@@ -104,15 +103,18 @@ BrlVector3D BrlEllipsoidCenter
 
 void BrlEllipsoidSetCenter
 (
-    BrlEllipsoid ellipsoid, 
-    double centerX, double centerY, double centerZ
+    BrlEllipsoid ellipsoid,
+    double       centerX, double centerY, double centerZ
 ) {
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D cpp_center(centerX, centerY, centerZ);
-            static_cast<EllipsoidData*>(data)->Pointer()->SetCenter(cpp_center);
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr) {
+            Vector3D center(centerX, centerY, centerZ);
+
+            ell->SetCenter(center);
         }
     }
 }
@@ -120,17 +122,18 @@ void BrlEllipsoidSetCenter
 
 BrlVector3D BrlEllipsoidSemiPrincipalAxis
 (
-    BrlEllipsoid ellipsoid, 
-    int index
+    BrlEllipsoid ellipsoid,
+    int          index
 ) {
     BrlVector3D ret = nullptr;
+
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D semiPrincipalAxis = static_cast<EllipsoidData*>(data)->Pointer()->SemiPrincipalAxis(index);
-            ret = new Vector3DData(semiPrincipalAxis);
-        }
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr)
+            ret = new Vector3DData(ell->SemiPrincipalAxis(index));
     }
     return ret;
 }
@@ -138,38 +141,66 @@ BrlVector3D BrlEllipsoidSemiPrincipalAxis
 
 void BrlEllipsoidSetSemiPrincipalAxis
 (
-    BrlEllipsoid ellipsoid, 
-    int index, 
-    double axisX, double axisY, double axisZ
+    BrlEllipsoid ellipsoid,
+    int          index,
+    double       axisX, double axisY, double axisZ
 ) {
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D cpp_axis(axisX, axisY, axisZ);
-            static_cast<EllipsoidData*>(data)->Pointer()->SetSemiPrincipalAxis(index, cpp_axis);
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr) {
+            Vector3D axis(axisX, axisY, axisZ);
+
+            ell->SetSemiPrincipalAxis(index, axis);
         }
     }
 }
 
 
-void BrlEllipsoidSet
+void BrlEllipsoidSetAsGeneralEllipsoid
 (
     BrlEllipsoid ellipsoid,
-    double centerX, double centerY, double centerZ,
-    double semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
-    double semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
-    double semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ
+    double       centerX,             double centerY,             double centerZ,
+    double       semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
+    double       semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
+    double       semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ
 ) {
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D cpp_center(centerX, centerY, centerZ);
-            Vector3D cpp_a(semiPrincipalAxisAX, semiPrincipalAxisAY, semiPrincipalAxisAZ);
-            Vector3D cpp_b(semiPrincipalAxisBX, semiPrincipalAxisBY, semiPrincipalAxisBZ);
-            Vector3D cpp_c(semiPrincipalAxisCX, semiPrincipalAxisCY, semiPrincipalAxisCZ);
-            static_cast<EllipsoidData*>(data)->Pointer()->Set(cpp_center, cpp_a, cpp_b, cpp_c);
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr) {
+            Vector3D center(centerX, centerY, centerZ);
+            Vector3D a(semiPrincipalAxisAX, semiPrincipalAxisAY, semiPrincipalAxisAZ);
+            Vector3D b(semiPrincipalAxisBX, semiPrincipalAxisBY, semiPrincipalAxisBZ);
+            Vector3D c(semiPrincipalAxisCX, semiPrincipalAxisCY, semiPrincipalAxisCZ);
+
+            ell->Set(center, a, b, c);
+        }
+    }
+}
+
+
+void BrlEllipsoidSetAsEllipsoid1
+(
+    BrlEllipsoid ellipsoid,
+    double       centerX,            double centerY,            double centerZ,
+    double       semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
+    double       radius
+) {
+    if (ellipsoid != nullptr) {
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr) {
+            Vector3D center(centerX, centerY, centerZ);
+            Vector3D axis(semiPrincipalAxisX, semiPrincipalAxisY, semiPrincipalAxisZ);
+
+            ell->Set(center, axis, radius);
         }
     }
 }
@@ -178,17 +209,20 @@ void BrlEllipsoidSet
 void BrlEllipsoidSetFocals
 (
     BrlEllipsoid ellipsoid,
-    double focalAX, double focalAY, double focalAZ,
-    double focalBX, double focalBY, double focalBZ,
-    double          majorAxisLength
+    double       focalAX, double focalAY, double focalAZ,
+    double       focalBX, double focalBY, double focalBZ,
+    double       majorAxisLength
 ) {
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D cpp_focalA(focalAX, focalAY, focalAZ);
-            Vector3D cpp_focalB(focalBX, focalBY, focalBZ);
-            static_cast<EllipsoidData*>(data)->Pointer()->SetFocals(cpp_focalA, cpp_focalB, majorAxisLength);
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr) {
+            Vector3D focalA(focalAX, focalAY, focalAZ);
+            Vector3D focalB(focalBX, focalBY, focalBZ);
+
+            ell->SetFocals(focalA, focalB, majorAxisLength);
         }
     }
 }
@@ -197,15 +231,18 @@ void BrlEllipsoidSetFocals
 void BrlEllipsoidSetSphere
 (
     BrlEllipsoid ellipsoid,
-    double centerX, double centerY, double centerZ,
-    double          radius
+    double       centerX, double centerY, double centerZ,
+    double       radius
 ) {
     if (ellipsoid != nullptr) {
-        BrlData* data = CastHandle(ellipsoid);
-        assert(data != nullptr);
-        if (data != nullptr && data->Magic() == EllipsoidMagic) {
-            Vector3D cpp_center(centerX, centerY, centerZ);
-            static_cast<EllipsoidData*>(data)->Pointer()->SetSphere(cpp_center, radius);
+        Ellipsoid* ell = CastEllipsoid(ellipsoid);
+
+        assert(ell != nullptr);
+
+        if (ell != nullptr) {
+            Vector3D center(centerX, centerY, centerZ);
+
+            ell->SetSphere(center, radius);
         }
     }
 }

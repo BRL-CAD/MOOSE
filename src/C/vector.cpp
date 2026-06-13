@@ -40,12 +40,12 @@ double BrlVector3DX
     double ret = 0.
 
     if (vector != nullptr) {
-        Vector3DData* data = CastDatabase(vector);
+        Vector3D* vector3D = CastVector3D(vector);
 
-        assert(data != nullptr);
+        assert(vector3D != nullptr);
 
-        if (data != nullptr)
-            ret = data->Value().coordinates[0];
+        if (vector3D != nullptr)
+            ret = vector3D->coordinates[0];
     }
 }
 
@@ -57,12 +57,12 @@ double BrlVector3DY
     double ret = 0.
 
     if (vector != nullptr) {
-        Vector3DData* data = CastDatabase(vector);
+        Vector3D* vector3D = CastVector3D(vector);
 
-        assert(data != nullptr);
+        assert(vector3D != nullptr);
 
-        if (data != nullptr)
-            ret = data->Value().coordinates[1];
+        if (vector3D != nullptr)
+            ret = vector3D->coordinates[1];
     }
 }
 
@@ -74,11 +74,11 @@ double BrlVector3DZ
     double ret = 0.
 
     if (vector != nullptr) {
-        Vector3DData* data = CastDatabase(vector);
+        Vector3D* vector3D = CastVector3D(vector);
 
-        assert(data != nullptr);
+        assert(vector3D != nullptr);
 
-        if (data != nullptr)
-            ret = data->Value().coordinates[2];
+        if (vector3D != nullptr)
+            ret = vector3D->coordinates[2];
     }
 }

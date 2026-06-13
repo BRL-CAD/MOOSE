@@ -33,7 +33,7 @@
 using namespace BRLCAD;
 
 
-BrlArb8 BrlNewArb8From4Points
+BrlArb8 BrlNewArb8AsArb4
 (
     double point1X, double point1Y, double point1Z,
     double point2X, double point2Y, double point2Z,
@@ -49,7 +49,7 @@ BrlArb8 BrlNewArb8From4Points
 }
 
 
-BrlArb8 BrlNewArb8From8Points
+BrlArb8 BrlNewArb8AsArb8
 (
     double point1X, double point1Y, double point1Z,
     double point2X, double point2Y, double point2Z,
@@ -73,7 +73,7 @@ BrlArb8 BrlNewArb8From8Points
 }
 
 
-BrlArb8 BrlNewArb8From2Points
+BrlArb8 BrlNewArb8AsRectengularParallelPiped
 (
     double point1X, double point1Y, double point1Z,
     double point2X, double point2Y, double point2Z
