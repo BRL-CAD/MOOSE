@@ -32,10 +32,10 @@ int main
         BRLCAD::FileDatabase database;
 
         if (database.Load(argv[1])) {
-            BRLCAD::CommandString    parser(database);
-            std::vector<const char*> arguments = {"title"};
+            BRLCAD::CommandString parser(database);
+            const char*           argument = "title";
 
-            if (parser.Parse(arguments) == BRLCAD::CommandString::State::Success)
+            if (parser.Parse(1, &argument) == BRLCAD::CommandString::State::Success)
                 std::cout << parser.Results() << std::endl;
             else {
                 ret = 3;
