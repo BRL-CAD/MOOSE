@@ -43,6 +43,19 @@ BRLCAD_MOOSE_EXPORT int         BrlObjectIsValid(BrlObject object);
 BRLCAD_MOOSE_EXPORT void        BrlObjectSetName(BrlObject   object,
                                                  const char* name);
 
+                                                 BRLCAD_MOOSE_EXPORT const char* BrlObjectName(BrlObject object);
+
+BRLCAD_MOOSE_EXPORT int         BrlObjectHasAttribute(BrlObject object, const char* key);
+
+BRLCAD_MOOSE_EXPORT const char* BrlObjectAttribute(BrlObject object, const char* key);
+
+BRLCAD_MOOSE_EXPORT void        BrlObjectSetAttribute(BrlObject object, const char* key, const char* value);
+
+BRLCAD_MOOSE_EXPORT void        BrlObjectAddMultiAttribute(BrlObject object, const char* key, const char* value);
+
+BRLCAD_MOOSE_EXPORT void        BrlObjectRemoveAttribute(BrlObject object, const char* key);
+
+BRLCAD_MOOSE_EXPORT void        BrlObjectClearAttributes(BrlObject object);
 
 #ifdef __cplusplus
 }

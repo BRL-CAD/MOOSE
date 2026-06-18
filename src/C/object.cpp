@@ -85,3 +85,127 @@ void BrlObjectSetName
             objectIntern->SetName(name);
     }
 }
+
+
+const char* BrlObjectName
+(
+    BrlObject object
+) {
+    const char* ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = objectIntern->Name();
+    }
+
+    return ret;
+}
+
+
+int BrlObjectHasAttribute
+(
+    BrlObject   object,
+    const char* key
+) {
+    int ret = 0;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = objectIntern->HasAttribute(key) ? 1 : 0;
+    }
+
+    return ret;
+}
+
+
+const char* BrlObjectAttribute
+(
+    BrlObject   object,
+    const char* key
+) {
+    const char* ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = objectIntern->Attribute(key);
+    }
+
+    return ret;
+}
+
+
+void BrlObjectSetAttribute
+(
+    BrlObject   object,
+    const char* key,
+    const char* value
+) {
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            objectIntern->SetAttribute(key, value);
+    }
+}
+
+
+void BrlObjectAddMultiAttribute
+(
+    BrlObject   object,
+    const char* key,
+    const char* value
+) {
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            objectIntern->AddMultiAttribute(key, value);
+    }
+}
+
+
+void BrlObjectRemoveAttribute
+(
+    BrlObject   object,
+    const char* key
+) {
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            objectIntern->RemoveAttribute(key);
+    }
+}
+
+
+void BrlObjectClearAttributes
+(
+    BrlObject object
+) {
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            objectIntern->ClearAttributes();
+    }
+}
