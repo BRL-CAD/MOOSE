@@ -31,22 +31,23 @@
 #include "BrlData.h"
 
 
-BrlData*                     CastHandle(BrlHandle handle);
+BrlData*                           CastHandle(BrlHandle handle);
 
-BRLCAD::Vector3D*            CastVector3D(BrlHandle handle);
-BRLCAD::VectorList*          CastVectorList(BrlHandle handle);
+BRLCAD::Vector3D*                  CastVector3D(BrlHandle handle);
+BRLCAD::VectorList*                CastVectorList(BrlHandle handle);
 
-BRLCAD::ConstDatabase*       CastConstDatabase(BrlHandle handle);
-BRLCAD::Database*            CastDatabase(BrlHandle handle);
-BRLCAD::FileDatabase*        CastFileDatabase(BrlHandle handle);
-BRLCAD::MemoryDatabase*      CastMemoryDatabase(BrlHandle handle);
+BRLCAD::ConstDatabase*             CastConstDatabase(BrlHandle handle);
+BRLCAD::Database*                  CastDatabase(BrlHandle handle);
+BRLCAD::FileDatabase*              CastFileDatabase(BrlHandle handle);
+BRLCAD::MemoryDatabase*            CastMemoryDatabase(BrlHandle handle);
 
-BRLCAD::Object*              CastObject(BrlHandle handle);
-BRLCAD::Arb8*                CastArb8(BrlHandle handle);
-BRLCAD::Cone*                CastCone(BrlHandle handle);
-BRLCAD::Ellipsoid*           CastEllipsoid(BrlHandle handle);
-BRLCAD::NonManifoldGeometry* CastNonManifoldGeometry(BrlHandle handle);
-BRLCAD::Sphere*              CastSphere(BrlHandle handle);
+BRLCAD::Object*                    CastObject(BrlHandle handle);
+BRLCAD::Arb8*                      CastArb8(BrlHandle handle);
+BRLCAD::Cone*                      CastCone(BrlHandle handle);
+BRLCAD::Ellipsoid*                 CastEllipsoid(BrlHandle handle);
+BRLCAD::NonManifoldGeometry*       CastNonManifoldGeometry(BrlHandle handle);
+BRLCAD::Sphere*                    CastSphere(BrlHandle handle);
+BRLCAD::Object::AttributeIterator* CastAttributeIterator(BrlHandle handle);
 
 
 #endif // BRLCAD_C_CASTS_INCLUDED

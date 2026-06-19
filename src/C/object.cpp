@@ -209,3 +209,114 @@ void BrlObjectClearAttributes
             objectIntern->ClearAttributes();
     }
 }
+
+
+BrlAttributeIterator BrlObjectFirstAttribute
+(
+    BrlObject object
+) {
+    BrlAttributeIterator ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = new AttributeIteratorData(objectIntern->FirstAttribute());
+    }
+
+    return ret;
+}
+
+
+BrlAttributeIterator BrlObjectMultiAttribute
+(
+    BrlObject   object,
+    const char* key
+) {
+    BrlAttributeIterator ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = new AttributeIteratorData(objectIntern->MultiAttribute(key));
+    }
+
+    return ret;
+}
+
+
+void BrlAttributeIteratorNext
+(
+    BrlAttributeIterator iterator
+) {
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ++(*iteratorIntern);
+    }
+}
+
+
+int BrlAttributeIteratorGood
+(
+    BrlAttributeIterator iterator
+) {
+    int ret = 0;
+
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ret = iteratorIntern->Good() ? 1 : 0;
+    }
+
+    return ret;
+}
+
+
+const char* BrlAttributeIteratorKey
+(
+    BrlAttributeIterator iterator
+) {
+    const char* ret = nullptr;
+
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ret = iteratorIntern->Key();
+    }
+
+    return ret;
+}
+
+
+const char* BrlAttributeIteratorValue
+(
+    BrlAttributeIterator iterator
+) {
+    const char* ret = nullptr;
+
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ret = iteratorIntern->Value();
+    }
+
+    return ret;
+}
