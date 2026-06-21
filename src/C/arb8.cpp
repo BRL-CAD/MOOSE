@@ -196,7 +196,7 @@ BrlVector3D BrlArb8Point
 void BrlArb8SetPoint
 (
     BrlArb8 arb8,
-    int  number,
+    int     number,
     double  pointX, double pointY, double pointZ
 ) {
     if (arb8 != nullptr) {
