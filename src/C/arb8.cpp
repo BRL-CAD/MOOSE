@@ -60,6 +60,66 @@ BrlArb8 BrlNewArb8AsArb4
 }
 
 
+BrlArb8 BrlNewArb8AsArb5
+(
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z,
+    double point5X, double point5Y, double point5Z
+) {
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+    Vector3D point3(point3X, point3Y, point3Z);
+    Vector3D point4(point4X, point4Y, point4Z);
+    Vector3D point5(point5X, point5Y, point5Z);
+
+    return new Arb8Data(new Arb8(point1, point2, point3, point4, point5));
+}
+
+
+BrlArb8 BrlNewArb8AsArb6
+(
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z,
+    double point5X, double point5Y, double point5Z,
+    double point6X, double point6Y, double point6Z
+) {
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+    Vector3D point3(point3X, point3Y, point3Z);
+    Vector3D point4(point4X, point4Y, point4Z);
+    Vector3D point5(point5X, point5Y, point5Z);
+    Vector3D point6(point6X, point6Y, point6Z);
+
+    return new Arb8Data(new Arb8(point1, point2, point3, point4, point5, point6));
+}
+
+
+BrlArb8 BrlNewArb8AsArb7
+(
+    double point1X, double point1Y, double point1Z,
+    double point2X, double point2Y, double point2Z,
+    double point3X, double point3Y, double point3Z,
+    double point4X, double point4Y, double point4Z,
+    double point5X, double point5Y, double point5Z,
+    double point6X, double point6Y, double point6Z,
+    double point7X, double point7Y, double point7Z
+) {
+    Vector3D point1(point1X, point1Y, point1Z);
+    Vector3D point2(point2X, point2Y, point2Z);
+    Vector3D point3(point3X, point3Y, point3Z);
+    Vector3D point4(point4X, point4Y, point4Z);
+    Vector3D point5(point5X, point5Y, point5Z);
+    Vector3D point6(point6X, point6Y, point6Z);
+    Vector3D point7(point7X, point7Y, point7Z);
+
+    return new Arb8Data(new Arb8(point1, point2, point3, point4, point5, point6, point7));
+}
+
+
 BrlArb8 BrlNewArb8AsArb8
 (
     double point1X, double point1Y, double point1Z,
