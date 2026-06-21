@@ -23,15 +23,26 @@
  *      implements a handle and functions for Arb8 solid handling
  */
 
+#include <cassert>
+
 #include <brlcad/Database/Arb8.h>
 
 #include <brlcad/C/arb8.h>
 
 #include "BrlData.h"
 
+#include "casts.h"
+
 
 using namespace BRLCAD;
 
+
+BrlArb8 BrlNewArb8
+(
+    void
+) {
+    return new Arb8Data(new Arb8());
+}
 
 BrlArb8 BrlNewArb8AsArb4
 (
@@ -82,4 +93,264 @@ BrlArb8 BrlNewArb8AsRectengularParallelPiped
     Vector3D point2(point2X, point2Y, point2Z);
 
     return new Arb8Data(new Arb8(point1, point2));
+}
+
+
+int BrlArb8NumberOfVertices
+(
+    BrlArb8 arb8
+) {
+    int ret = 0;
+
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr)
+            ret = static_cast<int>(ab->NumberOfVertices());
+    }
+    return ret;
+}
+
+
+BrlVector3D BrlArb8Point
+(
+    BrlArb8 arb8,
+    int     number
+) {
+    BrlVector3D ret = nullptr;
+
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr)
+            ret = new Vector3DData(ab->Point(number));
+    }
+    return ret;
+}
+
+
+BrlVector3D BrlArb8RawPoint
+(
+    BrlArb8 arb8,
+    int     index
+) {
+    BrlVector3D ret = nullptr;
+
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr)
+            ret = new Vector3DData(ab->RawPoint(index));
+    }
+    return ret;
+}
+
+
+void BrlArb8SetPoint
+(
+    BrlArb8 arb8,
+    int  number,
+    double  x, double y, double z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point(x, y, z);
+            ab->SetPoint(number, point);
+        }
+    }
+}
+
+
+void BrlArb8SetRawPoint
+(
+    BrlArb8 arb8,
+    int     index,
+    double  x, double y, double z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point(x, y, z);
+            ab->SetRawPoint(index, point);
+        }
+    }
+}
+
+
+void BrlArb8SetPointsAsArb2
+(
+    BrlArb8 arb8,
+    double  point1x, double point1y, double point1z,
+    double  point2x, double point2y, double point2z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point1(point1x, point1y, point1z);
+            Vector3D point2(point2x, point2y, point2z);
+
+            ab->SetPoints(point1, point2);
+        }
+    }
+}
+
+
+void BrlArb8SetPointsAsArb4
+(
+    BrlArb8 arb8,
+    double  point1x, double point1y, double point1z,
+    double  point2x, double point2y, double point2z,
+    double  point3x, double point3y, double point3z,
+    double  point4x, double point4y, double point4z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point1(point1x, point1y, point1z);
+            Vector3D point2(point2x, point2y, point2z);
+            Vector3D point3(point3x, point3y, point3z);
+            Vector3D point4(point4x, point4y, point4z);
+
+            ab->SetPoints(point1, point2, point3, point4);
+        }
+    }
+}
+
+
+void BrlArb8SetPointsAsArb5
+(
+    BrlArb8 arb8,
+    double  point1x, double point1y, double point1z,
+    double  point2x, double point2y, double point2z,
+    double  point3x, double point3y, double point3z,
+    double  point4x, double point4y, double point4z,
+    double  point5x, double point5y, double point5z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point1(point1x, point1y, point1z);
+            Vector3D point2(point2x, point2y, point2z);
+            Vector3D point3(point3x, point3y, point3z);
+            Vector3D point4(point4x, point4y, point4z);
+            Vector3D point5(point5x, point5y, point5z);
+
+            ab->SetPoints(point1, point2, point3, point4, point5);
+        }
+    }
+}
+
+
+void BrlArb8SetPointsAsArb6
+(
+    BrlArb8 arb8,
+    double  point1x, double point1y, double point1z,
+    double  point2x, double point2y, double point2z,
+    double  point3x, double point3y, double point3z,
+    double  point4x, double point4y, double point4z,
+    double  point5x, double point5y, double point5z,
+    double  point6x, double point6y, double point6z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point1(point1x, point1y, point1z);
+            Vector3D point2(point2x, point2y, point2z);
+            Vector3D point3(point3x, point3y, point3z);
+            Vector3D point4(point4x, point4y, point4z);
+            Vector3D point5(point5x, point5y, point5z);
+            Vector3D point6(point6x, point6y, point6z);
+
+            ab->SetPoints(point1, point2, point3, point4, point5, point6);
+        }
+    }
+}
+
+
+void BrlArb8SetPointsAsArb7
+(
+    BrlArb8 arb8,
+    double  point1x, double point1y, double point1z,
+    double  point2x, double point2y, double point2z,
+    double  point3x, double point3y, double point3z,
+    double  point4x, double point4y, double point4z,
+    double  point5x, double point5y, double point5z,
+    double  point6x, double point6y, double point6z,
+    double  point7x, double point7y, double point7z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point1(point1x, point1y, point1z);
+            Vector3D point2(point2x, point2y, point2z);
+            Vector3D point3(point3x, point3y, point3z);
+            Vector3D point4(point4x, point4y, point4z);
+            Vector3D point5(point5x, point5y, point5z);
+            Vector3D point6(point6x, point6y, point6z);
+            Vector3D point7(point7x, point7y, point7z);
+
+            ab->SetPoints(point1, point2, point3, point4, point5, point6, point7);
+        }
+    }
+}
+
+
+void BrlArb8SetPointsAsArb8
+(
+    BrlArb8 arb8,
+    double  point1x, double point1y, double point1z,
+    double  point2x, double point2y, double point2z,
+    double  point3x, double point3y, double point3z,
+    double  point4x, double point4y, double point4z,
+    double  point5x, double point5y, double point5z,
+    double  point6x, double point6y, double point6z,
+    double  point7x, double point7y, double point7z,
+    double  point8x, double point8y, double point8z
+) {
+    if (arb8 != nullptr) {
+        Arb8* ab = CastArb8(arb8);
+
+        assert(ab != nullptr);
+
+        if (ab != nullptr) {
+            Vector3D point1(point1x, point1y, point1z);
+            Vector3D point2(point2x, point2y, point2z);
+            Vector3D point3(point3x, point3y, point3z);
+            Vector3D point4(point4x, point4y, point4z);
+            Vector3D point5(point5x, point5y, point5z);
+            Vector3D point6(point6x, point6y, point6z);
+            Vector3D point7(point7x, point7y, point7z);
+            Vector3D point8(point8x, point8y, point8z);
+
+            ab->SetPoints(point1, point2, point3, point4, point5, point6, point7, point8);
+        }
+    }
 }

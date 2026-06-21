@@ -70,6 +70,7 @@ extern const char* const ConeMagic;
 extern const char* const EllipsoidMagic;
 extern const char* const NonManifoldGeometryMagic;
 extern const char* const SphereMagic;
+extern const char* const AttributeIteratorMagic;
 
 
 template<class ValueType> class ValueData : public BrlData {
@@ -188,6 +189,12 @@ public:
 class SphereData : public PointerData<BRLCAD::Sphere> {
 public:
     SphereData(BRLCAD::Sphere* pointer) : PointerData(SphereMagic, pointer) {}
+};
+
+
+class AttributeIteratorData : public ValueData<BRLCAD::Object::AttributeIterator> {
+public:
+    AttributeIteratorData(const BRLCAD::Object::AttributeIterator& value) : ValueData(AttributeIteratorMagic, value) {}
 };
 
 

@@ -50,7 +50,8 @@ BrlData* CastHandle
             (handleMagic == ConeMagic) ||
             (handleMagic == EllipsoidMagic) ||
             (handleMagic == NonManifoldGeometryMagic) ||
-            (handleMagic == SphereMagic))
+            (handleMagic == SphereMagic) ||
+            (handleMagic == AttributeIteratorMagic))
             ret = handle;
         else
             bu_log("CastHandle: invalid handle");
@@ -298,6 +299,25 @@ Sphere* CastSphere
             ret = static_cast<SphereData*>(handle)->Pointer();
         else
             bu_log("CastSphere: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Object::AttributeIterator* CastAttributeIterator
+(
+    BrlHandle handle
+) {
+    Object::AttributeIterator* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == AttributeIteratorMagic)
+            ret = &static_cast<AttributeIteratorData*>(handle)->Value();
+        else
+            bu_log("CastAttributeIterator: wrong handle");
     }
 
     return ret;

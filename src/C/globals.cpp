@@ -57,6 +57,7 @@ const char* const ConstDatabaseMagic       = "BRLCAD::ConstDatabase";
 const char* const FileDatabaseMagic        = "BRLCAD::FileDatabase";
 const char* const MemoryDatabaseMagic      = "BRLCAD::MemoryDatabase";
 const char* const ObjectMagic              = "BRLCAD::Object";
+const char* const AttributeIteratorMagic   = "BRLCAD::Object::AttributeIterator";
 const char* const Arb8Magic                = "BRLCAD::Arb8";
 const char* const ConeMagic                = "BRLCAD::Cone";
 const char* const EllipsoidMagic           = "BRLCAD::Ellipsoid";
