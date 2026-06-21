@@ -34,42 +34,45 @@ extern "C" {
 
 
 typedef BrlHandle BrlObject;
-typedef BrlHandle BrlAttributeIterator;
 
 
-BRLCAD_MOOSE_EXPORT const char*          BrlObjectType(BrlObject object);
+BRLCAD_MOOSE_EXPORT const char*                BrlObjectType(BrlObject object);
 
-BRLCAD_MOOSE_EXPORT int                  BrlObjectIsValid(BrlObject object);
+BRLCAD_MOOSE_EXPORT int                        BrlObjectIsValid(BrlObject object);
 
-BRLCAD_MOOSE_EXPORT void                 BrlObjectSetName(BrlObject   object,
-                                                          const char* name);
+BRLCAD_MOOSE_EXPORT const char*                BrlObjectName(BrlObject object);
+BRLCAD_MOOSE_EXPORT void                       BrlObjectSetName(BrlObject   object,
+                                                                const char* name);
 
-                                                          BRLCAD_MOOSE_EXPORT const char* BrlObjectName(BrlObject object);
 
-BRLCAD_MOOSE_EXPORT int                  BrlObjectHasAttribute(BrlObject object, const char* key);
+typedef BrlHandle BrlObjectAttributeIterator;
 
-BRLCAD_MOOSE_EXPORT const char*          BrlObjectAttribute(BrlObject object, const char* key);
+BRLCAD_MOOSE_EXPORT void                       BrlObjectAttributeIteratorNext(BrlObjectAttributeIterator iterator);
 
-BRLCAD_MOOSE_EXPORT void                 BrlObjectSetAttribute(BrlObject object, const char* key, const char* value);
+BRLCAD_MOOSE_EXPORT int                        BrlObjectAttributeIteratorGood(BrlObjectAttributeIterator iterator);
 
-BRLCAD_MOOSE_EXPORT void                 BrlObjectAddMultiAttribute(BrlObject object, const char* key, const char* value);
+BRLCAD_MOOSE_EXPORT const char*                BrlObjectAttributeIteratorKey(BrlObjectAttributeIterator iterator);
 
-BRLCAD_MOOSE_EXPORT void                 BrlObjectRemoveAttribute(BrlObject object, const char* key);
+BRLCAD_MOOSE_EXPORT const char*                BrlObjectAttributeIteratorValue(BrlObjectAttributeIterator iterator);
 
-BRLCAD_MOOSE_EXPORT void                 BrlObjectClearAttributes(BrlObject object);
 
-BRLCAD_MOOSE_EXPORT BrlAttributeIterator BrlObjectFirstAttribute(BrlObject object);
+BRLCAD_MOOSE_EXPORT int                        BrlObjectHasAttribute(BrlObject   object,
+                                                                     const char* key);
+BRLCAD_MOOSE_EXPORT BrlObjectAttributeIterator BrlObjectFirstAttribute(BrlObject object);
+BRLCAD_MOOSE_EXPORT const char*                BrlObjectAttribute(BrlObject   object,
+                                                                  const char* key);
+BRLCAD_MOOSE_EXPORT BrlObjectAttributeIterator BrlObjectMultiAttribute(BrlObject   object,
+                                                                       const char* key);
+BRLCAD_MOOSE_EXPORT void                       BrlObjectSetAttribute(BrlObject   object,
+                                                                     const char* key,
+                                                                     const char* value);
+BRLCAD_MOOSE_EXPORT void                       BrlObjectAddMultiAttribute(BrlObject   object,
+                                                                          const char* key,
+                                                                          const char* value);
+BRLCAD_MOOSE_EXPORT void                       BrlObjectRemoveAttribute(BrlObject   object,
+                                                                        const char* key);
+BRLCAD_MOOSE_EXPORT void                       BrlObjectClearAttributes(BrlObject object);
 
-BRLCAD_MOOSE_EXPORT BrlAttributeIterator BrlObjectMultiAttribute(BrlObject   object,
-                                                                 const char* key);
-
-BRLCAD_MOOSE_EXPORT void                 BrlAttributeIteratorNext(BrlAttributeIterator iterator);
-
-BRLCAD_MOOSE_EXPORT int                  BrlAttributeIteratorGood(BrlAttributeIterator iterator);
-
-BRLCAD_MOOSE_EXPORT const char*          BrlAttributeIteratorKey(BrlAttributeIterator iterator);
-
-BRLCAD_MOOSE_EXPORT const char*          BrlAttributeIteratorValue(BrlAttributeIterator iterator);
 
 #ifdef __cplusplus
 }
