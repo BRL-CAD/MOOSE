@@ -81,7 +81,7 @@ namespace BRLCAD {
         /** The argument is the number (1..8) of the vertex as used in the documentation,
             not the index at the storage-structure of an arb8.
             E.g. with an arb4 "number = 3" returns the vertex with index 2
-            and "number = 4" returns the vertex with index 4.
+            and "number = 4" returns the vertex with index 3.
         */
         Vector3D           Point(size_t number) const;
         void               SetPoint(size_t    number,
