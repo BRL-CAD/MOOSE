@@ -355,3 +355,11 @@ void BrlConeSetAsRightCircularCylinder
         }
     }
 }
+
+
+const char *BrlConeClassName
+(
+    void
+) {
+  return Cone::ClassName();
+}

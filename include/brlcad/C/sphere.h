@@ -51,6 +51,8 @@ BRLCAD_MOOSE_EXPORT void        BrlSphereSet(BrlSphere sphere,
                                              double    centerX, double centerY, double centerZ,
                                              double    radius);
 
+BRLCAD_MOOSE_EXPORT const char* BrlSphereClassName(void);
+
 
 #ifdef __cplusplus
 }

@@ -246,3 +246,11 @@ void BrlEllipsoidSetSphere
         }
     }
 }
+
+
+const char *BrlEllipsoidClassName
+(
+    void
+) {
+  return Ellipsoid::ClassName();
+}

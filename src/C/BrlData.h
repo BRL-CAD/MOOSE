@@ -34,6 +34,7 @@
 #include <brlcad/Database/Ellipsoid.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
 #include <brlcad/Database/Sphere.h>
+#include <brlcad/Database/Combination.h>
 
 
 class BrlData {
@@ -70,6 +71,8 @@ extern const char* const ConeMagic;
 extern const char* const EllipsoidMagic;
 extern const char* const NonManifoldGeometryMagic;
 extern const char* const SphereMagic;
+extern const char* const CombinationMagic;
+extern const char* const TreeNodeMagic;
 extern const char* const AttributeIteratorMagic;
 
 
@@ -189,6 +192,18 @@ public:
 class SphereData : public PointerData<BRLCAD::Sphere> {
 public:
     SphereData(BRLCAD::Sphere* pointer) : PointerData(SphereMagic, pointer) {}
+};
+
+
+class CombinationData : public PointerData<BRLCAD::Combination> {
+public:
+    CombinationData(BRLCAD::Combination* pointer) : PointerData(CombinationMagic, pointer) {}
+};
+
+
+class TreeNodeData : public ValueData<BRLCAD::Combination::TreeNode> {
+public:
+    TreeNodeData(const BRLCAD::Combination::TreeNode& value) : ValueData(TreeNodeMagic, value) {}
 };
 
 

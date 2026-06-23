@@ -101,6 +101,8 @@ BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb8(BrlArb8 arb8,
                                                           double point7x, double point7y, double point7z, 
                                                           double point8x, double point8y, double point8z);
 
+BRLCAD_MOOSE_EXPORT const char*    BrlArb8ClassName(void); 
+
 
 #ifdef __cplusplus
 }

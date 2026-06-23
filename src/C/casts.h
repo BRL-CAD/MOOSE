@@ -47,6 +47,8 @@ BRLCAD::Cone*                      CastCone(BrlHandle handle);
 BRLCAD::Ellipsoid*                 CastEllipsoid(BrlHandle handle);
 BRLCAD::NonManifoldGeometry*       CastNonManifoldGeometry(BrlHandle handle);
 BRLCAD::Sphere*                    CastSphere(BrlHandle handle);
+BRLCAD::Combination*               CastCombination(BrlHandle handle);
+BRLCAD::Combination::TreeNode*      CastTreeNode(BrlHandle handle);
 BRLCAD::Object::AttributeIterator* CastAttributeIterator(BrlHandle handle);
 
 

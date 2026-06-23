@@ -76,6 +76,8 @@ BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetSphere(BrlEllipsoid ellipsoid,
                                                       double       centerX, double centerY, double centerZ,
                                                       double       radius);
 
+BRLCAD_MOOSE_EXPORT const char* BrlEllipsoidClassName(void);
+
 
 #ifdef __cplusplus
 }

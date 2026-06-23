@@ -63,6 +63,8 @@ const char* const ConeMagic                = "BRLCAD::Cone";
 const char* const EllipsoidMagic           = "BRLCAD::Ellipsoid";
 const char* const NonManifoldGeometryMagic = "BRLCAD::NonManifoldGeometry";
 const char* const SphereMagic              = "BRLCAD::Sphere";
+const char* const CombinationMagic         = "BRLCAD::Combination";
+const char* const TreeNodeMagic            = "BRLCAD::Combination::TreeNode";
 
 
 void BrlDeleteHandle

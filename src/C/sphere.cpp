@@ -144,3 +144,11 @@ void BrlSphereSet
         }
     }
 }
+
+
+const char *BrlSphereClassName
+(
+    void
+) {
+  return Sphere::ClassName();
+}

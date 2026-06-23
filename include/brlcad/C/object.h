@@ -71,6 +71,9 @@ BRLCAD_MOOSE_EXPORT const char*          BrlAttributeIteratorKey(BrlAttributeIte
 
 BRLCAD_MOOSE_EXPORT const char*          BrlAttributeIteratorValue(BrlAttributeIterator iterator);
 
+BRLCAD_MOOSE_EXPORT BrlObject            BrlObjectClone(BrlObject object);
+
+
 #ifdef __cplusplus
 }
 #endif

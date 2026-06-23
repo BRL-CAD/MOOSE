@@ -354,3 +354,11 @@ void BrlArb8SetPointsAsArb8
         }
     }
 }
+
+
+const char *BrlArb8ClassName
+(
+    void
+) {
+  return Arb8::ClassName();
+}
