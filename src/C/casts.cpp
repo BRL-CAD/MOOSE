@@ -1,4 +1,4 @@
-/*                         C A S T S . C P P 
+/*                         C A S T S . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -46,14 +46,14 @@ BrlData* CastHandle
             (handleMagic == FileDatabaseMagic) ||
             (handleMagic == MemoryDatabaseMagic) ||
             (handleMagic == ObjectMagic) ||
+            (handleMagic == ObjectAttributeIteratorMagic) ||
             (handleMagic == Arb8Magic) ||
             (handleMagic == ConeMagic) ||
             (handleMagic == EllipsoidMagic) ||
             (handleMagic == NonManifoldGeometryMagic) ||
             (handleMagic == SphereMagic) ||
             (handleMagic == CombinationMagic) ||
-            (handleMagic == TreeNodeMagic) ||
-            (handleMagic == AttributeIteratorMagic))
+            (handleMagic == TreeNodeMagic))
             ret = handle;
         else
             bu_log("CastHandle: invalid handle");
@@ -214,6 +214,25 @@ Object* CastObject
 }
 
 
+Object::AttributeIterator* CastObjectAttributeIterator
+(
+    BrlHandle handle
+) {
+    Object::AttributeIterator* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ObjectAttributeIteratorMagic)
+            ret = &static_cast<ObjectAttributeIteratorData*>(handle)->Value();
+        else
+            bu_log("CastObjectAttributeIterator: wrong handle");
+    }
+
+    return ret;
+}
+
+
 Arb8* CastArb8
 (
     BrlHandle handle
@@ -341,25 +360,6 @@ Combination::TreeNode* CastTreeNode
             ret = &static_cast<TreeNodeData*>(handle)->Value();
         else
             bu_log("CastTreeNode: wrong handle");
-    }
-
-    return ret;
-}
-
-
-Object::AttributeIterator* CastAttributeIterator
-(
-    BrlHandle handle
-) {
-    Object::AttributeIterator* ret = nullptr;
-
-    if (handle != nullptr) {
-        const char* handleMagic = handle->Magic();
-
-        if (handleMagic == AttributeIteratorMagic)
-            ret = &static_cast<AttributeIteratorData*>(handle)->Value();
-        else
-            bu_log("CastAttributeIterator: wrong handle");
     }
 
     return ret;

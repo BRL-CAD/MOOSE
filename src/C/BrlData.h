@@ -66,6 +66,7 @@ extern const char* const ConstDatabaseMagic;
 extern const char* const FileDatabaseMagic;
 extern const char* const MemoryDatabaseMagic;
 extern const char* const ObjectMagic;
+extern const char* const ObjectAttributeIteratorMagic;
 extern const char* const Arb8Magic;
 extern const char* const ConeMagic;
 extern const char* const EllipsoidMagic;
@@ -73,7 +74,6 @@ extern const char* const NonManifoldGeometryMagic;
 extern const char* const SphereMagic;
 extern const char* const CombinationMagic;
 extern const char* const TreeNodeMagic;
-extern const char* const AttributeIteratorMagic;
 
 
 template<class ValueType> class ValueData : public BrlData {
@@ -165,6 +165,12 @@ public:
 };
 
 
+class ObjectAttributeIteratorData : public ValueData<BRLCAD::Object::AttributeIterator> {
+public:
+    ObjectAttributeIteratorData(const BRLCAD::Object::AttributeIterator& value) : ValueData(ObjectAttributeIteratorMagic, value) {}
+};
+
+
 class Arb8Data : public PointerData<BRLCAD::Arb8> {
 public:
     Arb8Data(BRLCAD::Arb8* pointer) : PointerData(Arb8Magic, pointer) {}
@@ -204,12 +210,6 @@ public:
 class TreeNodeData : public ValueData<BRLCAD::Combination::TreeNode> {
 public:
     TreeNodeData(const BRLCAD::Combination::TreeNode& value) : ValueData(TreeNodeMagic, value) {}
-};
-
-
-class AttributeIteratorData : public ValueData<BRLCAD::Object::AttributeIterator> {
-public:
-    AttributeIteratorData(const BRLCAD::Object::AttributeIterator& value) : ValueData(AttributeIteratorMagic, value) {}
 };
 
 

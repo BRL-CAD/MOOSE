@@ -27,7 +27,6 @@
 #define BRLCAD_C_ARB8_INCLUDED
 
 #include <brlcad/C/object.h>
-
 #include <brlcad/C/vector.h>
 
 #ifdef __cplusplus
@@ -38,68 +37,92 @@ extern "C" {
 typedef BrlObject BrlArb8;
 
 
-BRLCAD_MOOSE_EXPORT BrlArb8        BrlNewArb8(void);
-BRLCAD_MOOSE_EXPORT BrlArb8        BrlNewArb8AsArb4(double point1X, double point1Y, double point1Z,
-                                                    double point2X, double point2Y, double point2Z,
-                                                    double point3X, double point3Y, double point3Z,
-                                                    double point4X, double point4Y, double point4Z);
-BRLCAD_MOOSE_EXPORT BrlArb8        BrlNewArb8AsArb8(double point1X, double point1Y, double point1Z,
-                                                    double point2X, double point2Y, double point2Z,
-                                                    double point3X, double point3Y, double point3Z,
-                                                    double point4X, double point4Y, double point4Z,
-                                                    double point5X, double point5Y, double point5Z,
-                                                    double point6X, double point6Y, double point6Z,
-                                                    double point7X, double point7Y, double point7Z,
-                                                    double point8X, double point8Y, double point8Z);
-BRLCAD_MOOSE_EXPORT BrlArb8        BrlNewArb8AsRectengularParallelPiped(double point1X, double point1Y, double point1Z,
-                                                                        double point2X, double point2Y, double point2Z);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8(void);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8AsArb4(double point1X, double point1Y, double point1Z,
+                                                 double point2X, double point2Y, double point2Z,
+                                                 double point3X, double point3Y, double point3Z,
+                                                 double point4X, double point4Y, double point4Z);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8AsArb5(double point1X, double point1Y, double point1Z,
+                                                 double point2X, double point2Y, double point2Z,
+                                                 double point3X, double point3Y, double point3Z,
+                                                 double point4X, double point4Y, double point4Z,
+                                                 double point5X, double point5Y, double point5Z);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8AsArb6(double point1X, double point1Y, double point1Z,
+                                                 double point2X, double point2Y, double point2Z,
+                                                 double point3X, double point3Y, double point3Z,
+                                                 double point4X, double point4Y, double point4Z,
+                                                 double point5X, double point5Y, double point5Z,
+                                                 double point6X, double point6Y, double point6Z);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8AsArb7(double point1X, double point1Y, double point1Z,
+                                                 double point2X, double point2Y, double point2Z,
+                                                 double point3X, double point3Y, double point3Z,
+                                                 double point4X, double point4Y, double point4Z,
+                                                 double point5X, double point5Y, double point5Z,
+                                                 double point6X, double point6Y, double point6Z,
+                                                 double point7X, double point7Y, double point7Z);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8AsArb8(double point1X, double point1Y, double point1Z,
+                                                 double point2X, double point2Y, double point2Z,
+                                                 double point3X, double point3Y, double point3Z,
+                                                 double point4X, double point4Y, double point4Z,
+                                                 double point5X, double point5Y, double point5Z,
+                                                 double point6X, double point6Y, double point6Z,
+                                                 double point7X, double point7Y, double point7Z,
+                                                 double point8X, double point8Y, double point8Z);
+BRLCAD_MOOSE_EXPORT BrlArb8     BrlNewArb8AsRectengularParallelPiped(double point1X, double point1Y, double point1Z,
+                                                                     double point2X, double point2Y, double point2Z);
 
-BRLCAD_MOOSE_EXPORT int            BrlArb8NumberOfVertices(BrlArb8 arb8);
+BRLCAD_MOOSE_EXPORT int         BrlArb8NumberOfVertices(BrlArb8 arb8);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D    BrlArb8Point(BrlArb8 arb8, int number);
-BRLCAD_MOOSE_EXPORT BrlVector3D    BrlArb8RawPoint(BrlArb8 arb8, int index);
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlArb8Point(BrlArb8 arb8,
+                                             int     number);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPoint(BrlArb8 arb8,
+                                                int     number,
+                                                double  pointX, double pointY, double pointZ);
 
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPoint(BrlArb8 arb8, int number, double x, double y, double z);
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetRawPoint(BrlArb8 arb8, int index, double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlArb8RawPoint(BrlArb8 arb8,
+                                                int     index);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetRawPoint(BrlArb8 arb8,
+                                                   int     index,
+                                                   double  pointX, double pointY, double pointZ);
 
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb2(BrlArb8 arb8,
-                                                        double point1x, double point1y, double point1z,
-                                                        double point2x, double point2y, double point2z);
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb4(BrlArb8 arb8,
-                                                          double point1x, double point1y, double point1z,
-                                                          double point2x, double point2y, double point2z,
-                                                          double point3x, double point3y, double point3z, 
-                                                          double point4x, double point4y, double point4z);
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb5(BrlArb8 arb8,
-                                                          double point1x, double point1y, double point1z,
-                                                          double point2x, double point2y, double point2z,
-                                                          double point3x, double point3y, double point3z, 
-                                                          double point4x, double point4y, double point4z,
-                                                          double point5x, double point5y, double point5z);
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb6(BrlArb8 arb8,
-                                                          double point1x, double point1y, double point1z, 
-                                                          double point2x, double point2y, double point2z,
-                                                          double point3x, double point3y, double point3z, 
-                                                          double point4x, double point4y, double point4z,
-                                                          double point5x, double point5y, double point5z, 
-                                                          double point6x, double point6y, double point6z);
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb7(BrlArb8 arb8,
-                                                          double point1x, double point1y, double point1z, 
-                                                          double point2x, double point2y, double point2z,
-                                                          double point3x, double point3y, double point3z, 
-                                                          double point4x, double point4y, double point4z,
-                                                          double point5x, double point5y, double point5z, 
-                                                          double point6x, double point6y, double point6z,
-                                                          double point7x, double point7y, double point7z);
-BRLCAD_MOOSE_EXPORT void           BrlArb8SetPointsAsArb8(BrlArb8 arb8,
-                                                          double point1x, double point1y, double point1z, 
-                                                          double point2x, double point2y, double point2z,
-                                                          double point3x, double point3y, double point3z, 
-                                                          double point4x, double point4y, double point4z,
-                                                          double point5x, double point5y, double point5z, 
-                                                          double point6x, double point6y, double point6z,
-                                                          double point7x, double point7y, double point7z, 
-                                                          double point8x, double point8y, double point8z);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsArb4(BrlArb8 arb8,
+                                                       double  point1X, double point1Y, double point1Z,
+                                                       double  point2X, double point2Y, double point2Z,
+                                                       double  point3X, double point3Y, double point3Z,
+                                                       double  point4X, double point4Y, double point4Z);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsArb5(BrlArb8 arb8,
+                                                       double  point1X, double point1Y, double point1Z,
+                                                       double  point2X, double point2Y, double point2Z,
+                                                       double  point3X, double point3Y, double point3Z,
+                                                       double  point4X, double point4Y, double point4Z,
+                                                       double  point5X, double point5Y, double point5Z);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsArb6(BrlArb8 arb8,
+                                                       double  point1X, double point1Y, double point1Z,
+                                                       double  point2X, double point2Y, double point2Z,
+                                                       double  point3X, double point3Y, double point3Z,
+                                                       double  point4X, double point4Y, double point4Z,
+                                                       double  point5X, double point5Y, double point5Z,
+                                                       double  point6X, double point6Y, double point6Z);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsArb7(BrlArb8 arb8,
+                                                       double  point1X, double point1Y, double point1Z,
+                                                       double  point2X, double point2Y, double point2Z,
+                                                       double  point3X, double point3Y, double point3Z,
+                                                       double  point4X, double point4Y, double point4Z,
+                                                       double  point5X, double point5Y, double point5Z,
+                                                       double  point6X, double point6Y, double point6Z,
+                                                       double  point7X, double point7Y, double point7Z);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsArb8(BrlArb8 arb8,
+                                                       double  point1X, double point1Y, double point1Z,
+                                                       double  point2X, double point2Y, double point2Z,
+                                                       double  point3X, double point3Y, double point3Z,
+                                                       double  point4X, double point4Y, double point4Z,
+                                                       double  point5X, double point5Y, double point5Z,
+                                                       double  point6X, double point6Y, double point6Z,
+                                                       double  point7X, double point7Y, double point7Z,
+                                                       double  point8X, double point8Y, double point8Z);
+BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsRectengularParallelPiped(BrlArb8 arb8,
+                                                                           double  point1X, double point1Y, double point1Z,
+                                                                           double  point2X, double point2Y, double point2Z);
 
 BRLCAD_MOOSE_EXPORT const char*    BrlArb8ClassName(void); 
 

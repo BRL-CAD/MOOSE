@@ -71,6 +71,25 @@ int BrlObjectIsValid
 }
 
 
+const char* BrlObjectName
+(
+    BrlObject object
+) {
+    const char* ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = objectIntern->Name();
+    }
+
+    return ret;
+}
+
+
 void BrlObjectSetName
 (
     BrlObject   object,
@@ -87,19 +106,72 @@ void BrlObjectSetName
 }
 
 
-const char* BrlObjectName
+void BrlObjectAttributeIteratorNext
 (
-    BrlObject object
+    BrlObjectAttributeIterator iterator
+) {
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastObjectAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ++(*iteratorIntern);
+    }
+}
+
+
+int BrlObjectAttributeIteratorGood
+(
+    BrlObjectAttributeIterator iterator
+) {
+    int ret = 0;
+
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastObjectAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ret = iteratorIntern->Good() ? 1 : 0;
+    }
+
+    return ret;
+}
+
+
+const char* BrlObjectAttributeIteratorKey
+(
+    BrlObjectAttributeIterator iterator
 ) {
     const char* ret = nullptr;
 
-    if (object != nullptr) {
-        Object* objectIntern = CastObject(object);
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastObjectAttributeIterator(iterator);
 
-        assert(objectIntern != nullptr);
+        assert(iteratorIntern != nullptr);
 
-        if (objectIntern != nullptr)
-            ret = objectIntern->Name();
+        if (iteratorIntern != nullptr)
+            ret = iteratorIntern->Key();
+    }
+
+    return ret;
+}
+
+
+const char* BrlObjectAttributeIteratorValue
+(
+    BrlObjectAttributeIterator iterator
+) {
+    const char* ret = nullptr;
+
+    if (iterator != nullptr) {
+        Object::AttributeIterator* iteratorIntern = CastObjectAttributeIterator(iterator);
+
+        assert(iteratorIntern != nullptr);
+
+        if (iteratorIntern != nullptr)
+            ret = iteratorIntern->Value();
     }
 
     return ret;
@@ -126,6 +198,25 @@ int BrlObjectHasAttribute
 }
 
 
+BrlObjectAttributeIterator BrlObjectFirstAttribute
+(
+    BrlObject object
+) {
+    BrlObjectAttributeIterator ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = new ObjectAttributeIteratorData(objectIntern->FirstAttribute());
+    }
+
+    return ret;
+}
+
+
 const char* BrlObjectAttribute
 (
     BrlObject   object,
@@ -140,6 +231,26 @@ const char* BrlObjectAttribute
 
         if (objectIntern != nullptr)
             ret = objectIntern->Attribute(key);
+    }
+
+    return ret;
+}
+
+
+BrlObjectAttributeIterator BrlObjectMultiAttribute
+(
+    BrlObject   object,
+    const char* key
+) {
+    BrlObjectAttributeIterator ret = nullptr;
+
+    if (object != nullptr) {
+        Object* objectIntern = CastObject(object);
+
+        assert(objectIntern != nullptr);
+
+        if (objectIntern != nullptr)
+            ret = new ObjectAttributeIteratorData(objectIntern->MultiAttribute(key));
     }
 
     return ret;
@@ -211,131 +322,20 @@ void BrlObjectClearAttributes
 }
 
 
-BrlAttributeIterator BrlObjectFirstAttribute
-(
-    BrlObject object
-) {
-    BrlAttributeIterator ret = nullptr;
-
-    if (object != nullptr) {
-        Object* objectIntern = CastObject(object);
-
-        assert(objectIntern != nullptr);
-
-        if (objectIntern != nullptr)
-            ret = new AttributeIteratorData(objectIntern->FirstAttribute());
-    }
-
-    return ret;
-}
-
-
-BrlAttributeIterator BrlObjectMultiAttribute
-(
-    BrlObject   object,
-    const char* key
-) {
-    BrlAttributeIterator ret = nullptr;
-
-    if (object != nullptr) {
-        Object* objectIntern = CastObject(object);
-
-        assert(objectIntern != nullptr);
-
-        if (objectIntern != nullptr)
-            ret = new AttributeIteratorData(objectIntern->MultiAttribute(key));
-    }
-
-    return ret;
-}
-
-
-void BrlAttributeIteratorNext
-(
-    BrlAttributeIterator iterator
-) {
-    if (iterator != nullptr) {
-        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
-
-        assert(iteratorIntern != nullptr);
-
-        if (iteratorIntern != nullptr)
-            ++(*iteratorIntern);
-    }
-}
-
-
-int BrlAttributeIteratorGood
-(
-    BrlAttributeIterator iterator
-) {
-    int ret = 0;
-
-    if (iterator != nullptr) {
-        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
-
-        assert(iteratorIntern != nullptr);
-
-        if (iteratorIntern != nullptr)
-            ret = iteratorIntern->Good() ? 1 : 0;
-    }
-
-    return ret;
-}
-
-
-const char* BrlAttributeIteratorKey
-(
-    BrlAttributeIterator iterator
-) {
-    const char* ret = nullptr;
-
-    if (iterator != nullptr) {
-        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
-
-        assert(iteratorIntern != nullptr);
-
-        if (iteratorIntern != nullptr)
-            ret = iteratorIntern->Key();
-    }
-
-    return ret;
-}
-
-
-const char* BrlAttributeIteratorValue
-(
-    BrlAttributeIterator iterator
-) {
-    const char* ret = nullptr;
-
-    if (iterator != nullptr) {
-        Object::AttributeIterator* iteratorIntern = CastAttributeIterator(iterator);
-
-        assert(iteratorIntern != nullptr);
-
-        if (iteratorIntern != nullptr)
-            ret = iteratorIntern->Value();
-    }
-
-    return ret;
-}
-
-
 BrlObject BrlObjectClone
 (
     BrlObject object
 ) {
-  BrlObject ret = nullptr;
+    BrlObject ret = nullptr;
 
-  if (object != nullptr) {
-    Object *obj = CastObject(object);
-    assert(obj != nullptr);
+    if (object != nullptr) {
+        Object *obj = CastObject(object);
+        assert(obj != nullptr);
 
-    if (obj != nullptr) {
-      ret = new ObjectData(obj->Clone());
+        if (obj != nullptr) {
+            ret = new ObjectData(obj->Clone());
+        }
     }
-  }
 
-  return ret;
+    return ret;
 }

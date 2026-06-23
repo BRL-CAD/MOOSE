@@ -51,20 +51,20 @@ int BrlPatchVersion(void) {
 }
 
 
-const char* const Vector3DMagic            = "BRLCAD::Vector3D";
-const char* const VectorListMagic          = "BRLCAD::VectorList";
-const char* const ConstDatabaseMagic       = "BRLCAD::ConstDatabase";
-const char* const FileDatabaseMagic        = "BRLCAD::FileDatabase";
-const char* const MemoryDatabaseMagic      = "BRLCAD::MemoryDatabase";
-const char* const ObjectMagic              = "BRLCAD::Object";
-const char* const AttributeIteratorMagic   = "BRLCAD::Object::AttributeIterator";
-const char* const Arb8Magic                = "BRLCAD::Arb8";
-const char* const ConeMagic                = "BRLCAD::Cone";
-const char* const EllipsoidMagic           = "BRLCAD::Ellipsoid";
-const char* const NonManifoldGeometryMagic = "BRLCAD::NonManifoldGeometry";
-const char* const SphereMagic              = "BRLCAD::Sphere";
-const char* const CombinationMagic         = "BRLCAD::Combination";
-const char* const TreeNodeMagic            = "BRLCAD::Combination::TreeNode";
+const char* const Vector3DMagic                = "BRLCAD::Vector3D";
+const char* const VectorListMagic              = "BRLCAD::VectorList";
+const char* const ConstDatabaseMagic           = "BRLCAD::ConstDatabase";
+const char* const FileDatabaseMagic            = "BRLCAD::FileDatabase";
+const char* const MemoryDatabaseMagic          = "BRLCAD::MemoryDatabase";
+const char* const ObjectMagic                  = "BRLCAD::Object";
+const char* const ObjectAttributeIteratorMagic = "BRLCAD::Object::AttributeIterator";
+const char* const Arb8Magic                    = "BRLCAD::Arb8";
+const char* const ConeMagic                    = "BRLCAD::Cone";
+const char* const EllipsoidMagic               = "BRLCAD::Ellipsoid";
+const char* const NonManifoldGeometryMagic     = "BRLCAD::NonManifoldGeometry";
+const char* const SphereMagic                  = "BRLCAD::Sphere";
+const char* const CombinationMagic             = "BRLCAD::Combination";
+const char* const TreeNodeMagic                = "BRLCAD::Combination::TreeNode";
 
 
 void BrlDeleteHandle
