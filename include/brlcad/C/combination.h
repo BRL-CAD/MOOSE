@@ -37,11 +37,11 @@ extern "C" {
 typedef BrlObject BrlCombination;
 typedef BrlHandle BrlTreeNode;
 
-typedef enum {
-    BrlFastgenNon = 0,
-    BrlFastgenPlate = 1,
-    BrlFastgenVolume = 2
-} BrlFastgenType;
+enum BrlCombinationFastgenType {
+    BrlCombinationFastgenTypeNon,
+    BrlCombinationFastgenTypePlate,
+    BrlCombinationFastgenTypeVolume
+};
 
 typedef enum {
     BrlOpNull = 0,
@@ -59,8 +59,8 @@ BRLCAD_MOOSE_EXPORT BrlCombination      BrlNewCombination(void);
 BRLCAD_MOOSE_EXPORT int                 BrlCombinationIsRegion(BrlCombination combination);
 BRLCAD_MOOSE_EXPORT void                BrlCombinationSetIsRegion(BrlCombination combination, int value);
 
-BRLCAD_MOOSE_EXPORT BrlFastgenType      BrlCombinationFastgenRegion(BrlCombination combination);
-BRLCAD_MOOSE_EXPORT void                BrlCombinationSetFastgenRegion(BrlCombination combination, BrlFastgenType value);
+BRLCAD_MOOSE_EXPORT enum                BrlCombinationFastgenType BrlCombinationFastgenRegion(BrlCombination combination);
+BRLCAD_MOOSE_EXPORT void                BrlCombinationSetFastgenRegion(BrlCombination combination, enum BrlCombinationFastgenType value);
 
 BRLCAD_MOOSE_EXPORT int                 BrlCombinationRegionId(BrlCombination combination);
 BRLCAD_MOOSE_EXPORT void                BrlCombinationSetRegionId(BrlCombination combination, int value);

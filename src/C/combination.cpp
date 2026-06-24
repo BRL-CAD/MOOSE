@@ -164,11 +164,11 @@ void BrlCombinationSetIsRegion
 }
 
 
-BrlFastgenType BrlCombinationFastgenRegion
+enum BrlCombinationFastgenType BrlCombinationFastgenRegion
 (
     BrlCombination combination
 ) {
-    BrlFastgenType ret = BrlFastgenNon;
+    enum BrlCombinationFastgenType ret = BrlCombinationFastgenTypeNon;
 
     if (combination != nullptr) {
         Combination* comb = CastCombination(combination);
@@ -178,15 +178,15 @@ BrlFastgenType BrlCombinationFastgenRegion
         if (comb != nullptr) {
             switch (comb->FastgenRegion()) {
             case Combination::FastgenType::Non:
-                ret = BrlFastgenNon;
+                ret = BrlCombinationFastgenTypeNon;
                 break;
 
             case Combination::FastgenType::Plate:
-                ret = BrlFastgenPlate;
+                ret = BrlCombinationFastgenTypePlate;
                 break;
 
             case Combination::FastgenType::Volume:
-                ret = BrlFastgenVolume;
+                ret = BrlCombinationFastgenTypeVolume;
                 break;
 
             default:
@@ -202,7 +202,7 @@ BrlFastgenType BrlCombinationFastgenRegion
 void BrlCombinationSetFastgenRegion
 (
     BrlCombination combination,
-    BrlFastgenType value
+    enum BrlCombinationFastgenType value
 ) {
     if (combination != nullptr) {
         Combination* comb = CastCombination(combination);
@@ -211,15 +211,15 @@ void BrlCombinationSetFastgenRegion
 
         if (comb != nullptr) {
             switch (value) {
-            case BrlFastgenNon:
+            case BrlCombinationFastgenTypeNon:
                 comb->SetFastgenRegion(Combination::FastgenType::Non);
                 break;
 
-            case BrlFastgenPlate:
+            case BrlCombinationFastgenTypePlate:
                 comb->SetFastgenRegion(Combination::FastgenType::Plate);
                 break;
 
-            case BrlFastgenVolume:
+            case BrlCombinationFastgenTypeVolume:
                 comb->SetFastgenRegion(Combination::FastgenType::Volume);
                 break;
 
