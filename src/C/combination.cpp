@@ -42,31 +42,31 @@ static Combination::TreeNode::Operator ConvertOperator
     Combination::TreeNode::Operator ret = Combination::TreeNode::Operator::Null;
 
     switch (op) {
-    case BrlOpNull:
+    case BrlTreeNodeOperatorNull:
         ret = Combination::TreeNode::Operator::Null;
         break;
 
-    case BrlOpUnion:
+    case BrlTreeNodeOperatorUnion:
         ret = Combination::TreeNode::Operator::Union;
         break;
 
-    case BrlOpIntersection:
+    case BrlTreeNodeOperatorIntersection:
         ret = Combination::TreeNode::Operator::Intersection;
         break;
 
-    case BrlOpSubtraction:
+    case BrlTreeNodeOperatorSubtraction:
         ret = Combination::TreeNode::Operator::Subtraction;
         break;
 
-    case BrlOpExclusiveOr:
+    case BrlTreeNodeOperatorExclusiveOr:
         ret = Combination::TreeNode::Operator::ExclusiveOr;
         break;
 
-    case BrlOpNot:
+    case BrlTreeNodeOperatorNot:
         ret = Combination::TreeNode::Operator::Not;
         break;
 
-    case BrlOpLeaf:
+    case BrlTreeNodeOperatorLeaf:
         ret = Combination::TreeNode::Operator::Leaf;
         break;
 
@@ -82,35 +82,35 @@ static BrlTreeNodeOperator ConvertOperatorBack
 (
     Combination::TreeNode::Operator op
 ) {
-    BrlTreeNodeOperator ret = BrlOpNull;
+    BrlTreeNodeOperator ret = BrlTreeNodeOperatorNull;
 
     switch (op) {
     case Combination::TreeNode::Operator::Null:
-        ret = BrlOpNull;
+        ret = BrlTreeNodeOperatorNull;
         break;
 
     case Combination::TreeNode::Operator::Union:
-        ret = BrlOpUnion;
+        ret = BrlTreeNodeOperatorUnion;
         break;
 
     case Combination::TreeNode::Operator::Intersection:
-        ret = BrlOpIntersection;
+        ret = BrlTreeNodeOperatorIntersection;
         break;
 
     case Combination::TreeNode::Operator::Subtraction:
-        ret = BrlOpSubtraction;
+        ret = BrlTreeNodeOperatorSubtraction;
         break;
 
     case Combination::TreeNode::Operator::ExclusiveOr:
-        ret = BrlOpExclusiveOr;
+        ret = BrlTreeNodeOperatorExclusiveOr;
         break;
 
     case Combination::TreeNode::Operator::Not:
-        ret = BrlOpNot;
+        ret = BrlTreeNodeOperatorNot;
         break;
 
     case Combination::TreeNode::Operator::Leaf:
-        ret = BrlOpLeaf;
+        ret = BrlTreeNodeOperatorLeaf;
         break;
 
     default:
@@ -164,11 +164,11 @@ void BrlCombinationSetIsRegion
 }
 
 
-enum BrlCombinationFastgenType BrlCombinationFastgenRegion
+BrlCombinationFastgenType BrlCombinationFastgenRegion
 (
     BrlCombination combination
 ) {
-    enum BrlCombinationFastgenType ret = BrlCombinationFastgenTypeNon;
+    BrlCombinationFastgenType ret = BrlCombinationFastgenTypeNon;
 
     if (combination != nullptr) {
         Combination* comb = CastCombination(combination);
@@ -201,8 +201,8 @@ enum BrlCombinationFastgenType BrlCombinationFastgenRegion
 
 void BrlCombinationSetFastgenRegion
 (
-    BrlCombination combination,
-    enum BrlCombinationFastgenType value
+    BrlCombination            combination,
+    BrlCombinationFastgenType value
 ) {
     if (combination != nullptr) {
         Combination* comb = CastCombination(combination);
