@@ -74,6 +74,9 @@ BRLCAD_MOOSE_EXPORT void                       BrlObjectRemoveAttribute(BrlObjec
 BRLCAD_MOOSE_EXPORT void                       BrlObjectClearAttributes(BrlObject object);
 
 
+BRLCAD_MOOSE_EXPORT BrlObject            BrlObjectClone(BrlObject object);
+
+
 #ifdef __cplusplus
 }
 #endif

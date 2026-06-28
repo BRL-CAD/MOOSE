@@ -51,7 +51,9 @@ BrlData* CastHandle
             (handleMagic == ConeMagic) ||
             (handleMagic == EllipsoidMagic) ||
             (handleMagic == NonManifoldGeometryMagic) ||
-            (handleMagic == SphereMagic))
+            (handleMagic == SphereMagic) ||
+            (handleMagic == CombinationMagic) ||
+            (handleMagic == TreeNodeMagic))
             ret = handle;
         else
             bu_log("CastHandle: invalid handle");
@@ -202,6 +204,8 @@ Object* CastObject
             ret = static_cast<NonManifoldGeometryData*>(handle)->Pointer();
         else if (handleMagic == SphereMagic)
             ret = static_cast<SphereData*>(handle)->Pointer();
+        else if (handleMagic == CombinationMagic)
+            ret = static_cast<CombinationData*>(handle)->Pointer();
         else
             bu_log("CastObject: wrong handle");
     }
@@ -318,6 +322,44 @@ Sphere* CastSphere
             ret = static_cast<SphereData*>(handle)->Pointer();
         else
             bu_log("CastSphere: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Combination* CastCombination
+(
+    BrlHandle handle
+) {
+    Combination* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == CombinationMagic)
+            ret = static_cast<CombinationData*>(handle)->Pointer();
+        else
+            bu_log("CastCombination: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Combination::TreeNode* CastTreeNode
+(
+    BrlHandle handle
+) {
+    Combination::TreeNode* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == TreeNodeMagic)
+            ret = &static_cast<TreeNodeData*>(handle)->Value();
+        else
+            bu_log("CastTreeNode: wrong handle");
     }
 
     return ret;

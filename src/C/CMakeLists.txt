@@ -26,6 +26,7 @@
 SET(CSources
     C/arb8.cpp
     C/casts.cpp
+    C/combination.cpp
     C/constDatabase.cpp
     C/cone.cpp
     C/database.cpp
@@ -40,6 +41,7 @@ SET(CSources
 
 SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/arb8.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/combination.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/constDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/cone.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/database.h
