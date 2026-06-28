@@ -49,34 +49,34 @@ BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidAsEllipsoid1(double centerX,    
 BRLCAD_MOOSE_EXPORT BrlEllipsoid BrlNewEllipsoidAsSphere(double centerX, double centerY, double centerZ,
                                                          double radius);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlEllipsoidCenter(BrlEllipsoid ellipsoid);
-BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetCenter(BrlEllipsoid ellipsoid,
-                                                      double       centerX, double centerY, double centerZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D  BrlEllipsoidCenter(BrlEllipsoid ellipsoid);
+BRLCAD_MOOSE_EXPORT void         BrlEllipsoidSetCenter(BrlEllipsoid ellipsoid,
+                                                       double       centerX, double centerY, double centerZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlEllipsoidSemiPrincipalAxis(BrlEllipsoid ellipsoid,
-                                                              int          index);
-BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetSemiPrincipalAxis(BrlEllipsoid ellipsoid, 
-                                                                 int          index,
-                                                                 double       axisX, double axisY, double axisZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D  BrlEllipsoidSemiPrincipalAxis(BrlEllipsoid ellipsoid,
+                                                               int          index);
+BRLCAD_MOOSE_EXPORT void         BrlEllipsoidSetSemiPrincipalAxis(BrlEllipsoid ellipsoid, 
+                                                                  int          index,
+                                                                  double       axisX, double axisY, double axisZ);
 
-BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetAsGeneralEllipsoid(BrlEllipsoid ellipsoid,
-                                                                  double       centerX,             double centerY,                    double centerZ,
-                                                                  double       semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
-                                                                  double       semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
-                                                                  double       semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ);
-BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetAsEllipsoid1(BrlEllipsoid ellipsoid,
-                                                            double       centerX,            double centerY,            double centerZ,
-                                                            double       semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
-                                                            double       radius);
-BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetFocals(BrlEllipsoid ellipsoid,
-                                                      double       focalAX, double focalAY, double focalAZ,
-                                                      double       focalBX, double focalBY, double focalBZ,
-                                                      double       majorAxisLength);
-BRLCAD_MOOSE_EXPORT void        BrlEllipsoidSetSphere(BrlEllipsoid ellipsoid,
-                                                      double       centerX, double centerY, double centerZ,
-                                                      double       radius);
+BRLCAD_MOOSE_EXPORT void         BrlEllipsoidSetAsGeneralEllipsoid(BrlEllipsoid ellipsoid,
+                                                                   double       centerX,             double centerY,                    double centerZ,
+                                                                   double       semiPrincipalAxisAX, double semiPrincipalAxisAY, double semiPrincipalAxisAZ,
+                                                                   double       semiPrincipalAxisBX, double semiPrincipalAxisBY, double semiPrincipalAxisBZ,
+                                                                   double       semiPrincipalAxisCX, double semiPrincipalAxisCY, double semiPrincipalAxisCZ);
+BRLCAD_MOOSE_EXPORT void         BrlEllipsoidSetAsEllipsoid1(BrlEllipsoid ellipsoid,
+                                                             double       centerX,            double centerY,            double centerZ,
+                                                             double       semiPrincipalAxisX, double semiPrincipalAxisY, double semiPrincipalAxisZ,
+                                                             double       radius);
+BRLCAD_MOOSE_EXPORT void         BrlEllipsoidSetFocals(BrlEllipsoid ellipsoid,
+                                                       double       focalAX, double focalAY, double focalAZ,
+                                                       double       focalBX, double focalBY, double focalBZ,
+                                                       double       majorAxisLength);
+BRLCAD_MOOSE_EXPORT void         BrlEllipsoidSetSphere(BrlEllipsoid ellipsoid,
+                                                       double       centerX, double centerY, double centerZ,
+                                                       double       radius);
 
-BRLCAD_MOOSE_EXPORT const char* BrlEllipsoidClassName(void);
+BRLCAD_MOOSE_EXPORT const char*  BrlEllipsoidClassName(void);
 
 
 #ifdef __cplusplus

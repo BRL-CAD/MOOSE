@@ -35,10 +35,7 @@
 using namespace BRLCAD;
 
 
-BrlCone BrlNewCone
-(
-    void
-) {
+BrlCone BrlNewCone(void) {
     return new ConeData(new Cone());
 }
 
@@ -357,9 +354,6 @@ void BrlConeSetAsRightCircularCylinder
 }
 
 
-const char *BrlConeClassName
-(
-    void
-) {
+const char* BrlConeClassName(void) {
   return Cone::ClassName();
 }

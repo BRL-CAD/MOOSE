@@ -124,7 +124,7 @@ BRLCAD_MOOSE_EXPORT void        BrlArb8SetPointsAsRectengularParallelPiped(BrlAr
                                                                            double  point1X, double point1Y, double point1Z,
                                                                            double  point2X, double point2Y, double point2Z);
 
-BRLCAD_MOOSE_EXPORT const char*    BrlArb8ClassName(void); 
+BRLCAD_MOOSE_EXPORT const char* BrlArb8ClassName(void); 
 
 
 #ifdef __cplusplus

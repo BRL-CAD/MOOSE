@@ -59,12 +59,12 @@ const char* const MemoryDatabaseMagic          = "BRLCAD::MemoryDatabase";
 const char* const ObjectMagic                  = "BRLCAD::Object";
 const char* const ObjectAttributeIteratorMagic = "BRLCAD::Object::AttributeIterator";
 const char* const Arb8Magic                    = "BRLCAD::Arb8";
+const char* const CombinationMagic             = "BRLCAD::Combination";
+const char* const CombinationTreeNodeMagic     = "BRLCAD::Combination::TreeNode";
 const char* const ConeMagic                    = "BRLCAD::Cone";
 const char* const EllipsoidMagic               = "BRLCAD::Ellipsoid";
 const char* const NonManifoldGeometryMagic     = "BRLCAD::NonManifoldGeometry";
 const char* const SphereMagic                  = "BRLCAD::Sphere";
-const char* const CombinationMagic             = "BRLCAD::Combination";
-const char* const TreeNodeMagic                = "BRLCAD::Combination::TreeNode";
 
 
 void BrlDeleteHandle

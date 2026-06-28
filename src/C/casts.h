@@ -44,12 +44,12 @@ BRLCAD::MemoryDatabase*            CastMemoryDatabase(BrlHandle handle);
 BRLCAD::Object*                    CastObject(BrlHandle handle);
 BRLCAD::Object::AttributeIterator* CastObjectAttributeIterator(BrlHandle handle);
 BRLCAD::Arb8*                      CastArb8(BrlHandle handle);
+BRLCAD::Combination*               CastCombination(BrlHandle handle);
+BRLCAD::Combination::TreeNode*     CastCombinationTreeNode(BrlHandle handle);
 BRLCAD::Cone*                      CastCone(BrlHandle handle);
 BRLCAD::Ellipsoid*                 CastEllipsoid(BrlHandle handle);
 BRLCAD::NonManifoldGeometry*       CastNonManifoldGeometry(BrlHandle handle);
 BRLCAD::Sphere*                    CastSphere(BrlHandle handle);
-BRLCAD::Combination*               CastCombination(BrlHandle handle);
-BRLCAD::Combination::TreeNode*      CastTreeNode(BrlHandle handle);
 
 
 #endif // BRLCAD_C_CASTS_INCLUDED

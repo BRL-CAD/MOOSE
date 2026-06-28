@@ -30,11 +30,11 @@
 #include <brlcad/Database/FileDatabase.h>
 #include <brlcad/Database/MemoryDatabase.h>
 #include <brlcad/Database/Arb8.h>
+#include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
 #include <brlcad/Database/Sphere.h>
-#include <brlcad/Database/Combination.h>
 
 
 class BrlData {
@@ -68,12 +68,12 @@ extern const char* const MemoryDatabaseMagic;
 extern const char* const ObjectMagic;
 extern const char* const ObjectAttributeIteratorMagic;
 extern const char* const Arb8Magic;
+extern const char* const CombinationMagic;
+extern const char* const CombinationTreeNodeMagic;
 extern const char* const ConeMagic;
 extern const char* const EllipsoidMagic;
 extern const char* const NonManifoldGeometryMagic;
 extern const char* const SphereMagic;
-extern const char* const CombinationMagic;
-extern const char* const TreeNodeMagic;
 
 
 template<class ValueType> class ValueData : public BrlData {
@@ -177,6 +177,18 @@ public:
 };
 
 
+class CombinationData : public PointerData<BRLCAD::Combination> {
+public:
+    CombinationData(BRLCAD::Combination* pointer) : PointerData(CombinationMagic, pointer) {}
+};
+
+
+class CombinationTreeNodeData : public ValueData<BRLCAD::Combination::TreeNode> {
+public:
+    CombinationTreeNodeData(const BRLCAD::Combination::TreeNode& value) : ValueData(CombinationTreeNodeMagic, value) {}
+};
+
+
 class ConeData : public PointerData<BRLCAD::Cone> {
 public:
     ConeData(BRLCAD::Cone* pointer) : PointerData(ConeMagic, pointer) {}
@@ -198,18 +210,6 @@ public:
 class SphereData : public PointerData<BRLCAD::Sphere> {
 public:
     SphereData(BRLCAD::Sphere* pointer) : PointerData(SphereMagic, pointer) {}
-};
-
-
-class CombinationData : public PointerData<BRLCAD::Combination> {
-public:
-    CombinationData(BRLCAD::Combination* pointer) : PointerData(CombinationMagic, pointer) {}
-};
-
-
-class TreeNodeData : public ValueData<BRLCAD::Combination::TreeNode> {
-public:
-    TreeNodeData(const BRLCAD::Combination::TreeNode& value) : ValueData(TreeNodeMagic, value) {}
 };
 
 

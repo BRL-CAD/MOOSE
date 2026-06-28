@@ -36,6 +36,8 @@ extern "C" {
 typedef BrlHandle BrlObject;
 
 
+BRLCAD_MOOSE_EXPORT BrlObject                  BrlObjectClone(BrlObject object);
+
 BRLCAD_MOOSE_EXPORT const char*                BrlObjectType(BrlObject object);
 
 BRLCAD_MOOSE_EXPORT int                        BrlObjectIsValid(BrlObject object);
@@ -72,9 +74,6 @@ BRLCAD_MOOSE_EXPORT void                       BrlObjectAddMultiAttribute(BrlObj
 BRLCAD_MOOSE_EXPORT void                       BrlObjectRemoveAttribute(BrlObject   object,
                                                                         const char* key);
 BRLCAD_MOOSE_EXPORT void                       BrlObjectClearAttributes(BrlObject object);
-
-
-BRLCAD_MOOSE_EXPORT BrlObject            BrlObjectClone(BrlObject object);
 
 
 #ifdef __cplusplus

@@ -25,6 +25,8 @@
 
 #include <cassert>
 
+#include "bu/log.h"
+
 #include <brlcad/Database/Combination.h>
 
 #include <brlcad/C/combination.h>
@@ -37,95 +39,396 @@ using namespace BRLCAD;
 
 static Combination::TreeNode::Operator ConvertOperator
 (
-    BrlTreeNodeOperator op
+    BrlCombinationTreeNodeOperator op
 ) {
     Combination::TreeNode::Operator ret = Combination::TreeNode::Operator::Null;
 
     switch (op) {
-    case BrlTreeNodeOperatorNull:
+    case BrlCombinationTreeNodeOperatorNull:
         ret = Combination::TreeNode::Operator::Null;
         break;
 
-    case BrlTreeNodeOperatorUnion:
+    case BrlCombinationTreeNodeOperatorUnion:
         ret = Combination::TreeNode::Operator::Union;
         break;
 
-    case BrlTreeNodeOperatorIntersection:
+    case BrlCombinationTreeNodeOperatorIntersection:
         ret = Combination::TreeNode::Operator::Intersection;
         break;
 
-    case BrlTreeNodeOperatorSubtraction:
+    case BrlCombinationTreeNodeOperatorSubtraction:
         ret = Combination::TreeNode::Operator::Subtraction;
         break;
 
-    case BrlTreeNodeOperatorExclusiveOr:
+    case BrlCombinationTreeNodeOperatorExclusiveOr:
         ret = Combination::TreeNode::Operator::ExclusiveOr;
         break;
 
-    case BrlTreeNodeOperatorNot:
+    case BrlCombinationTreeNodeOperatorNot:
         ret = Combination::TreeNode::Operator::Not;
         break;
 
-    case BrlTreeNodeOperatorLeaf:
+    case BrlCombinationTreeNodeOperatorLeaf:
         ret = Combination::TreeNode::Operator::Leaf;
         break;
 
     default:
-        assert(0);
+        bu_log("BrlCombinationTreeNode~: invalid BrlCombinationTreeNodeOperator");
     }
 
     return ret;
 }
 
 
-static BrlTreeNodeOperator ConvertOperatorBack
+static BrlCombinationTreeNodeOperator ConvertOperatorBack
 (
     Combination::TreeNode::Operator op
 ) {
-    BrlTreeNodeOperator ret = BrlTreeNodeOperatorNull;
+    BrlCombinationTreeNodeOperator ret = BrlCombinationTreeNodeOperatorNull;
 
     switch (op) {
     case Combination::TreeNode::Operator::Null:
-        ret = BrlTreeNodeOperatorNull;
+        ret = BrlCombinationTreeNodeOperatorNull;
         break;
 
     case Combination::TreeNode::Operator::Union:
-        ret = BrlTreeNodeOperatorUnion;
+        ret = BrlCombinationTreeNodeOperatorUnion;
         break;
 
     case Combination::TreeNode::Operator::Intersection:
-        ret = BrlTreeNodeOperatorIntersection;
+        ret = BrlCombinationTreeNodeOperatorIntersection;
         break;
 
     case Combination::TreeNode::Operator::Subtraction:
-        ret = BrlTreeNodeOperatorSubtraction;
+        ret = BrlCombinationTreeNodeOperatorSubtraction;
         break;
 
     case Combination::TreeNode::Operator::ExclusiveOr:
-        ret = BrlTreeNodeOperatorExclusiveOr;
+        ret = BrlCombinationTreeNodeOperatorExclusiveOr;
         break;
 
     case Combination::TreeNode::Operator::Not:
-        ret = BrlTreeNodeOperatorNot;
+        ret = BrlCombinationTreeNodeOperatorNot;
         break;
 
     case Combination::TreeNode::Operator::Leaf:
-        ret = BrlTreeNodeOperatorLeaf;
+        ret = BrlCombinationTreeNodeOperatorLeaf;
         break;
 
     default:
-        assert(0);
+        bu_log("BrlCombinationTreeNode~: invalid BRLCAD::Combination::TreeNode::Operator");
     }
 
     return ret;
 }
 
 
-BrlCombination BrlNewCombination
-(
-    void
-) {
+BrlCombination BrlNewCombination(void) {
     return new CombinationData(new Combination());
+}
+
+
+BrlCombinationTreeNodeOperator BrlCombinationTreeNodeOperation
+(
+    BrlCombinationTreeNode node
+) {
+    BrlCombinationTreeNodeOperator ret = BrlCombinationTreeNodeOperatorNull;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = ConvertOperatorBack(nodeIntern->Operation());
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeLeftOperand
+(
+    BrlCombinationTreeNode node
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = new CombinationTreeNodeData(nodeIntern->LeftOperand());
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeRightOperand
+(
+    BrlCombinationTreeNode node
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = new CombinationTreeNodeData(nodeIntern->RightOperand());
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeOperand
+(
+    BrlCombinationTreeNode node
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = new CombinationTreeNodeData(nodeIntern->Operand());
+    }
+
+    return ret;
+}
+
+
+const char* BrlCombinationTreeNodeName
+(
+    BrlCombinationTreeNode node
+) {
+    const char* ret = nullptr;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = nodeIntern->Name();
+    }
+
+    return ret;
+}
+
+
+void BrlCombinationTreeNodeSetName
+(
+    BrlCombinationTreeNode node,
+    const char*            name
+) {
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            nodeIntern->SetName(name);
+    }
+}
+
+
+const double* BrlCombinationTreeNodeMatrix
+(
+    BrlCombinationTreeNode node
+) {
+    const double* ret = nullptr;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = nodeIntern->Matrix();
+    }
+
+    return ret;
+}
+
+
+void BrlCombinationTreeNodeSetMatrix
+(
+    BrlCombinationTreeNode node,
+    const double           matrix[16]
+) {
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            nodeIntern->SetMatrix(matrix);
+    }
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeApplyUnary
+(
+    BrlCombinationTreeNode         node,
+    BrlCombinationTreeNodeOperator op
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = new CombinationTreeNodeData(nodeIntern->Apply(ConvertOperator(op)));
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeApplyNodeRight
+(
+    BrlCombinationTreeNode         node,
+    BrlCombinationTreeNodeOperator op,
+    BrlCombinationTreeNode         other
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if ((node != nullptr) && (other != nullptr)) {
+        Combination::TreeNode* nodeIntern  = CastCombinationTreeNode(node);
+        Combination::TreeNode* otherIntern = CastCombinationTreeNode(other);
+
+        assert(nodeIntern != nullptr);
+        assert(otherIntern != nullptr);
+
+        if ((nodeIntern != nullptr) && (otherIntern != nullptr))
+            ret = new CombinationTreeNodeData(nodeIntern->Apply(ConvertOperator(op), *otherIntern));
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeApplyLeafRight
+(
+    BrlCombinationTreeNode         node,
+    BrlCombinationTreeNodeOperator op,
+    const char*                    leafName
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if ((node != nullptr) && (leafName != nullptr)) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = new CombinationTreeNodeData(nodeIntern->Apply(ConvertOperator(op), leafName));
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeApplyNodeLeft
+(
+    BrlCombinationTreeNode         node,
+    BrlCombinationTreeNode         other,
+    BrlCombinationTreeNodeOperator op
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if ((other != nullptr) && (node != nullptr)) {
+        Combination::TreeNode* nodeIntern  = CastCombinationTreeNode(node);
+        Combination::TreeNode* otherIntern = CastCombinationTreeNode(other);
+
+        assert(nodeIntern != nullptr);
+        assert(otherIntern != nullptr);
+
+        if ((nodeIntern != nullptr) && (otherIntern != nullptr))
+            ret = new CombinationTreeNodeData(nodeIntern->Apply(*otherIntern, ConvertOperator(op)));
+    }
+
+    return ret;
+}
+
+
+BrlCombinationTreeNode BrlCombinationTreeNodeApplyLeafLeft
+(
+    BrlCombinationTreeNode         node,
+    const char*                    leafName,
+    BrlCombinationTreeNodeOperator op
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if ((leafName != nullptr) && (node != nullptr)) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            ret = new CombinationTreeNodeData(nodeIntern->Apply(leafName, ConvertOperator(op)));
+    }
+
+    return ret;
+}
+
+
+void BrlCombinationTreeNodeDelete
+(
+    BrlCombinationTreeNode node
+) {
+    if (node != nullptr) {
+        Combination::TreeNode* nodeIntern = CastCombinationTreeNode(node);
+
+        assert(nodeIntern != nullptr);
+
+        if (nodeIntern != nullptr)
+            nodeIntern->Delete();
+    }
+}
+
+
+BrlCombinationTreeNode BrlCombinationTree
+(
+    BrlCombination combination
+) {
+    BrlCombinationTreeNode ret = nullptr;
+
+    if (combination != nullptr) {
+        Combination* comb = CastCombination(combination);
+
+        assert(comb != nullptr);
+
+        if (comb != nullptr)
+            ret = new CombinationTreeNodeData(comb->Tree());
+    }
+
+    return ret;
+}
+
+
+void BrlCombinationAddLeaf
+(
+    BrlCombination combination,
+    const char*    leafName
+) {
+    if (combination != nullptr) {
+        Combination* comb = CastCombination(combination);
+
+        assert(comb != nullptr);
+
+        if (comb != nullptr)
+            comb->AddLeaf(leafName);
+    }
 }
 
 
@@ -190,7 +493,7 @@ BrlCombinationFastgenType BrlCombinationFastgenRegion
                 break;
 
             default:
-                assert(0);
+                bu_log("BrlCombinationFastgenRegion: invalid BRLCAD::Combination::FastgenType");
             }
         }
     }
@@ -224,7 +527,7 @@ void BrlCombinationSetFastgenRegion
                 break;
 
             default:
-                assert(0);
+                bu_log("BrlCombinationSetFastgenRegion: invalid BrlCombinationFastgenType");
             }
         }
     }
@@ -651,233 +954,6 @@ void BrlCombinationSetTemperature
 }
 
 
-void BrlCombinationAddLeaf
-(
-    BrlCombination combination,
-    const char*    leafName
-) {
-    if (combination != nullptr) {
-        Combination* comb = CastCombination(combination);
-
-        assert(comb != nullptr);
-
-        if (comb != nullptr)
-            comb->AddLeaf(leafName);
-    }
-}
-
-
-BrlTreeNode BrlCombinationTree
-(
-    BrlCombination combination
-) {
-    BrlTreeNode ret = nullptr;
-
-    if (combination != nullptr) {
-        Combination* comb = CastCombination(combination);
-
-        assert(comb != nullptr);
-
-        if (comb != nullptr) {
-            Combination::TreeNode it = comb->Tree();
-            ret = new TreeNodeData(it);
-        }
-    }
-
-    return ret;
-}
-
-
-void BrlTreeNodeSetMatrix
-(
-    BrlTreeNode  node,
-    const double matrix[16]
-) {
-    if (node != nullptr) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr)
-            nodeIntern->SetMatrix(matrix);
-    }
-}
-
-
-BrlTreeNode BrlTreeNodeLeftOperand
-(
-    BrlTreeNode node
-) {
-    BrlTreeNode ret = nullptr;
-
-    if (node != nullptr) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr) {
-            Combination::TreeNode it = nodeIntern->LeftOperand();
-            ret = new TreeNodeData(it);
-        }
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeRightOperand
-(
-    BrlTreeNode node
-) {
-    BrlTreeNode ret = nullptr;
-
-    if (node != nullptr) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr) {
-            Combination::TreeNode it = nodeIntern->RightOperand();
-            ret = new TreeNodeData(it);
-        }
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeOperand
-(
-    BrlTreeNode node
-) {
-    BrlTreeNode ret = nullptr;
-
-    if (node != nullptr) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr) {
-            Combination::TreeNode it = nodeIntern->Operand();
-            ret = new TreeNodeData(it);
-        }
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeApply
-(
-    BrlTreeNode         node,
-    BrlTreeNodeOperator op
-) {
-    BrlTreeNode ret = nullptr;
-
-    if (node != nullptr) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr)
-            ret = new TreeNodeData(nodeIntern->Apply(ConvertOperator(op)));
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeApplyWithOther
-(
-    BrlTreeNode         node,
-    BrlTreeNodeOperator op,
-    BrlTreeNode         other
-) {
-    BrlTreeNode ret = nullptr;
-
-    if ((node != nullptr) && (other != nullptr)) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-        Combination::TreeNode* otherIntern = CastTreeNode(other);
-
-        assert(nodeIntern != nullptr);
-        assert(otherIntern != nullptr);
-
-        if ((nodeIntern != nullptr) && (otherIntern != nullptr))
-            ret = new TreeNodeData(nodeIntern->Apply(ConvertOperator(op), *otherIntern));
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeApplyWithLeaf
-(
-    BrlTreeNode         node,
-    BrlTreeNodeOperator op,
-    const char*         leafName
-) {
-    BrlTreeNode ret = nullptr;
-
-    if ((node != nullptr) && (leafName != nullptr)) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr)
-            ret = new TreeNodeData(nodeIntern->Apply(ConvertOperator(op), leafName));
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeApplyOtherWith
-(
-    BrlTreeNode         other,
-    BrlTreeNodeOperator op,
-    BrlTreeNode         node
-) {
-    BrlTreeNode ret = nullptr;
-
-    if ((other != nullptr) && (node != nullptr)) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-        Combination::TreeNode* otherIntern = CastTreeNode(other);
-
-        assert(nodeIntern != nullptr);
-        assert(otherIntern != nullptr);
-
-        if ((nodeIntern != nullptr) && (otherIntern != nullptr))
-            ret = new TreeNodeData(nodeIntern->Apply(*otherIntern, ConvertOperator(op)));
-    }
-
-    return ret;
-}
-
-
-BrlTreeNode BrlTreeNodeApplyLeafWith
-(
-    const char*         leafName,
-    BrlTreeNodeOperator op,
-    BrlTreeNode         node
-) {
-    BrlTreeNode ret = nullptr;
-
-    if ((leafName != nullptr) && (node != nullptr)) {
-        Combination::TreeNode* nodeIntern = CastTreeNode(node);
-
-        assert(nodeIntern != nullptr);
-
-        if (nodeIntern != nullptr)
-            ret = new TreeNodeData(nodeIntern->Apply(leafName, ConvertOperator(op)));
-    }
-
-    return ret;
-}
-
-
-const char *BrlCombinationClassName
-(
-    void
-) {
+const char *BrlCombinationClassName(void) {
   return Combination::ClassName();
 }

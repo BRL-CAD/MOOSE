@@ -37,10 +37,7 @@
 using namespace BRLCAD;
 
 
-BrlArb8 BrlNewArb8
-(
-    void
-) {
+BrlArb8 BrlNewArb8(void) {
     return new Arb8Data(new Arb8());
 }
 
@@ -416,9 +413,6 @@ void BrlArb8SetPointsAsRectengularParallelPiped
 }
 
 
-const char *BrlArb8ClassName
-(
-    void
-) {
+const char* BrlArb8ClassName(void) {
     return Arb8::ClassName();
 }
