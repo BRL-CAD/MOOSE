@@ -47,6 +47,8 @@ BrlHandle DowncastObject
                 return new SphereData(static_cast<BRLCAD::Sphere*>(object));
             } else if (std::strcmp(typeName, BRLCAD::Arb8::ClassName()) == 0) {
                 return new Arb8Data(static_cast<BRLCAD::Arb8*>(object));
+            } else if (std::strcmp(typeName, BRLCAD::BagOfTriangles::ClassName()) == 0) {
+                return new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
             } else if (std::strcmp(typeName, BRLCAD::Cone::ClassName()) == 0) {
                 return new ConeData(static_cast<BRLCAD::Cone*>(object));
             } else if (std::strcmp(typeName, BRLCAD::Ellipsoid::ClassName()) == 0) {
