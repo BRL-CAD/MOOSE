@@ -604,7 +604,6 @@ void BagOfTriangles::Face::SetPoints
 
 double BagOfTriangles::Face::Thickness(void) const {
     assert(m_bot != nullptr);
-    assert(m_bot->thickness != nullptr);
     assert(m_bot->mode != RT_BOT_SOLID);
     assert(m_bot->mode != RT_BOT_SURFACE);
 
@@ -622,7 +621,6 @@ void BagOfTriangles::Face::SetThickness
     double value
 ) {
     assert(m_bot != nullptr);
-    assert(m_bot->thickness != nullptr);
     assert(m_bot->mode != RT_BOT_SOLID);
     assert(m_bot->mode != RT_BOT_SURFACE);
 

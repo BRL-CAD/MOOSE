@@ -197,7 +197,7 @@ BrlObject BrlConstDatabaseGet
         assert(constDatabase != nullptr);
 
         if (constDatabase != nullptr)
-            ret = new ObjectData(constDatabase->Get(objectName));
+            ret = DowncastObject(constDatabase->Get(objectName));
     }
 
     return ret;
