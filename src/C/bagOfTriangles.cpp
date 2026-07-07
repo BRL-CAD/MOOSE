@@ -1,4 +1,4 @@
-/*                      B A G O F T R I A N G L E . C P P
+/*                      B A G O F T R I A N G L E S . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,14 +17,10 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file bagOfTriangle.cpp
+/** @file bagOfTriangles.cpp
  *
  *  BRL-CAD core simplified C interface:
  *      Implements a handle and functions for Bag of Triangle solid handling
- */
-
-/* B A G O F T R I A N G L E S . C P P
- * BRL-CAD
  */
 
 #include <cassert>

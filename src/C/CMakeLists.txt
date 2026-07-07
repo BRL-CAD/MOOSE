@@ -25,7 +25,7 @@
 
 SET(CSources
     C/arb8.cpp
-    C/bagOfTriangle.cpp
+    C/bagOfTriangles.cpp
     C/casts.cpp
     C/combination.cpp
     C/constDatabase.cpp
@@ -42,7 +42,7 @@ SET(CSources
 
 SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/arb8.h
-    ${MOOSE_SOURCE_DIR}/include/brlcad/C/bagOfTriangle.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/bagOfTriangles.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/combination.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/constDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/cone.h

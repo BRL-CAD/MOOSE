@@ -41,19 +41,19 @@ BrlHandle DowncastObject
         const char* typeName = object->Type();
 
         if (typeName != nullptr) {
-            if (std::strcmp(typeName, BRLCAD::Combination::ClassName()) == 0) {
+            if (typeName == BRLCAD::Combination::ClassName()) {
                 return new CombinationData(static_cast<BRLCAD::Combination*>(object));
-            } else if (std::strcmp(typeName, BRLCAD::Sphere::ClassName()) == 0) {
+            } else if (typeName == BRLCAD::Sphere::ClassName()) {
                 return new SphereData(static_cast<BRLCAD::Sphere*>(object));
-            } else if (std::strcmp(typeName, BRLCAD::Arb8::ClassName()) == 0) {
+            } else if (typeName == BRLCAD::Arb8::ClassName()) {
                 return new Arb8Data(static_cast<BRLCAD::Arb8*>(object));
-            } else if (std::strcmp(typeName, BRLCAD::BagOfTriangles::ClassName()) == 0) {
-                return new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
-            } else if (std::strcmp(typeName, BRLCAD::Cone::ClassName()) == 0) {
+            } else if (typeName == BRLCAD::Cone::ClassName()) {
                 return new ConeData(static_cast<BRLCAD::Cone*>(object));
-            } else if (std::strcmp(typeName, BRLCAD::Ellipsoid::ClassName()) == 0) {
+            } else if (typeName == BRLCAD::Ellipsoid::ClassName()) {
                 return new EllipsoidData(static_cast<BRLCAD::Ellipsoid*>(object));
-            } else if (std::strcmp(typeName, BRLCAD::NonManifoldGeometry::ClassName()) == 0) {
+            } else if (typeName == BRLCAD::BagOfTriangles::ClassName()) {
+                return new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
+            } else if (typeName == BRLCAD::NonManifoldGeometry::ClassName()) {
                 return new NonManifoldGeometryData(static_cast<BRLCAD::NonManifoldGeometry*>(object));
             }
         }
