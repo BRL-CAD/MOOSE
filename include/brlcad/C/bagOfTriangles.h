@@ -42,7 +42,7 @@ typedef BrlHandle BrlBagOfTrianglesFace;
 BRLCAD_MOOSE_EXPORT BrlBagOfTriangles              BrlNewBagOfTriangles(void);
 
 
-enum BrlBagOfTrianglesMode {
+enum BrlBagOfTrianglesBotMode {
     BrlBotModeSurface,
     BrlBotModeSolid,
     BrlBotModePlate,
@@ -55,7 +55,7 @@ BRLCAD_MOOSE_EXPORT void                            BrlBagOfTrianglesSetMode(Brl
                                                                              int               mode);
 
 
-enum BrlBagOfTrianglesOrientation {
+enum BrlBagOfTrianglesBotOrientation {
     BrlBotOrientationUnoriented,
     BrlBotOrientationClockWise,
     BrlBotOrientationCounterClockWise
