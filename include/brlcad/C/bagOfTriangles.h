@@ -43,28 +43,26 @@ BRLCAD_MOOSE_EXPORT BrlBagOfTriangles              BrlNewBagOfTriangles(void);
 
 
 enum BrlBagOfTrianglesBotMode {
-    BrlBotModeSurface,
-    BrlBotModeSolid,
-    BrlBotModePlate,
-    BrlBotModeEqualLineOfSightPlate
+    BrlBagOfTrianglesBotModeSurface,
+    BrlBagOfTrianglesBotModeSolid,
+    BrlBagOfTrianglesBotModePlate,
+    BrlBagOfTrianglesBotModeEqualLineOfSightPlate
 };
 
-
-BRLCAD_MOOSE_EXPORT int                             BrlBagOfTrianglesMode(BrlBagOfTriangles bot);
-BRLCAD_MOOSE_EXPORT void                            BrlBagOfTrianglesSetMode(BrlBagOfTriangles bot,
-                                                                             int               mode);
+BRLCAD_MOOSE_EXPORT BrlBagOfTrianglesBotMode       BrlBagOfTrianglesMode(BrlBagOfTriangles bot);
+BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesSetMode(BrlBagOfTriangles bot,
+                                                                            BrlBagOfTrianglesBotMode   mode);
 
 
 enum BrlBagOfTrianglesBotOrientation {
-    BrlBotOrientationUnoriented,
-    BrlBotOrientationClockWise,
-    BrlBotOrientationCounterClockWise
+    BrlBagOfTrianglesBotOrientationUnoriented,
+    BrlBagOfTrianglesBotOrientationClockWise,
+    BrlBagOfTrianglesBotOrientationCounterClockWise
 };
 
-
-BRLCAD_MOOSE_EXPORT int                             BrlBagOfTrianglesOrientation(BrlBagOfTriangles bot);
+BRLCAD_MOOSE_EXPORT BrlBagOfTrianglesBotOrientation BrlBagOfTrianglesOrientation(BrlBagOfTriangles bot);
 BRLCAD_MOOSE_EXPORT void                            BrlBagOfTrianglesSetOrientation(BrlBagOfTriangles bot,
-                                                                                    int               orientation);
+                                                                                    BrlBagOfTrianglesBotOrientation orientation);
 
 
 BRLCAD_MOOSE_EXPORT int                            BrlBagOfTrianglesFacesHaveNormals(BrlBagOfTriangles bot);
@@ -84,15 +82,9 @@ BRLCAD_MOOSE_EXPORT int                            BrlBagOfTrianglesNumberOfFace
 BRLCAD_MOOSE_EXPORT BrlBagOfTrianglesFace          BrlBagOfTrianglesGetFace(BrlBagOfTriangles bot,
                                                                             int               index);
 BRLCAD_MOOSE_EXPORT BrlBagOfTrianglesFace          BrlBagOfTrianglesAddFace(BrlBagOfTriangles bot,
-                                                                            double            point1X,
-                                                                            double            point1Y,
-                                                                            double            point1Z,
-                                                                            double            point2X,
-                                                                            double            point2Y,
-                                                                            double            point2Z,
-                                                                            double            point3X,
-                                                                            double            point3Y,
-                                                                            double            point3Z);
+                                                                            double            point1X, double point1Y, double point1Z,
+                                                                            double            point2X, double point2Y, double point2Z,
+                                                                            double            point3X, double point3Y, double point3Z);
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesDeleteFace(BrlBagOfTriangles bot,
                                                                                int               index);
 
@@ -100,24 +92,14 @@ BRLCAD_MOOSE_EXPORT const char*                    BrlBagOfTrianglesClassName(vo
 
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFacePoint(BrlBagOfTrianglesFace face, 
                                                                               int                   index, 
-                                                                              double*               outX,
-                                                                              double*               outY,
-                                                                              double*               outZ);
+                                                                              double*               outX, double* outY, double* outZ);
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceSetPoint(BrlBagOfTrianglesFace face,
                                                                                  int                   index,
-                                                                                 double                pointX,
-                                                                                 double                pointY,
-                                                                                 double                pointZ);
+                                                                                 double                pointX, double pointY, double pointZ);
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceSetPoints(BrlBagOfTrianglesFace face,
-                                                                                  double                point1X,
-                                                                                  double                point1Y,
-                                                                                  double                point1Z,
-                                                                                  double                point2X,
-                                                                                  double                point2Y,
-                                                                                  double                point2Z,
-                                                                                  double                point3X,
-                                                                                  double                point3Y,
-                                                                                  double                point3Z);
+                                                                                  double                point1X, double point1Y, double point1Z,
+                                                                                  double                point2X, double point2Y, double point2Z,
+                                                                                  double                point3X, double point3Y, double point3Z);
 
 BRLCAD_MOOSE_EXPORT double                         BrlBagOfTrianglesFaceThickness(BrlBagOfTrianglesFace face);
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceSetThickness(BrlBagOfTrianglesFace face,
@@ -129,24 +111,14 @@ BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceSetApend
 
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceNormal(BrlBagOfTrianglesFace face,
                                                                                int                   index,
-                                                                               double*               outNormalX,
-                                                                               double*               outNormalY,
-                                                                               double*               outNormalZ);
+                                                                               double*               outNormalX, double* outNormalY, double* outNormalZ);
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceSetNormal(BrlBagOfTrianglesFace face,
                                                                                   int                   index,
-                                                                                  double                normalX,
-                                                                                  double                normalY,
-                                                                                  double                normalZ);
+                                                                                  double                normalX, double normalY, double normalZ);
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceSetNormals(BrlBagOfTrianglesFace face,
-                                                                                   double                normal1X,
-                                                                                   double                normal1Y,
-                                                                                   double                normal1Z,
-                                                                                   double                normal2X,
-                                                                                   double                normal2Y,
-                                                                                   double                normal2Z,
-                                                                                   double                normal3X,
-                                                                                   double                normal3Y,
-                                                                                   double                normal3Z);
+                                                                                   double                normal1X, double normal1Y, double normal1Z,
+                                                                                   double                normal2X, double normal2Y, double normal2Z,
+                                                                                   double                normal3X, double normal3Y, double normal3Z);
 
 BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesFaceDelete(BrlBagOfTrianglesFace face);
 

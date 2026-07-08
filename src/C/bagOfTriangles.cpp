@@ -45,11 +45,11 @@ BrlBagOfTriangles BrlNewBagOfTriangles
 }
 
 
-int BrlBagOfTrianglesMode
+BrlBagOfTrianglesBotMode BrlBagOfTrianglesMode
 (
     BrlBagOfTriangles bot
 ) {
-    int ret = 0; 
+    BrlBagOfTrianglesBotMode ret = BrlBagOfTrianglesBotModeSurface; 
 
     if (bot != nullptr) {
         BagOfTriangles* b = CastBagOfTriangles(bot);
@@ -59,16 +59,16 @@ int BrlBagOfTrianglesMode
         if (b != nullptr) {
             switch (b->Mode()) {
             case BagOfTriangles::BotMode::Surface:
-                ret = 0;
+                ret = BrlBagOfTrianglesBotModeSurface;
                 break;
             case BagOfTriangles::BotMode::Solid:
-                ret = 1;
+                ret = BrlBagOfTrianglesBotModeSolid;
                 break;
             case BagOfTriangles::BotMode::Plate:
-                ret = 2;
+                ret = BrlBagOfTrianglesBotModePlate;
                 break;
             case BagOfTriangles::BotMode::EqualLineOfSightPlate:
-                ret = 3;
+                ret = BrlBagOfTrianglesBotModeEqualLineOfSightPlate;
                 break;
             default:
                 assert(0);
@@ -82,8 +82,8 @@ int BrlBagOfTrianglesMode
 
 void BrlBagOfTrianglesSetMode
 (
-    BrlBagOfTriangles bot,
-    int               mode
+    BrlBagOfTriangles        bot,
+    BrlBagOfTrianglesBotMode mode
 ) {
     if (bot != nullptr) {
         BagOfTriangles* b = CastBagOfTriangles(bot);
@@ -92,16 +92,16 @@ void BrlBagOfTrianglesSetMode
 
         if (b != nullptr) {
             switch (mode) {
-            case 0:
+            case BrlBagOfTrianglesBotModeSurface:
                 b->SetMode(BagOfTriangles::BotMode::Surface);
                 break;
-            case 1:
+            case BrlBagOfTrianglesBotModeSolid:
                 b->SetMode(BagOfTriangles::BotMode::Solid);
                 break;
-            case 2:
+            case BrlBagOfTrianglesBotModePlate:
                 b->SetMode(BagOfTriangles::BotMode::Plate);
                 break;
-            case 3: 
+            case BrlBagOfTrianglesBotModeEqualLineOfSightPlate:
                 b->SetMode(BagOfTriangles::BotMode::EqualLineOfSightPlate);
                 break;
             default:
@@ -112,11 +112,11 @@ void BrlBagOfTrianglesSetMode
 }
 
 
-int BrlBagOfTrianglesOrientation
+BrlBagOfTrianglesBotOrientation BrlBagOfTrianglesOrientation
 (
     BrlBagOfTriangles bot
 ) {
-    int ret = 0; 
+    BrlBagOfTrianglesBotOrientation ret = BrlBagOfTrianglesBotOrientationUnoriented; 
 
     if (bot != nullptr) {
         BagOfTriangles* b = CastBagOfTriangles(bot);
@@ -126,13 +126,13 @@ int BrlBagOfTrianglesOrientation
         if (b != nullptr) {
             switch (b->Orientation()) {
             case BagOfTriangles::BotOrientation::Unoriented:
-                ret = 0;
+                ret = BrlBagOfTrianglesBotOrientationUnoriented;
                 break;
             case BagOfTriangles::BotOrientation::ClockWise:
-                ret = 1;
+                ret = BrlBagOfTrianglesBotOrientationClockWise;
                 break;
             case BagOfTriangles::BotOrientation::CounterClockWise:
-                ret = 2;
+                ret = BrlBagOfTrianglesBotOrientationCounterClockWise;
                 break;
             default:
                 assert(0);
@@ -146,8 +146,8 @@ int BrlBagOfTrianglesOrientation
 
 void BrlBagOfTrianglesSetOrientation
 (
-    BrlBagOfTriangles bot,
-    int               orientation
+    BrlBagOfTriangles               bot,
+    BrlBagOfTrianglesBotOrientation orientation
 ) {
     if (bot != nullptr) {
         BagOfTriangles* b = CastBagOfTriangles(bot);
@@ -156,13 +156,13 @@ void BrlBagOfTrianglesSetOrientation
 
         if (b != nullptr) {
             switch (orientation) {
-            case 0:
+            case BrlBagOfTrianglesBotOrientationUnoriented:
                 b->SetOrientation(BagOfTriangles::BotOrientation::Unoriented);
                 break;
-            case 1:
+            case BrlBagOfTrianglesBotOrientationClockWise:
                 b->SetOrientation(BagOfTriangles::BotOrientation::ClockWise);
                 break;
-            case 2: 
+            case BrlBagOfTrianglesBotOrientationCounterClockWise:
                 b->SetOrientation(BagOfTriangles::BotOrientation::CounterClockWise);
                 break;
             default:
@@ -320,15 +320,9 @@ BrlBagOfTrianglesFace BrlBagOfTrianglesGetFace
 BrlBagOfTrianglesFace BrlBagOfTrianglesAddFace
 (
     BrlBagOfTriangles bot,
-    double            point1X,
-    double            point1Y,
-    double            point1Z,
-    double            point2X,
-    double            point2Y,
-    double            point2Z,
-    double            point3X,
-    double            point3Y,
-    double            point3Z
+    double            point1X, double point1Y, double point1Z,
+    double            point2X, double point2Y, double point2Z,
+    double            point3X, double point3Y, double point3Z
 ) {
     BrlBagOfTrianglesFace ret = nullptr;
 
@@ -377,9 +371,7 @@ void BrlBagOfTrianglesFacePoint
 (
     BrlBagOfTrianglesFace face,
     int                   index,
-    double* outX,
-    double* outY,
-    double* outZ
+    double*               outX, double* outY, double* outZ
 ) {
     if ((face != nullptr) && (outX != nullptr) && (outY != nullptr) && (outZ != nullptr)) {
         BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
@@ -400,9 +392,7 @@ void BrlBagOfTrianglesFaceSetPoint
 (
     BrlBagOfTrianglesFace face,
     int                   index,
-    double                pointX,
-    double                pointY,
-    double                pointZ
+    double                pointX, double pointY, double pointZ
 ) {
     if (face != nullptr) {
         BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
@@ -420,15 +410,9 @@ void BrlBagOfTrianglesFaceSetPoint
 void BrlBagOfTrianglesFaceSetPoints
 (
     BrlBagOfTrianglesFace face,
-    double                point1X,
-    double                point1Y,
-    double                point1Z,
-    double                point2X,
-    double                point2Y,
-    double                point2Z,
-    double                point3X,
-    double                point3Y,
-    double                point3Z
+    double                point1X, double point1Y, double point1Z,
+    double                point2X, double point2Y, double point2Z,
+    double                point3X, double point3Y, double point3Z
 ) {
     if (face != nullptr) {
         BagOfTriangles::Face* f  = CastBagOfTrianglesFace(face);
@@ -519,9 +503,7 @@ void BrlBagOfTrianglesFaceNormal
 (
     BrlBagOfTrianglesFace face,
     int                   index,
-    double* outNormalX,
-    double* outNormalY,
-    double* outNormalZ
+    double*               outNormalX, double* outNormalY, double* outNormalZ
 ) {
     if ((face != nullptr) && (outNormalX != nullptr) && (outNormalY != nullptr) && (outNormalZ != nullptr)) {
         BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
@@ -542,9 +524,7 @@ void BrlBagOfTrianglesFaceSetNormal
 (
     BrlBagOfTrianglesFace face,
     int                   index,
-    double                normalX,
-    double                normalY,
-    double                normalZ
+    double                normalX, double normalY, double normalZ
 ) {
     if (face != nullptr) {
         BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
@@ -562,15 +542,9 @@ void BrlBagOfTrianglesFaceSetNormal
 void BrlBagOfTrianglesFaceSetNormals
 (
     BrlBagOfTrianglesFace face,
-    double                normal1X,
-    double                normal1Y,
-    double                normal1Z,
-    double                normal2X,
-    double                normal2Y,
-    double                normal2Z,
-    double                normal3X,
-    double                normal3Y,
-    double                normal3Z
+    double                normal1X, double normal1Y, double normal1Z,
+    double                normal2X, double normal2Y, double normal2Z,
+    double                normal3X, double normal3Y, double normal3Z
 ) {
     if (face != nullptr) {
         BagOfTriangles::Face* f  = CastBagOfTrianglesFace(face);
