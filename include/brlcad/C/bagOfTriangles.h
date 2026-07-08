@@ -50,7 +50,7 @@ enum BrlBagOfTrianglesBotMode {
 };
 
 BRLCAD_MOOSE_EXPORT BrlBagOfTrianglesBotMode       BrlBagOfTrianglesMode(BrlBagOfTriangles bot);
-BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesSetMode(BrlBagOfTriangles bot,
+BRLCAD_MOOSE_EXPORT void                           BrlBagOfTrianglesSetMode(BrlBagOfTriangles          bot,
                                                                             BrlBagOfTrianglesBotMode   mode);
 
 
@@ -61,7 +61,7 @@ enum BrlBagOfTrianglesBotOrientation {
 };
 
 BRLCAD_MOOSE_EXPORT BrlBagOfTrianglesBotOrientation BrlBagOfTrianglesOrientation(BrlBagOfTriangles bot);
-BRLCAD_MOOSE_EXPORT void                            BrlBagOfTrianglesSetOrientation(BrlBagOfTriangles bot,
+BRLCAD_MOOSE_EXPORT void                            BrlBagOfTrianglesSetOrientation(BrlBagOfTriangles               bot,
                                                                                     BrlBagOfTrianglesBotOrientation orientation);
 
 
