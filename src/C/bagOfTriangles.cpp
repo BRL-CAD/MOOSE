@@ -367,24 +367,21 @@ const char* BrlBagOfTrianglesClassName
 }
 
 
-void BrlBagOfTrianglesFacePoint
+BrlVector3D BrlBagOfTrianglesFacePoint
 (
     BrlBagOfTrianglesFace face,
-    int                   index,
-    double*               outX, double* outY, double* outZ
+    int                   index
 ) {
-    if ((face != nullptr) && (outX != nullptr) && (outY != nullptr) && (outZ != nullptr)) {
+    if (face != nullptr) {
         BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
         assert(f != nullptr);
 
         if (f != nullptr) {
-            Vector3D v = f->Point(index);
-            *outX = v.coordinates[0];
-            *outY = v.coordinates[1];
-            *outZ = v.coordinates[2];
+            BRLCAD::Vector3D v = f->Point(index);
+            return new Vector3DData(v);
         }
     }
+    return nullptr;
 }
 
 
@@ -499,24 +496,21 @@ void BrlBagOfTrianglesFaceSetApendThickness
 }
 
 
-void BrlBagOfTrianglesFaceNormal
+BrlVector3D BrlBagOfTrianglesFaceNormal
 (
     BrlBagOfTrianglesFace face,
-    int                   index,
-    double*               outNormalX, double* outNormalY, double* outNormalZ
+    int                   index
 ) {
-    if ((face != nullptr) && (outNormalX != nullptr) && (outNormalY != nullptr) && (outNormalZ != nullptr)) {
+    if (face != nullptr) {
         BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
         assert(f != nullptr);
 
         if (f != nullptr) {
-            Vector3D n = f->Normal(index);
-            *outNormalX = n.coordinates[0];
-            *outNormalY = n.coordinates[1];
-            *outNormalZ = n.coordinates[2];
+            BRLCAD::Vector3D n = f->Normal(index);
+            return new Vector3DData(n);
         }
     }
+    return nullptr;
 }
 
 
@@ -572,5 +566,20 @@ void BrlBagOfTrianglesFaceDelete
         
         if (data != nullptr)
             delete data;
+    }
+}
+
+
+BRLCAD_MOOSE_EXPORT void BrlVector3DGetCoordinates(
+    BrlVector3D vector,
+    double* outX,
+    double* outY,
+    double* outZ
+) {
+    if (vector != nullptr && outX != nullptr && outY != nullptr && outZ != nullptr) {
+        Vector3DData* data = static_cast<Vector3DData*>(vector);
+        *outX = data->Value().coordinates[0];
+        *outY = data->Value().coordinates[1];
+        *outZ = data->Value().coordinates[2];
     }
 }
