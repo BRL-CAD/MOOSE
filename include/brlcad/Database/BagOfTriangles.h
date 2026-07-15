@@ -112,6 +112,9 @@ namespace BRLCAD {
         bool                  FacesHaveNormals(void) const;
         void                  SetFacesHaveNormals(bool facesHaveNormals);
 
+        bool                  FacesHaveThickness(void) const;
+        void                  SetFacesHaveThickness(bool facesHaveThickness);
+
         bool                  UseFaceNormals(void) const;
         void                  SetUseFaceNormals(bool useFaceNormals);
 
