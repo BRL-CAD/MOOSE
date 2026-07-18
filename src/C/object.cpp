@@ -44,7 +44,7 @@ BrlObject BrlObjectClone
         assert(obj != nullptr);
 
         if (obj != nullptr)
-            ret = new ObjectData(obj->Clone());
+            ret = DowncastObject(obj->Clone());
     }
 
     return ret;
