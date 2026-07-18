@@ -20,7 +20,7 @@
 /** @file bagOfTriangles.cpp
  *
  *  BRL-CAD core simplified C interface:
- *      Implements a handle and functions for Bag of Triangle solid handling
+ *      implements a handle and functions for Bag of Triangle solid handling
  */
 
 #include <cassert>
@@ -42,6 +42,196 @@ BrlBagOfTriangles BrlNewBagOfTriangles
     void
 ) {
     return new BagOfTrianglesData(new BagOfTriangles());
+}
+
+
+BrlVector3D BrlBagOfTrianglesFacePoint
+(
+    BrlBagOfTrianglesFace face,
+    int                   index
+) {
+    BrlVector3D ret = nullptr;
+
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+        assert(f != nullptr);
+
+        if (f != nullptr)
+            ret = new Vector3DData(f->Point(index));
+    }
+
+    return ret;
+}
+
+
+void BrlBagOfTrianglesFaceSetPoint
+(
+    BrlBagOfTrianglesFace face,
+    int                   index,
+    double                pointX, double pointY, double pointZ
+) {
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr) {
+            Vector3D v(pointX, pointY, pointZ);
+            f->SetPoint(index, v);
+        }
+    }
+}
+
+
+void BrlBagOfTrianglesFaceSetPoints
+(
+    BrlBagOfTrianglesFace face,
+    double                point1X, double point1Y, double point1Z,
+    double                point2X, double point2Y, double point2Z,
+    double                point3X, double point3Y, double point3Z
+) {
+    if (face != nullptr) {
+        BagOfTriangles::Face* f  = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr) {
+            Vector3D v1(point1X, point1Y, point1Z);
+            Vector3D v2(point2X, point2Y, point2Z);
+            Vector3D v3(point3X, point3Y, point3Z);
+            f->SetPoints(v1, v2, v3);
+        }
+    }
+}
+
+
+double BrlBagOfTrianglesFaceThickness
+(
+    BrlBagOfTrianglesFace face
+) {
+    double ret = 0.;
+
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr)
+            ret = f->Thickness();
+    }
+
+    return ret;
+}
+
+
+void BrlBagOfTrianglesFaceSetThickness
+(
+    BrlBagOfTrianglesFace face,
+    double                value
+) {
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr)
+            f->SetThickness(value);
+    }
+}
+
+
+int BrlBagOfTrianglesFaceApendThickness
+(
+    BrlBagOfTrianglesFace face
+) {
+    int ret = 0;
+
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr)
+            ret = f->ApendThickness() ? 1 : 0;
+    }
+
+    return ret;
+}
+
+
+void BrlBagOfTrianglesFaceSetApendThickness
+(
+    BrlBagOfTrianglesFace face,
+    int                   apendThickness
+) {
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr)
+            f->SetApendThickness(apendThickness != 0);
+    }
+}
+
+
+BrlVector3D BrlBagOfTrianglesFaceNormal
+(
+    BrlBagOfTrianglesFace face,
+    int                   index
+) {
+    BrlVector3D ret = nullptr;
+
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+        assert(f != nullptr);
+
+        if (f != nullptr)
+            ret = new Vector3DData(f->Normal(index));
+    }
+
+    return ret;
+}
+
+
+void BrlBagOfTrianglesFaceSetNormal
+(
+    BrlBagOfTrianglesFace face,
+    int                   index,
+    double                normalX, double normalY, double normalZ
+) {
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr) {
+            Vector3D n(normalX, normalY, normalZ);
+            f->SetNormal(index, n);
+        }
+    }
+}
+
+
+void BrlBagOfTrianglesFaceSetNormals
+(
+    BrlBagOfTrianglesFace face,
+    double                normal1X, double normal1Y, double normal1Z,
+    double                normal2X, double normal2Y, double normal2Z,
+    double                normal3X, double normal3Y, double normal3Z
+) {
+    if (face != nullptr) {
+        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
+
+        assert(f != nullptr);
+
+        if (f != nullptr) {
+            Vector3D n1(normal1X, normal1Y, normal1Z);
+            Vector3D n2(normal2X, normal2Y, normal2Z);
+            Vector3D n3(normal3X, normal3Y, normal3Z);
+            f->SetNormals(n1, n2, n3);
+        }
+    }
 }
 
 
@@ -364,222 +554,4 @@ const char* BrlBagOfTrianglesClassName
     void
 ) {
     return BagOfTriangles::ClassName();
-}
-
-
-BrlVector3D BrlBagOfTrianglesFacePoint
-(
-    BrlBagOfTrianglesFace face,
-    int                   index
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-        assert(f != nullptr);
-
-        if (f != nullptr) {
-            BRLCAD::Vector3D v = f->Point(index);
-            return new Vector3DData(v);
-        }
-    }
-    return nullptr;
-}
-
-
-void BrlBagOfTrianglesFaceSetPoint
-(
-    BrlBagOfTrianglesFace face,
-    int                   index,
-    double                pointX, double pointY, double pointZ
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr) {
-            Vector3D v(pointX, pointY, pointZ);
-            f->SetPoint(index, v);
-        }
-    }
-}
-
-
-void BrlBagOfTrianglesFaceSetPoints
-(
-    BrlBagOfTrianglesFace face,
-    double                point1X, double point1Y, double point1Z,
-    double                point2X, double point2Y, double point2Z,
-    double                point3X, double point3Y, double point3Z
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f  = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr) {
-            Vector3D v1(point1X, point1Y, point1Z);
-            Vector3D v2(point2X, point2Y, point2Z);
-            Vector3D v3(point3X, point3Y, point3Z);
-            f->SetPoints(v1, v2, v3);
-        }
-    }
-}
-
-
-double BrlBagOfTrianglesFaceThickness
-(
-    BrlBagOfTrianglesFace face
-) {
-    double ret = 0.0;
-
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr)
-            ret = f->Thickness();
-    }
-
-    return ret;
-}
-
-
-void BrlBagOfTrianglesFaceSetThickness
-(
-    BrlBagOfTrianglesFace face,
-    double                value
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr)
-            f->SetThickness(value);
-    }
-}
-
-
-int BrlBagOfTrianglesFaceApendThickness
-(
-    BrlBagOfTrianglesFace face
-) {
-    int ret = 0;
-
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr)
-            ret = f->ApendThickness() ? 1 : 0;
-    }
-
-    return ret;
-}
-
-
-void BrlBagOfTrianglesFaceSetApendThickness
-(
-    BrlBagOfTrianglesFace face,
-    int                   apendThickness
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr)
-            f->SetApendThickness(apendThickness != 0);
-    }
-}
-
-
-BrlVector3D BrlBagOfTrianglesFaceNormal
-(
-    BrlBagOfTrianglesFace face,
-    int                   index
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-        assert(f != nullptr);
-
-        if (f != nullptr) {
-            BRLCAD::Vector3D n = f->Normal(index);
-            return new Vector3DData(n);
-        }
-    }
-    return nullptr;
-}
-
-
-void BrlBagOfTrianglesFaceSetNormal
-(
-    BrlBagOfTrianglesFace face,
-    int                   index,
-    double                normalX, double normalY, double normalZ
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr) {
-            Vector3D n(normalX, normalY, normalZ);
-            f->SetNormal(index, n);
-        }
-    }
-}
-
-
-void BrlBagOfTrianglesFaceSetNormals
-(
-    BrlBagOfTrianglesFace face,
-    double                normal1X, double normal1Y, double normal1Z,
-    double                normal2X, double normal2Y, double normal2Z,
-    double                normal3X, double normal3Y, double normal3Z
-) {
-    if (face != nullptr) {
-        BagOfTriangles::Face* f  = CastBagOfTrianglesFace(face);
-
-        assert(f != nullptr);
-
-        if (f != nullptr) {
-            Vector3D n1(normal1X, normal1Y, normal1Z);
-            Vector3D n2(normal2X, normal2Y, normal2Z);
-            Vector3D n3(normal3X, normal3Y, normal3Z);
-            f->SetNormals(n1, n2, n3);
-        }
-    }
-}
-
-
-void BrlBagOfTrianglesFaceDelete
-(
-    BrlBagOfTrianglesFace face
-) {
-    if (face != nullptr) {
-        BagOfTrianglesFaceData* data = static_cast<BagOfTrianglesFaceData*>(face);
-        
-        assert(data != nullptr);
-        
-        if (data != nullptr)
-            delete data;
-    }
-}
-
-
-BRLCAD_MOOSE_EXPORT void BrlVector3DGetCoordinates(
-    BrlVector3D vector,
-    double* outX,
-    double* outY,
-    double* outZ
-) {
-    if (vector != nullptr && outX != nullptr && outY != nullptr && outZ != nullptr) {
-        Vector3DData* data = static_cast<Vector3DData*>(vector);
-        *outX = data->Value().coordinates[0];
-        *outY = data->Value().coordinates[1];
-        *outZ = data->Value().coordinates[2];
-    }
 }
