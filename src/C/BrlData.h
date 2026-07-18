@@ -30,6 +30,7 @@
 #include <brlcad/Database/FileDatabase.h>
 #include <brlcad/Database/MemoryDatabase.h>
 #include <brlcad/Database/Arb8.h>
+#include <brlcad/Database/BagOfTriangles.h>
 #include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
@@ -68,6 +69,8 @@ extern const char* const MemoryDatabaseMagic;
 extern const char* const ObjectMagic;
 extern const char* const ObjectAttributeIteratorMagic;
 extern const char* const Arb8Magic;
+extern const char* const BagOfTrianglesMagic;
+extern const char* const BagOfTrianglesFaceMagic;
 extern const char* const CombinationMagic;
 extern const char* const CombinationTreeNodeMagic;
 extern const char* const ConeMagic;
@@ -174,6 +177,18 @@ public:
 class Arb8Data : public PointerData<BRLCAD::Arb8> {
 public:
     Arb8Data(BRLCAD::Arb8* pointer) : PointerData(Arb8Magic, pointer) {}
+};
+
+
+class BagOfTrianglesData : public PointerData<BRLCAD::BagOfTriangles> {
+public:
+    BagOfTrianglesData(BRLCAD::BagOfTriangles* pointer) : PointerData(BagOfTrianglesMagic, pointer) {}
+};
+
+
+class BagOfTrianglesFaceData : public ValueData<BRLCAD::BagOfTriangles::Face> {
+public:
+    BagOfTrianglesFaceData(const BRLCAD::BagOfTriangles::Face& value) : ValueData(BagOfTrianglesFaceMagic, value) {}
 };
 
 

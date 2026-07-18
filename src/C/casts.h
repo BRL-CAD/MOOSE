@@ -31,6 +31,8 @@
 #include "BrlData.h"
 
 
+BrlHandle                          DowncastObject(BRLCAD::Object* object);
+
 BrlData*                           CastHandle(BrlHandle handle);
 
 BRLCAD::Vector3D*                  CastVector3D(BrlHandle handle);
@@ -44,6 +46,8 @@ BRLCAD::MemoryDatabase*            CastMemoryDatabase(BrlHandle handle);
 BRLCAD::Object*                    CastObject(BrlHandle handle);
 BRLCAD::Object::AttributeIterator* CastObjectAttributeIterator(BrlHandle handle);
 BRLCAD::Arb8*                      CastArb8(BrlHandle handle);
+BRLCAD::BagOfTriangles*            CastBagOfTriangles(BrlHandle handle);
+BRLCAD::BagOfTriangles::Face*      CastBagOfTrianglesFace(BrlHandle handle);
 BRLCAD::Combination*               CastCombination(BrlHandle handle);
 BRLCAD::Combination::TreeNode*     CastCombinationTreeNode(BrlHandle handle);
 BRLCAD::Cone*                      CastCone(BrlHandle handle);

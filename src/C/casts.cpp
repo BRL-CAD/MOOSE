@@ -31,6 +31,41 @@
 using namespace BRLCAD;
 
 
+#include <cstring>
+
+BrlHandle DowncastObject
+(
+    BRLCAD::Object* object
+) {
+    if (object != nullptr) {
+        const char* typeName = object->Type();
+
+        if (typeName != nullptr) {
+            if (typeName == BRLCAD::Combination::ClassName()) {
+                return new CombinationData(static_cast<BRLCAD::Combination*>(object));
+            } else if (typeName == BRLCAD::Sphere::ClassName()) {
+                return new SphereData(static_cast<BRLCAD::Sphere*>(object));
+            } else if (typeName == BRLCAD::Arb8::ClassName()) {
+                return new Arb8Data(static_cast<BRLCAD::Arb8*>(object));
+            } else if (typeName == BRLCAD::Cone::ClassName()) {
+                return new ConeData(static_cast<BRLCAD::Cone*>(object));
+            } else if (typeName == BRLCAD::Ellipsoid::ClassName()) {
+                return new EllipsoidData(static_cast<BRLCAD::Ellipsoid*>(object));
+            } else if (typeName == BRLCAD::BagOfTriangles::ClassName()) {
+                return new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
+            } else if (typeName == BRLCAD::NonManifoldGeometry::ClassName()) {
+                return new NonManifoldGeometryData(static_cast<BRLCAD::NonManifoldGeometry*>(object));
+            }
+        }
+
+        // Fallback for types not explicitly wrapped or unknown
+        return new ObjectData(object);
+    }
+
+    return nullptr;
+}
+
+
 BrlData* CastHandle
 (
     BrlHandle handle
@@ -48,6 +83,8 @@ BrlData* CastHandle
             (handleMagic == ObjectMagic) ||
             (handleMagic == ObjectAttributeIteratorMagic) ||
             (handleMagic == Arb8Magic) ||
+            (handleMagic == BagOfTrianglesMagic) ||
+            (handleMagic == BagOfTrianglesFaceMagic) ||
             (handleMagic == CombinationMagic) ||
             (handleMagic == CombinationTreeNodeMagic) ||
             (handleMagic == ConeMagic) ||
@@ -196,6 +233,8 @@ Object* CastObject
             ret = static_cast<ObjectData*>(handle)->Pointer();
         else if (handleMagic == Arb8Magic)
             ret = static_cast<Arb8Data*>(handle)->Pointer();
+        else if (handleMagic == BagOfTrianglesMagic)
+            ret = static_cast<BagOfTrianglesData*>(handle)->Pointer();
         else if (handleMagic == CombinationMagic)
             ret = static_cast<CombinationData*>(handle)->Pointer();
         else if (handleMagic == ConeMagic)
@@ -250,6 +289,45 @@ Arb8* CastArb8
 
     return ret;
 }
+
+
+BagOfTriangles* CastBagOfTriangles
+(
+    BrlHandle handle
+) {
+    BagOfTriangles* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == BagOfTrianglesMagic)
+            ret = static_cast<BagOfTrianglesData*>(handle)->Pointer();
+        else
+            bu_log("CastBagOfTriangles: wrong handle");
+    }
+
+    return ret;
+}
+
+
+BagOfTriangles::Face* CastBagOfTrianglesFace
+(
+    BrlHandle handle
+) {
+    BagOfTriangles::Face* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == BagOfTrianglesFaceMagic)
+            ret = &static_cast<BagOfTrianglesFaceData*>(handle)->Value();
+        else
+            bu_log("CastBagOfTrianglesFace: wrong handle");
+    }
+
+    return ret;
+}
+
 
 Combination* CastCombination
 (
