@@ -226,7 +226,7 @@ static void EnsureFaceNormals
         fastf_t defaultNormal[3] = {0};
         int     newIndex         = AddNormal(defaultNormal, bot);
 
-        for (size_t i = bot.num_face_normals; i < bot.num_faces; ++i) {
+        for (int i = bot.num_face_normals; i < bot.num_faces; ++i) {
             bot.face_normals[3 * i]     = newIndex;
             bot.face_normals[3 * i + 1] = newIndex;
             bot.face_normals[3 * i + 2] = newIndex;
@@ -666,15 +666,15 @@ Vector3D BagOfTriangles::Face::Normal
 (
     size_t index
 ) const {
-    assert(m_bot != nullptr);
     assert(index < 3);
+    assert(m_bot != nullptr);
 
     Vector3D ret;
 
     if ((m_bot != nullptr) && (m_bot->face_normals != nullptr) && (m_bot->normals != nullptr) && (index < 3)) {
-        fastf_t tmp[3] = {m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3],
-                          m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 1],
-                          m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 2]};
+        double tmp[3] = {m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3],
+                         m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 1],
+                         m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 2]};
 
         ret = Vector3D(tmp);
     }
