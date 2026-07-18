@@ -27,11 +27,10 @@
 #define BRLCAD_C_CASTS_INCLUDED
 
 #include <brlcad/C/globals.h>
+#include <brlcad/C/object.h>
 
 #include "BrlData.h"
 
-
-BrlHandle                          DowncastObject(BRLCAD::Object* object);
 
 BrlData*                           CastHandle(BrlHandle handle);
 
@@ -45,6 +44,7 @@ BRLCAD::MemoryDatabase*            CastMemoryDatabase(BrlHandle handle);
 
 BRLCAD::Object*                    CastObject(BrlHandle handle);
 BRLCAD::Object::AttributeIterator* CastObjectAttributeIterator(BrlHandle handle);
+BrlObject                          DowncastObject(BRLCAD::Object* object);
 BRLCAD::Arb8*                      CastArb8(BrlHandle handle);
 BRLCAD::BagOfTriangles*            CastBagOfTriangles(BrlHandle handle);
 BRLCAD::BagOfTriangles::Face*      CastBagOfTrianglesFace(BrlHandle handle);

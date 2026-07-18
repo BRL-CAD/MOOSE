@@ -23,47 +23,14 @@
  *      implements helper functions to cast void* handles to the correct C++ class
  */
 
+#include <cstring>
+
 #include "bu/log.h"
 
 #include "casts.h"
 
 
 using namespace BRLCAD;
-
-
-#include <cstring>
-
-BrlHandle DowncastObject
-(
-    BRLCAD::Object* object
-) {
-    if (object != nullptr) {
-        const char* typeName = object->Type();
-
-        if (typeName != nullptr) {
-            if (typeName == BRLCAD::Combination::ClassName()) {
-                return new CombinationData(static_cast<BRLCAD::Combination*>(object));
-            } else if (typeName == BRLCAD::Sphere::ClassName()) {
-                return new SphereData(static_cast<BRLCAD::Sphere*>(object));
-            } else if (typeName == BRLCAD::Arb8::ClassName()) {
-                return new Arb8Data(static_cast<BRLCAD::Arb8*>(object));
-            } else if (typeName == BRLCAD::Cone::ClassName()) {
-                return new ConeData(static_cast<BRLCAD::Cone*>(object));
-            } else if (typeName == BRLCAD::Ellipsoid::ClassName()) {
-                return new EllipsoidData(static_cast<BRLCAD::Ellipsoid*>(object));
-            } else if (typeName == BRLCAD::BagOfTriangles::ClassName()) {
-                return new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
-            } else if (typeName == BRLCAD::NonManifoldGeometry::ClassName()) {
-                return new NonManifoldGeometryData(static_cast<BRLCAD::NonManifoldGeometry*>(object));
-            }
-        }
-
-        // Fallback for types not explicitly wrapped or unknown
-        return new ObjectData(object);
-    }
-
-    return nullptr;
-}
 
 
 BrlData* CastHandle
@@ -269,6 +236,38 @@ Object::AttributeIterator* CastObjectAttributeIterator
     }
 
     return ret;
+}
+
+
+BrlObject DowncastObject
+(
+    BRLCAD::Object* object
+) {
+    BrlObject ret = nullptr;
+
+    if (object != nullptr) {
+        const char* typeName = object->Type();
+
+        if (typeName == BRLCAD::Arb8::ClassName())
+            ret = new Arb8Data(static_cast<BRLCAD::Arb8*>(object));
+        else if (typeName == BRLCAD::BagOfTriangles::ClassName())
+            ret = new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
+        else if (typeName == BRLCAD::Combination::ClassName())
+            ret = new CombinationData(static_cast<BRLCAD::Combination*>(object));
+        else if (typeName == BRLCAD::Cone::ClassName())
+            ret = new ConeData(static_cast<BRLCAD::Cone*>(object));
+        else if (typeName == BRLCAD::Ellipsoid::ClassName())
+            ret = new EllipsoidData(static_cast<BRLCAD::Ellipsoid*>(object));
+        else if (typeName == BRLCAD::NonManifoldGeometry::ClassName())
+            ret = new NonManifoldGeometryData(static_cast<BRLCAD::NonManifoldGeometry*>(object));
+        else if (typeName == BRLCAD::Sphere::ClassName())
+            ret = new SphereData(static_cast<BRLCAD::Sphere*>(object));
+        else
+            // Fallback for types not explicitly wrapped or unknown
+            ret = new ObjectData(object);
+    }
+
+    return nullptr;
 }
 
 
