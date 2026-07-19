@@ -1,0 +1,8 @@
+from brlcad import ConstDatabase
+
+# Using the context manager ensures automatic memory freeing
+with ConstDatabase() as db:
+    if db.Load("geometry_scene.g"):
+        print(f"Opened database: {db.Title()}")
+    else:
+        print("Failed to load geometry file.")

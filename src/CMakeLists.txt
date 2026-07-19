@@ -92,6 +92,12 @@ IF(MODULE_LUA)
     GET_DIRECTORY_PROPERTY(LuaSources DIRECTORY Lua DEFINITION LuaSources)
 ENDIF(MODULE_LUA)
 
+# Module: Python
+OPTION(MODULE_PYTHON "Build the Python module" OFF)
+IF(MODULE_PYTHON)
+    ADD_SUBDIRECTORY(Python)
+ENDIF(MODULE_PYTHON)
+
 SET(MooseSources
     ${DatabaseSources}
     ${CommandStringSources}
