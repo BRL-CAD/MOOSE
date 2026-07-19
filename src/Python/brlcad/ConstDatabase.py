@@ -58,7 +58,7 @@ class ConstDatabase(Handle):
         c_file = ctypes.c_char_p(file_name.encode('utf-8'))
         status = _lib.BrlConstDatabaseLoad(self._handle, c_file)
         
-        if status != 0:
+        if status == 0:
             self.close() 
             return False
             
@@ -103,8 +103,8 @@ class ConstDatabase(Handle):
         # --- THE FACTORY ROUTER ---
         # Match the C++ string to our Python classes
         if obj_type == "Combination":
-            from .Combination import Combination
-            return Combination(handle=raw_handle)
+            from .Combinations import Combinations
+            return Combinations(handle=raw_handle)
             
         elif obj_type == "Sphere":
             from .Sphere import Sphere
