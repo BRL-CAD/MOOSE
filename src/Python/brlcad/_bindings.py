@@ -272,4 +272,3 @@ _bind("BrlBagOfTrianglesFaceApendThickness",    c_int,    [c_void_p])
 _bind("BrlBagOfTrianglesFaceSetApendThickness", None,     [c_void_p, c_int])
 _bind("BrlBagOfTrianglesFaceSetNormal",         None,     [c_void_p, c_int, c_double, c_double, c_double])
 _bind("BrlBagOfTrianglesFaceSetNormals",        None,     [c_void_p] + [c_double] * 9)
-
