@@ -1,4 +1,4 @@
-/*      N O N M A N I F O L D G E O M E T R Y . C P P
+/*                          N O N M A N I F O L D G E O M E T R Y . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by

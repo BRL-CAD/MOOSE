@@ -1,4 +1,4 @@
-/*      E L L I P T I C A L T O R U S . H
+/*                      E L L I P T I C A L T O R U S . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -38,36 +38,36 @@ typedef BrlObject BrlEllipticalTorus;
 
 
 BRLCAD_MOOSE_EXPORT BrlEllipticalTorus BrlNewEllipticalTorus(void);
-BRLCAD_MOOSE_EXPORT BrlEllipticalTorus BrlNewEllipticalTorusAsEllipticalTorus(double centerX, double centerY, double centerZ,
-                                                                              double normalX, double normalY, double normalZ,
+BRLCAD_MOOSE_EXPORT BrlEllipticalTorus BrlNewEllipticalTorusAsEllipticalTorus(double centerX,            double centerY,            double centerZ,
+                                                                              double normalX,            double normalY,            double normalZ,
                                                                               double tubeCenterLineRadius,
                                                                               double tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ,
                                                                               double tubeSemiMinorAxisLength);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D        BrlEllipticalTorusCenter(BrlEllipticalTorus ellipticalTorus);
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetCenter(BrlEllipticalTorus ellipticalTorus,
-                                                                   double centerX, double centerY, double centerZ);
+                                                                   double             centerX, double centerY, double centerZ);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D        BrlEllipticalTorusNormal(BrlEllipticalTorus ellipticalTorus);
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetNormal(BrlEllipticalTorus ellipticalTorus,
-                                                                   double normalX, double normalY, double normalZ);
+                                                                   double             normalX, double normalY, double normalZ);
 
 BRLCAD_MOOSE_EXPORT double             BrlEllipticalTorusTubeCenterLineRadius(BrlEllipticalTorus ellipticalTorus);
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeCenterLineRadius(BrlEllipticalTorus ellipticalTorus, double radius);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D        BrlEllipticalTorusTubeSemiMajorAxis(BrlEllipticalTorus ellipticalTorus);
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeSemiMajorAxis(BrlEllipticalTorus ellipticalTorus,
-                                                                              double tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ);
+                                                                              double             tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ);
 
 BRLCAD_MOOSE_EXPORT double             BrlEllipticalTorusTubeSemiMinorAxis(BrlEllipticalTorus ellipticalTorus);
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeSemiMinorAxis(BrlEllipticalTorus ellipticalTorus, double length);
 
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSet(BrlEllipticalTorus ellipticalTorus,
-                                                             double centerX, double centerY, double centerZ,
-                                                             double normalX, double normalY, double normalZ,
-                                                             double tubeCenterLineRadius,
-                                                             double tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ,
-                                                             double tubeSemiMinorAxisLength);
+                                                             double             centerX,            double centerY,            double centerZ,
+                                                             double             normalX,            double normalY,            double normalZ,
+                                                             double             tubeCenterLineRadius,
+                                                             double             tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ,
+                                                             double             tubeSemiMinorAxisLength);
 
 BRLCAD_MOOSE_EXPORT const char*        BrlEllipticalTorusClassName(void);
 

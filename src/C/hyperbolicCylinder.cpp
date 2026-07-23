@@ -1,4 +1,4 @@
-/*                   H Y P E R B O L I C C Y L I N D E R . C P P
+/*                      H Y P E R B O L I C C Y L I N D E R . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by

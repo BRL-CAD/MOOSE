@@ -1,4 +1,4 @@
-/*      E L L I P T I C A L T O R U S . C P P
+/*                          E L L I P T I C A L T O R U S . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by

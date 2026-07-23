@@ -1,4 +1,4 @@
-/*                    T O R U S . H
+/*                      T O R U S . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -58,10 +58,10 @@ BRLCAD_MOOSE_EXPORT double      BrlTorusTubeRadius(BrlTorus torus);
 BRLCAD_MOOSE_EXPORT void        BrlTorusSetTubeRadius(BrlTorus torus, double radius);
 
 BRLCAD_MOOSE_EXPORT void        BrlTorusSet(BrlTorus torus,
-                                            double centerX, double centerY, double centerZ,
-                                            double normalX, double normalY, double normalZ,
-                                            double tubeCenterLineRadius,
-                                            double tubeRadius);
+                                            double   centerX, double centerY, double centerZ,
+                                            double   normalX, double normalY, double normalZ,
+                                            double   tubeCenterLineRadius,
+                                            double   tubeRadius);
 
 BRLCAD_MOOSE_EXPORT const char* BrlTorusClassName(void);
 

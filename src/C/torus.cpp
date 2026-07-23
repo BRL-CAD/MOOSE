@@ -1,4 +1,4 @@
-/*                    T O R U S . C P P
+/*                      T O R U S . C P P
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by

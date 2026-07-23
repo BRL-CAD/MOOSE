@@ -46,11 +46,14 @@ SET(PythonSources
     brlcad/ConstDatabase.py
     brlcad/Database.py
     brlcad/Ellipsoid.py
+    brlcad/EllipticalTorus.py
     brlcad/FileDatabase.py
     brlcad/Handle.py
+    brlcad/HyperbolicCylinder.py
     brlcad/MemoryDatabase.py
     brlcad/Object.py
     brlcad/Sphere.py
+    brlcad/Torus.py
     brlcad/VectorList.py
     brlcad/__init__.py
     brlcad/_bindings.py
