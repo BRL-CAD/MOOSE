@@ -34,8 +34,11 @@
 #include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
+#include <brlcad/Database/EllipticalTorus.h>
+#include <brlcad/Database/HyperbolicCylinder.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
 #include <brlcad/Database/Sphere.h>
+#include <brlcad/Database/Torus.h>
 
 
 class BrlData {
@@ -75,8 +78,11 @@ extern const char* const CombinationMagic;
 extern const char* const CombinationTreeNodeMagic;
 extern const char* const ConeMagic;
 extern const char* const EllipsoidMagic;
+extern const char* const EllipticalTorusMagic;
+extern const char* const HyperbolicCylinderMagic;
 extern const char* const NonManifoldGeometryMagic;
 extern const char* const SphereMagic;
+extern const char* const TorusMagic;
 
 
 template<class ValueType> class ValueData : public BrlData {
@@ -216,6 +222,18 @@ public:
 };
 
 
+class EllipticalTorusData : public PointerData<BRLCAD::EllipticalTorus> {
+public:
+    EllipticalTorusData(BRLCAD::EllipticalTorus* pointer) : PointerData(EllipticalTorusMagic, pointer) {}
+};
+
+
+class HyperbolicCylinderData : public PointerData<BRLCAD::HyperbolicCylinder> {
+public:
+    HyperbolicCylinderData(BRLCAD::HyperbolicCylinder* pointer) : PointerData(HyperbolicCylinderMagic, pointer) {}
+};
+
+
 class NonManifoldGeometryData : public PointerData<BRLCAD::NonManifoldGeometry> {
 public:
     NonManifoldGeometryData(BRLCAD::NonManifoldGeometry* pointer) : PointerData(NonManifoldGeometryMagic, pointer) {}
@@ -225,6 +243,12 @@ public:
 class SphereData : public PointerData<BRLCAD::Sphere> {
 public:
     SphereData(BRLCAD::Sphere* pointer) : PointerData(SphereMagic, pointer) {}
+};
+
+
+class TorusData : public PointerData<BRLCAD::Torus> {
+public:
+    TorusData(BRLCAD::Torus* pointer) : PointerData(TorusMagic, pointer) {}
 };
 
 

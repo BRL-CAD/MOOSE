@@ -36,6 +36,13 @@ extern "C" {
 typedef BrlObject BrlNonManifoldGeometry;
 
 
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometry BrlNewNonManifoldGeometry(void);
+
+BRLCAD_MOOSE_EXPORT void                   BrlNonManifoldGeometryTriangulate(BrlNonManifoldGeometry nonManifoldGeometry);
+
+BRLCAD_MOOSE_EXPORT const char*            BrlNonManifoldGeometryClassName(void);
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -30,10 +30,13 @@ from .Cone import Cone
 from .ConstDatabase import ConstDatabase
 from .Database import Database
 from .Ellipsoid import Ellipsoid
+from .EllipticalTorus import EllipticalTorus
 from .FileDatabase import FileDatabase
+from .HyperbolicCylinder import HyperbolicCylinder
 from .MemoryDatabase import MemoryDatabase
 from .Object import Object
 from .Sphere import Sphere
+from .Torus import Torus
 
 
 __all__ = [
@@ -44,10 +47,13 @@ __all__ = [
     'ConstDatabase',
     'Database',
     'Ellipsoid',
+    'EllipticalTorus',
     'Face',
     'FileDatabase',
+    'HyperbolicCylinder',
     'MemoryDatabase',
     'Object',
     'Sphere',
+    'Torus',
     'TreeNode'
 ]

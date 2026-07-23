@@ -272,3 +272,55 @@ _bind("BrlBagOfTrianglesFaceApendThickness",    c_int,    [c_void_p])
 _bind("BrlBagOfTrianglesFaceSetApendThickness", None,     [c_void_p, c_int])
 _bind("BrlBagOfTrianglesFaceSetNormal",         None,     [c_void_p, c_int, c_double, c_double, c_double])
 _bind("BrlBagOfTrianglesFaceSetNormals",        None,     [c_void_p] + [c_double] * 9)
+
+# -----------------------------------------------------------------------------
+# Torus Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewTorus",                          c_void_p,   [])
+_bind("BrlNewTorusAsTorus",                   c_void_p,   [c_double] * 8)
+_bind("BrlTorusCenter",                       c_void_p,   [c_void_p])
+_bind("BrlTorusSetCenter",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlTorusNormal",                       c_void_p,   [c_void_p])
+_bind("BrlTorusSetNormal",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlTorusTubeCenterLineRadius",         c_double,   [c_void_p])
+_bind("BrlTorusSetTubeCenterLineRadius",      None,       [c_void_p, c_double])
+_bind("BrlTorusTubeRadius",                   c_double,   [c_void_p])
+_bind("BrlTorusSetTubeRadius",                None,       [c_void_p, c_double])
+_bind("BrlTorusSet",                          None,       [c_void_p] + [c_double] * 8)
+_bind("BrlTorusClassName",                    c_char_p,   [])
+
+# -----------------------------------------------------------------------------
+# EllipticalTorus Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewEllipticalTorus",                          c_void_p,   [])
+_bind("BrlNewEllipticalTorusAsEllipticalTorus",         c_void_p,   [c_double] * 11)
+_bind("BrlEllipticalTorusCenter",                       c_void_p,   [c_void_p])
+_bind("BrlEllipticalTorusSetCenter",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlEllipticalTorusNormal",                       c_void_p,   [c_void_p])
+_bind("BrlEllipticalTorusSetNormal",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlEllipticalTorusTubeCenterLineRadius",         c_double,   [c_void_p])
+_bind("BrlEllipticalTorusSetTubeCenterLineRadius",      None,       [c_void_p, c_double])
+_bind("BrlEllipticalTorusTubeSemiMajorAxis",            c_void_p,   [c_void_p])
+_bind("BrlEllipticalTorusSetTubeSemiMajorAxis",         None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlEllipticalTorusTubeSemiMinorAxis",            c_double,   [c_void_p])
+_bind("BrlEllipticalTorusSetTubeSemiMinorAxis",         None,       [c_void_p, c_double])
+_bind("BrlEllipticalTorusSet",                          None,       [c_void_p] + [c_double] * 11)
+_bind("BrlEllipticalTorusClassName",                    c_char_p,   [])
+
+# -----------------------------------------------------------------------------
+# HyperbolicCylinder Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewHyperbolicCylinder",                          c_void_p,   [])
+_bind("BrlNewHyperbolicCylinderAsHyperbolicCylinder",      c_void_p,   [c_double] * 11)
+_bind("BrlHyperbolicCylinderBasePoint",                    c_void_p,   [c_void_p])
+_bind("BrlHyperbolicCylinderSetBasePoint",                 None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperbolicCylinderHeight",                       c_void_p,   [c_void_p])
+_bind("BrlHyperbolicCylinderSetHeight",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperbolicCylinderDepth",                        c_void_p,   [c_void_p])
+_bind("BrlHyperbolicCylinderSetDepth",                     None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperbolicCylinderHalfWidth",                    c_double,   [c_void_p])
+_bind("BrlHyperbolicCylinderSetHalfWidth",                 None,       [c_void_p, c_double])
+_bind("BrlHyperbolicCylinderApexAsymptoteDistance",        c_double,   [c_void_p])
+_bind("BrlHyperbolicCylinderSetApexAsymptoteDistance",     None,       [c_void_p, c_double])
+_bind("BrlHyperbolicCylinderSet",                          None,       [c_void_p] + [c_double] * 11)
+_bind("BrlHyperbolicCylinderClassName",                    c_char_p,   [])

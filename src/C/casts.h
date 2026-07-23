@@ -52,8 +52,11 @@ BRLCAD::Combination*               CastCombination(BrlHandle handle);
 BRLCAD::Combination::TreeNode*     CastCombinationTreeNode(BrlHandle handle);
 BRLCAD::Cone*                      CastCone(BrlHandle handle);
 BRLCAD::Ellipsoid*                 CastEllipsoid(BrlHandle handle);
+BRLCAD::EllipticalTorus*           CastEllipticalTorus(BrlHandle handle);
+BRLCAD::HyperbolicCylinder*        CastHyperbolicCylinder(BrlHandle handle);
 BRLCAD::NonManifoldGeometry*       CastNonManifoldGeometry(BrlHandle handle);
 BRLCAD::Sphere*                    CastSphere(BrlHandle handle);
+BRLCAD::Torus*                     CastTorus(BrlHandle handle);
 
 
 #endif // BRLCAD_C_CASTS_INCLUDED

@@ -32,11 +32,15 @@ SET(CSources
     C/cone.cpp
     C/database.cpp
     C/ellipsoid.cpp
+    C/ellipticalTorus.cpp
     C/fileDatabase.cpp
     C/globals.cpp
+    C/hyperbolicCylinder.cpp
     C/memoryDatabase.cpp
+    C/nonManifoldGeometry.cpp
     C/object.cpp
     C/sphere.cpp
+    C/torus.cpp
     C/vectorList.cpp
 )
 
@@ -48,12 +52,15 @@ SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/cone.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/database.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/ellipsoid.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/ellipticalTorus.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/fileDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/globals.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/hyperbolicCylinder.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/nonManifoldGeometry.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/sphere.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/torus.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/vectorList.h
 )
 
