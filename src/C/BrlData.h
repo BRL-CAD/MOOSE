@@ -81,6 +81,14 @@ extern const char* const EllipsoidMagic;
 extern const char* const EllipticalTorusMagic;
 extern const char* const HyperbolicCylinderMagic;
 extern const char* const NonManifoldGeometryMagic;
+extern const char* const NonManifoldGeometryVertexMagic;
+extern const char* const NonManifoldGeometryEdgeMagic;
+extern const char* const NonManifoldGeometryLoopMagic;
+extern const char* const NonManifoldGeometryFaceMagic;
+extern const char* const NonManifoldGeometryShellMagic;
+extern const char* const NonManifoldGeometryRegionMagic;
+extern const char* const NonManifoldGeometryRegionIteratorMagic;
+extern const char* const NullObjectMagic;
 extern const char* const SphereMagic;
 extern const char* const TorusMagic;
 
@@ -201,6 +209,41 @@ public:
 class CombinationData : public PointerData<BRLCAD::Combination> {
 public:
     CombinationData(BRLCAD::Combination* pointer) : PointerData(CombinationMagic, pointer) {}
+};
+
+class NonManifoldGeometryVertexData : public ValueData<BRLCAD::NonManifoldGeometry::Vertex> {
+public:
+    NonManifoldGeometryVertexData(const BRLCAD::NonManifoldGeometry::Vertex& value) : ValueData(NonManifoldGeometryVertexMagic, value) {}
+};
+
+class NonManifoldGeometryEdgeData : public ValueData<BRLCAD::NonManifoldGeometry::Edge> {
+public:
+    NonManifoldGeometryEdgeData(const BRLCAD::NonManifoldGeometry::Edge& value) : ValueData(NonManifoldGeometryEdgeMagic, value) {}
+};
+
+class NonManifoldGeometryLoopData : public ValueData<BRLCAD::NonManifoldGeometry::Loop> {
+public:
+    NonManifoldGeometryLoopData(const BRLCAD::NonManifoldGeometry::Loop& value) : ValueData(NonManifoldGeometryLoopMagic, value) {}
+};
+
+class NonManifoldGeometryFaceData : public ValueData<BRLCAD::NonManifoldGeometry::Face> {
+public:
+    NonManifoldGeometryFaceData(const BRLCAD::NonManifoldGeometry::Face& value) : ValueData(NonManifoldGeometryFaceMagic, value) {}
+};
+
+class NonManifoldGeometryShellData : public ValueData<BRLCAD::NonManifoldGeometry::Shell> {
+public:
+    NonManifoldGeometryShellData(const BRLCAD::NonManifoldGeometry::Shell& value) : ValueData(NonManifoldGeometryShellMagic, value) {}
+};
+
+class NonManifoldGeometryRegionData : public ValueData<BRLCAD::NonManifoldGeometry::Region> {
+public:
+    NonManifoldGeometryRegionData(const BRLCAD::NonManifoldGeometry::Region& value) : ValueData(NonManifoldGeometryRegionMagic, value) {}
+};
+
+class NonManifoldGeometryRegionIteratorData : public ValueData<BRLCAD::NonManifoldGeometry::RegionIterator> {
+public:
+    NonManifoldGeometryRegionIteratorData(const BRLCAD::NonManifoldGeometry::RegionIterator& value) : ValueData(NonManifoldGeometryRegionIteratorMagic, value) {}
 };
 
 

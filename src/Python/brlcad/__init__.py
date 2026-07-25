@@ -34,6 +34,7 @@ from .EllipticalTorus import EllipticalTorus
 from .FileDatabase import FileDatabase
 from .HyperbolicCylinder import HyperbolicCylinder
 from .MemoryDatabase import MemoryDatabase
+from .NonManifoldGeometry import NonManifoldGeometry
 from .Object import Object
 from .Sphere import Sphere
 from .Torus import Torus
@@ -52,6 +53,7 @@ __all__ = [
     'FileDatabase',
     'HyperbolicCylinder',
     'MemoryDatabase',
+    'NonManifoldGeometry',
     'Object',
     'Sphere',
     'Torus',

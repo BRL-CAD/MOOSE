@@ -59,6 +59,13 @@ BrlData* CastHandle
             (handleMagic == EllipticalTorusMagic) ||
             (handleMagic == HyperbolicCylinderMagic) ||
             (handleMagic == NonManifoldGeometryMagic) ||
+            (handleMagic == NonManifoldGeometryVertexMagic) ||
+            (handleMagic == NonManifoldGeometryEdgeMagic) ||
+            (handleMagic == NonManifoldGeometryLoopMagic) ||
+            (handleMagic == NonManifoldGeometryFaceMagic) ||
+            (handleMagic == NonManifoldGeometryShellMagic) ||
+            (handleMagic == NonManifoldGeometryRegionMagic) ||
+            (handleMagic == NonManifoldGeometryRegionIteratorMagic) ||
             (handleMagic == SphereMagic) ||
             (handleMagic == TorusMagic))
             ret = handle;
@@ -470,6 +477,139 @@ NonManifoldGeometry* CastNonManifoldGeometry
             ret = static_cast<NonManifoldGeometryData*>(handle)->Pointer();
         else
             bu_log("CastNonManifoldGeometry: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Vertex* CastNonManifoldGeometryVertex
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Vertex* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryVertexMagic)
+            ret = &(static_cast<NonManifoldGeometryVertexData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryVertex: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Edge* CastNonManifoldGeometryEdge
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Edge* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryEdgeMagic)
+            ret = &(static_cast<NonManifoldGeometryEdgeData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryEdge: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Loop* CastNonManifoldGeometryLoop
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Loop* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryLoopMagic)
+            ret = &(static_cast<NonManifoldGeometryLoopData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryLoop: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Face* CastNonManifoldGeometryFace
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Face* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryFaceMagic)
+            ret = &(static_cast<NonManifoldGeometryFaceData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryFace: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Shell* CastNonManifoldGeometryShell
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Shell* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryShellMagic)
+            ret = &(static_cast<NonManifoldGeometryShellData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryShell: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Region* CastNonManifoldGeometryRegion
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Region* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryRegionMagic)
+            ret = &(static_cast<NonManifoldGeometryRegionData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryRegion: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::RegionIterator* CastNonManifoldGeometryRegionIterator
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::RegionIterator* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryRegionIteratorMagic)
+            ret = &(static_cast<NonManifoldGeometryRegionIteratorData*>(handle)->Value());
+        else
+            bu_log("CastNonManifoldGeometryRegionIterator: wrong handle");
     }
 
     return ret;

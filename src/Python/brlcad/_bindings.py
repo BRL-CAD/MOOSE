@@ -324,3 +324,55 @@ _bind("BrlHyperbolicCylinderApexAsymptoteDistance",        c_double,   [c_void_p
 _bind("BrlHyperbolicCylinderSetApexAsymptoteDistance",     None,       [c_void_p, c_double])
 _bind("BrlHyperbolicCylinderSet",                          None,       [c_void_p] + [c_double] * 11)
 _bind("BrlHyperbolicCylinderClassName",                    c_char_p,   [])
+
+# -----------------------------------------------------------------------------
+# NonManifoldGeometry Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewNonManifoldGeometry",                    c_void_p,   [])
+_bind("BrlNonManifoldGeometryRegions",                c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryTriangulate",            None,       [c_void_p])
+_bind("BrlNonManifoldGeometryTriangulateShell",       None,       [c_void_p, c_void_p])
+_bind("BrlNonManifoldGeometryTriangulateFace",        None,       [c_void_p, c_void_p])
+_bind("BrlNonManifoldGeometryClassName",              c_char_p,   [])
+
+# RegionIterator
+_bind("BrlNonManifoldGeometryRegionIteratorGotoFirstRegion", None, [c_void_p])
+_bind("BrlNonManifoldGeometryRegionIteratorNextRegion",      c_void_p, [c_void_p])
+_bind("BrlNonManifoldGeometryRegionIteratorCurrentRegion",   c_void_p, [c_void_p])
+
+# Region
+_bind("BrlNonManifoldGeometryRegionGotoFirstShell",   None,       [c_void_p])
+_bind("BrlNonManifoldGeometryRegionNextShell",        c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryRegionCurrentShell",     c_void_p,   [c_void_p])
+
+# Shell
+_bind("BrlNonManifoldGeometryShellGotoFirstFace",     None,       [c_void_p])
+_bind("BrlNonManifoldGeometryShellNextFace",          c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellCurrentFace",       c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellGotoFirstLoop",     None,       [c_void_p])
+_bind("BrlNonManifoldGeometryShellNextLoop",          c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellCurrentLoop",       c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellGotoFirstEdge",     None,       [c_void_p])
+_bind("BrlNonManifoldGeometryShellNextEdge",          c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellCurrentEdge",       c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellGotoFirstVertex",   None,       [c_void_p])
+_bind("BrlNonManifoldGeometryShellNextVertex",        c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryShellCurrentVertex",     c_void_p,   [c_void_p])
+
+# Face
+_bind("BrlNonManifoldGeometryFaceGotoFirstLoop",      None,       [c_void_p])
+_bind("BrlNonManifoldGeometryFaceNextLoop",           c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryFaceCurrentLoop",        c_void_p,   [c_void_p])
+
+# Loop
+_bind("BrlNonManifoldGeometryLoopIsHole",             c_int,      [c_void_p])
+_bind("BrlNonManifoldGeometryLoopGotoFirstEdge",      None,       [c_void_p])
+_bind("BrlNonManifoldGeometryLoopNextEdge",           c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryLoopCurrentEdge",        c_void_p,   [c_void_p])
+
+# Edge
+_bind("BrlNonManifoldGeometryEdgeForwardVertex",      c_void_p,   [c_void_p])
+_bind("BrlNonManifoldGeometryEdgeBackwardVertex",     c_void_p,   [c_void_p])
+
+# Vertex
+_bind("BrlNonManifoldGeometryVertexPoint",            c_void_p,   [c_void_p])
