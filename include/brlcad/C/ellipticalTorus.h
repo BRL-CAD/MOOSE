@@ -53,14 +53,16 @@ BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetNormal(BrlElliptical
                                                                    double             normalX, double normalY, double normalZ);
 
 BRLCAD_MOOSE_EXPORT double             BrlEllipticalTorusTubeCenterLineRadius(BrlEllipticalTorus ellipticalTorus);
-BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeCenterLineRadius(BrlEllipticalTorus ellipticalTorus, double radius);
+BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeCenterLineRadius(BrlEllipticalTorus ellipticalTorus,
+                                                                                 double             radius);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D        BrlEllipticalTorusTubeSemiMajorAxis(BrlEllipticalTorus ellipticalTorus);
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeSemiMajorAxis(BrlEllipticalTorus ellipticalTorus,
                                                                               double             tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ);
 
 BRLCAD_MOOSE_EXPORT double             BrlEllipticalTorusTubeSemiMinorAxis(BrlEllipticalTorus ellipticalTorus);
-BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeSemiMinorAxis(BrlEllipticalTorus ellipticalTorus, double length);
+BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSetTubeSemiMinorAxis(BrlEllipticalTorus ellipticalTorus,
+                                                                              double             length);
 
 BRLCAD_MOOSE_EXPORT void               BrlEllipticalTorusSet(BrlEllipticalTorus ellipticalTorus,
                                                              double             centerX,            double centerY,            double centerZ,

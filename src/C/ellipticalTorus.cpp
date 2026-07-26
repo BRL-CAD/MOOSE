@@ -44,8 +44,8 @@ BrlEllipticalTorus BrlNewEllipticalTorus(void) {
 
 BrlEllipticalTorus BrlNewEllipticalTorusAsEllipticalTorus
 (
-    double centerX, double centerY, double centerZ,
-    double normalX, double normalY, double normalZ,
+    double centerX,            double centerY,            double centerZ,
+    double normalX,            double normalY,            double normalZ,
     double tubeCenterLineRadius,
     double tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ,
     double tubeSemiMinorAxisLength
@@ -245,8 +245,8 @@ void BrlEllipticalTorusSetTubeSemiMinorAxis
 void BrlEllipticalTorusSet
 (
     BrlEllipticalTorus ellipticalTorus,
-    double             centerX, double centerY, double centerZ,
-    double             normalX, double normalY, double normalZ,
+    double             centerX,            double centerY,            double centerZ,
+    double             normalX,            double normalY,            double normalZ,
     double             tubeCenterLineRadius,
     double             tubeSemiMajorAxisX, double tubeSemiMajorAxisY, double tubeSemiMajorAxisZ,
     double             tubeSemiMinorAxisLength
