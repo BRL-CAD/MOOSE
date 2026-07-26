@@ -65,8 +65,19 @@ const char* const CombinationMagic             = "BRLCAD::Combination";
 const char* const CombinationTreeNodeMagic     = "BRLCAD::Combination::TreeNode";
 const char* const ConeMagic                    = "BRLCAD::Cone";
 const char* const EllipsoidMagic               = "BRLCAD::Ellipsoid";
+const char* const EllipticalTorusMagic         = "BRLCAD::EllipticalTorus";
+const char* const HyperbolicCylinderMagic      = "BRLCAD::HyperbolicCylinder";
 const char* const NonManifoldGeometryMagic     = "BRLCAD::NonManifoldGeometry";
+const char* const NonManifoldGeometryVertexMagic         = "BRLCAD::NonManifoldGeometry::Vertex";
+const char* const NonManifoldGeometryEdgeMagic           = "BRLCAD::NonManifoldGeometry::Edge";
+const char* const NonManifoldGeometryLoopMagic           = "BRLCAD::NonManifoldGeometry::Loop";
+const char* const NonManifoldGeometryFaceMagic           = "BRLCAD::NonManifoldGeometry::Face";
+const char* const NonManifoldGeometryShellMagic          = "BRLCAD::NonManifoldGeometry::Shell";
+const char* const NonManifoldGeometryRegionMagic         = "BRLCAD::NonManifoldGeometry::Region";
+const char* const NonManifoldGeometryRegionIteratorMagic = "BRLCAD::NonManifoldGeometry::RegionIterator";
+const char* const NullObjectMagic                        = "nullObject";
 const char* const SphereMagic                  = "BRLCAD::Sphere";
+const char* const TorusMagic                   = "BRLCAD::Torus";
 
 
 void BrlDeleteHandle

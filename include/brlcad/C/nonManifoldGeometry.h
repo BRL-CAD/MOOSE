@@ -27,6 +27,7 @@
 #define BRLCAD_C_NONMANIFOLDGEOMETRY_INCLUDED
 
 #include <brlcad/C/object.h>
+#include <brlcad/C/vector.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -34,6 +35,63 @@ extern "C" {
 
 
 typedef BrlObject BrlNonManifoldGeometry;
+
+typedef BrlHandle BrlNonManifoldGeometryVertex;
+typedef BrlHandle BrlNonManifoldGeometryEdge;
+typedef BrlHandle BrlNonManifoldGeometryLoop;
+typedef BrlHandle BrlNonManifoldGeometryFace;
+typedef BrlHandle BrlNonManifoldGeometryShell;
+typedef BrlHandle BrlNonManifoldGeometryRegion;
+typedef BrlHandle BrlNonManifoldGeometryRegionIterator;
+
+
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometry BrlNewNonManifoldGeometry(void);
+
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryRegionIterator BrlNonManifoldGeometryRegions(BrlNonManifoldGeometry nonManifoldGeometry);
+BRLCAD_MOOSE_EXPORT void                   BrlNonManifoldGeometryTriangulate(BrlNonManifoldGeometry nonManifoldGeometry);
+BRLCAD_MOOSE_EXPORT void                   BrlNonManifoldGeometryTriangulateShell(BrlNonManifoldGeometry nonManifoldGeometry, BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT void                   BrlNonManifoldGeometryTriangulateFace(BrlNonManifoldGeometry nonManifoldGeometry, BrlNonManifoldGeometryFace face);
+
+BRLCAD_MOOSE_EXPORT const char*            BrlNonManifoldGeometryClassName(void);
+
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryRegionIteratorGotoFirstRegion(BrlNonManifoldGeometryRegionIterator iterator);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryRegionIterator BrlNonManifoldGeometryRegionIteratorNextRegion(BrlNonManifoldGeometryRegionIterator iterator);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryRegion BrlNonManifoldGeometryRegionIteratorCurrentRegion(BrlNonManifoldGeometryRegionIterator iterator);
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryRegionGotoFirstShell(BrlNonManifoldGeometryRegion region);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryRegion BrlNonManifoldGeometryRegionNextShell(BrlNonManifoldGeometryRegion region);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryShell BrlNonManifoldGeometryRegionCurrentShell(BrlNonManifoldGeometryRegion region);
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryShellGotoFirstFace(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryShell BrlNonManifoldGeometryShellNextFace(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryFace BrlNonManifoldGeometryShellCurrentFace(BrlNonManifoldGeometryShell shell);
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryShellGotoFirstLoop(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryShell BrlNonManifoldGeometryShellNextLoop(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryLoop BrlNonManifoldGeometryShellCurrentLoop(BrlNonManifoldGeometryShell shell);
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryShellGotoFirstEdge(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryShell BrlNonManifoldGeometryShellNextEdge(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryEdge BrlNonManifoldGeometryShellCurrentEdge(BrlNonManifoldGeometryShell shell);
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryShellGotoFirstVertex(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryShell BrlNonManifoldGeometryShellNextVertex(BrlNonManifoldGeometryShell shell);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryVertex BrlNonManifoldGeometryShellCurrentVertex(BrlNonManifoldGeometryShell shell);
+
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryFaceGotoFirstLoop(BrlNonManifoldGeometryFace face);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryFace BrlNonManifoldGeometryFaceNextLoop(BrlNonManifoldGeometryFace face);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryLoop BrlNonManifoldGeometryFaceCurrentLoop(BrlNonManifoldGeometryFace face);
+
+BRLCAD_MOOSE_EXPORT int BrlNonManifoldGeometryLoopIsHole(BrlNonManifoldGeometryLoop loop);
+BRLCAD_MOOSE_EXPORT void BrlNonManifoldGeometryLoopGotoFirstEdge(BrlNonManifoldGeometryLoop loop);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryLoop BrlNonManifoldGeometryLoopNextEdge(BrlNonManifoldGeometryLoop loop);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryEdge BrlNonManifoldGeometryLoopCurrentEdge(BrlNonManifoldGeometryLoop loop);
+
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryVertex BrlNonManifoldGeometryEdgeForwardVertex(BrlNonManifoldGeometryEdge edge);
+BRLCAD_MOOSE_EXPORT BrlNonManifoldGeometryVertex BrlNonManifoldGeometryEdgeBackwardVertex(BrlNonManifoldGeometryEdge edge);
+
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlNonManifoldGeometryVertexPoint(BrlNonManifoldGeometryVertex vertex);
 
 
 #ifdef __cplusplus

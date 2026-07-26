@@ -34,8 +34,11 @@
 #include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
+#include <brlcad/Database/EllipticalTorus.h>
+#include <brlcad/Database/HyperbolicCylinder.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
 #include <brlcad/Database/Sphere.h>
+#include <brlcad/Database/Torus.h>
 
 
 class BrlData {
@@ -75,8 +78,19 @@ extern const char* const CombinationMagic;
 extern const char* const CombinationTreeNodeMagic;
 extern const char* const ConeMagic;
 extern const char* const EllipsoidMagic;
+extern const char* const EllipticalTorusMagic;
+extern const char* const HyperbolicCylinderMagic;
 extern const char* const NonManifoldGeometryMagic;
+extern const char* const NonManifoldGeometryVertexMagic;
+extern const char* const NonManifoldGeometryEdgeMagic;
+extern const char* const NonManifoldGeometryLoopMagic;
+extern const char* const NonManifoldGeometryFaceMagic;
+extern const char* const NonManifoldGeometryShellMagic;
+extern const char* const NonManifoldGeometryRegionMagic;
+extern const char* const NonManifoldGeometryRegionIteratorMagic;
+extern const char* const NullObjectMagic;
 extern const char* const SphereMagic;
+extern const char* const TorusMagic;
 
 
 template<class ValueType> class ValueData : public BrlData {
@@ -197,6 +211,41 @@ public:
     CombinationData(BRLCAD::Combination* pointer) : PointerData(CombinationMagic, pointer) {}
 };
 
+class NonManifoldGeometryVertexData : public ValueData<BRLCAD::NonManifoldGeometry::Vertex> {
+public:
+    NonManifoldGeometryVertexData(const BRLCAD::NonManifoldGeometry::Vertex& value) : ValueData(NonManifoldGeometryVertexMagic, value) {}
+};
+
+class NonManifoldGeometryEdgeData : public ValueData<BRLCAD::NonManifoldGeometry::Edge> {
+public:
+    NonManifoldGeometryEdgeData(const BRLCAD::NonManifoldGeometry::Edge& value) : ValueData(NonManifoldGeometryEdgeMagic, value) {}
+};
+
+class NonManifoldGeometryLoopData : public ValueData<BRLCAD::NonManifoldGeometry::Loop> {
+public:
+    NonManifoldGeometryLoopData(const BRLCAD::NonManifoldGeometry::Loop& value) : ValueData(NonManifoldGeometryLoopMagic, value) {}
+};
+
+class NonManifoldGeometryFaceData : public ValueData<BRLCAD::NonManifoldGeometry::Face> {
+public:
+    NonManifoldGeometryFaceData(const BRLCAD::NonManifoldGeometry::Face& value) : ValueData(NonManifoldGeometryFaceMagic, value) {}
+};
+
+class NonManifoldGeometryShellData : public ValueData<BRLCAD::NonManifoldGeometry::Shell> {
+public:
+    NonManifoldGeometryShellData(const BRLCAD::NonManifoldGeometry::Shell& value) : ValueData(NonManifoldGeometryShellMagic, value) {}
+};
+
+class NonManifoldGeometryRegionData : public ValueData<BRLCAD::NonManifoldGeometry::Region> {
+public:
+    NonManifoldGeometryRegionData(const BRLCAD::NonManifoldGeometry::Region& value) : ValueData(NonManifoldGeometryRegionMagic, value) {}
+};
+
+class NonManifoldGeometryRegionIteratorData : public ValueData<BRLCAD::NonManifoldGeometry::RegionIterator> {
+public:
+    NonManifoldGeometryRegionIteratorData(const BRLCAD::NonManifoldGeometry::RegionIterator& value) : ValueData(NonManifoldGeometryRegionIteratorMagic, value) {}
+};
+
 
 class CombinationTreeNodeData : public ValueData<BRLCAD::Combination::TreeNode> {
 public:
@@ -216,6 +265,18 @@ public:
 };
 
 
+class EllipticalTorusData : public PointerData<BRLCAD::EllipticalTorus> {
+public:
+    EllipticalTorusData(BRLCAD::EllipticalTorus* pointer) : PointerData(EllipticalTorusMagic, pointer) {}
+};
+
+
+class HyperbolicCylinderData : public PointerData<BRLCAD::HyperbolicCylinder> {
+public:
+    HyperbolicCylinderData(BRLCAD::HyperbolicCylinder* pointer) : PointerData(HyperbolicCylinderMagic, pointer) {}
+};
+
+
 class NonManifoldGeometryData : public PointerData<BRLCAD::NonManifoldGeometry> {
 public:
     NonManifoldGeometryData(BRLCAD::NonManifoldGeometry* pointer) : PointerData(NonManifoldGeometryMagic, pointer) {}
@@ -225,6 +286,12 @@ public:
 class SphereData : public PointerData<BRLCAD::Sphere> {
 public:
     SphereData(BRLCAD::Sphere* pointer) : PointerData(SphereMagic, pointer) {}
+};
+
+
+class TorusData : public PointerData<BRLCAD::Torus> {
+public:
+    TorusData(BRLCAD::Torus* pointer) : PointerData(TorusMagic, pointer) {}
 };
 
 
