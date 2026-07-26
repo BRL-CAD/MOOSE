@@ -52,10 +52,12 @@ BRLCAD_MOOSE_EXPORT void        BrlTorusSetNormal(BrlTorus torus,
                                                   double normalX, double normalY, double normalZ);
 
 BRLCAD_MOOSE_EXPORT double      BrlTorusTubeCenterLineRadius(BrlTorus torus);
-BRLCAD_MOOSE_EXPORT void        BrlTorusSetTubeCenterLineRadius(BrlTorus torus, double radius);
+BRLCAD_MOOSE_EXPORT void        BrlTorusSetTubeCenterLineRadius(BrlTorus torus,
+                                                                double   radius);
 
 BRLCAD_MOOSE_EXPORT double      BrlTorusTubeRadius(BrlTorus torus);
-BRLCAD_MOOSE_EXPORT void        BrlTorusSetTubeRadius(BrlTorus torus, double radius);
+BRLCAD_MOOSE_EXPORT void        BrlTorusSetTubeRadius(BrlTorus torus,
+                                                      double   radius);
 
 BRLCAD_MOOSE_EXPORT void        BrlTorusSet(BrlTorus torus,
                                             double   centerX, double centerY, double centerZ,
