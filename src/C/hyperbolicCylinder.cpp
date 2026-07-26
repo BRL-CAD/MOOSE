@@ -44,9 +44,9 @@ BrlHyperbolicCylinder BrlNewHyperbolicCylinder(void) {
 
 BrlHyperbolicCylinder BrlNewHyperbolicCylinderAsHyperbolicCylinder
 (
-    double basePointX,    double basePointY,    double basePointZ,
-    double heightX,       double heightY,       double heightZ,
-    double depthX,        double depthY,        double depthZ,
+    double basePointX, double basePointY, double basePointZ,
+    double heightX,    double heightY,    double heightZ,
+    double depthX,     double depthY,     double depthZ,
     double halfWidth,
     double apexAsymptoteDistance
 ) {
@@ -80,7 +80,7 @@ BrlVector3D BrlHyperbolicCylinderBasePoint
 void BrlHyperbolicCylinderSetBasePoint
 (
     BrlHyperbolicCylinder hyperbolicCylinder,
-    double                basePointX,       double basePointY,       double basePointZ
+    double                basePointX, double basePointY, double basePointZ
 ) {
     if (hyperbolicCylinder != nullptr) {
         HyperbolicCylinder* hc = CastHyperbolicCylinder(hyperbolicCylinder);
@@ -118,7 +118,7 @@ BrlVector3D BrlHyperbolicCylinderHeight
 void BrlHyperbolicCylinderSetHeight
 (
     BrlHyperbolicCylinder hyperbolicCylinder,
-    double                heightX,          double heightY,       double heightZ
+    double                heightX, double heightY, double heightZ
 ) {
     if (hyperbolicCylinder != nullptr) {
         HyperbolicCylinder* hc = CastHyperbolicCylinder(hyperbolicCylinder);
@@ -156,7 +156,7 @@ BrlVector3D BrlHyperbolicCylinderDepth
 void BrlHyperbolicCylinderSetDepth
 (
     BrlHyperbolicCylinder hyperbolicCylinder,
-    double                depthX,       double depthY,      double depthZ
+    double                depthX, double depthY, double depthZ
 ) {
     if (hyperbolicCylinder != nullptr) {
         HyperbolicCylinder* hc = CastHyperbolicCylinder(hyperbolicCylinder);
@@ -245,10 +245,11 @@ void BrlHyperbolicCylinderSetApexAsymptoteDistance
 void BrlHyperbolicCylinderSet
 (
     BrlHyperbolicCylinder hyperbolicCylinder,
-    double                basePointX,    double basePointY,    double basePointZ,
-    double                heightX,       double heightY,       double heightZ,
-    double                depthX,        double depthY,        double depthZ,
-    double                halfWidth,     double apexAsymptoteDistance
+    double                basePointX, double basePointY, double basePointZ,
+    double                heightX,    double heightY,    double heightZ,
+    double                depthX,     double depthY,     double depthZ,
+    double                halfWidth,
+    double                apexAsymptoteDistance
 ) {
     if (hyperbolicCylinder != nullptr) {
         HyperbolicCylinder* hc = CastHyperbolicCylinder(hyperbolicCylinder);

@@ -38,10 +38,11 @@ typedef BrlObject BrlHyperbolicCylinder;
 
 
 BRLCAD_MOOSE_EXPORT BrlHyperbolicCylinder BrlNewHyperbolicCylinder(void);
-BRLCAD_MOOSE_EXPORT BrlHyperbolicCylinder BrlNewHyperbolicCylinderAsHyperbolicCylinder(double basePointX,    double basePointY,    double basePointZ,
-                                                                                       double heightX,       double heightY,       double heightZ,
-                                                                                       double depthX,        double depthY,        double depthZ,
-                                                                                       double halfWidth,     double apexAsymptoteDistance);
+BRLCAD_MOOSE_EXPORT BrlHyperbolicCylinder BrlNewHyperbolicCylinderAsHyperbolicCylinder(double basePointX, double basePointY, double basePointZ,
+                                                                                       double heightX,    double heightY,    double heightZ,
+                                                                                       double depthX,     double depthY,     double depthZ,
+                                                                                       double halfWidth,
+                                                                                       double apexAsymptoteDistance);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D           BrlHyperbolicCylinderBasePoint(BrlHyperbolicCylinder hyperbolicCylinder);
 BRLCAD_MOOSE_EXPORT void                  BrlHyperbolicCylinderSetBasePoint(BrlHyperbolicCylinder hyperbolicCylinder,
@@ -60,13 +61,15 @@ BRLCAD_MOOSE_EXPORT void                  BrlHyperbolicCylinderSetHalfWidth(BrlH
                                                                             double                halfWidth);
 
 BRLCAD_MOOSE_EXPORT double                BrlHyperbolicCylinderApexAsymptoteDistance(BrlHyperbolicCylinder hyperbolicCylinder);
-BRLCAD_MOOSE_EXPORT void                  BrlHyperbolicCylinderSetApexAsymptoteDistance(BrlHyperbolicCylinder hyperbolicCylinder, double apexAsymptoteDistance);
+BRLCAD_MOOSE_EXPORT void                  BrlHyperbolicCylinderSetApexAsymptoteDistance(BrlHyperbolicCylinder hyperbolicCylinder,
+                                                                                        double                apexAsymptoteDistance);
 
 BRLCAD_MOOSE_EXPORT void                  BrlHyperbolicCylinderSet(BrlHyperbolicCylinder hyperbolicCylinder,
                                                                    double                basePointX, double basePointY, double basePointZ,
                                                                    double                heightX,    double heightY,    double heightZ,
                                                                    double                depthX,     double depthY,     double depthZ,
-                                                                   double                halfWidth,  double apexAsymptoteDistance);
+                                                                   double                halfWidth,
+                                                                   double                apexAsymptoteDistance);
 
 BRLCAD_MOOSE_EXPORT const char*           BrlHyperbolicCylinderClassName(void);
 
