@@ -28,7 +28,7 @@ from .Database import Database
 
 class FileDatabase(Database):
     """Object-oriented Python interface for the read-write BRL-CAD FileDatabase."""
-    
+
     def __init__(self):
         self._handle = _lib.BrlNewFileDatabase()
         if not self._handle:

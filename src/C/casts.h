@@ -53,7 +53,9 @@ BRLCAD::Combination::TreeNode*               CastCombinationTreeNode(BrlHandle h
 BRLCAD::Cone*                                CastCone(BrlHandle handle);
 BRLCAD::Ellipsoid*                           CastEllipsoid(BrlHandle handle);
 BRLCAD::EllipticalTorus*                     CastEllipticalTorus(BrlHandle handle);
+BRLCAD::Halfspace*                           CastHalfspace(BrlHandle handle);
 BRLCAD::HyperbolicCylinder*                  CastHyperbolicCylinder(BrlHandle handle);
+BRLCAD::Hyperboloid*                         CastHyperboloid(BrlHandle handle);
 BRLCAD::NonManifoldGeometry*                 CastNonManifoldGeometry(BrlHandle handle);
 BRLCAD::NonManifoldGeometry::Vertex*         CastNonManifoldGeometryVertex(BrlHandle handle);
 BRLCAD::NonManifoldGeometry::Edge*           CastNonManifoldGeometryEdge(BrlHandle handle);
@@ -62,6 +64,8 @@ BRLCAD::NonManifoldGeometry::Face*           CastNonManifoldGeometryFace(BrlHand
 BRLCAD::NonManifoldGeometry::Shell*          CastNonManifoldGeometryShell(BrlHandle handle);
 BRLCAD::NonManifoldGeometry::Region*         CastNonManifoldGeometryRegion(BrlHandle handle);
 BRLCAD::NonManifoldGeometry::RegionIterator* CastNonManifoldGeometryRegionIterator(BrlHandle handle);
+BRLCAD::Paraboloid*                          CastParaboloid(BrlHandle handle);
+BRLCAD::Particle*                            CastParticle(BrlHandle handle);
 BRLCAD::Sphere*                              CastSphere(BrlHandle handle);
 BRLCAD::Torus*                               CastTorus(BrlHandle handle);
 

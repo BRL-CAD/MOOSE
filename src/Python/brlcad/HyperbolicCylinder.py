@@ -53,7 +53,7 @@ class HyperbolicCylinder(Object):
             handle = _lib.BrlNewHyperbolicCylinder()
 
         super().__init__(handle=handle, owned=owned)
-        
+
     def GetBasePoint(self):
         return _lib.BrlHyperbolicCylinderBasePoint(self._handle)
 

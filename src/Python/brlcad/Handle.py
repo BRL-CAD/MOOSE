@@ -35,14 +35,14 @@ class Handle:
             self._handle = None
         else:
             self._handle = handle
-        self._owned = owned  
+        self._owned = owned
 
     def close(self):
         """Explicitly drops the pointer into the unified C++ destructor if owned."""
         if hasattr(self, '_handle') and self._handle is not None and self._handle != 0:
             is_owned = getattr(self, '_owned', True)
-            
-            if is_owned:  
+
+            if is_owned:
                 _lib.BrlDeleteHandle(self._handle)
             self._handle = None
 

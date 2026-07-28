@@ -29,7 +29,7 @@ from .ConstDatabase import ConstDatabase
 
 class Database(ConstDatabase):
     """Intermediate parent class providing read-write capabilities (SetTitle)."""
-    
+
     def __init__(self):
         super().__init__()
 
@@ -37,6 +37,6 @@ class Database(ConstDatabase):
         """Modifies the internal title tracking string inside the database header."""
         if not self._handle:
             raise ValueError("Cannot invoke SetTitle on an explicitly closed session.")
-            
+
         c_title = ctypes.c_char_p(title.encode('utf-8'))
         _lib.BrlDatabaseSetTitle(self._handle, c_title)

@@ -52,7 +52,7 @@ class Torus(Object):
             handle = _lib.BrlNewTorus()
 
         super().__init__(handle=handle, owned=owned)
-        
+
     def GetCenter(self):
         """Returns the center point wrapper handle address of the torus."""
         return _lib.BrlTorusCenter(self._handle)

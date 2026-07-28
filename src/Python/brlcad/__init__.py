@@ -32,9 +32,13 @@ from .Database import Database
 from .Ellipsoid import Ellipsoid
 from .EllipticalTorus import EllipticalTorus
 from .FileDatabase import FileDatabase
+from .Halfspace import Halfspace
 from .HyperbolicCylinder import HyperbolicCylinder
+from .Hyperboloid import Hyperboloid
 from .MemoryDatabase import MemoryDatabase
 from .NonManifoldGeometry import NonManifoldGeometry
+from .Paraboloid import Paraboloid
+from .Particle import Particle
 from .Object import Object
 from .Sphere import Sphere
 from .Torus import Torus
@@ -51,9 +55,13 @@ __all__ = [
     'EllipticalTorus',
     'Face',
     'FileDatabase',
+    'Halfspace',
     'HyperbolicCylinder',
+    'Hyperboloid',
     'MemoryDatabase',
     'NonManifoldGeometry',
+    'Paraboloid',
+    'Particle',
     'Object',
     'Sphere',
     'Torus',

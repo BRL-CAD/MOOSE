@@ -28,7 +28,7 @@ from .Database import Database
 
 class MemoryDatabase(Database):
     """Object-oriented Python interface for the in-memory BRL-CAD MemoryDatabase."""
-    
+
     def __init__(self):
         self._handle = _lib.BrlNewMemoryDatabase()
         if not self._handle:

@@ -376,3 +376,80 @@ _bind("BrlNonManifoldGeometryEdgeBackwardVertex",     c_void_p,   [c_void_p])
 
 # Vertex
 _bind("BrlNonManifoldGeometryVertexPoint",            c_void_p,   [c_void_p])
+
+
+# -----------------------------------------------------------------------------
+# Halfspace Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewHalfspace",                           c_void_p,   [])
+_bind("BrlNewHalfspaceAsHalfspace",                c_void_p,   [c_double, c_double, c_double, c_double])
+_bind("BrlHalfspaceNormal",                        c_void_p,   [c_void_p])
+_bind("BrlHalfspaceSetNormal",                     None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHalfspaceDistanceFromOrigin",            c_double,   [c_void_p])
+_bind("BrlHalfspaceSetDistanceFromOrigin",         None,       [c_void_p, c_double])
+_bind("BrlHalfspaceSet",                           None,       [c_void_p, c_double, c_double, c_double, c_double])
+_bind("BrlHalfspaceClassName",                     c_char_p,   [])
+
+# -----------------------------------------------------------------------------
+# Hyperboloid Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewHyperboloid",                         c_void_p,   [])
+_bind("BrlNewHyperboloidAsHyperboloid",            c_void_p,   [c_double] * 11)
+_bind("BrlNewHyperboloidAsHyperboloidWithLength",  c_void_p,   [c_double] * 12)
+_bind("BrlHyperboloidBasePoint",                   c_void_p,   [c_void_p])
+_bind("BrlHyperboloidSetBasePoint",                None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperboloidHeight",                      c_void_p,   [c_void_p])
+_bind("BrlHyperboloidSetHeight",                   None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperboloidSemiMajorAxis",               c_void_p,   [c_void_p])
+_bind("BrlHyperboloidSetSemiMajorAxis",            None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperboloidSetSemiMajorAxisWithLength",  None,       [c_void_p, c_double, c_double, c_double, c_double])
+_bind("BrlHyperboloidSemiMajorAxisDirection",      c_void_p,   [c_void_p])
+_bind("BrlHyperboloidSetSemiMajorAxisDirection",   None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlHyperboloidSemiMajorAxisLength",         c_double,   [c_void_p])
+_bind("BrlHyperboloidSetSemiMajorAxisLength",      None,       [c_void_p, c_double])
+_bind("BrlHyperboloidSemiMinorAxisLength",         c_double,   [c_void_p])
+_bind("BrlHyperboloidSetSemiMinorAxisLength",      None,       [c_void_p, c_double])
+_bind("BrlHyperboloidApexAsymptoteDistance",       c_double,   [c_void_p])
+_bind("BrlHyperboloidSetApexAsymptoteDistance",    None,       [c_void_p, c_double])
+_bind("BrlHyperboloidSet",                         None,       [c_void_p] + [c_double] * 11)
+_bind("BrlHyperboloidSetWithLength",               None,       [c_void_p] + [c_double] * 12)
+_bind("BrlHyperboloidClassName",                   c_char_p,   [])
+
+# -----------------------------------------------------------------------------
+# Particle Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewParticle",                            c_void_p,   [])
+_bind("BrlNewParticleAsParticle",                  c_void_p,   [c_double] * 8)
+_bind("BrlParticleBasePoint",                      c_void_p,   [c_void_p])
+_bind("BrlParticleSetBasePoint",                   None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlParticleHeight",                         c_void_p,   [c_void_p])
+_bind("BrlParticleSetHeight",                      None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlParticleBaseRadius",                     c_double,   [c_void_p])
+_bind("BrlParticleSetBaseRadius",                  None,       [c_void_p, c_double])
+_bind("BrlParticleTopRadius",                      c_double,   [c_void_p])
+_bind("BrlParticleSetTopRadius",                   None,       [c_void_p, c_double])
+_bind("BrlParticleSet",                            None,       [c_void_p] + [c_double] * 8)
+_bind("BrlParticleClassName",                      c_char_p,   [])
+
+# -----------------------------------------------------------------------------
+# Paraboloid Function Signatures
+# -----------------------------------------------------------------------------
+_bind("BrlNewParaboloid",                          c_void_p,   [])
+_bind("BrlNewParaboloidAsParaboloid",              c_void_p,   [c_double] * 10)
+_bind("BrlNewParaboloidAsParaboloidWithLength",    c_void_p,   [c_double] * 11)
+_bind("BrlParaboloidBasePoint",                    c_void_p,   [c_void_p])
+_bind("BrlParaboloidSetBasePoint",                 None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlParaboloidHeight",                       c_void_p,   [c_void_p])
+_bind("BrlParaboloidSetHeight",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlParaboloidSemiMajorAxis",                c_void_p,   [c_void_p])
+_bind("BrlParaboloidSetSemiMajorAxis",             None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlParaboloidSetSemiMajorAxisWithLength",   None,       [c_void_p, c_double, c_double, c_double, c_double])
+_bind("BrlParaboloidSemiMajorAxisDirection",       c_void_p,   [c_void_p])
+_bind("BrlParaboloidSetSemiMajorAxisDirection",    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlParaboloidSemiMajorAxisLength",          c_double,   [c_void_p])
+_bind("BrlParaboloidSetSemiMajorAxisLength",       None,       [c_void_p, c_double])
+_bind("BrlParaboloidSemiMinorAxisLength",          c_double,   [c_void_p])
+_bind("BrlParaboloidSetSemiMinorAxisLength",       None,       [c_void_p, c_double])
+_bind("BrlParaboloidSet",                          None,       [c_void_p] + [c_double] * 10)
+_bind("BrlParaboloidSetWithLength",                None,       [c_void_p] + [c_double] * 11)
+_bind("BrlParaboloidClassName",                    c_char_p,   [])
