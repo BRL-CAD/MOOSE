@@ -102,6 +102,8 @@ BRLCAD_MOOSE_EXPORT void        BrlConeSetAsRightCircularCylinder(BrlCone cone,
                                                                   double  heightX, double heightY, double heightZ,
                                                                   double  radius);
 
+BRLCAD_MOOSE_EXPORT const char* BrlConeClassName(void);
+
 
 #ifdef __cplusplus
 }

@@ -35,10 +35,7 @@
 using namespace BRLCAD;
 
 
-BrlEllipsoid BrlNewEllipsoid
-(
-    void
-) {
+BrlEllipsoid BrlNewEllipsoid(void) {
     return new EllipsoidData(new Ellipsoid());
 }
 
@@ -245,4 +242,9 @@ void BrlEllipsoidSetSphere
             ell->SetSphere(center, radius);
         }
     }
+}
+
+
+const char* BrlEllipsoidClassName(void) {
+  return Ellipsoid::ClassName();
 }

@@ -23,6 +23,8 @@
  *      implements helper functions to cast void* handles to the correct C++ class
  */
 
+#include <cstring>
+
 #include "bu/log.h"
 
 #include "casts.h"
@@ -48,10 +50,28 @@ BrlData* CastHandle
             (handleMagic == ObjectMagic) ||
             (handleMagic == ObjectAttributeIteratorMagic) ||
             (handleMagic == Arb8Magic) ||
+            (handleMagic == BagOfTrianglesMagic) ||
+            (handleMagic == BagOfTrianglesFaceMagic) ||
+            (handleMagic == CombinationMagic) ||
+            (handleMagic == CombinationTreeNodeMagic) ||
             (handleMagic == ConeMagic) ||
             (handleMagic == EllipsoidMagic) ||
+            (handleMagic == EllipticalTorusMagic) ||
+            (handleMagic == HalfspaceMagic) ||
+            (handleMagic == HyperbolicCylinderMagic) ||
+            (handleMagic == HyperboloidMagic) ||
             (handleMagic == NonManifoldGeometryMagic) ||
-            (handleMagic == SphereMagic))
+            (handleMagic == NonManifoldGeometryVertexMagic) ||
+            (handleMagic == NonManifoldGeometryEdgeMagic) ||
+            (handleMagic == NonManifoldGeometryLoopMagic) ||
+            (handleMagic == NonManifoldGeometryFaceMagic) ||
+            (handleMagic == NonManifoldGeometryShellMagic) ||
+            (handleMagic == NonManifoldGeometryRegionMagic) ||
+            (handleMagic == NonManifoldGeometryRegionIteratorMagic) ||
+            (handleMagic == ParaboloidMagic) ||
+            (handleMagic == ParticleMagic) ||
+            (handleMagic == SphereMagic) ||
+            (handleMagic == TorusMagic))
             ret = handle;
         else
             bu_log("CastHandle: invalid handle");
@@ -194,14 +214,32 @@ Object* CastObject
             ret = static_cast<ObjectData*>(handle)->Pointer();
         else if (handleMagic == Arb8Magic)
             ret = static_cast<Arb8Data*>(handle)->Pointer();
+        else if (handleMagic == BagOfTrianglesMagic)
+            ret = static_cast<BagOfTrianglesData*>(handle)->Pointer();
+        else if (handleMagic == CombinationMagic)
+            ret = static_cast<CombinationData*>(handle)->Pointer();
         else if (handleMagic == ConeMagic)
             ret = static_cast<ConeData*>(handle)->Pointer();
         else if (handleMagic == EllipsoidMagic)
             ret = static_cast<EllipsoidData*>(handle)->Pointer();
+        else if (handleMagic == EllipticalTorusMagic)
+            ret = static_cast<EllipticalTorusData*>(handle)->Pointer();
+        else if (handleMagic == HalfspaceMagic)
+            ret = static_cast<HalfspaceData*>(handle)->Pointer();
+        else if (handleMagic == HyperbolicCylinderMagic)
+            ret = static_cast<HyperbolicCylinderData*>(handle)->Pointer();
+        else if (handleMagic == HyperboloidMagic)
+            ret = static_cast<HyperboloidData*>(handle)->Pointer();
         else if (handleMagic == NonManifoldGeometryMagic)
             ret = static_cast<NonManifoldGeometryData*>(handle)->Pointer();
+        else if (handleMagic == ParaboloidMagic)
+            ret = static_cast<ParaboloidData*>(handle)->Pointer();
+        else if (handleMagic == ParticleMagic)
+            ret = static_cast<ParticleData*>(handle)->Pointer();
         else if (handleMagic == SphereMagic)
             ret = static_cast<SphereData*>(handle)->Pointer();
+        else if (handleMagic == TorusMagic)
+            ret = static_cast<TorusData*>(handle)->Pointer();
         else
             bu_log("CastObject: wrong handle");
     }
@@ -229,6 +267,52 @@ Object::AttributeIterator* CastObjectAttributeIterator
 }
 
 
+BrlObject DowncastObject
+(
+    BRLCAD::Object* object
+) {
+    BrlObject ret = nullptr;
+
+    if (object != nullptr) {
+        const char* typeName = object->Type();
+
+        if (typeName == BRLCAD::Arb8::ClassName())
+            ret = new Arb8Data(static_cast<BRLCAD::Arb8*>(object));
+        else if (typeName == BRLCAD::BagOfTriangles::ClassName())
+            ret = new BagOfTrianglesData(static_cast<BRLCAD::BagOfTriangles*>(object));
+        else if (typeName == BRLCAD::Combination::ClassName())
+            ret = new CombinationData(static_cast<BRLCAD::Combination*>(object));
+        else if (typeName == BRLCAD::Cone::ClassName())
+            ret = new ConeData(static_cast<BRLCAD::Cone*>(object));
+        else if (typeName == BRLCAD::Ellipsoid::ClassName())
+            ret = new EllipsoidData(static_cast<BRLCAD::Ellipsoid*>(object));
+        else if (typeName == BRLCAD::EllipticalTorus::ClassName())
+            ret = new EllipticalTorusData(static_cast<BRLCAD::EllipticalTorus*>(object));
+        else if (typeName == BRLCAD::Halfspace::ClassName())
+            ret = new HalfspaceData(static_cast<BRLCAD::Halfspace*>(object));
+        else if (typeName == BRLCAD::HyperbolicCylinder::ClassName())
+            ret = new HyperbolicCylinderData(static_cast<BRLCAD::HyperbolicCylinder*>(object));
+        else if (typeName == BRLCAD::Hyperboloid::ClassName())
+            ret = new HyperboloidData(static_cast<BRLCAD::Hyperboloid*>(object));
+        else if (typeName == BRLCAD::NonManifoldGeometry::ClassName())
+            ret = new NonManifoldGeometryData(static_cast<BRLCAD::NonManifoldGeometry*>(object));
+        else if (typeName == BRLCAD::Paraboloid::ClassName())
+            ret = new ParaboloidData(static_cast<BRLCAD::Paraboloid*>(object));
+        else if (typeName == BRLCAD::Particle::ClassName())
+            ret = new ParticleData(static_cast<BRLCAD::Particle*>(object));
+        else if (typeName == BRLCAD::Sphere::ClassName())
+            ret = new SphereData(static_cast<BRLCAD::Sphere*>(object));
+        else if (typeName == BRLCAD::Torus::ClassName())
+            ret = new TorusData(static_cast<BRLCAD::Torus*>(object));
+        else
+            // Fallback for types not explicitly wrapped or unknown
+            ret = new ObjectData(object);
+    }
+
+    return ret;
+}
+
+
 Arb8* CastArb8
 (
     BrlHandle handle
@@ -242,6 +326,82 @@ Arb8* CastArb8
             ret = static_cast<Arb8Data*>(handle)->Pointer();
         else
             bu_log("CastArb8: wrong handle");
+    }
+
+    return ret;
+}
+
+
+BagOfTriangles* CastBagOfTriangles
+(
+    BrlHandle handle
+) {
+    BagOfTriangles* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == BagOfTrianglesMagic)
+            ret = static_cast<BagOfTrianglesData*>(handle)->Pointer();
+        else
+            bu_log("CastBagOfTriangles: wrong handle");
+    }
+
+    return ret;
+}
+
+
+BagOfTriangles::Face* CastBagOfTrianglesFace
+(
+    BrlHandle handle
+) {
+    BagOfTriangles::Face* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == BagOfTrianglesFaceMagic)
+            ret = &static_cast<BagOfTrianglesFaceData*>(handle)->Value();
+        else
+            bu_log("CastBagOfTrianglesFace: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Combination* CastCombination
+(
+    BrlHandle handle
+) {
+    Combination* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == CombinationMagic)
+            ret = static_cast<CombinationData*>(handle)->Pointer();
+        else
+            bu_log("CastCombination: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Combination::TreeNode* CastCombinationTreeNode
+(
+    BrlHandle handle
+) {
+    Combination::TreeNode* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == CombinationTreeNodeMagic)
+            ret = &static_cast<CombinationTreeNodeData*>(handle)->Value();
+        else
+            bu_log("CastCombinationTreeNode: wrong handle");
     }
 
     return ret;
@@ -286,6 +446,82 @@ Ellipsoid* CastEllipsoid
 }
 
 
+EllipticalTorus* CastEllipticalTorus
+(
+    BrlHandle handle
+) {
+    EllipticalTorus* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == EllipticalTorusMagic)
+            ret = static_cast<EllipticalTorusData*>(handle)->Pointer();
+        else
+            bu_log("CastEllipticalTorus: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Halfspace* CastHalfspace
+(
+    BrlHandle handle
+) {
+    Halfspace* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == HalfspaceMagic)
+            ret = static_cast<HalfspaceData*>(handle)->Pointer();
+        else
+            bu_log("CastHalfspace: wrong handle");
+    }
+
+    return ret;
+}
+
+
+HyperbolicCylinder* CastHyperbolicCylinder
+(
+    BrlHandle handle
+) {
+    HyperbolicCylinder* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == HyperbolicCylinderMagic)
+            ret = static_cast<HyperbolicCylinderData*>(handle)->Pointer();
+        else
+            bu_log("CastHyperbolicCylinder: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Hyperboloid* CastHyperboloid
+(
+    BrlHandle handle
+) {
+    Hyperboloid* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == HyperboloidMagic)
+            ret = static_cast<HyperboloidData*>(handle)->Pointer();
+        else
+            bu_log("CastHyperboloid: wrong handle");
+    }
+
+    return ret;
+}
+
+
 NonManifoldGeometry* CastNonManifoldGeometry
 (
     BrlHandle handle
@@ -305,6 +541,177 @@ NonManifoldGeometry* CastNonManifoldGeometry
 }
 
 
+NonManifoldGeometry::Vertex* CastNonManifoldGeometryVertex
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Vertex* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryVertexMagic)
+            ret = &static_cast<NonManifoldGeometryVertexData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryVertex: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Edge* CastNonManifoldGeometryEdge
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Edge* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryEdgeMagic)
+            ret = &static_cast<NonManifoldGeometryEdgeData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryEdge: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Loop* CastNonManifoldGeometryLoop
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Loop* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryLoopMagic)
+            ret = &static_cast<NonManifoldGeometryLoopData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryLoop: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Face* CastNonManifoldGeometryFace
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Face* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryFaceMagic)
+            ret = &static_cast<NonManifoldGeometryFaceData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryFace: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Shell* CastNonManifoldGeometryShell
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Shell* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryShellMagic)
+            ret = &static_cast<NonManifoldGeometryShellData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryShell: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Paraboloid* CastParaboloid
+(
+    BrlHandle handle
+) {
+    Paraboloid* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ParaboloidMagic)
+            ret = static_cast<ParaboloidData*>(handle)->Pointer();
+        else
+            bu_log("CastParaboloid: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Particle* CastParticle
+(
+    BrlHandle handle
+) {
+    Particle* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ParticleMagic)
+            ret = static_cast<ParticleData*>(handle)->Pointer();
+        else
+            bu_log("CastParticle: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::Region* CastNonManifoldGeometryRegion
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::Region* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryRegionMagic)
+            ret = &static_cast<NonManifoldGeometryRegionData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryRegion: wrong handle");
+    }
+
+    return ret;
+}
+
+
+NonManifoldGeometry::RegionIterator* CastNonManifoldGeometryRegionIterator
+(
+    BrlHandle handle
+) {
+    NonManifoldGeometry::RegionIterator* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == NonManifoldGeometryRegionIteratorMagic)
+            ret = &static_cast<NonManifoldGeometryRegionIteratorData*>(handle)->Value();
+        else
+            bu_log("CastNonManifoldGeometryRegionIterator: wrong handle");
+    }
+
+    return ret;
+}
+
+
 Sphere* CastSphere
 (
     BrlHandle handle
@@ -318,6 +725,25 @@ Sphere* CastSphere
             ret = static_cast<SphereData*>(handle)->Pointer();
         else
             bu_log("CastSphere: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Torus* CastTorus
+(
+    BrlHandle handle
+) {
+    Torus* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == TorusMagic)
+            ret = static_cast<TorusData*>(handle)->Pointer();
+        else
+            bu_log("CastTorus: wrong handle");
     }
 
     return ret;

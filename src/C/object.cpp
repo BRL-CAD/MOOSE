@@ -33,6 +33,24 @@
 using namespace BRLCAD;
 
 
+BrlObject BrlObjectClone
+(
+    BrlObject object
+) {
+    BrlObject ret = nullptr;
+
+    if (object != nullptr) {
+        Object *obj = CastObject(object);
+        assert(obj != nullptr);
+
+        if (obj != nullptr)
+            ret = DowncastObject(obj->Clone());
+    }
+
+    return ret;
+}
+
+
 const char* BrlObjectType
 (
     BrlObject object

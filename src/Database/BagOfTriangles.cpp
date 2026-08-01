@@ -133,9 +133,9 @@ static int AddNormal
 
     // normal already there?
     for (; ret < bot.num_normals; ++ret) {
-        tmp[0] = bot.normals[ret];
-        tmp[1] = bot.normals[ret + 1];
-        tmp[2] = bot.normals[ret + 2];
+        tmp[0] = bot.normals[ret * 3];
+        tmp[1] = bot.normals[ret * 3 + 1];
+        tmp[2] = bot.normals[ret * 3 + 2];
 
         if (VNEAR_EQUAL(normal, tmp, VUNITIZE_TOL))
             break;
@@ -145,9 +145,9 @@ static int AddNormal
         // add a new normal
         ++bot.num_normals;
         bot.normals = static_cast<fastf_t*>(bu_realloc(bot.normals, bot.num_normals * 3 * sizeof(fastf_t), "bot interface AddNormal()"));
-        bot.normals[ret]     = normal[0];
-        bot.normals[ret + 1] = normal[1];
-        bot.normals[ret + 2] = normal[2];
+        bot.normals[ret * 3]     = normal[0];
+        bot.normals[ret * 3 + 1] = normal[1];
+        bot.normals[ret * 3 + 2] = normal[2];
     }
 
     return ret;
@@ -172,7 +172,7 @@ static void RemoveNormal
 
         if (normalUsage <= 1) {
             // really remove it
-            memcpy(bot.normals + index, bot.normals + index + 3, (bot.num_normals - index - 1) * 3 * sizeof(fastf_t));
+            memcpy(bot.normals + index * 3, bot.normals + (index + 1) * 3, (bot.num_normals - index - 1) * 3 * sizeof(fastf_t));
 
             --bot.num_normals;
             bot.normals = static_cast<fastf_t*>(bu_realloc(bot.normals, bot.num_normals * 3 * sizeof(fastf_t), "bot interface RemoveNormal()"));
@@ -195,9 +195,9 @@ static int SwapNormal
 ) {
     int     ret; // index of the new normal
     fastf_t tmp[3];
-    tmp[0] = bot.normals[oldIndex];
-    tmp[1] = bot.normals[oldIndex + 1];
-    tmp[2] = bot.normals[oldIndex + 2];
+    tmp[0] = bot.normals[oldIndex * 3];
+    tmp[1] = bot.normals[oldIndex * 3 + 1];
+    tmp[2] = bot.normals[oldIndex * 3 + 2];
 
     if (VNEAR_EQUAL(newNormal, tmp, VUNITIZE_TOL))
         ret = oldIndex;
@@ -217,20 +217,19 @@ static void EnsureFaceNormals
 ) {
     assert(bot.num_faces >= bot.num_face_normals);
 
-    if (bot.num_faces > 0) {
+    if (bot.num_faces > bot.num_face_normals) {
         if (bot.face_normals == nullptr)
             bot.face_normals = static_cast<int*>(bu_calloc(3 * bot.num_faces, sizeof(int), "bot interface EnsureFaceNormals(): face_normals"));
-        else if (bot.num_faces > bot.num_face_normals) {
+        else
             bot.face_normals = static_cast<int*>(bu_realloc(bot.face_normals, 3 * bot.num_faces * sizeof(int), "bot interface EnsureFaceNormals(): face_normals"));
 
-            for (size_t i = bot.num_face_normals; i < bot.num_faces; ++i) {
-                fastf_t defaultNormal[3] = {0};
-                int     newIndex         = AddNormal(defaultNormal, bot);
+        fastf_t defaultNormal[3] = {0};
+        int     newIndex         = AddNormal(defaultNormal, bot);
 
-                bot.face_normals[3 * i]     = newIndex;
-                bot.face_normals[3 * i + 1] = newIndex;
-                bot.face_normals[3 * i + 2] = newIndex;
-            }
+        for (int i = bot.num_face_normals; i < bot.num_faces; ++i) {
+            bot.face_normals[3 * i]     = newIndex;
+            bot.face_normals[3 * i + 1] = newIndex;
+            bot.face_normals[3 * i + 2] = newIndex;
         }
 
         bot.num_face_normals = bot.num_faces;
@@ -604,7 +603,6 @@ void BagOfTriangles::Face::SetPoints
 
 double BagOfTriangles::Face::Thickness(void) const {
     assert(m_bot != nullptr);
-    assert(m_bot->thickness != nullptr);
     assert(m_bot->mode != RT_BOT_SOLID);
     assert(m_bot->mode != RT_BOT_SURFACE);
 
@@ -622,7 +620,6 @@ void BagOfTriangles::Face::SetThickness
     double value
 ) {
     assert(m_bot != nullptr);
-    assert(m_bot->thickness != nullptr);
     assert(m_bot->mode != RT_BOT_SOLID);
     assert(m_bot->mode != RT_BOT_SURFACE);
 
@@ -669,14 +666,15 @@ Vector3D BagOfTriangles::Face::Normal
 (
     size_t index
 ) const {
+    assert(index < 3);
     assert(m_bot != nullptr);
 
     Vector3D ret;
 
-    if (m_bot != nullptr) {
-        fastf_t tmp[3] = {m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3],
-                          m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 1],
-                          m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 2]};
+    if ((m_bot != nullptr) && (m_bot->face_normals != nullptr) && (m_bot->normals != nullptr) && (index < 3)) {
+        double tmp[3] = {m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3],
+                         m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 1],
+                         m_bot->normals[m_bot->face_normals[m_faceIndex * 3 + index] * 3 + 2]};
 
         ret = Vector3D(tmp);
     }

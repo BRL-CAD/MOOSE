@@ -35,10 +35,7 @@
 using namespace BRLCAD;
 
 
-BrlSphere BrlNewSphere
-(
-    void
-) {
+BrlSphere BrlNewSphere(void) {
     return new SphereData(new Sphere());
 }
 
@@ -143,4 +140,9 @@ void BrlSphereSet
             sphr->Set(center, radius);
         }
     }
+}
+
+
+const char* BrlSphereClassName(void) {
+  return Sphere::ClassName();
 }
