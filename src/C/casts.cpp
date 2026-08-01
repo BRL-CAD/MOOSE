@@ -57,7 +57,9 @@ BrlData* CastHandle
             (handleMagic == ConeMagic) ||
             (handleMagic == EllipsoidMagic) ||
             (handleMagic == EllipticalTorusMagic) ||
+            (handleMagic == HalfspaceMagic) ||
             (handleMagic == HyperbolicCylinderMagic) ||
+            (handleMagic == HyperboloidMagic) ||
             (handleMagic == NonManifoldGeometryMagic) ||
             (handleMagic == NonManifoldGeometryVertexMagic) ||
             (handleMagic == NonManifoldGeometryEdgeMagic) ||
@@ -66,6 +68,8 @@ BrlData* CastHandle
             (handleMagic == NonManifoldGeometryShellMagic) ||
             (handleMagic == NonManifoldGeometryRegionMagic) ||
             (handleMagic == NonManifoldGeometryRegionIteratorMagic) ||
+            (handleMagic == ParaboloidMagic) ||
+            (handleMagic == ParticleMagic) ||
             (handleMagic == SphereMagic) ||
             (handleMagic == TorusMagic))
             ret = handle;
@@ -220,10 +224,18 @@ Object* CastObject
             ret = static_cast<EllipsoidData*>(handle)->Pointer();
         else if (handleMagic == EllipticalTorusMagic)
             ret = static_cast<EllipticalTorusData*>(handle)->Pointer();
+        else if (handleMagic == HalfspaceMagic)
+            ret = static_cast<HalfspaceData*>(handle)->Pointer();
         else if (handleMagic == HyperbolicCylinderMagic)
             ret = static_cast<HyperbolicCylinderData*>(handle)->Pointer();
+        else if (handleMagic == HyperboloidMagic)
+            ret = static_cast<HyperboloidData*>(handle)->Pointer();
         else if (handleMagic == NonManifoldGeometryMagic)
             ret = static_cast<NonManifoldGeometryData*>(handle)->Pointer();
+        else if (handleMagic == ParaboloidMagic)
+            ret = static_cast<ParaboloidData*>(handle)->Pointer();
+        else if (handleMagic == ParticleMagic)
+            ret = static_cast<ParticleData*>(handle)->Pointer();
         else if (handleMagic == SphereMagic)
             ret = static_cast<SphereData*>(handle)->Pointer();
         else if (handleMagic == TorusMagic)
@@ -276,10 +288,18 @@ BrlObject DowncastObject
             ret = new EllipsoidData(static_cast<BRLCAD::Ellipsoid*>(object));
         else if (typeName == BRLCAD::EllipticalTorus::ClassName())
             ret = new EllipticalTorusData(static_cast<BRLCAD::EllipticalTorus*>(object));
+        else if (typeName == BRLCAD::Halfspace::ClassName())
+            ret = new HalfspaceData(static_cast<BRLCAD::Halfspace*>(object));
         else if (typeName == BRLCAD::HyperbolicCylinder::ClassName())
             ret = new HyperbolicCylinderData(static_cast<BRLCAD::HyperbolicCylinder*>(object));
+        else if (typeName == BRLCAD::Hyperboloid::ClassName())
+            ret = new HyperboloidData(static_cast<BRLCAD::Hyperboloid*>(object));
         else if (typeName == BRLCAD::NonManifoldGeometry::ClassName())
             ret = new NonManifoldGeometryData(static_cast<BRLCAD::NonManifoldGeometry*>(object));
+        else if (typeName == BRLCAD::Paraboloid::ClassName())
+            ret = new ParaboloidData(static_cast<BRLCAD::Paraboloid*>(object));
+        else if (typeName == BRLCAD::Particle::ClassName())
+            ret = new ParticleData(static_cast<BRLCAD::Particle*>(object));
         else if (typeName == BRLCAD::Sphere::ClassName())
             ret = new SphereData(static_cast<BRLCAD::Sphere*>(object));
         else if (typeName == BRLCAD::Torus::ClassName())
@@ -445,6 +465,25 @@ EllipticalTorus* CastEllipticalTorus
 }
 
 
+Halfspace* CastHalfspace
+(
+    BrlHandle handle
+) {
+    Halfspace* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == HalfspaceMagic)
+            ret = static_cast<HalfspaceData*>(handle)->Pointer();
+        else
+            bu_log("CastHalfspace: wrong handle");
+    }
+
+    return ret;
+}
+
+
 HyperbolicCylinder* CastHyperbolicCylinder
 (
     BrlHandle handle
@@ -458,6 +497,25 @@ HyperbolicCylinder* CastHyperbolicCylinder
             ret = static_cast<HyperbolicCylinderData*>(handle)->Pointer();
         else
             bu_log("CastHyperbolicCylinder: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Hyperboloid* CastHyperboloid
+(
+    BrlHandle handle
+) {
+    Hyperboloid* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == HyperboloidMagic)
+            ret = static_cast<HyperboloidData*>(handle)->Pointer();
+        else
+            bu_log("CastHyperboloid: wrong handle");
     }
 
     return ret;
@@ -572,6 +630,44 @@ NonManifoldGeometry::Shell* CastNonManifoldGeometryShell
             ret = &static_cast<NonManifoldGeometryShellData*>(handle)->Value();
         else
             bu_log("CastNonManifoldGeometryShell: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Paraboloid* CastParaboloid
+(
+    BrlHandle handle
+) {
+    Paraboloid* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ParaboloidMagic)
+            ret = static_cast<ParaboloidData*>(handle)->Pointer();
+        else
+            bu_log("CastParaboloid: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Particle* CastParticle
+(
+    BrlHandle handle
+) {
+    Particle* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ParticleMagic)
+            ret = static_cast<ParticleData*>(handle)->Pointer();
+        else
+            bu_log("CastParticle: wrong handle");
     }
 
     return ret;

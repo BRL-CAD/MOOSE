@@ -1,6 +1,6 @@
 #   Permission to use, copy, modify, and/or distribute this software for any
 #   purpose with or without fee is hereby granted.
-#  
+#
 #   THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
 #   WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
 #   MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
@@ -22,7 +22,7 @@ from brlcad import FileDatabase
 def main(argv=None):
     if argv is None:
         argv = sys.argv
-        
+
     argc = len(argv)
     ret = 1
 
@@ -30,7 +30,7 @@ def main(argv=None):
         print(f"Usage: {argv[0]} <test type>", file=sys.stderr)
     else:
         if argv[1] == "getTitle":
-            
+
             with FileDatabase() as database:
                 filename = "gettitle.g"
 
@@ -40,7 +40,7 @@ def main(argv=None):
 
                 if database.Load(filename):
                     database.SetTitle("get Title")
-                    
+
                     print(f"[SUCCESS] Updated Title value: '{database.Title()}'")
                     ret = 0
                 else:

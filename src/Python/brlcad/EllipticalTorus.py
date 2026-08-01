@@ -54,7 +54,7 @@ class EllipticalTorus(Object):
             handle = _lib.BrlNewEllipticalTorus()
 
         super().__init__(handle=handle, owned=owned)
-        
+
     def GetCenter(self):
         return _lib.BrlEllipticalTorusCenter(self._handle)
 

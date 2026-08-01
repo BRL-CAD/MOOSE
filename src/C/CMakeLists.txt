@@ -35,10 +35,14 @@ SET(CSources
     C/ellipticalTorus.cpp
     C/fileDatabase.cpp
     C/globals.cpp
+    C/halfspace.cpp
     C/hyperbolicCylinder.cpp
+    C/hyperboloid.cpp
     C/memoryDatabase.cpp
     C/nonManifoldGeometry.cpp
     C/object.cpp
+    C/paraboloid.cpp
+    C/particle.cpp
     C/sphere.cpp
     C/torus.cpp
     C/vectorList.cpp
@@ -55,10 +59,14 @@ SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/ellipticalTorus.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/fileDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/globals.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/halfspace.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/hyperbolicCylinder.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/hyperboloid.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/nonManifoldGeometry.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/paraboloid.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/particle.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/sphere.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/torus.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/vectorList.h

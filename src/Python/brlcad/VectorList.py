@@ -31,7 +31,7 @@ class VectorList(Handle):
     Object-oriented Python interface for the BRL-CAD VectorList point container.
     Used for gathering coordinate arrays during geometric plot computations.
     """
-    
+
     def __init__(self):
         # Initialize by creating a raw native VectorList handle instance
         native_handle = _lib.BrlNewVectorList()

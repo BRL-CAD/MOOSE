@@ -29,17 +29,17 @@ from .Handle import Handle
 
 class Object(Handle):
     """Base class for all BRL-CAD geometric primitives."""
-    
+
     def __init__(self, handle=None, owned=True):
         super().__init__(handle=handle, owned=owned)
 
     def SetName(self, name: str):
         """Sets the structural database lookup name key for this shape."""
         if not self._handle:
-            return 
+            return
         c_name = ctypes.c_char_p(name.encode('utf-8'))
         _lib.BrlObjectSetName(self._handle, c_name)
-        
+
     def IsValid(self):
         """Returns True if the geometric primitive is valid."""
         return _lib.BrlObjectIsValid(self._handle) == 1
@@ -48,7 +48,7 @@ class Object(Handle):
         """Returns the core primitive engine type string."""
         type_str = _lib.BrlObjectType(self._handle)
         return type_str.decode('utf-8') if type_str else ""
-    
+
     def GetName(self):
         """Returns the structural database lookup name key string."""
         if not self._handle:
@@ -99,7 +99,7 @@ class Object(Handle):
         if not self._handle:
             return
         _lib.BrlObjectClearAttributes(self._handle)
-        
+
     def IterAttributes(self):
         """Yields all (key, value) attribute string pairs assigned to this object."""
         if not self._handle:
@@ -112,13 +112,13 @@ class Object(Handle):
         while _lib.BrlObjectAttributeIteratorGood(it) == 1:
             key_ptr = _lib.BrlObjectAttributeIteratorKey(it)
             val_ptr = _lib.BrlObjectAttributeIteratorValue(it)
-            
+
             key = key_ptr.decode('utf-8') if key_ptr else ""
             val = val_ptr.decode('utf-8') if val_ptr else ""
-            
+
             yield key, val
             _lib.BrlObjectAttributeIteratorNext(it)
-            
+
         _lib.BrlDeleteHandle(it)
 
     def IterMultiAttributes(self, key: str):
@@ -134,15 +134,15 @@ class Object(Handle):
         while _lib.BrlObjectAttributeIteratorGood(it) == 1:
             key_ptr = _lib.BrlObjectAttributeIteratorKey(it)
             val_ptr = _lib.BrlObjectAttributeIteratorValue(it)
-            
+
             k = key_ptr.decode('utf-8') if key_ptr else ""
             v = val_ptr.decode('utf-8') if val_ptr else ""
-            
+
             yield k, v
             _lib.BrlObjectAttributeIteratorNext(it)
-            
+
         _lib.BrlDeleteHandle(it)
-        
+
     def Clone(self):
         """Creates a deep duplicate tracking copy of the primitive shape."""
         raw_clone = _lib.BrlObjectClone(self._handle)

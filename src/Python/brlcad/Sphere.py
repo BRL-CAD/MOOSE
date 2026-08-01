@@ -51,7 +51,7 @@ class Sphere(Object):
             handle = _lib.BrlNewSphere()
 
         super().__init__(handle=handle, owned=owned)
-        
+
     def GetCenter(self):
         """Returns the center point wrapper handle address of the sphere."""
         return _lib.BrlSphereCenter(self._handle)

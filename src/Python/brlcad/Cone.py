@@ -167,7 +167,7 @@ class Cone(Object):
             float(height[0]), float(height[1]), float(height[2]),
             float(radius)
         )
-    
+
     def ClassName(self):
         """Returns the static C++ class designator identification string."""
         res = _lib.BrlConeClassName()

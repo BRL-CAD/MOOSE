@@ -164,7 +164,7 @@ class Combinations(Object):
         """Returns a wrapped TreeNode tracking reference holding the CSG root layout context handle."""
         raw_node = _lib.BrlCombinationTree(self._handle)
         return TreeNode(raw_node, owned=True) if raw_node else None
-    
+
     def ClassName(self):
         """Returns the static C++ class designator identification string."""
         res = _lib.BrlCombinationClassName()
@@ -190,11 +190,11 @@ class TreeNode:
         """Returns the geometry identifier string if the current node is a Leaf."""
         res = _lib.BrlCombinationTreeNodeName(self._handle)
         return res.decode('utf-8') if res else ""
-    
+
     def SetName(self, name):
         """Updates the geometry identifier string if the current node is a Leaf."""
         _lib.BrlCombinationTreeNodeSetName(self._handle, name.encode('utf-8'))
-    
+
     def GetLeftOperand(self):
         """Traverses the tracking sub-frame and returns a wrapped left target component reference."""
         raw = _lib.BrlCombinationTreeNodeLeftOperand(self._handle)

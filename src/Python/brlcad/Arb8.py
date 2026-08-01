@@ -22,7 +22,7 @@
 # BRL-CAD core simplified Python interface:
 #       Python interface implementation for the Arb8.cpp
 
-import ctypes 
+import ctypes
 from ._bindings import _lib
 from .Object import Object
 
@@ -48,7 +48,7 @@ class Arb8(Object):
         elif len(args) == 2:
             p1, p2 = args[0], args[1]
             as_rpp = kwargs.get('is_rpp', True)
-            
+
             if as_rpp:
                 handle = _lib.BrlNewArb8AsRectengularParallelPiped(
                     float(p1[0]), float(p1[1]), float(p1[2]),
@@ -143,7 +143,7 @@ class Arb8(Object):
             raise ValueError("Updating all points requires exactly 8 entries of 3D vectors.")
         flat_coords = [float(coord) for point in points_list for coord in point]
         _lib.BrlArb8SetPointsAsArb8(self._handle, *flat_coords)
-        
+
     def SetPointsAsRectangularParallelpiped(self, p1, p2):
         """Mutates the frame tracking bounds using two opposite coordinate corners."""
         _lib.BrlArb8SetPointsAsRectengularParallelPiped(
@@ -151,7 +151,7 @@ class Arb8(Object):
             float(p1[0]), float(p1[1]), float(p1[2]),
             float(p2[0]), float(p2[1]), float(p2[2])
         )
-    
+
     def ClassName(self):
         """Returns the static C++ class designator identification string."""
         res = _lib.BrlArb8ClassName()
