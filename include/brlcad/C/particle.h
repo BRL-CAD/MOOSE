@@ -27,7 +27,6 @@
 #ifndef BRLCAD_C_PARTICLE_INCLUDED
 #define BRLCAD_C_PARTICLE_INCLUDED
 
-#include <brlcad/C/globals.h>
 #include <brlcad/C/object.h>
 #include <brlcad/C/vector.h>
 
@@ -36,33 +35,36 @@ extern "C" {
 #endif
 
 
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewParticle(void);
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewParticleAsParticle(double baseX,      double baseY,      double baseZ,
-                                                         double heightX,    double heightY,    double heightZ,
+typedef BrlObject BrlParticle;
+
+
+BRLCAD_MOOSE_EXPORT BrlParticle BrlNewParticle(void);
+BRLCAD_MOOSE_EXPORT BrlParticle BrlNewParticleAsParticle(double baseX,   double baseY,   double baseZ,
+                                                         double heightX, double heightY, double heightZ,
                                                          double baseRadius,
                                                          double topRadius);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlParticleBasePoint(BrlObject particle);
-BRLCAD_MOOSE_EXPORT void        BrlParticleSetBasePoint(BrlObject particle,
-                                                        double    baseX, double baseY, double baseZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlParticleBasePoint(BrlParticle particle);
+BRLCAD_MOOSE_EXPORT void        BrlParticleSetBasePoint(BrlParticle particle,
+                                                        double      baseX, double baseY, double baseZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlParticleHeight(BrlObject particle);
-BRLCAD_MOOSE_EXPORT void        BrlParticleSetHeight(BrlObject particle,
-                                                     double    heightX, double heightY, double heightZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D BrlParticleHeight(BrlParticle particle);
+BRLCAD_MOOSE_EXPORT void        BrlParticleSetHeight(BrlParticle particle,
+                                                     double      heightX, double heightY, double heightZ);
 
-BRLCAD_MOOSE_EXPORT double      BrlParticleBaseRadius(BrlObject particle);
-BRLCAD_MOOSE_EXPORT void        BrlParticleSetBaseRadius(BrlObject particle,
-                                                         double    radius);
+BRLCAD_MOOSE_EXPORT double      BrlParticleBaseRadius(BrlParticle particle);
+BRLCAD_MOOSE_EXPORT void        BrlParticleSetBaseRadius(BrlParticle particle,
+                                                         double      radius);
 
-BRLCAD_MOOSE_EXPORT double      BrlParticleTopRadius(BrlObject particle);
-BRLCAD_MOOSE_EXPORT void        BrlParticleSetTopRadius(BrlObject particle,
-                                                        double    radius);
+BRLCAD_MOOSE_EXPORT double      BrlParticleTopRadius(BrlParticle particle);
+BRLCAD_MOOSE_EXPORT void        BrlParticleSetTopRadius(BrlParticle particle,
+                                                        double      radius);
 
-BRLCAD_MOOSE_EXPORT void        BrlParticleSet(BrlObject particle,
-                                               double    baseX,      double baseY,      double baseZ,
-                                               double    heightX,    double heightY,    double heightZ,
-                                               double    baseRadius,
-                                               double    topRadius);
+BRLCAD_MOOSE_EXPORT void        BrlParticleSet(BrlParticle particle,
+                                               double      baseX,   double baseY,   double baseZ,
+                                               double      heightX, double heightY, double heightZ,
+                                               double      baseRadius,
+                                               double      topRadius);
 
 BRLCAD_MOOSE_EXPORT const char* BrlParticleClassName(void);
 

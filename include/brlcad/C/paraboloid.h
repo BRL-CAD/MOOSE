@@ -27,7 +27,6 @@
 #ifndef BRLCAD_C_PARABOLOID_INCLUDED
 #define BRLCAD_C_PARABOLOID_INCLUDED
 
-#include <brlcad/C/globals.h>
 #include <brlcad/C/object.h>
 #include <brlcad/C/vector.h>
 
@@ -36,59 +35,62 @@ extern "C" {
 #endif
 
 
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewParaboloid(void);
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewParaboloidAsParaboloid(double baseX,          double baseY,          double baseZ,
-                                                             double heightX,        double heightY,        double heightZ,
-                                                             double semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
-                                                             double semiMinorAxisLength);
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewParaboloidAsParaboloidWithLength(double baseX,               double baseY,               double baseZ,
-                                                                       double heightX,             double heightY,             double heightZ,
-                                                                       double directionX,          double directionY,          double directionZ,
-                                                                       double semiMajorAxisLength,
-                                                                       double semiMinorAxisLength);
+typedef BrlObject BrlParaboloid;
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlParaboloidBasePoint(BrlObject paraboloid);
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetBasePoint(BrlObject paraboloid,
-                                                          double    baseX, double baseY, double baseZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlParaboloidHeight(BrlObject paraboloid);
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetHeight(BrlObject paraboloid,
-                                                       double    heightX, double heightY, double heightZ);
+BRLCAD_MOOSE_EXPORT BrlParaboloid BrlNewParaboloid(void);
+BRLCAD_MOOSE_EXPORT BrlParaboloid BrlNewParaboloidAsParaboloid(double baseX,          double baseY,          double baseZ,
+                                                               double heightX,        double heightY,        double heightZ,
+                                                               double semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
+                                                               double semiMinorAxisLength);
+BRLCAD_MOOSE_EXPORT BrlParaboloid BrlNewParaboloidAsParaboloidWithLength(double baseX,      double baseY,      double baseZ,
+                                                                         double heightX,    double heightY,    double heightZ,
+                                                                         double directionX, double directionY, double directionZ,
+                                                                         double semiMajorAxisLength,
+                                                                         double semiMinorAxisLength);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlParaboloidSemiMajorAxis(BrlObject paraboloid);
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetSemiMajorAxis(BrlObject paraboloid,
-                                                              double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D   BrlParaboloidBasePoint(BrlParaboloid paraboloid);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetBasePoint(BrlParaboloid paraboloid,
+                                                            double        baseX, double baseY, double baseZ);
 
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetSemiMajorAxisWithLength(BrlObject paraboloid,
-                                                                        double    directionX, double directionY, double directionZ,
-                                                                        double    length);
+BRLCAD_MOOSE_EXPORT BrlVector3D   BrlParaboloidHeight(BrlParaboloid paraboloid);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetHeight(BrlParaboloid paraboloid,
+                                                         double        heightX, double heightY, double heightZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlParaboloidSemiMajorAxisDirection(BrlObject paraboloid);
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetSemiMajorAxisDirection(BrlObject paraboloid,
-                                                                       double    directionX, double directionY, double directionZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D   BrlParaboloidSemiMajorAxis(BrlParaboloid paraboloid);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetSemiMajorAxis(BrlParaboloid paraboloid,
+                                                                double        semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ);
 
-BRLCAD_MOOSE_EXPORT double      BrlParaboloidSemiMajorAxisLength(BrlObject paraboloid);
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetSemiMajorAxisLength(BrlObject paraboloid,
-                                                                    double    length);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetSemiMajorAxisWithLength(BrlParaboloid paraboloid,
+                                                                          double        directionX, double directionY, double directionZ,
+                                                                          double        length);
 
-BRLCAD_MOOSE_EXPORT double      BrlParaboloidSemiMinorAxisLength(BrlObject paraboloid);
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetSemiMinorAxisLength(BrlObject paraboloid,
-                                                                    double    length);
+BRLCAD_MOOSE_EXPORT BrlVector3D   BrlParaboloidSemiMajorAxisDirection(BrlParaboloid paraboloid);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetSemiMajorAxisDirection(BrlParaboloid paraboloid,
+                                                                         double        directionX, double directionY, double directionZ);
 
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSet(BrlObject paraboloid,
-                                                 double    baseX,          double baseY,          double baseZ,
-                                                 double    heightX,        double heightY,        double heightZ,
-                                                 double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
-                                                 double    semiMinorAxisLength);
+BRLCAD_MOOSE_EXPORT double        BrlParaboloidSemiMajorAxisLength(BrlParaboloid paraboloid);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetSemiMajorAxisLength(BrlParaboloid paraboloid,
+                                                                      double        length);
 
-BRLCAD_MOOSE_EXPORT void        BrlParaboloidSetWithLength(BrlObject paraboloid,
-                                                           double    baseX,               double baseY,               double baseZ,
-                                                           double    heightX,             double heightY,             double heightZ,
-                                                           double    directionX,          double directionY,          double directionZ,
-                                                           double    semiMajorAxisLength,
-                                                           double    semiMinorAxisLength);
+BRLCAD_MOOSE_EXPORT double        BrlParaboloidSemiMinorAxisLength(BrlParaboloid paraboloid);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetSemiMinorAxisLength(BrlParaboloid paraboloid,
+                                                                      double        length);
 
-BRLCAD_MOOSE_EXPORT const char* BrlParaboloidClassName(void);
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSet(BrlParaboloid paraboloid,
+                                                   double        baseX,          double baseY,          double baseZ,
+                                                   double        heightX,        double heightY,        double heightZ,
+                                                   double        semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
+                                                   double        semiMinorAxisLength);
+
+BRLCAD_MOOSE_EXPORT void          BrlParaboloidSetWithLength(BrlParaboloid paraboloid,
+                                                             double        baseX,      double baseY,      double baseZ,
+                                                             double        heightX,    double heightY,    double heightZ,
+                                                             double        directionX, double directionY, double directionZ,
+                                                             double        semiMajorAxisLength,
+                                                             double        semiMinorAxisLength);
+
+BRLCAD_MOOSE_EXPORT const char*   BrlParaboloidClassName(void);
 
 
 #ifdef __cplusplus

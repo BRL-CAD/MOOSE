@@ -29,20 +29,18 @@
 
 #include <brlcad/C/halfspace.h>
 
-#include "BrlData.h"
-
 #include "casts.h"
 
 
 using namespace BRLCAD;
 
 
-BrlObject BrlNewHalfspace(void) {
-    return DowncastObject(new Halfspace());
+BrlHalfspace BrlNewHalfspace(void) {
+    return new HalfspaceData(new Halfspace());
 }
 
 
-BrlObject BrlNewHalfspaceAsHalfspace
+BrlHalfspace BrlNewHalfspaceAsHalfspace
 (
     double normalX, double normalY, double normalZ,
     double distance
@@ -55,7 +53,7 @@ BrlObject BrlNewHalfspaceAsHalfspace
 
 BrlVector3D BrlHalfspaceNormal
 (
-    BrlObject halfspace
+    BrlHalfspace halfspace
 ) {
     BrlVector3D ret = nullptr;
 
@@ -74,8 +72,8 @@ BrlVector3D BrlHalfspaceNormal
 
 void BrlHalfspaceSetNormal
 (
-    BrlObject halfspace,
-    double    normalX, double normalY, double normalZ
+    BrlHalfspace halfspace,
+    double       normalX, double normalY, double normalZ
 ) {
     if (halfspace != nullptr) {
         Halfspace* halfIntern = CastHalfspace(halfspace);
@@ -93,9 +91,9 @@ void BrlHalfspaceSetNormal
 
 double BrlHalfspaceDistanceFromOrigin
 (
-    BrlObject halfspace
+    BrlHalfspace halfspace
 ) {
-    double ret = 0.0;
+    double ret = 0.;
 
     if (halfspace != nullptr) {
         Halfspace* halfIntern = CastHalfspace(halfspace);
@@ -112,8 +110,8 @@ double BrlHalfspaceDistanceFromOrigin
 
 void BrlHalfspaceSetDistanceFromOrigin
 (
-    BrlObject halfspace,
-    double    distance
+    BrlHalfspace halfspace,
+    double       distance
 ) {
     if (halfspace != nullptr) {
         Halfspace* halfIntern = CastHalfspace(halfspace);
@@ -128,9 +126,9 @@ void BrlHalfspaceSetDistanceFromOrigin
 
 void BrlHalfspaceSet
 (
-    BrlObject halfspace,
-    double    normalX, double normalY, double normalZ,
-    double    distance
+    BrlHalfspace halfspace,
+    double       normalX, double normalY, double normalZ,
+    double       distance
 ) {
     if (halfspace != nullptr) {
         Halfspace* halfIntern = CastHalfspace(halfspace);

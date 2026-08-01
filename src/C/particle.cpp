@@ -29,23 +29,21 @@
 
 #include <brlcad/C/particle.h>
 
-#include "BrlData.h"
-
 #include "casts.h"
 
 
 using namespace BRLCAD;
 
 
-BrlObject BrlNewParticle(void) {
-    return DowncastObject(new Particle());
+BrlParticle BrlNewParticle(void) {
+    return new ParticleData(new Particle());
 }
 
 
-BrlObject BrlNewParticleAsParticle
+BrlParticle BrlNewParticleAsParticle
 (
-    double baseX,      double baseY,      double baseZ,
-    double heightX,    double heightY,    double heightZ,
+    double baseX,   double baseY,   double baseZ,
+    double heightX, double heightY, double heightZ,
     double baseRadius,
     double topRadius
 ) {
@@ -58,7 +56,7 @@ BrlObject BrlNewParticleAsParticle
 
 BrlVector3D BrlParticleBasePoint
 (
-    BrlObject particle
+    BrlParticle particle
 ) {
     BrlVector3D ret = nullptr;
 
@@ -77,8 +75,8 @@ BrlVector3D BrlParticleBasePoint
 
 void BrlParticleSetBasePoint
 (
-    BrlObject particle,
-    double    baseX, double baseY, double baseZ
+    BrlParticle particle,
+    double      baseX, double baseY, double baseZ
 ) {
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
@@ -96,7 +94,7 @@ void BrlParticleSetBasePoint
 
 BrlVector3D BrlParticleHeight
 (
-    BrlObject particle
+    BrlParticle particle
 ) {
     BrlVector3D ret = nullptr;
 
@@ -115,8 +113,8 @@ BrlVector3D BrlParticleHeight
 
 void BrlParticleSetHeight
 (
-    BrlObject particle,
-    double    heightX, double heightY, double heightZ
+    BrlParticle particle,
+    double      heightX, double heightY, double heightZ
 ) {
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
@@ -134,9 +132,9 @@ void BrlParticleSetHeight
 
 double BrlParticleBaseRadius
 (
-    BrlObject particle
+    BrlParticle particle
 ) {
-    double ret = 0.0;
+    double ret = 0.;
 
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
@@ -153,8 +151,8 @@ double BrlParticleBaseRadius
 
 void BrlParticleSetBaseRadius
 (
-    BrlObject particle,
-    double    radius
+    BrlParticle particle,
+    double      radius
 ) {
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
@@ -169,9 +167,9 @@ void BrlParticleSetBaseRadius
 
 double BrlParticleTopRadius
 (
-    BrlObject particle
+    BrlParticle particle
 ) {
-    double ret = 0.0;
+    double ret = 0.;
 
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
@@ -188,8 +186,8 @@ double BrlParticleTopRadius
 
 void BrlParticleSetTopRadius
 (
-    BrlObject particle,
-    double    radius
+    BrlParticle particle,
+    double      radius
 ) {
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
@@ -204,11 +202,11 @@ void BrlParticleSetTopRadius
 
 void BrlParticleSet
 (
-    BrlObject particle,
-    double    baseX,      double baseY,      double baseZ,
-    double    heightX,    double heightY,    double heightZ,
-    double    baseRadius,
-    double    topRadius
+    BrlParticle particle,
+    double      baseX,   double baseY,   double baseZ,
+    double      heightX, double heightY, double heightZ,
+    double      baseRadius,
+    double      topRadius
 ) {
     if (particle != nullptr) {
         Particle* partIntern = CastParticle(particle);
