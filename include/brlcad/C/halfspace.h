@@ -27,7 +27,6 @@
 #ifndef BRLCAD_C_HALFSPACE_INCLUDED
 #define BRLCAD_C_HALFSPACE_INCLUDED
 
-#include <brlcad/C/globals.h>
 #include <brlcad/C/object.h>
 #include <brlcad/C/vector.h>
 
@@ -36,23 +35,26 @@ extern "C" {
 #endif
 
 
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewHalfspace(void);
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewHalfspaceAsHalfspace(double normalX, double normalY, double normalZ,
-                                                           double distance);
+typedef BrlObject BrlHalfspace;
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlHalfspaceNormal(BrlObject halfspace);
-BRLCAD_MOOSE_EXPORT void        BrlHalfspaceSetNormal(BrlObject halfspace,
-                                                      double    normalX, double normalY, double normalZ);
 
-BRLCAD_MOOSE_EXPORT double      BrlHalfspaceDistanceFromOrigin(BrlObject halfspace);
-BRLCAD_MOOSE_EXPORT void        BrlHalfspaceSetDistanceFromOrigin(BrlObject halfspace,
-                                                                  double    distance);
+BRLCAD_MOOSE_EXPORT BrlHalfspace BrlNewHalfspace(void);
+BRLCAD_MOOSE_EXPORT BrlHalfspace BrlNewHalfspaceAsHalfspace(double normalX, double normalY, double normalZ,
+                                                            double distance);
 
-BRLCAD_MOOSE_EXPORT void        BrlHalfspaceSet(BrlObject halfspace,
-                                                double    normalX, double normalY, double normalZ,
-                                                double    distance);
+BRLCAD_MOOSE_EXPORT BrlVector3D  BrlHalfspaceNormal(BrlHalfspace halfspace);
+BRLCAD_MOOSE_EXPORT void         BrlHalfspaceSetNormal(BrlHalfspace halfspace,
+                                                       double       normalX, double normalY, double normalZ);
 
-BRLCAD_MOOSE_EXPORT const char* BrlHalfspaceClassName(void);
+BRLCAD_MOOSE_EXPORT double       BrlHalfspaceDistanceFromOrigin(BrlHalfspace halfspace);
+BRLCAD_MOOSE_EXPORT void         BrlHalfspaceSetDistanceFromOrigin(BrlHalfspace halfspace,
+                                                                   double       distance);
+
+BRLCAD_MOOSE_EXPORT void         BrlHalfspaceSet(BrlHalfspace halfspace,
+                                                 double       normalX, double normalY, double normalZ,
+                                                 double       distance);
+
+BRLCAD_MOOSE_EXPORT const char*  BrlHalfspaceClassName(void);
 
 
 #ifdef __cplusplus

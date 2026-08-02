@@ -27,7 +27,6 @@
 #ifndef BRLCAD_C_HYPERBOLOID_INCLUDED
 #define BRLCAD_C_HYPERBOLOID_INCLUDED
 
-#include <brlcad/C/globals.h>
 #include <brlcad/C/object.h>
 #include <brlcad/C/vector.h>
 
@@ -36,67 +35,70 @@ extern "C" {
 #endif
 
 
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewHyperboloid(void);
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewHyperboloidAsHyperboloid(double baseX,          double baseY,          double baseZ,
-                                                               double heightX,        double heightY,        double heightZ,
-                                                               double semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
-                                                               double semiMinorAxisLength,
-                                                               double apexAsymptoteDistance);
-BRLCAD_MOOSE_EXPORT BrlObject   BrlNewHyperboloidAsHyperboloidWithLength(double baseX,               double baseY,               double baseZ,
-                                                                         double heightX,             double heightY,             double heightZ,
-                                                                         double directionX,          double directionY,          double directionZ,
-                                                                         double semiMajorAxisLength,
-                                                                         double semiMinorAxisLength,
-                                                                         double apexAsymptoteDistance);
+typedef BrlObject BrlHyperboloid;
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlHyperboloidBasePoint(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetBasePoint(BrlObject hyperboloid,
-                                                           double    baseX, double baseY, double baseZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlHyperboloidHeight(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetHeight(BrlObject hyperboloid,
-                                                        double    heightX, double heightY, double heightZ);
+BRLCAD_MOOSE_EXPORT BrlHyperboloid BrlNewHyperboloid(void);
+BRLCAD_MOOSE_EXPORT BrlHyperboloid BrlNewHyperboloidAsHyperboloid(double baseX,          double baseY,          double baseZ,
+                                                                  double heightX,        double heightY,        double heightZ,
+                                                                  double semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
+                                                                  double semiMinorAxisLength,
+                                                                  double apexAsymptoteDistance);
+BRLCAD_MOOSE_EXPORT BrlHyperboloid BrlNewHyperboloidAsHyperboloidWithLength(double baseX,      double baseY,      double baseZ,
+                                                                            double heightX,    double heightY,    double heightZ,
+                                                                            double directionX, double directionY, double directionZ,
+                                                                            double semiMajorAxisLength,
+                                                                            double semiMinorAxisLength,
+                                                                            double apexAsymptoteDistance);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlHyperboloidSemiMajorAxis(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetSemiMajorAxis(BrlObject hyperboloid,
-                                                               double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D    BrlHyperboloidBasePoint(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetBasePoint(BrlHyperboloid hyperboloid,
+                                                              double         baseX, double baseY, double baseZ);
 
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetSemiMajorAxisWithLength(BrlObject hyperboloid,
-                                                                         double    directionX, double directionY, double directionZ,
-                                                                         double    length);
+BRLCAD_MOOSE_EXPORT BrlVector3D    BrlHyperboloidHeight(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetHeight(BrlHyperboloid hyperboloid,
+                                                           double         heightX, double heightY, double heightZ);
 
-BRLCAD_MOOSE_EXPORT BrlVector3D BrlHyperboloidSemiMajorAxisDirection(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetSemiMajorAxisDirection(BrlObject hyperboloid,
-                                                                        double    directionX, double directionY, double directionZ);
+BRLCAD_MOOSE_EXPORT BrlVector3D    BrlHyperboloidSemiMajorAxis(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetSemiMajorAxis(BrlHyperboloid hyperboloid,
+                                                                  double         semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ);
 
-BRLCAD_MOOSE_EXPORT double      BrlHyperboloidSemiMajorAxisLength(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetSemiMajorAxisLength(BrlObject hyperboloid,
-                                                                     double    length);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetSemiMajorAxisWithLength(BrlHyperboloid hyperboloid,
+                                                                            double         directionX, double directionY, double directionZ,
+                                                                            double         length);
 
-BRLCAD_MOOSE_EXPORT double      BrlHyperboloidSemiMinorAxisLength(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetSemiMinorAxisLength(BrlObject hyperboloid,
-                                                                     double    length);
+BRLCAD_MOOSE_EXPORT BrlVector3D    BrlHyperboloidSemiMajorAxisDirection(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetSemiMajorAxisDirection(BrlHyperboloid hyperboloid,
+                                                                           double         directionX, double directionY, double directionZ);
 
-BRLCAD_MOOSE_EXPORT double      BrlHyperboloidApexAsymptoteDistance(BrlObject hyperboloid);
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetApexAsymptoteDistance(BrlObject hyperboloid,
-                                                                       double    distance);
+BRLCAD_MOOSE_EXPORT double         BrlHyperboloidSemiMajorAxisLength(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetSemiMajorAxisLength(BrlHyperboloid hyperboloid,
+                                                                        double         length);
 
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSet(BrlObject hyperboloid,
-                                                  double    baseX,          double baseY,          double baseZ,
-                                                  double    heightX,        double heightY,        double heightZ,
-                                                  double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
-                                                  double    semiMinorAxisLength,
-                                                  double    apexAsymptoteDistance);
+BRLCAD_MOOSE_EXPORT double         BrlHyperboloidSemiMinorAxisLength(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetSemiMinorAxisLength(BrlHyperboloid hyperboloid,
+                                                                        double         length);
 
-BRLCAD_MOOSE_EXPORT void        BrlHyperboloidSetWithLength(BrlObject hyperboloid,
-                                                            double    baseX,               double baseY,               double baseZ,
-                                                            double    heightX,             double heightY,             double heightZ,
-                                                            double    directionX,          double directionY,          double directionZ,
-                                                            double    semiMajorAxisLength,
-                                                            double    semiMinorAxisLength,
-                                                            double    apexAsymptoteDistance);
+BRLCAD_MOOSE_EXPORT double         BrlHyperboloidApexAsymptoteDistance(BrlHyperboloid hyperboloid);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetApexAsymptoteDistance(BrlHyperboloid hyperboloid,
+                                                                          double         distance);
 
-BRLCAD_MOOSE_EXPORT const char* BrlHyperboloidClassName(void);
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSet(BrlHyperboloid hyperboloid,
+                                                     double         baseX,          double baseY,          double baseZ,
+                                                     double         heightX,        double heightY,        double heightZ,
+                                                     double         semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
+                                                     double         semiMinorAxisLength,
+                                                     double         apexAsymptoteDistance);
+
+BRLCAD_MOOSE_EXPORT void           BrlHyperboloidSetWithLength(BrlHyperboloid hyperboloid,
+                                                               double         baseX,      double baseY,      double baseZ,
+                                                               double         heightX,    double heightY,    double heightZ,
+                                                               double         directionX, double directionY, double directionZ,
+                                                               double         semiMajorAxisLength,
+                                                               double         semiMinorAxisLength,
+                                                               double         apexAsymptoteDistance);
+
+BRLCAD_MOOSE_EXPORT const char*    BrlHyperboloidClassName(void);
 
 
 #ifdef __cplusplus

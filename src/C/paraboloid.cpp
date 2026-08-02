@@ -29,20 +29,18 @@
 
 #include <brlcad/C/paraboloid.h>
 
-#include "BrlData.h"
-
 #include "casts.h"
 
 
 using namespace BRLCAD;
 
 
-BrlObject BrlNewParaboloid(void) {
-    return DowncastObject(new Paraboloid());
+BrlParaboloid BrlNewParaboloid(void) {
+    return new ParaboloidData(new Paraboloid());
 }
 
 
-BrlObject BrlNewParaboloidAsParaboloid
+BrlParaboloid BrlNewParaboloidAsParaboloid
 (
     double baseX,          double baseY,          double baseZ,
     double heightX,        double heightY,        double heightZ,
@@ -57,11 +55,11 @@ BrlObject BrlNewParaboloidAsParaboloid
 }
 
 
-BrlObject BrlNewParaboloidAsParaboloidWithLength
+BrlParaboloid BrlNewParaboloidAsParaboloidWithLength
 (
-    double baseX,               double baseY,               double baseZ,
-    double heightX,             double heightY,             double heightZ,
-    double directionX,          double directionY,          double directionZ,
+    double baseX,      double baseY,      double baseZ,
+    double heightX,    double heightY,    double heightZ,
+    double directionX, double directionY, double directionZ,
     double semiMajorAxisLength,
     double semiMinorAxisLength
 ) {
@@ -75,7 +73,7 @@ BrlObject BrlNewParaboloidAsParaboloidWithLength
 
 BrlVector3D BrlParaboloidBasePoint
 (
-    BrlObject paraboloid
+    BrlParaboloid paraboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -94,8 +92,8 @@ BrlVector3D BrlParaboloidBasePoint
 
 void BrlParaboloidSetBasePoint
 (
-    BrlObject paraboloid,
-    double    baseX, double baseY, double baseZ
+    BrlParaboloid paraboloid,
+    double        baseX, double baseY, double baseZ
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -113,7 +111,7 @@ void BrlParaboloidSetBasePoint
 
 BrlVector3D BrlParaboloidHeight
 (
-    BrlObject paraboloid
+    BrlParaboloid paraboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -132,8 +130,8 @@ BrlVector3D BrlParaboloidHeight
 
 void BrlParaboloidSetHeight
 (
-    BrlObject paraboloid,
-    double    heightX, double heightY, double heightZ
+    BrlParaboloid paraboloid,
+    double        heightX, double heightY, double heightZ
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -151,7 +149,7 @@ void BrlParaboloidSetHeight
 
 BrlVector3D BrlParaboloidSemiMajorAxis
 (
-    BrlObject paraboloid
+    BrlParaboloid paraboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -170,8 +168,8 @@ BrlVector3D BrlParaboloidSemiMajorAxis
 
 void BrlParaboloidSetSemiMajorAxis
 (
-    BrlObject paraboloid,
-    double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ
+    BrlParaboloid paraboloid,
+    double        semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -189,9 +187,9 @@ void BrlParaboloidSetSemiMajorAxis
 
 void BrlParaboloidSetSemiMajorAxisWithLength
 (
-    BrlObject paraboloid,
-    double    directionX, double directionY, double directionZ,
-    double    length
+    BrlParaboloid paraboloid,
+    double        directionX, double directionY, double directionZ,
+    double        length
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -209,7 +207,7 @@ void BrlParaboloidSetSemiMajorAxisWithLength
 
 BrlVector3D BrlParaboloidSemiMajorAxisDirection
 (
-    BrlObject paraboloid
+    BrlParaboloid paraboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -228,8 +226,8 @@ BrlVector3D BrlParaboloidSemiMajorAxisDirection
 
 void BrlParaboloidSetSemiMajorAxisDirection
 (
-    BrlObject paraboloid,
-    double    directionX, double directionY, double directionZ
+    BrlParaboloid paraboloid,
+    double        directionX, double directionY, double directionZ
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -247,7 +245,7 @@ void BrlParaboloidSetSemiMajorAxisDirection
 
 double BrlParaboloidSemiMajorAxisLength
 (
-    BrlObject paraboloid
+    BrlParaboloid paraboloid
 ) {
     double ret = 0.0;
 
@@ -266,8 +264,8 @@ double BrlParaboloidSemiMajorAxisLength
 
 void BrlParaboloidSetSemiMajorAxisLength
 (
-    BrlObject paraboloid,
-    double    length
+    BrlParaboloid paraboloid,
+    double        length
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -282,7 +280,7 @@ void BrlParaboloidSetSemiMajorAxisLength
 
 double BrlParaboloidSemiMinorAxisLength
 (
-    BrlObject paraboloid
+    BrlParaboloid paraboloid
 ) {
     double ret = 0.0;
 
@@ -301,8 +299,8 @@ double BrlParaboloidSemiMinorAxisLength
 
 void BrlParaboloidSetSemiMinorAxisLength
 (
-    BrlObject paraboloid,
-    double    length
+    BrlParaboloid paraboloid,
+    double        length
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -317,11 +315,11 @@ void BrlParaboloidSetSemiMinorAxisLength
 
 void BrlParaboloidSet
 (
-    BrlObject paraboloid,
-    double    baseX,          double baseY,          double baseZ,
-    double    heightX,        double heightY,        double heightZ,
-    double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
-    double    semiMinorAxisLength
+    BrlParaboloid paraboloid,
+    double        baseX,          double baseY,          double baseZ,
+    double        heightX,        double heightY,        double heightZ,
+    double        semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
+    double        semiMinorAxisLength
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);
@@ -341,12 +339,12 @@ void BrlParaboloidSet
 
 void BrlParaboloidSetWithLength
 (
-    BrlObject paraboloid,
-    double    baseX,               double baseY,               double baseZ,
-    double    heightX,             double heightY,             double heightZ,
-    double    directionX,          double directionY,          double directionZ,
-    double    semiMajorAxisLength,
-    double    semiMinorAxisLength
+    BrlParaboloid paraboloid,
+    double        baseX,      double baseY,      double baseZ,
+    double        heightX,    double heightY,    double heightZ,
+    double        directionX, double directionY, double directionZ,
+    double        semiMajorAxisLength,
+    double        semiMinorAxisLength
 ) {
     if (paraboloid != nullptr) {
         Paraboloid* paraIntern = CastParaboloid(paraboloid);

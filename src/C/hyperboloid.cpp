@@ -29,20 +29,18 @@
 
 #include <brlcad/C/hyperboloid.h>
 
-#include "BrlData.h"
-
 #include "casts.h"
 
 
 using namespace BRLCAD;
 
 
-BrlObject BrlNewHyperboloid(void) {
-    return DowncastObject(new Hyperboloid());
+BrlHyperboloid BrlNewHyperboloid(void) {
+    return new HyperboloidData(new Hyperboloid());
 }
 
 
-BrlObject BrlNewHyperboloidAsHyperboloid
+BrlHyperboloid BrlNewHyperboloidAsHyperboloid
 (
     double baseX,          double baseY,          double baseZ,
     double heightX,        double heightY,        double heightZ,
@@ -58,11 +56,11 @@ BrlObject BrlNewHyperboloidAsHyperboloid
 }
 
 
-BrlObject BrlNewHyperboloidAsHyperboloidWithLength
+BrlHyperboloid BrlNewHyperboloidAsHyperboloidWithLength
 (
-    double baseX,               double baseY,               double baseZ,
-    double heightX,             double heightY,             double heightZ,
-    double directionX,          double directionY,          double directionZ,
+    double baseX,      double baseY,      double baseZ,
+    double heightX,    double heightY,    double heightZ,
+    double directionX, double directionY, double directionZ,
     double semiMajorAxisLength,
     double semiMinorAxisLength,
     double apexAsymptoteDistance
@@ -77,7 +75,7 @@ BrlObject BrlNewHyperboloidAsHyperboloidWithLength
 
 BrlVector3D BrlHyperboloidBasePoint
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -96,8 +94,8 @@ BrlVector3D BrlHyperboloidBasePoint
 
 void BrlHyperboloidSetBasePoint
 (
-    BrlObject hyperboloid,
-    double    baseX, double baseY, double baseZ
+    BrlHyperboloid hyperboloid,
+    double         baseX, double baseY, double baseZ
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -115,7 +113,7 @@ void BrlHyperboloidSetBasePoint
 
 BrlVector3D BrlHyperboloidHeight
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -134,8 +132,8 @@ BrlVector3D BrlHyperboloidHeight
 
 void BrlHyperboloidSetHeight
 (
-    BrlObject hyperboloid,
-    double    heightX, double heightY, double heightZ
+    BrlHyperboloid hyperboloid,
+    double         heightX, double heightY, double heightZ
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -153,7 +151,7 @@ void BrlHyperboloidSetHeight
 
 BrlVector3D BrlHyperboloidSemiMajorAxis
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -172,8 +170,8 @@ BrlVector3D BrlHyperboloidSemiMajorAxis
 
 void BrlHyperboloidSetSemiMajorAxis
 (
-    BrlObject hyperboloid,
-    double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ
+    BrlHyperboloid hyperboloid,
+    double         semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -191,9 +189,9 @@ void BrlHyperboloidSetSemiMajorAxis
 
 void BrlHyperboloidSetSemiMajorAxisWithLength
 (
-    BrlObject hyperboloid,
-    double    directionX, double directionY, double directionZ,
-    double    length
+    BrlHyperboloid hyperboloid,
+    double         directionX, double directionY, double directionZ,
+    double         length
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -211,7 +209,7 @@ void BrlHyperboloidSetSemiMajorAxisWithLength
 
 BrlVector3D BrlHyperboloidSemiMajorAxisDirection
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
     BrlVector3D ret = nullptr;
 
@@ -230,8 +228,8 @@ BrlVector3D BrlHyperboloidSemiMajorAxisDirection
 
 void BrlHyperboloidSetSemiMajorAxisDirection
 (
-    BrlObject hyperboloid,
-    double    directionX, double directionY, double directionZ
+    BrlHyperboloid hyperboloid,
+    double         directionX, double directionY, double directionZ
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -249,9 +247,9 @@ void BrlHyperboloidSetSemiMajorAxisDirection
 
 double BrlHyperboloidSemiMajorAxisLength
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
-    double ret = 0.0;
+    double ret = 0.;
 
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -268,8 +266,8 @@ double BrlHyperboloidSemiMajorAxisLength
 
 void BrlHyperboloidSetSemiMajorAxisLength
 (
-    BrlObject hyperboloid,
-    double    length
+    BrlHyperboloid hyperboloid,
+    double         length
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -284,9 +282,9 @@ void BrlHyperboloidSetSemiMajorAxisLength
 
 double BrlHyperboloidSemiMinorAxisLength
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
-    double ret = 0.0;
+    double ret = 0.;
 
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -303,8 +301,8 @@ double BrlHyperboloidSemiMinorAxisLength
 
 void BrlHyperboloidSetSemiMinorAxisLength
 (
-    BrlObject hyperboloid,
-    double    length
+    BrlHyperboloid hyperboloid,
+    double         length
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -319,9 +317,9 @@ void BrlHyperboloidSetSemiMinorAxisLength
 
 double BrlHyperboloidApexAsymptoteDistance
 (
-    BrlObject hyperboloid
+    BrlHyperboloid hyperboloid
 ) {
-    double ret = 0.0;
+    double ret = 0.;
 
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -338,8 +336,8 @@ double BrlHyperboloidApexAsymptoteDistance
 
 void BrlHyperboloidSetApexAsymptoteDistance
 (
-    BrlObject hyperboloid,
-    double    distance
+    BrlHyperboloid hyperboloid,
+    double         distance
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -354,12 +352,12 @@ void BrlHyperboloidSetApexAsymptoteDistance
 
 void BrlHyperboloidSet
 (
-    BrlObject hyperboloid,
-    double    baseX,          double baseY,          double baseZ,
-    double    heightX,        double heightY,        double heightZ,
-    double    semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
-    double    semiMinorAxisLength,
-    double    apexAsymptoteDistance
+    BrlHyperboloid hyperboloid,
+    double         baseX,          double baseY,          double baseZ,
+    double         heightX,        double heightY,        double heightZ,
+    double         semiMajorAxisX, double semiMajorAxisY, double semiMajorAxisZ,
+    double         semiMinorAxisLength,
+    double         apexAsymptoteDistance
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
@@ -379,13 +377,13 @@ void BrlHyperboloidSet
 
 void BrlHyperboloidSetWithLength
 (
-    BrlObject hyperboloid,
-    double    baseX,               double baseY,               double baseZ,
-    double    heightX,             double heightY,             double heightZ,
-    double    directionX,          double directionY,          double directionZ,
-    double    semiMajorAxisLength,
-    double    semiMinorAxisLength,
-    double    apexAsymptoteDistance
+    BrlHyperboloid hyperboloid,
+    double         baseX,      double baseY,      double baseZ,
+    double         heightX,    double heightY,    double heightZ,
+    double         directionX, double directionY, double directionZ,
+    double         semiMajorAxisLength,
+    double         semiMinorAxisLength,
+    double         apexAsymptoteDistance
 ) {
     if (hyperboloid != nullptr) {
         Hyperboloid* hyperIntern = CastHyperboloid(hyperboloid);
