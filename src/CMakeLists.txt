@@ -43,7 +43,6 @@ IF(MODULE_COMMANDSTRING)
 
     IF(BRLCAD_USE_STATIC_LIBS)
         SET(COMMANDSTRING_LIBRARIES
-            ZLIB::ZLIB_STATIC
             BRLCAD::ged-static
         )
     ELSE(BRLCAD_USE_STATIC_LIBS)
@@ -128,8 +127,26 @@ IF(BRLCAD_USE_STATIC_LIBS)
     TARGET_LINK_LIBRARIES(brlcad
         ${COMMANDSTRING_LIBRARIES}
         BRLCAD::rt-static
+        BRLCAD::nmg-static
+        BRLCAD::wdb-static
+        BRLCAD::bn-static
+        BRLCAD::brep-static
+        BRLCAD::bv-static
+        BRLCAD::bg-static
+        BRLCAD::bu-static
+        #BRLCAD::gdiam-static
+        #LMDB::LMDB_STATIC
+        mmesh::mmesh-static
+        #OPENNURBS::OPENNURBS_STATIC
+        #BRLCAD::poly2tri-static
+        #BRLCAD::vds-static
+        #REGEX::REGEX_STATIC
+        ZLIB::ZLIB_STATIC
         ${MSVC_LIBRARIES}
         ${LUA_LIBRARIES}
+        ${CMAKE_DL_LIBS}
+        Threads::Threads
+        #UUID_LIBRARIES
     )
 ELSE(BRLCAD_USE_STATIC_LIBS)
     TARGET_LINK_LIBRARIES(brlcad
