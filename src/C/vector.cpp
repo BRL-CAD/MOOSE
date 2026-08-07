@@ -37,7 +37,7 @@ double BrlVector3DX
 (
     BrlVector3D vector
 ) {
-    double ret = 0.
+    double ret = 0.;
 
     if (vector != nullptr) {
         Vector3D* vector3D = CastVector3D(vector);
@@ -47,6 +47,8 @@ double BrlVector3DX
         if (vector3D != nullptr)
             ret = vector3D->coordinates[0];
     }
+
+    return ret;
 }
 
 
@@ -54,7 +56,7 @@ double BrlVector3DY
 (
     BrlVector3D vector
 ) {
-    double ret = 0.
+    double ret = 0.;
 
     if (vector != nullptr) {
         Vector3D* vector3D = CastVector3D(vector);
@@ -64,6 +66,8 @@ double BrlVector3DY
         if (vector3D != nullptr)
             ret = vector3D->coordinates[1];
     }
+
+    return ret;
 }
 
 
@@ -71,7 +75,7 @@ double BrlVector3DZ
 (
     BrlVector3D vector
 ) {
-    double ret = 0.
+    double ret = 0.;
 
     if (vector != nullptr) {
         Vector3D* vector3D = CastVector3D(vector);
@@ -81,4 +85,6 @@ double BrlVector3DZ
         if (vector3D != nullptr)
             ret = vector3D->coordinates[2];
     }
+
+    return ret;
 }

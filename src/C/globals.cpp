@@ -53,6 +53,7 @@ int BrlPatchVersion(void) {
 
 const char* const Vector3DMagic                          = "BRLCAD::Vector3D";
 const char* const VectorListMagic                        = "BRLCAD::VectorList";
+const char* const VectorListElementMagic                 = "VectorListElementMagic";
 const char* const ConstDatabaseMagic                     = "BRLCAD::ConstDatabase";
 const char* const FileDatabaseMagic                      = "BRLCAD::FileDatabase";
 const char* const MemoryDatabaseMagic                    = "BRLCAD::MemoryDatabase";
@@ -77,10 +78,20 @@ const char* const NonManifoldGeometryFaceMagic           = "BRLCAD::NonManifoldG
 const char* const NonManifoldGeometryShellMagic          = "BRLCAD::NonManifoldGeometry::Shell";
 const char* const NonManifoldGeometryRegionMagic         = "BRLCAD::NonManifoldGeometry::Region";
 const char* const NonManifoldGeometryRegionIteratorMagic = "BRLCAD::NonManifoldGeometry::RegionIterator";
+const char* const ParabolicCylinderMagic                 = "ParabolicCylinderMagic";
 const char* const ParaboloidMagic                        = "BRLCAD::Paraboloid";
 const char* const ParticleMagic                          = "BRLCAD::Particle";
+const char* const PipeMagic                              = "PipeMagic";
+const char* const PipeControlPointMagic                  = "PipeControlPointMagic";
+const char* const SketchMagic                            = "SketchMagic";
+const char* const SketchSegmentMagic                     = "SketchSegmentMagic";
+const char* const SketchLineMagic                        = "SketchLineMagic";
+const char* const SketchCircularArcMagic                 = "SketchCircularArcMagic";
+const char* const SketchNurbMagic                        = "SketchNurbMagic";
+const char* const SketchBezierMagic                      = "SketchBezierMagic";
 const char* const SphereMagic                            = "BRLCAD::Sphere";
 const char* const TorusMagic                             = "BRLCAD::Torus";
+const char* const UnknownMagic                           = "UnknownMagic";
 
 
 void BrlDeleteHandle
@@ -129,3 +140,4 @@ void BrlDeRegisterLogHandler
 ) {
     CLogHandlers.erase(logHandler);
 }
+

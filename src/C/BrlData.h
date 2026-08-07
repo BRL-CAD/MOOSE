@@ -26,23 +26,27 @@
 #ifndef BRLCAD_C_BRLDATA_INCLUDED
 #define BRLCAD_C_BRLDATA_INCLUDED
 
-#include <brlcad/VectorList.h>
-#include <brlcad/Database/FileDatabase.h>
-#include <brlcad/Database/MemoryDatabase.h>
 #include <brlcad/Database/Arb8.h>
 #include <brlcad/Database/BagOfTriangles.h>
 #include <brlcad/Database/Combination.h>
 #include <brlcad/Database/Cone.h>
 #include <brlcad/Database/Ellipsoid.h>
 #include <brlcad/Database/EllipticalTorus.h>
+#include <brlcad/Database/FileDatabase.h>
 #include <brlcad/Database/Halfspace.h>
 #include <brlcad/Database/HyperbolicCylinder.h>
 #include <brlcad/Database/Hyperboloid.h>
+#include <brlcad/Database/MemoryDatabase.h>
 #include <brlcad/Database/NonManifoldGeometry.h>
+#include <brlcad/Database/ParabolicCylinder.h>
 #include <brlcad/Database/Paraboloid.h>
 #include <brlcad/Database/Particle.h>
+#include <brlcad/Database/Pipe.h>
+#include <brlcad/Database/Sketch.h>
 #include <brlcad/Database/Sphere.h>
 #include <brlcad/Database/Torus.h>
+#include <brlcad/Database/Unknown.h>
+#include <brlcad/VectorList.h>
 
 
 class BrlData {
@@ -70,6 +74,7 @@ protected:
 
 extern const char* const Vector3DMagic;
 extern const char* const VectorListMagic;
+extern const char* const VectorListElementMagic;
 extern const char* const ConstDatabaseMagic;
 extern const char* const FileDatabaseMagic;
 extern const char* const MemoryDatabaseMagic;
@@ -94,10 +99,20 @@ extern const char* const NonManifoldGeometryFaceMagic;
 extern const char* const NonManifoldGeometryShellMagic;
 extern const char* const NonManifoldGeometryRegionMagic;
 extern const char* const NonManifoldGeometryRegionIteratorMagic;
+extern const char* const ParabolicCylinderMagic;
 extern const char* const ParaboloidMagic;
 extern const char* const ParticleMagic;
+extern const char* const PipeMagic;
+extern const char* const PipeControlPointMagic;
+extern const char* const SketchMagic;
+extern const char* const SketchSegmentMagic;
+extern const char* const SketchLineMagic;
+extern const char* const SketchCircularArcMagic;
+extern const char* const SketchNurbMagic;
+extern const char* const SketchBezierMagic;
 extern const char* const SphereMagic;
 extern const char* const TorusMagic;
+extern const char* const UnknownMagic;
 
 
 template<class ValueType> class ValueData : public BrlData {
@@ -162,6 +177,12 @@ public:
 class VectorListData : public PointerData<BRLCAD::VectorList> {
 public:
     VectorListData(BRLCAD::VectorList* pointer) : PointerData(VectorListMagic, pointer) {}
+};
+
+
+class VectorListElementData : public PointerData<BRLCAD::VectorList::Element> {
+public:
+    VectorListElementData(BRLCAD::VectorList::Element* pointer) : PointerData(VectorListElementMagic, pointer) {}
 };
 
 
@@ -309,6 +330,12 @@ public:
 };
 
 
+class ParabolicCylinderData : public PointerData<BRLCAD::ParabolicCylinder> {
+public:
+    ParabolicCylinderData(BRLCAD::ParabolicCylinder* pointer) : PointerData(ParabolicCylinderMagic, pointer) {}
+};
+
+
 class ParaboloidData : public PointerData<BRLCAD::Paraboloid> {
 public:
     ParaboloidData(BRLCAD::Paraboloid* pointer) : PointerData(ParaboloidMagic, pointer) {}
@@ -318,6 +345,54 @@ public:
 class ParticleData : public PointerData<BRLCAD::Particle> {
 public:
     ParticleData(BRLCAD::Particle* pointer) : PointerData(ParticleMagic, pointer) {}
+};
+
+
+class PipeData : public PointerData<BRLCAD::Pipe> {
+public:
+    PipeData(BRLCAD::Pipe* pointer) : PointerData(PipeMagic, pointer) {}
+};
+
+
+class PipeControlPointData : public ValueData<BRLCAD::Pipe::ControlPoint> {
+public:
+    PipeControlPointData(const BRLCAD::Pipe::ControlPoint& value) : ValueData(PipeControlPointMagic, value) {}
+};
+
+
+class SketchData : public PointerData<BRLCAD::Sketch> {
+public:
+    SketchData(BRLCAD::Sketch* pointer) : PointerData(SketchMagic, pointer) {}
+};
+
+
+class SketchSegmentData : public PointerData<BRLCAD::Sketch::Segment> {
+public:
+    SketchSegmentData(BRLCAD::Sketch::Segment* pointer) : PointerData(SketchSegmentMagic, pointer) {}
+};
+
+
+class SketchLineData : public PointerData<BRLCAD::Sketch::Line> {
+public:
+    SketchLineData(BRLCAD::Sketch::Line* pointer) : PointerData(SketchLineMagic, pointer) {}
+};
+
+
+class SketchCircularArcData : public PointerData<BRLCAD::Sketch::CircularArc> {
+public:
+    SketchCircularArcData(BRLCAD::Sketch::CircularArc* pointer) : PointerData(SketchCircularArcMagic, pointer) {}
+};
+
+
+class SketchNurbData : public PointerData<BRLCAD::Sketch::Nurb> {
+public:
+    SketchNurbData(BRLCAD::Sketch::Nurb* pointer) : PointerData(SketchNurbMagic, pointer) {}
+};
+
+
+class SketchBezierData : public PointerData<BRLCAD::Sketch::Bezier> {
+public:
+    SketchBezierData(BRLCAD::Sketch::Bezier* pointer) : PointerData(SketchBezierMagic, pointer) {}
 };
 
 
@@ -332,5 +407,10 @@ public:
     TorusData(BRLCAD::Torus* pointer) : PointerData(TorusMagic, pointer) {}
 };
 
+
+class UnknownData : public PointerData<BRLCAD::Unknown> {
+public:
+    UnknownData(BRLCAD::Unknown* pointer) : PointerData(UnknownMagic, pointer) {}
+};
 
 #endif // BRLCAD_C_BRLDATA_INCLUDED

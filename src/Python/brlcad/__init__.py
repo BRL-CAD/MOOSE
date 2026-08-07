@@ -23,6 +23,7 @@
 #       allows importing of Python modules
 
 
+
 from .Arb8 import Arb8
 from .BagOfTriangles import BagOfTriangles, Face
 from .Combinations import Combinations, TreeNode
@@ -37,11 +38,16 @@ from .HyperbolicCylinder import HyperbolicCylinder
 from .Hyperboloid import Hyperboloid
 from .MemoryDatabase import MemoryDatabase
 from .NonManifoldGeometry import NonManifoldGeometry
+from .Object import Object
+from .ParabolicCylinder import ParabolicCylinder
 from .Paraboloid import Paraboloid
 from .Particle import Particle
-from .Object import Object
+from .Pipe import Pipe, PipeControlPoint
+from .Sketch import Sketch, SketchSegment, SketchLine, SketchCircularArc, SketchNurb, SketchBezier
 from .Sphere import Sphere
 from .Torus import Torus
+from .Unknown import Unknown
+from .VectorList import VectorList, VectorListElement, VectorListPointDraw, VectorListPointSize, VectorListLineMove, VectorListLineDraw, VectorListLineWidth, VectorListTriangleStart, VectorListTriangleMove, VectorListTriangleDraw, VectorListTriangleEnd, VectorListTriangleVertexNormal, VectorListPolygonStart, VectorListPolygonMove, VectorListPolygonDraw, VectorListPolygonEnd, VectorListPolygonVertexNormal, VectorListDisplaySpace, VectorListModelSpace
 
 
 __all__ = [
@@ -60,10 +66,39 @@ __all__ = [
     'Hyperboloid',
     'MemoryDatabase',
     'NonManifoldGeometry',
+    'Object',
+    'ParabolicCylinder',
     'Paraboloid',
     'Particle',
-    'Object',
+    'Pipe',
+    'PipeControlPoint',
+    'Sketch',
+    'SketchBezier',
+    'SketchCircularArc',
+    'SketchLine',
+    'SketchNurb',
+    'SketchSegment',
     'Sphere',
     'Torus',
-    'TreeNode'
+    'TreeNode',
+    'Unknown',
+    'VectorList',
+    'VectorListDisplaySpace',
+    'VectorListElement',
+    'VectorListLineDraw',
+    'VectorListLineMove',
+    'VectorListLineWidth',
+    'VectorListModelSpace',
+    'VectorListPointDraw',
+    'VectorListPointSize',
+    'VectorListPolygonDraw',
+    'VectorListPolygonEnd',
+    'VectorListPolygonMove',
+    'VectorListPolygonStart',
+    'VectorListPolygonVertexNormal',
+    'VectorListTriangleDraw',
+    'VectorListTriangleEnd',
+    'VectorListTriangleMove',
+    'VectorListTriangleStart',
+    'VectorListTriangleVertexNormal'
 ]

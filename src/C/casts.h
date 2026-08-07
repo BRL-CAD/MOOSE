@@ -36,6 +36,7 @@ BrlData*                                     CastHandle(BrlHandle handle);
 
 BRLCAD::Vector3D*                            CastVector3D(BrlHandle handle);
 BRLCAD::VectorList*                          CastVectorList(BrlHandle handle);
+BRLCAD::VectorList::Element*                 CastVectorListElement(BrlHandle handle);
 
 BRLCAD::ConstDatabase*                       CastConstDatabase(BrlHandle handle);
 BRLCAD::Database*                            CastDatabase(BrlHandle handle);
@@ -64,10 +65,19 @@ BRLCAD::NonManifoldGeometry::Face*           CastNonManifoldGeometryFace(BrlHand
 BRLCAD::NonManifoldGeometry::Shell*          CastNonManifoldGeometryShell(BrlHandle handle);
 BRLCAD::NonManifoldGeometry::Region*         CastNonManifoldGeometryRegion(BrlHandle handle);
 BRLCAD::NonManifoldGeometry::RegionIterator* CastNonManifoldGeometryRegionIterator(BrlHandle handle);
+BRLCAD::ParabolicCylinder*                   CastParabolicCylinder(BrlHandle handle);
 BRLCAD::Paraboloid*                          CastParaboloid(BrlHandle handle);
 BRLCAD::Particle*                            CastParticle(BrlHandle handle);
+BRLCAD::Pipe*                                CastPipe(BrlHandle handle);
+BRLCAD::Pipe::ControlPoint*                  CastPipeControlPoint(BrlHandle handle);
+BRLCAD::Sketch*                              CastSketch(BrlHandle handle);
+BRLCAD::Sketch::Segment*                     CastSketchSegment(BrlHandle handle);
+BRLCAD::Sketch::Line*                        CastSketchLine(BrlHandle handle);
+BRLCAD::Sketch::CircularArc*                 CastSketchCircularArc(BrlHandle handle);
+BRLCAD::Sketch::Nurb*                        CastSketchNurb(BrlHandle handle);
+BRLCAD::Sketch::Bezier*                      CastSketchBezier(BrlHandle handle);
 BRLCAD::Sphere*                              CastSphere(BrlHandle handle);
 BRLCAD::Torus*                               CastTorus(BrlHandle handle);
-
+BRLCAD::Unknown*                             CastUnknown(BrlHandle handle);
 
 #endif // BRLCAD_C_CASTS_INCLUDED

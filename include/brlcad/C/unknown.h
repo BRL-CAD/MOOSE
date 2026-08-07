@@ -1,4 +1,4 @@
-/*                      V E C T O R . H
+/*                      U N K N O W N . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -17,32 +17,37 @@
  * License along with this file; see the file named COPYING for more
  * information.
  */
-/** @file vector.h
+/** @file unknown.h
  *
  *  BRL-CAD core simplified C interface:
- *      declarations of vector data types
+ *      declares a handle and functions for Unknown solid handling
  */
 
-#ifndef BRLCAD_C_VECTOR_INCLUDED
-#define BRLCAD_C_VECTOR_INCLUDED
 
-#include <brlcad/C/globals.h>
+#ifndef BRLCAD_C_UNKNOWN_INCLUDED
+#define BRLCAD_C_UNKNOWN_INCLUDED
+
+#include <brlcad/C/object.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
-typedef BrlHandle BrlVector3D;
+typedef BrlObject BrlUnknown;
 
 
-BRLCAD_MOOSE_EXPORT double BrlVector3DX(BrlVector3D vector);
-BRLCAD_MOOSE_EXPORT double BrlVector3DY(BrlVector3D vector);
-BRLCAD_MOOSE_EXPORT double BrlVector3DZ(BrlVector3D vector);
+BRLCAD_MOOSE_EXPORT BrlUnknown  BrlUnknownClone(BrlUnknown unknown);
+
+BRLCAD_MOOSE_EXPORT const char* BrlUnknownType(BrlUnknown unknown);
+
+BRLCAD_MOOSE_EXPORT int         BrlUnknownIsValid(BrlUnknown unknown);
+
+BRLCAD_MOOSE_EXPORT const char* BrlUnknownClassName(void);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // BRLCAD_C_VECTOR_INCLUDED
+#endif // BRLCAD_C_UNKNOWN_INCLUDED
