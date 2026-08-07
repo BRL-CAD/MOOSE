@@ -36,13 +36,13 @@ extern "C" {
 typedef BrlHandle BrlVector3D;
 
 
-BRLCAD_MOOSE_EXPORT double BrlVector3DX(BrlVector3D vector);
-BRLCAD_MOOSE_EXPORT double BrlVector3DY(BrlVector3D vector);
-BRLCAD_MOOSE_EXPORT double BrlVector3DZ(BrlVector3D vector);
+double BrlVector3DX(BrlVector3D vector);
+double BrlVector3DY(BrlVector3D vector);
+double BrlVector3DZ(BrlVector3D vector);
 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif // BRLCAD_C_VECTOR_INCLUDED
+#endif // BRLCAD_C_GLOBALS_INCLUDED

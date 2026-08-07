@@ -1,4 +1,4 @@
-/*                    V E C T O R L I S T . H
+/*                           V E C T O R L I S T . H
  * BRL-CAD
  *
  * Copyright (c) 2026 United States Government as represented by
@@ -20,7 +20,7 @@
 /** @file vectorList.h
  *
  *  BRL-CAD core simplified C interface:
- *      header for VectorList opaque wrapper
+ *       header for VectorList opaque wrapper
  */
 
 
@@ -48,50 +48,22 @@ BRLCAD_MOOSE_EXPORT void                 BrlVectorListClear(BrlVectorList vlist)
 
 BRLCAD_MOOSE_EXPORT int                  BrlVectorListElementType(BrlVectorListElement element);
 
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPointDraw(double x,
-                                                                   double y,
-                                                                   double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPointDraw(double x, double y, double z);
 BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPointSize(double size);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListLineMove(double x,
-                                                                  double y,
-                                                                  double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListLineDraw(double x,
-                                                                  double y,
-                                                                  double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListLineMove(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListLineDraw(double x, double y, double z);
 BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListLineWidth(double width);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleStart(double nx,
-                                                                       double ny,
-                                                                       double nz);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleMove(double x,
-                                                                      double y,
-                                                                      double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleDraw(double x,
-                                                                      double y,
-                                                                      double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleEnd(double x,
-                                                                     double y,
-                                                                     double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleVertexNormal(double nx,
-                                                                              double ny,
-                                                                              double nz);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonStart(double nx,
-                                                                      double ny,
-                                                                      double nz);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonMove(double x,
-                                                                     double y,
-                                                                     double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonDraw(double x,
-                                                                     double y,
-                                                                     double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonEnd(double x,
-                                                                    double y,
-                                                                    double z);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonVertexNormal(double nx,
-                                                                             double ny,
-                                                                             double nz);
-BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListDisplaySpace(double x,
-                                                                      double y,
-                                                                      double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleStart(double nx, double ny, double nz);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleMove(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleDraw(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleEnd(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListTriangleVertexNormal(double nx, double ny, double nz);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonStart(double nx, double ny, double nz);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonMove(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonDraw(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonEnd(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListPolygonVertexNormal(double nx, double ny, double nz);
+BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListDisplaySpace(double x, double y, double z);
 BRLCAD_MOOSE_EXPORT BrlVectorListElement BrlNewVectorListModelSpace(void);
 
 
