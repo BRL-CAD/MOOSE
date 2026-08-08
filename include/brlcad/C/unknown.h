@@ -37,12 +37,6 @@ extern "C" {
 typedef BrlObject BrlUnknown;
 
 
-BRLCAD_MOOSE_EXPORT BrlUnknown  BrlUnknownClone(BrlUnknown unknown);
-
-BRLCAD_MOOSE_EXPORT const char* BrlUnknownType(BrlUnknown unknown);
-
-BRLCAD_MOOSE_EXPORT int         BrlUnknownIsValid(BrlUnknown unknown);
-
 BRLCAD_MOOSE_EXPORT const char* BrlUnknownClassName(void);
 
 

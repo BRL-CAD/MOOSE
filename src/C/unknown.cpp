@@ -35,63 +35,6 @@
 using namespace BRLCAD;
 
 
-BrlUnknown BrlUnknownClone
-(
-    BrlUnknown unknown
-) {
-    BrlUnknown ret = nullptr;
-
-    if (unknown != nullptr) {
-        Unknown* unknownIntern = CastUnknown(unknown);
-
-        assert(unknownIntern != nullptr);
-
-        if (unknownIntern != nullptr)
-            ret = new UnknownData(static_cast<Unknown*>(unknownIntern->Clone()));
-    }
-
-    return ret;
-}
-
-
-const char* BrlUnknownType
-(
-    BrlUnknown unknown
-) {
-    const char* ret = nullptr;
-
-    if (unknown != nullptr) {
-        Unknown* unknownIntern = CastUnknown(unknown);
-
-        assert(unknownIntern != nullptr);
-
-        if (unknownIntern != nullptr)
-            ret = unknownIntern->Type();
-    }
-
-    return ret;
-}
-
-
-int BrlUnknownIsValid
-(
-    BrlUnknown unknown
-) {
-    int ret = 0;
-
-    if (unknown != nullptr) {
-        Unknown* unknownIntern = CastUnknown(unknown);
-
-        assert(unknownIntern != nullptr);
-
-        if (unknownIntern != nullptr)
-            ret = unknownIntern->IsValid() ? 1 : 0;
-    }
-
-    return ret;
-}
-
-
 const char* BrlUnknownClassName(void) {
     return Unknown::ClassName();
 }
