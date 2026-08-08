@@ -44,6 +44,7 @@ BrlData* CastHandle
 
         if ((handleMagic == Vector3DMagic) ||
             (handleMagic == VectorListMagic) ||
+            (handleMagic == VectorListElementMagic) ||
             (handleMagic == ConstDatabaseMagic) ||
             (handleMagic == FileDatabaseMagic) ||
             (handleMagic == MemoryDatabaseMagic) ||
@@ -68,10 +69,20 @@ BrlData* CastHandle
             (handleMagic == NonManifoldGeometryShellMagic) ||
             (handleMagic == NonManifoldGeometryRegionMagic) ||
             (handleMagic == NonManifoldGeometryRegionIteratorMagic) ||
+            (handleMagic == ParabolicCylinderMagic) ||
             (handleMagic == ParaboloidMagic) ||
             (handleMagic == ParticleMagic) ||
+            (handleMagic == PipeMagic) ||
+            (handleMagic == PipeControlPointMagic) ||
+            (handleMagic == SketchMagic) ||
+            (handleMagic == SketchSegmentMagic) ||
+            (handleMagic == SketchLineMagic) ||
+            (handleMagic == SketchCircularArcMagic) ||
+            (handleMagic == SketchNurbMagic) ||
+            (handleMagic == SketchBezierMagic) ||
             (handleMagic == SphereMagic) ||
-            (handleMagic == TorusMagic))
+            (handleMagic == TorusMagic) ||
+            (handleMagic == UnknownMagic))
             ret = handle;
         else
             bu_log("CastHandle: invalid handle");
@@ -115,6 +126,21 @@ VectorList* CastVectorList
             bu_log("CastVectorList: wrong handle");
     }
 
+    return ret;
+}
+
+
+BRLCAD::VectorList::Element* CastVectorListElement
+(
+    BrlHandle handle
+) {
+    BRLCAD::VectorList::Element* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == VectorListElementMagic)
+            ret = static_cast<VectorListElementData*>(handle)->Pointer();
+        else
+            bu_log("CastVectorListElement: wrong handle");
+    }
     return ret;
 }
 
@@ -304,6 +330,14 @@ BrlObject DowncastObject
             ret = new SphereData(static_cast<BRLCAD::Sphere*>(object));
         else if (typeName == BRLCAD::Torus::ClassName())
             ret = new TorusData(static_cast<BRLCAD::Torus*>(object));
+        else if (typeName == BRLCAD::Unknown::ClassName())
+            ret = new UnknownData(static_cast<BRLCAD::Unknown*>(object));
+        else if (typeName == BRLCAD::ParabolicCylinder::ClassName())
+            ret = new ParabolicCylinderData(static_cast<BRLCAD::ParabolicCylinder*>(object));
+        else if (typeName == BRLCAD::Pipe::ClassName())
+            ret = new PipeData(static_cast<BRLCAD::Pipe*>(object));
+        else if (typeName == BRLCAD::Sketch::ClassName())
+            ret = new SketchData(static_cast<BRLCAD::Sketch*>(object));
         else
             // Fallback for types not explicitly wrapped or unknown
             ret = new ObjectData(object);
@@ -636,44 +670,6 @@ NonManifoldGeometry::Shell* CastNonManifoldGeometryShell
 }
 
 
-Paraboloid* CastParaboloid
-(
-    BrlHandle handle
-) {
-    Paraboloid* ret = nullptr;
-
-    if (handle != nullptr) {
-        const char* handleMagic = handle->Magic();
-
-        if (handleMagic == ParaboloidMagic)
-            ret = static_cast<ParaboloidData*>(handle)->Pointer();
-        else
-            bu_log("CastParaboloid: wrong handle");
-    }
-
-    return ret;
-}
-
-
-Particle* CastParticle
-(
-    BrlHandle handle
-) {
-    Particle* ret = nullptr;
-
-    if (handle != nullptr) {
-        const char* handleMagic = handle->Magic();
-
-        if (handleMagic == ParticleMagic)
-            ret = static_cast<ParticleData*>(handle)->Pointer();
-        else
-            bu_log("CastParticle: wrong handle");
-    }
-
-    return ret;
-}
-
-
 NonManifoldGeometry::Region* CastNonManifoldGeometryRegion
 (
     BrlHandle handle
@@ -712,6 +708,188 @@ NonManifoldGeometry::RegionIterator* CastNonManifoldGeometryRegionIterator
 }
 
 
+BRLCAD::ParabolicCylinder* CastParabolicCylinder
+(
+    BrlHandle handle
+) {
+    BRLCAD::ParabolicCylinder* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == ParabolicCylinderMagic)
+            ret = static_cast<ParabolicCylinderData*>(handle)->Pointer();
+        else
+            bu_log("CastParabolicCylinder: wrong handle");
+    }
+    return ret;
+}
+
+
+Paraboloid* CastParaboloid
+(
+    BrlHandle handle
+) {
+    Paraboloid* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ParaboloidMagic)
+            ret = static_cast<ParaboloidData*>(handle)->Pointer();
+        else
+            bu_log("CastParaboloid: wrong handle");
+    }
+
+    return ret;
+}
+
+
+Particle* CastParticle
+(
+    BrlHandle handle
+) {
+    Particle* ret = nullptr;
+
+    if (handle != nullptr) {
+        const char* handleMagic = handle->Magic();
+
+        if (handleMagic == ParticleMagic)
+            ret = static_cast<ParticleData*>(handle)->Pointer();
+        else
+            bu_log("CastParticle: wrong handle");
+    }
+
+    return ret;
+}
+
+
+BRLCAD::Pipe* CastPipe
+(
+    BrlHandle handle
+) {
+    BRLCAD::Pipe* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == PipeMagic)
+            ret = static_cast<PipeData*>(handle)->Pointer();
+        else
+            bu_log("CastPipe: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Pipe::ControlPoint* CastPipeControlPoint
+(
+    BrlHandle handle
+) {
+    BRLCAD::Pipe::ControlPoint* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == PipeControlPointMagic)
+            ret = &(static_cast<PipeControlPointData*>(handle)->Value());
+        else
+            bu_log("CastPipeControlPoint: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Sketch* CastSketch
+(
+    BrlHandle handle
+) {
+    BRLCAD::Sketch* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == SketchMagic)
+            ret = static_cast<SketchData*>(handle)->Pointer();
+        else
+            bu_log("CastSketch: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Sketch::Segment* CastSketchSegment
+(
+    BrlHandle handle
+) {
+    BRLCAD::Sketch::Segment* ret = nullptr;
+    if (handle != nullptr) {
+        const char* magic = handle->Magic();
+        if (magic == SketchSegmentMagic)
+            ret = static_cast<SketchSegmentData*>(handle)->Pointer();
+        else if (magic == SketchLineMagic)
+            ret = static_cast<SketchLineData*>(handle)->Pointer();
+        else if (magic == SketchCircularArcMagic)
+            ret = static_cast<SketchCircularArcData*>(handle)->Pointer();
+        else if (magic == SketchNurbMagic)
+            ret = static_cast<SketchNurbData*>(handle)->Pointer();
+        else if (magic == SketchBezierMagic)
+            ret = static_cast<SketchBezierData*>(handle)->Pointer();
+        else
+            bu_log("CastSketchSegment: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Sketch::Line* CastSketchLine
+(
+    BrlHandle handle
+) {
+    BRLCAD::Sketch::Line* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == SketchLineMagic)
+            ret = static_cast<SketchLineData*>(handle)->Pointer();
+        else
+            bu_log("CastSketchLine: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Sketch::CircularArc* CastSketchCircularArc
+(
+    BrlHandle handle
+) {
+    BRLCAD::Sketch::CircularArc* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == SketchCircularArcMagic)
+            ret = static_cast<SketchCircularArcData*>(handle)->Pointer();
+        else
+            bu_log("CastSketchCircularArc: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Sketch::Nurb* CastSketchNurb
+(
+    BrlHandle handle
+) {
+    BRLCAD::Sketch::Nurb* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == SketchNurbMagic)
+            ret = static_cast<SketchNurbData*>(handle)->Pointer();
+        else
+            bu_log("CastSketchNurb: wrong handle");
+    }
+    return ret;
+}
+
+
+BRLCAD::Sketch::Bezier* CastSketchBezier
+(
+    BrlHandle handle
+) {
+    BRLCAD::Sketch::Bezier* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == SketchBezierMagic)
+            ret = static_cast<SketchBezierData*>(handle)->Pointer();
+        else
+            bu_log("CastSketchBezier: wrong handle");
+    }
+    return ret;
+}
+
+
 Sphere* CastSphere
 (
     BrlHandle handle
@@ -746,5 +924,20 @@ Torus* CastTorus
             bu_log("CastTorus: wrong handle");
     }
 
+    return ret;
+}
+
+
+BRLCAD::Unknown* CastUnknown
+(
+    BrlHandle handle
+) {
+    BRLCAD::Unknown* ret = nullptr;
+    if (handle != nullptr) {
+        if (handle->Magic() == UnknownMagic)
+            ret = static_cast<UnknownData*>(handle)->Pointer();
+        else
+            bu_log("CastUnknown: wrong handle");
+    }
     return ret;
 }

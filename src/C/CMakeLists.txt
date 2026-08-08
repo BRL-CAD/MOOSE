@@ -41,10 +41,15 @@ SET(CSources
     C/memoryDatabase.cpp
     C/nonManifoldGeometry.cpp
     C/object.cpp
+    C/parabolicCylinder.cpp
     C/paraboloid.cpp
     C/particle.cpp
+    C/pipe.cpp
+    C/sketch.cpp
     C/sphere.cpp
     C/torus.cpp
+    C/unknown.cpp
+    C/vector.cpp
     C/vectorList.cpp
 )
 
@@ -65,10 +70,14 @@ SET(CHeaders
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/memoryDatabase.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/nonManifoldGeometry.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/object.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/parabolicCylinder.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/paraboloid.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/particle.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/pipe.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/sketch.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/sphere.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/torus.h
+    ${MOOSE_SOURCE_DIR}/include/brlcad/C/unknown.h
     ${MOOSE_SOURCE_DIR}/include/brlcad/C/vectorList.h
 )
 
