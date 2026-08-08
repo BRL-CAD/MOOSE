@@ -28,6 +28,7 @@ INCLUDE_DIRECTORIES(
         ${MOOSE_BINARY_DIR}/include
         ${BRLCAD_INCLUDE_DIRS}
         ${ZLIB_INCLUDE_DIRS}
+        ${OPENNURBS_INCLUDE_DIRS}
 )
 
 # Module: Database
@@ -135,18 +136,19 @@ IF(BRLCAD_USE_STATIC_LIBS)
         BRLCAD::bg-static
         BRLCAD::bu-static
         #BRLCAD::gdiam-static
-        #LMDB::LMDB_STATIC
-        mmesh::mmesh-static
-        #OPENNURBS::OPENNURBS_STATIC
+        liblmdb.a ##LMDB::LMDB_STATIC
+        libmanifold.a #manifold::manifold-static
+        libmmesh.a #mmesh::mmesh-static
+        opennurbsStatic #OPENNURBS::OPENNURBS_STATIC
         #BRLCAD::poly2tri-static
         #BRLCAD::vds-static
-        #REGEX::REGEX_STATIC
+        libregex_brl.a #REGEX::REGEX_STATIC
         ZLIB::ZLIB_STATIC
         ${MSVC_LIBRARIES}
         ${LUA_LIBRARIES}
         ${CMAKE_DL_LIBS}
         Threads::Threads
-        #UUID_LIBRARIES
+        uuid #UUID_LIBRARIES
     )
 ELSE(BRLCAD_USE_STATIC_LIBS)
     TARGET_LINK_LIBRARIES(brlcad
