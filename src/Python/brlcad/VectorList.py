@@ -66,7 +66,7 @@ class VectorListElement(Handle):
     def element_type(self):
         if not self._handle:
             return None
-        return _lib.BrlVectorListElementGetType(self._handle)
+        return _lib.BrlVectorListElementType(self._handle)
 
     def cast(self):
         t = self.element_type
@@ -116,9 +116,11 @@ class VectorListPointDraw(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListPointDraw(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPointDrawAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListPointDraw(), owned=True)
 
     @property
     def point(self):
@@ -129,8 +131,10 @@ class VectorListPointSize(VectorListElement):
     def __init__(self, size=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
+        elif size is not None:
+            super().__init__(handle=_lib.BrlNewVectorListPointSizeAsSize(size), owned=True)
         else:
-            super().__init__(handle=_lib.BrlNewVectorListPointSize(size), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPointSize(), owned=True)
 
     @property
     def size(self):
@@ -141,9 +145,11 @@ class VectorListLineMove(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListLineMove(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListLineMoveAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListLineMove(), owned=True)
 
     @property
     def point(self):
@@ -154,9 +160,11 @@ class VectorListLineDraw(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListLineDraw(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListLineDrawAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListLineDraw(), owned=True)
 
     @property
     def point(self):
@@ -167,8 +175,10 @@ class VectorListLineWidth(VectorListElement):
     def __init__(self, width=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
+        elif width is not None:
+            super().__init__(handle=_lib.BrlNewVectorListLineWidthAsWidth(width), owned=True)
         else:
-            super().__init__(handle=_lib.BrlNewVectorListLineWidth(width), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListLineWidth(), owned=True)
 
     @property
     def width(self):
@@ -179,9 +189,11 @@ class VectorListTriangleStart(VectorListElement):
     def __init__(self, normal=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif normal is not None:
             nx, ny, nz = normal
-            super().__init__(handle=_lib.BrlNewVectorListTriangleStart(nx, ny, nz), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListTriangleStartAsNormal(nx, ny, nz), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListTriangleStart(), owned=True)
 
     @property
     def normal(self):
@@ -192,9 +204,11 @@ class VectorListTriangleMove(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListTriangleMove(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListTriangleMoveAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListTriangleMove(), owned=True)
 
     @property
     def point(self):
@@ -205,9 +219,11 @@ class VectorListTriangleDraw(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListTriangleDraw(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListTriangleDrawAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListTriangleDraw(), owned=True)
 
     @property
     def point(self):
@@ -218,9 +234,11 @@ class VectorListTriangleEnd(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListTriangleEnd(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListTriangleEndAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListTriangleEnd(), owned=True)
 
     @property
     def point(self):
@@ -231,9 +249,11 @@ class VectorListTriangleVertexNormal(VectorListElement):
     def __init__(self, normal=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif normal is not None:
             nx, ny, nz = normal
-            super().__init__(handle=_lib.BrlNewVectorListTriangleVertexNormal(nx, ny, nz), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListTriangleVertexNormalAsNormal(nx, ny, nz), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListTriangleVertexNormal(), owned=True)
 
     @property
     def normal(self):
@@ -244,9 +264,11 @@ class VectorListPolygonStart(VectorListElement):
     def __init__(self, normal=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif normal is not None:
             nx, ny, nz = normal
-            super().__init__(handle=_lib.BrlNewVectorListPolygonStart(nx, ny, nz), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPolygonStartAsNormal(nx, ny, nz), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListPolygonStart(), owned=True)
 
     @property
     def normal(self):
@@ -257,9 +279,11 @@ class VectorListPolygonMove(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListPolygonMove(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPolygonMoveAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListPolygonMove(), owned=True)
 
     @property
     def point(self):
@@ -270,9 +294,11 @@ class VectorListPolygonDraw(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListPolygonDraw(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPolygonDrawAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListPolygonDraw(), owned=True)
 
     @property
     def point(self):
@@ -283,9 +309,11 @@ class VectorListPolygonEnd(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListPolygonEnd(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPolygonEndAsPoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListPolygonEnd(), owned=True)
 
     @property
     def point(self):
@@ -296,9 +324,11 @@ class VectorListPolygonVertexNormal(VectorListElement):
     def __init__(self, normal=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif normal is not None:
             nx, ny, nz = normal
-            super().__init__(handle=_lib.BrlNewVectorListPolygonVertexNormal(nx, ny, nz), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListPolygonVertexNormalAsNormal(nx, ny, nz), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListPolygonVertexNormal(), owned=True)
 
     @property
     def normal(self):
@@ -309,9 +339,11 @@ class VectorListDisplaySpace(VectorListElement):
     def __init__(self, point=None, handle=None, owned=True):
         if handle is not None:
             super().__init__(handle=handle, owned=owned)
-        else:
+        elif point is not None:
             x, y, z = point
-            super().__init__(handle=_lib.BrlNewVectorListDisplaySpace(x, y, z), owned=True)
+            super().__init__(handle=_lib.BrlNewVectorListDisplaySpaceAsReferencePoint(x, y, z), owned=True)
+        else:
+            super().__init__(handle=_lib.BrlNewVectorListDisplaySpace(), owned=True)
 
     @property
     def reference_point(self):
@@ -350,7 +382,7 @@ _ELEMENT_CLASSES = {
 def _wrap_borrowed_element(handle):
     if not handle:
         return None
-    element_type = _lib.BrlVectorListElementGetType(handle)
+    element_type = _lib.BrlVectorListElementType(handle)
     cls = _ELEMENT_CLASSES.get(element_type, VectorListElement)
     return cls(handle=handle, owned=False)
 

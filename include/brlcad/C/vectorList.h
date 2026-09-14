@@ -43,7 +43,7 @@ BRLCAD_MOOSE_EXPORT BrlVectorList                     BrlNewVectorList(void);
 
 typedef BrlHandle BrlVectorListElement;
 
-enum BrlVectorListElementElementType {
+typedef enum BrlVectorListElementElementType {
     BrlVectorListElementElementTypePointDraw,
     BrlVectorListElementElementTypePointSize,
     BrlVectorListElementElementTypeLineMove,
@@ -61,7 +61,7 @@ enum BrlVectorListElementElementType {
     BrlVectorListElementElementTypePolygonVertexNormal,
     BrlVectorListElementElementTypeDisplaySpace,
     BrlVectorListElementElementTypeModelSpace
-};
+} BrlVectorListElementElementType;
 
 
 BRLCAD_MOOSE_EXPORT BrlVectorListElementElementType   BrlVectorListElementType(BrlVectorListElement element);
@@ -70,7 +70,7 @@ BRLCAD_MOOSE_EXPORT BrlVectorListElementElementType   BrlVectorListElementType(B
 typedef BrlVectorListElement BrlVectorListPointDraw;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPointDraw            BrlNewVectorListPointDraw(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPointDraw            BrlNewVectorListPointDraw(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListPointDraw            BrlNewVectorListPointDrawAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListPointDrawPoint(BrlVectorListPointDraw pointDraw);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPointDrawSetPoint(BrlVectorListPointDraw pointDraw,
@@ -80,7 +80,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPointDrawSetP
 typedef BrlVectorListElement BrlVectorListPointSize;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPointSize            BrlNewVectorListPointSize(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPointSize            BrlNewVectorListPointSize(double size);
+BRLCAD_MOOSE_EXPORT BrlVectorListPointSize            BrlNewVectorListPointSizeAsSize(double size);
 
 BRLCAD_MOOSE_EXPORT double                            BrlVectorListPointSizeSize(BrlVectorListPointSize pointSize);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPointSizeSetSize(BrlVectorListPointSize pointSize,
@@ -90,7 +90,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPointSizeSetS
 typedef BrlVectorListElement BrlVectorListLineMove;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListLineMove             BrlNewVectorListLineMove(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListLineMove             BrlNewVectorListLineMove(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListLineMove             BrlNewVectorListLineMoveAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListLineMovePoint(BrlVectorListLineMove lineMove);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListLineMoveSetPoint(BrlVectorListLineMove lineMove,
@@ -100,17 +100,17 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListLineMoveSetPo
 typedef BrlVectorListElement BrlVectorListLineDraw;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListLineDraw             BrlNewVectorListLineDraw(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListLineDraw             BrlNewVectorListLineDraw(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListLineDraw             BrlNewVectorListLineDrawAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListLineDrawPoint(BrlVectorListLineDraw lineDraw);
-BRLCAD_MOOSE_EXPORT void                              BrlVectorListLineDrawSetPoint(BrlVectorListLineDraw pointDraw,
+BRLCAD_MOOSE_EXPORT void                              BrlVectorListLineDrawSetPoint(BrlVectorListLineDraw lineDraw,
                                                                                     double                x, double y, double z);
 
 
 typedef BrlVectorListElement BrlVectorListLineWidth;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListLineWidth            BrlNewVectorListLineWidth(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListLineWidth            BrlNewVectorListLineWidth(double width);
+BRLCAD_MOOSE_EXPORT BrlVectorListLineWidth            BrlNewVectorListLineWidthAsWidth(double width);
 
 BRLCAD_MOOSE_EXPORT double                            BrlVectorListLineWidthWidth(BrlVectorListLineWidth lineWidth);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListLineWidthSetWidth(BrlVectorListLineWidth lineWidth,
@@ -120,7 +120,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListLineWidthSetW
 typedef BrlVectorListElement BrlVectorListTriangleStart;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListTriangleStart        BrlNewVectorListTriangleStart(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListTriangleStart        BrlNewVectorListTriangleStart(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListTriangleStart        BrlNewVectorListTriangleStartAsNormal(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListTriangleStartNormal(BrlVectorListTriangleStart triangleStart);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleStartSetNormal(BrlVectorListTriangleStart triangleStart,
@@ -130,7 +130,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleStart
 typedef BrlVectorListElement BrlVectorListTriangleMove;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListTriangleMove         BrlNewVectorListTriangleMove(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListTriangleMove         BrlNewVectorListTriangleMove(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListTriangleMove         BrlNewVectorListTriangleMoveAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListTriangleMovePoint(BrlVectorListTriangleMove triangleMove);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleMoveSetPoint(BrlVectorListTriangleMove triangleMove,
@@ -140,7 +140,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleMoveS
 typedef BrlVectorListElement BrlVectorListTriangleDraw;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListTriangleDraw         BrlNewVectorListTriangleDraw(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListTriangleDraw         BrlNewVectorListTriangleDraw(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListTriangleDraw         BrlNewVectorListTriangleDrawAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListTriangleDrawPoint(BrlVectorListTriangleDraw triangleDraw);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleDrawSetPoint(BrlVectorListTriangleDraw triangleDraw,
@@ -150,7 +150,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleDrawS
 typedef BrlVectorListElement BrlVectorListTriangleEnd;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListTriangleEnd          BrlNewVectorListTriangleEnd(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListTriangleEnd          BrlNewVectorListTriangleEnd(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListTriangleEnd          BrlNewVectorListTriangleEndAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListTriangleEndPoint(BrlVectorListTriangleEnd triangleEnd);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleEndSetPoint(BrlVectorListTriangleEnd triangleEnd,
@@ -160,7 +160,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleEndSe
 typedef BrlVectorListElement BrlVectorListTriangleVertexNormal;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListTriangleVertexNormal BrlNewVectorListTriangleVertexNormal(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListTriangleVertexNormal BrlNewVectorListTriangleVertexNormal(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListTriangleVertexNormal BrlNewVectorListTriangleVertexNormalAsNormal(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListTriangleVertexNormalNormal(BrlVectorListTriangleVertexNormal triangleVertexNormal);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleVertexNormalSetNormal(BrlVectorListTriangleVertexNormal triangleVertexNormal,
@@ -170,7 +170,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListTriangleVerte
 typedef BrlVectorListElement BrlVectorListPolygonStart;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPolygonStart         BrlNewVectorListPolygonStart(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPolygonStart         BrlNewVectorListPolygonStart(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListPolygonStart         BrlNewVectorListPolygonStartAsNormal(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListPolygonStartNormal(BrlVectorListPolygonStart polygonStart);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonStartSetNormal(BrlVectorListPolygonStart polygonStart,
@@ -180,7 +180,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonStartS
 typedef BrlVectorListElement BrlVectorListPolygonMove;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPolygonMove          BrlNewVectorListPolygonMove(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPolygonMove          BrlNewVectorListPolygonMove(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListPolygonMove          BrlNewVectorListPolygonMoveAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListPolygonMovePoint(BrlVectorListPolygonMove polygonMove);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonMoveSetPoint(BrlVectorListPolygonMove polygonMove,
@@ -190,7 +190,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonMoveSe
 typedef BrlVectorListElement BrlVectorListPolygonDraw;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPolygonDraw          BrlNewVectorListPolygonDraw(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPolygonDraw          BrlNewVectorListPolygonDraw(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListPolygonDraw          BrlNewVectorListPolygonDrawAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListPolygonDrawPoint(BrlVectorListPolygonDraw polygonDraw);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonDrawSetPoint(BrlVectorListPolygonDraw polygonDraw,
@@ -200,7 +200,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonDrawSe
 typedef BrlVectorListElement BrlVectorListPolygonEnd;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPolygonEnd           BrlNewVectorListPolygonEnd(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPolygonEnd           BrlNewVectorListPolygonEnd(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListPolygonEnd           BrlNewVectorListPolygonEndAsPoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListPolygonEndPoint(BrlVectorListPolygonEnd polygonEnd);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonEndSetPoint(BrlVectorListPolygonEnd polygonEnd,
@@ -210,7 +210,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonEndSet
 typedef BrlVectorListElement BrlVectorListPolygonVertexNormal;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListPolygonVertexNormal  BrlNewVectorListPolygonVertexNormal(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListPolygonVertexNormal  BrlNewVectorListPolygonVertexNormal(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListPolygonVertexNormal  BrlNewVectorListPolygonVertexNormalAsNormal(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListPolygonVertexNormalNormal(BrlVectorListPolygonVertexNormal polygonVertexNormal);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonVertexNormalSetNormal(BrlVectorListPolygonVertexNormal polygonVertexNormal,
@@ -220,7 +220,7 @@ BRLCAD_MOOSE_EXPORT void                              BrlVectorListPolygonVertex
 typedef BrlVectorListElement BrlVectorListDisplaySpace;
 
 BRLCAD_MOOSE_EXPORT BrlVectorListDisplaySpace         BrlNewVectorListDisplaySpace(void);
-BRLCAD_MOOSE_EXPORT BrlVectorListDisplaySpace         BrlNewVectorListDisplaySpace(double x, double y, double z);
+BRLCAD_MOOSE_EXPORT BrlVectorListDisplaySpace         BrlNewVectorListDisplaySpaceAsReferencePoint(double x, double y, double z);
 
 BRLCAD_MOOSE_EXPORT BrlVector3D                       BrlVectorListDisplaySpaceReferencePoint(BrlVectorListDisplaySpace displaySpace);
 BRLCAD_MOOSE_EXPORT void                              BrlVectorListDisplaySpaceSetReferencePoint(BrlVectorListDisplaySpace displaySpace,
