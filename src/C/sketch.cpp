@@ -64,7 +64,7 @@ static BrlSketchSegment DowncastSketchSegment
             break;
 
         default:
-            ret = new SketchLineData(static_cast<Sketch::Line*>(segment));
+            ret = new SketchSegmentData(segment);
         }
     }
 
