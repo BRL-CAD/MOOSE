@@ -48,8 +48,8 @@ class SketchSegment(Handle):
         vec_handle = _lib.BrlSketchSegmentStartPoint(self._handle)
         if not vec_handle:
             return (0.0, 0.0)
-        x = _lib.BrlVector3DX(vec_handle)
-        y = _lib.BrlVector3DY(vec_handle)
+        x = _lib.BrlVector2DX(vec_handle)
+        y = _lib.BrlVector2DY(vec_handle)
         _lib.BrlDeleteHandle(vec_handle)
         return (x, y)
 
@@ -60,8 +60,8 @@ class SketchSegment(Handle):
         vec_handle = _lib.BrlSketchSegmentEndPoint(self._handle)
         if not vec_handle:
             return (0.0, 0.0)
-        x = _lib.BrlVector3DX(vec_handle)
-        y = _lib.BrlVector3DY(vec_handle)
+        x = _lib.BrlVector2DX(vec_handle)
+        y = _lib.BrlVector2DY(vec_handle)
         _lib.BrlDeleteHandle(vec_handle)
         return (x, y)
 
@@ -81,18 +81,19 @@ class SketchSegment(Handle):
         """Downcasts generic segment to specific segment class."""
         t = self.segment_type
         if t == 1: # Line
-            h = _lib.BrlCastToSketchLine(self._handle)
-            return SketchLine(handle=h)
+            new_obj = SketchLine(handle=self._handle)
         elif t == 2: # CircularArc
-            h = _lib.BrlCastToSketchCircularArc(self._handle)
-            return SketchCircularArc(handle=h)
+            new_obj = SketchCircularArc(handle=self._handle)
         elif t == 3: # Nurb
-            h = _lib.BrlCastToSketchNurb(self._handle)
-            return SketchNurb(handle=h)
+            new_obj = SketchNurb(handle=self._handle)
         elif t == 4: # Bezier
-            h = _lib.BrlCastToSketchBezier(self._handle)
-            return SketchBezier(handle=h)
-        return self
+            new_obj = SketchBezier(handle=self._handle)
+        else:
+            return self
+            
+        new_obj._owned = self._owned
+        self._owned = False
+        return new_obj
 
 
 class SketchLine(SketchSegment):
@@ -104,14 +105,14 @@ class SketchLine(SketchSegment):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchLineSetStartPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetStartPoint(self._handle, x, y)
 
     @SketchSegment.end_point.setter
     def end_point(self, value):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchLineSetEndPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetEndPoint(self._handle, x, y)
 
 
 class SketchCircularArc(SketchSegment):
@@ -123,14 +124,14 @@ class SketchCircularArc(SketchSegment):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchCircularArcSetStartPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetStartPoint(self._handle, x, y)
 
     @SketchSegment.end_point.setter
     def end_point(self, value):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchCircularArcSetEndPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetEndPoint(self._handle, x, y)
 
     @property
     def center(self):
@@ -139,11 +140,10 @@ class SketchCircularArc(SketchSegment):
         vec_handle = _lib.BrlSketchCircularArcCenter(self._handle)
         if not vec_handle:
             return (0.0, 0.0, 0.0)
-        x = _lib.BrlVector3DX(vec_handle)
-        y = _lib.BrlVector3DY(vec_handle)
-        z = _lib.BrlVector3DZ(vec_handle)
+        x = _lib.BrlVector2DX(vec_handle)
+        y = _lib.BrlVector2DY(vec_handle)
         _lib.BrlDeleteHandle(vec_handle)
-        return (x, y, z)
+        return (x, y)
 
     @center.setter
     def center(self, value):
@@ -200,14 +200,14 @@ class SketchNurb(SketchSegment):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchNurbSetStartPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetStartPoint(self._handle, x, y)
 
     @SketchSegment.end_point.setter
     def end_point(self, value):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchNurbSetEndPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetEndPoint(self._handle, x, y)
 
     @property
     def order(self):
@@ -255,8 +255,8 @@ class SketchNurb(SketchSegment):
         vec_handle = _lib.BrlSketchNurbControlPoint(self._handle, index)
         if not vec_handle:
             return (0.0, 0.0)
-        x = _lib.BrlVector3DX(vec_handle)
-        y = _lib.BrlVector3DY(vec_handle)
+        x = _lib.BrlVector2DX(vec_handle)
+        y = _lib.BrlVector2DY(vec_handle)
         _lib.BrlDeleteHandle(vec_handle)
         return (x, y)
 
@@ -284,14 +284,14 @@ class SketchBezier(SketchSegment):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchBezierSetStartPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetStartPoint(self._handle, x, y)
 
     @SketchSegment.end_point.setter
     def end_point(self, value):
         if not self._handle:
             return
         x, y = value
-        _lib.BrlSketchBezierSetEndPoint(self._handle, x, y)
+        _lib.BrlSketchSegmentSetEndPoint(self._handle, x, y)
 
     @property
     def degree(self):
@@ -305,8 +305,8 @@ class SketchBezier(SketchSegment):
         vec_handle = _lib.BrlSketchBezierControlPoint(self._handle, index)
         if not vec_handle:
             return (0.0, 0.0)
-        x = _lib.BrlVector3DX(vec_handle)
-        y = _lib.BrlVector3DY(vec_handle)
+        x = _lib.BrlVector2DX(vec_handle)
+        y = _lib.BrlVector2DY(vec_handle)
         _lib.BrlDeleteHandle(vec_handle)
         return (x, y)
 

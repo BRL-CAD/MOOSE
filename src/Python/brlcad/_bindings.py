@@ -23,9 +23,34 @@
 #       includes all the ctypes for Python Interface
 #
 
+import os
+import sys
 import ctypes
 
-_lib = ctypes.CDLL("libbrlcad.so")
+# Dynamically locate the shared library relative to this file
+_curr_dir = os.path.dirname(os.path.abspath(__file__))
+_lib_path = None
+
+_lib_path = os.environ.get("BRLCAD_LIB_PATH")
+if not _lib_path:
+    for ext in [".so", ".dylib", ".dll"]:
+        _candidate = os.path.join(_curr_dir, f"libbrlcad{ext}")
+        if os.path.exists(_candidate):
+            _lib_path = _candidate
+            break
+        
+        # Windows fallback without 'lib' prefix
+        _candidate = os.path.join(_curr_dir, f"brlcad{ext}")
+        if os.path.exists(_candidate):
+            _lib_path = _candidate
+            break
+
+if _lib_path:
+    _lib = ctypes.CDLL(_lib_path)
+else:
+    # Fallback to system paths (LD_LIBRARY_PATH, PATH, etc.)
+    _lib_name = "brlcad.dll" if sys.platform.startswith("win") else "libbrlcad.so"
+    _lib = ctypes.CDLL(_lib_name)
 
 # Type Aliases
 c_void_p = ctypes.c_void_p
@@ -180,6 +205,8 @@ _bind("BrlConeSetAsRightCircularCylinder",          None,       [c_void_p] + [c_
 # -----------------------------------------------------------------------------
 # Vector Function Signatures
 # -----------------------------------------------------------------------------
+_bind("BrlVector2DX",                         c_double,   [c_void_p])
+_bind("BrlVector2DY",                         c_double,   [c_void_p])
 _bind("BrlVector3DX",                         c_double,   [c_void_p])
 _bind("BrlVector3DY",                         c_double,   [c_void_p])
 _bind("BrlVector3DZ",                         c_double,   [c_void_p])
@@ -193,25 +220,8 @@ BrlVectorListCallback = ctypes.CFUNCTYPE(c_int, c_void_p, c_void_p)
 _bind("BrlNewVectorList",                     c_void_p,   [])
 _bind("BrlVectorListClear",                   None,       [c_void_p])
 _bind("BrlVectorListIterate",                 None,       [c_void_p, BrlVectorListCallback, c_void_p])
-_bind("BrlVectorListElementGetType",          c_int,      [c_void_p])
+_bind("BrlVectorListElementType",                c_int,      [c_void_p])
 
-_bind("BrlCastToVectorListPointDraw",         c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListPointSize",         c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListLineMove",          c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListLineDraw",          c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListLineWidth",         c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListTriangleStart",     c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListTriangleMove",      c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListTriangleDraw",      c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListTriangleEnd",       c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListTriangleVertexNormal", c_void_p, [c_void_p])
-_bind("BrlCastToVectorListPolygonStart",      c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListPolygonMove",       c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListPolygonDraw",       c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListPolygonEnd",        c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListPolygonVertexNormal", c_void_p, [c_void_p])
-_bind("BrlCastToVectorListDisplaySpace",      c_void_p,   [c_void_p])
-_bind("BrlCastToVectorListModelSpace",        c_void_p,   [c_void_p])
 
 _bind("BrlVectorListPointDrawPoint",          c_void_p,   [c_void_p])
 _bind("BrlVectorListPointSizeSize",           c_double,   [c_void_p])
@@ -569,15 +579,10 @@ _bind("BrlSketchSegmentStartPoint",                       c_void_p,   [c_void_p]
 _bind("BrlSketchSegmentEndPoint",                         c_void_p,   [c_void_p])
 _bind("BrlSketchSegmentReverse",                          c_int,      [c_void_p])
 _bind("BrlSketchSegmentSetReverse",                       None,       [c_void_p, c_int])
-_bind("BrlCastToSketchLine",                              c_void_p,   [c_void_p])
-_bind("BrlCastToSketchCircularArc",                       c_void_p,   [c_void_p])
-_bind("BrlCastToSketchNurb",                              c_void_p,   [c_void_p])
-_bind("BrlCastToSketchBezier",                            c_void_p,   [c_void_p])
 
-_bind("BrlSketchLineSetStartPoint",                       None,       [c_void_p, c_double, c_double])
-_bind("BrlSketchLineSetEndPoint",                         None,       [c_void_p, c_double, c_double])
-_bind("BrlSketchCircularArcSetStartPoint",                None,       [c_void_p, c_double, c_double])
-_bind("BrlSketchCircularArcSetEndPoint",                  None,       [c_void_p, c_double, c_double])
+
+_bind("BrlSketchSegmentSetStartPoint",                    None,       [c_void_p, c_double, c_double])
+_bind("BrlSketchSegmentSetEndPoint",                      None,       [c_void_p, c_double, c_double])
 _bind("BrlSketchCircularArcCenter",                       c_void_p,   [c_void_p])
 _bind("BrlSketchCircularArcSetCenter",                    None,       [c_void_p, c_double, c_double])
 _bind("BrlSketchCircularArcRadius",                       c_double,   [c_void_p])
@@ -586,8 +591,7 @@ _bind("BrlSketchCircularArcCenterIsLeft",                 c_int,      [c_void_p]
 _bind("BrlSketchCircularArcSetCenterIsLeft",              None,       [c_void_p, c_int])
 _bind("BrlSketchCircularArcClockwiseOriented",            c_int,      [c_void_p])
 _bind("BrlSketchCircularArcSetClockwiseOriented",         None,       [c_void_p, c_int])
-_bind("BrlSketchNurbSetStartPoint",                       None,       [c_void_p, c_double, c_double])
-_bind("BrlSketchNurbSetEndPoint",                         None,       [c_void_p, c_double, c_double])
+
 _bind("BrlSketchNurbOrder",                               c_int,   [c_void_p])
 _bind("BrlSketchNurbSetOrder",                            None,       [c_void_p, c_int])
 _bind("BrlSketchNurbIsRational",                          c_int,      [c_void_p])
@@ -599,8 +603,7 @@ _bind("BrlSketchNurbControlPoint",                        c_void_p,   [c_void_p,
 _bind("BrlSketchNurbControlPointWeight",                  c_double,   [c_void_p, c_int])
 _bind("BrlSketchNurbAddControlPoint",                     None,       [c_void_p, c_double, c_double])
 _bind("BrlSketchNurbAddControlPointWeight",               None,       [c_void_p, c_double, c_double, c_double])
-_bind("BrlSketchBezierSetStartPoint",                     None,       [c_void_p, c_double, c_double])
-_bind("BrlSketchBezierSetEndPoint",                       None,       [c_void_p, c_double, c_double])
+
 _bind("BrlSketchBezierDegree",                            c_int,   [c_void_p])
 _bind("BrlSketchBezierControlPoint",                      c_void_p,   [c_void_p, c_int])
 _bind("BrlSketchBezierAddControlPoint",                   None,       [c_void_p, c_double, c_double])
@@ -609,20 +612,36 @@ _bind("BrlSketchBezierAddControlPoint",                   None,       [c_void_p,
 # VectorList write helpers (secondary)
 # -----------------------------------------------------------------------------
 _bind("BrlVectorListAppend",                              c_int,      [c_void_p, c_void_p])
-_bind("BrlNewVectorListPointDraw",                        c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListPointSize",                        c_void_p,   [c_double])
-_bind("BrlNewVectorListLineMove",                         c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListLineDraw",                         c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListLineWidth",                        c_void_p,   [c_double])
-_bind("BrlNewVectorListTriangleStart",                    c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListTriangleMove",                     c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListTriangleDraw",                     c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListTriangleEnd",                      c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListTriangleVertexNormal",             c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListPolygonStart",                     c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListPolygonMove",                      c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListPolygonDraw",                      c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListPolygonEnd",                       c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListPolygonVertexNormal",              c_void_p,   [c_double, c_double, c_double])
-_bind("BrlNewVectorListDisplaySpace",                     c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPointDraw",                        c_void_p,   [])
+_bind("BrlNewVectorListPointDrawAsPoint",                 c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPointSize",                        c_void_p,   [])
+_bind("BrlNewVectorListPointSizeAsSize",                  c_void_p,   [c_double])
+_bind("BrlNewVectorListLineMove",                         c_void_p,   [])
+_bind("BrlNewVectorListLineMoveAsPoint",                  c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListLineDraw",                         c_void_p,   [])
+_bind("BrlNewVectorListLineDrawAsPoint",                  c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListLineWidth",                        c_void_p,   [])
+_bind("BrlNewVectorListLineWidthAsWidth",                 c_void_p,   [c_double])
+_bind("BrlNewVectorListTriangleStart",                    c_void_p,   [])
+_bind("BrlNewVectorListTriangleStartAsNormal",            c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListTriangleMove",                     c_void_p,   [])
+_bind("BrlNewVectorListTriangleMoveAsPoint",              c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListTriangleDraw",                     c_void_p,   [])
+_bind("BrlNewVectorListTriangleDrawAsPoint",              c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListTriangleEnd",                      c_void_p,   [])
+_bind("BrlNewVectorListTriangleEndAsPoint",               c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListTriangleVertexNormal",             c_void_p,   [])
+_bind("BrlNewVectorListTriangleVertexNormalAsNormal",     c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPolygonStart",                     c_void_p,   [])
+_bind("BrlNewVectorListPolygonStartAsNormal",             c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPolygonMove",                      c_void_p,   [])
+_bind("BrlNewVectorListPolygonMoveAsPoint",               c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPolygonDraw",                      c_void_p,   [])
+_bind("BrlNewVectorListPolygonDrawAsPoint",               c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPolygonEnd",                       c_void_p,   [])
+_bind("BrlNewVectorListPolygonEndAsPoint",                c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListPolygonVertexNormal",              c_void_p,   [])
+_bind("BrlNewVectorListPolygonVertexNormalAsNormal",      c_void_p,   [c_double, c_double, c_double])
+_bind("BrlNewVectorListDisplaySpace",                     c_void_p,   [])
+_bind("BrlNewVectorListDisplaySpaceAsReferencePoint",     c_void_p,   [c_double, c_double, c_double])
 _bind("BrlNewVectorListModelSpace",                       c_void_p,   [])
