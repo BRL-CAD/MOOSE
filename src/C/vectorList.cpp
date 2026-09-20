@@ -120,41 +120,41 @@ static BrlVectorListElement DowncastVectorListElement
 
     switch (el->Type()) {
     case VectorList::Element::ElementType::PointDraw:
-        return new VectorListPointDrawData(static_cast<VectorList::PointDraw*>(el), owned);
+        return new VectorListPointDrawData(static_cast<VectorList::PointDraw*>(el));
     case VectorList::Element::ElementType::PointSize:
-        return new VectorListPointSizeData(static_cast<VectorList::PointSize*>(el), owned);
+        return new VectorListPointSizeData(static_cast<VectorList::PointSize*>(el));
     case VectorList::Element::ElementType::LineMove:
-        return new VectorListLineMoveData(static_cast<VectorList::LineMove*>(el), owned);
+        return new VectorListLineMoveData(static_cast<VectorList::LineMove*>(el));
     case VectorList::Element::ElementType::LineDraw:
-        return new VectorListLineDrawData(static_cast<VectorList::LineDraw*>(el), owned);
+        return new VectorListLineDrawData(static_cast<VectorList::LineDraw*>(el));
     case VectorList::Element::ElementType::LineWidth:
-        return new VectorListLineWidthData(static_cast<VectorList::LineWidth*>(el), owned);
+        return new VectorListLineWidthData(static_cast<VectorList::LineWidth*>(el));
     case VectorList::Element::ElementType::TriangleStart:
-        return new VectorListTriangleStartData(static_cast<VectorList::TriangleStart*>(el), owned);
+        return new VectorListTriangleStartData(static_cast<VectorList::TriangleStart*>(el));
     case VectorList::Element::ElementType::TriangleMove:
-        return new VectorListTriangleMoveData(static_cast<VectorList::TriangleMove*>(el), owned);
+        return new VectorListTriangleMoveData(static_cast<VectorList::TriangleMove*>(el));
     case VectorList::Element::ElementType::TriangleDraw:
-        return new VectorListTriangleDrawData(static_cast<VectorList::TriangleDraw*>(el), owned);
+        return new VectorListTriangleDrawData(static_cast<VectorList::TriangleDraw*>(el));
     case VectorList::Element::ElementType::TriangleEnd:
-        return new VectorListTriangleEndData(static_cast<VectorList::TriangleEnd*>(el), owned);
+        return new VectorListTriangleEndData(static_cast<VectorList::TriangleEnd*>(el));
     case VectorList::Element::ElementType::TriangleVertexNormal:
-        return new VectorListTriangleVertexNormalData(static_cast<VectorList::TriangleVertexNormal*>(el), owned);
+        return new VectorListTriangleVertexNormalData(static_cast<VectorList::TriangleVertexNormal*>(el));
     case VectorList::Element::ElementType::PolygonStart:
-        return new VectorListPolygonStartData(static_cast<VectorList::PolygonStart*>(el), owned);
+        return new VectorListPolygonStartData(static_cast<VectorList::PolygonStart*>(el));
     case VectorList::Element::ElementType::PolygonMove:
-        return new VectorListPolygonMoveData(static_cast<VectorList::PolygonMove*>(el), owned);
+        return new VectorListPolygonMoveData(static_cast<VectorList::PolygonMove*>(el));
     case VectorList::Element::ElementType::PolygonDraw:
-        return new VectorListPolygonDrawData(static_cast<VectorList::PolygonDraw*>(el), owned);
+        return new VectorListPolygonDrawData(static_cast<VectorList::PolygonDraw*>(el));
     case VectorList::Element::ElementType::PolygonEnd:
-        return new VectorListPolygonEndData(static_cast<VectorList::PolygonEnd*>(el), owned);
+        return new VectorListPolygonEndData(static_cast<VectorList::PolygonEnd*>(el));
     case VectorList::Element::ElementType::PolygonVertexNormal:
-        return new VectorListPolygonVertexNormalData(static_cast<VectorList::PolygonVertexNormal*>(el), owned);
+        return new VectorListPolygonVertexNormalData(static_cast<VectorList::PolygonVertexNormal*>(el));
     case VectorList::Element::ElementType::DisplaySpace:
-        return new VectorListDisplaySpaceData(static_cast<VectorList::DisplaySpace*>(el), owned);
+        return new VectorListDisplaySpaceData(static_cast<VectorList::DisplaySpace*>(el));
     case VectorList::Element::ElementType::ModelSpace:
-        return new VectorListModelSpaceData(static_cast<VectorList::ModelSpace*>(el), owned);
+        return new VectorListModelSpaceData(static_cast<VectorList::ModelSpace*>(el));
     default:
-        return new VectorListElementData(el, owned);
+        return new VectorListElementData(el);
     }
 }
 
@@ -913,7 +913,7 @@ void BrlVectorListIterate
         if (vl != nullptr && callback != nullptr) {
             vl->Iterate([callback, userdata](VectorList::Element* el) -> bool {
                 if (el != nullptr) {
-                    BrlVectorListElement wrapped = DowncastVectorListElement(el, false);
+                    BrlVectorListElement wrapped = DowncastVectorListElement(el);
                     int res = callback(wrapped, userdata);
                     if (res == 0)
                         return false;

@@ -176,41 +176,41 @@ BRLCAD::VectorList::Element* CastVectorListElement
         const char* magic = handle->Magic();
 
         if (magic == VectorListElementMagic)
-            ret = static_cast<VectorListElementData*>(handle)->Pointer();
+            ret = static_cast<VectorListElementData*>(handle)->Value();
         else if (magic == VectorListDisplaySpaceMagic)
-            ret = static_cast<VectorListDisplaySpaceData*>(handle)->Pointer();
+            ret = static_cast<VectorListDisplaySpaceData*>(handle)->Value();
         else if (magic == VectorListPointDrawMagic)
-            ret = static_cast<VectorListPointDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListPointDrawData*>(handle)->Value();
         else if (magic == VectorListPointSizeMagic)
-            ret = static_cast<VectorListPointSizeData*>(handle)->Pointer();
+            ret = static_cast<VectorListPointSizeData*>(handle)->Value();
         else if (magic == VectorListLineMoveMagic)
-            ret = static_cast<VectorListLineMoveData*>(handle)->Pointer();
+            ret = static_cast<VectorListLineMoveData*>(handle)->Value();
         else if (magic == VectorListLineDrawMagic)
-            ret = static_cast<VectorListLineDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListLineDrawData*>(handle)->Value();
         else if (magic == VectorListLineWidthMagic)
-            ret = static_cast<VectorListLineWidthData*>(handle)->Pointer();
+            ret = static_cast<VectorListLineWidthData*>(handle)->Value();
         else if (magic == VectorListModelSpaceMagic)
-            ret = static_cast<VectorListModelSpaceData*>(handle)->Pointer();
+            ret = static_cast<VectorListModelSpaceData*>(handle)->Value();
         else if (magic == VectorListPolygonStartMagic)
-            ret = static_cast<VectorListPolygonStartData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonStartData*>(handle)->Value();
         else if (magic == VectorListPolygonMoveMagic)
-            ret = static_cast<VectorListPolygonMoveData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonMoveData*>(handle)->Value();
         else if (magic == VectorListPolygonDrawMagic)
-            ret = static_cast<VectorListPolygonDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonDrawData*>(handle)->Value();
         else if (magic == VectorListPolygonEndMagic)
-            ret = static_cast<VectorListPolygonEndData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonEndData*>(handle)->Value();
         else if (magic == VectorListPolygonVertexNormalMagic)
-            ret = static_cast<VectorListPolygonVertexNormalData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonVertexNormalData*>(handle)->Value();
         else if (magic == VectorListTriangleStartMagic)
-            ret = static_cast<VectorListTriangleStartData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleStartData*>(handle)->Value();
         else if (magic == VectorListTriangleMoveMagic)
-            ret = static_cast<VectorListTriangleMoveData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleMoveData*>(handle)->Value();
         else if (magic == VectorListTriangleDrawMagic)
-            ret = static_cast<VectorListTriangleDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleDrawData*>(handle)->Value();
         else if (magic == VectorListTriangleEndMagic)
-            ret = static_cast<VectorListTriangleEndData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleEndData*>(handle)->Value();
         else if (magic == VectorListTriangleVertexNormalMagic)
-            ret = static_cast<VectorListTriangleVertexNormalData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleVertexNormalData*>(handle)->Value();
         else
             bu_log("CastVectorListElement: wrong handle");
     }
@@ -225,7 +225,7 @@ BRLCAD::VectorList::DisplaySpace* CastVectorListDisplaySpace
     BRLCAD::VectorList::DisplaySpace* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListDisplaySpaceMagic)
-            ret = static_cast<VectorListDisplaySpaceData*>(handle)->Pointer();
+            ret = static_cast<VectorListDisplaySpaceData*>(handle)->Value();
         else
             bu_log("CastVectorListDisplaySpace: wrong handle");
     }
@@ -240,7 +240,7 @@ BRLCAD::VectorList::PointDraw* CastVectorListPointDraw
     BRLCAD::VectorList::PointDraw* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPointDrawMagic)
-            ret = static_cast<VectorListPointDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListPointDrawData*>(handle)->Value();
         else
             bu_log("CastVectorListPointDraw: wrong handle");
     }
@@ -255,7 +255,7 @@ BRLCAD::VectorList::PointSize* CastVectorListPointSize
     BRLCAD::VectorList::PointSize* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPointSizeMagic)
-            ret = static_cast<VectorListPointSizeData*>(handle)->Pointer();
+            ret = static_cast<VectorListPointSizeData*>(handle)->Value();
         else
             bu_log("CastVectorListPointSize: wrong handle");
     }
@@ -270,7 +270,7 @@ BRLCAD::VectorList::LineMove* CastVectorListLineMove
     BRLCAD::VectorList::LineMove* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListLineMoveMagic)
-            ret = static_cast<VectorListLineMoveData*>(handle)->Pointer();
+            ret = static_cast<VectorListLineMoveData*>(handle)->Value();
         else
             bu_log("CastVectorListLineMove: wrong handle");
     }
@@ -285,7 +285,7 @@ BRLCAD::VectorList::LineDraw* CastVectorListLineDraw
     BRLCAD::VectorList::LineDraw* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListLineDrawMagic)
-            ret = static_cast<VectorListLineDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListLineDrawData*>(handle)->Value();
         else
             bu_log("CastVectorListLineDraw: wrong handle");
     }
@@ -300,7 +300,7 @@ BRLCAD::VectorList::LineWidth* CastVectorListLineWidth
     BRLCAD::VectorList::LineWidth* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListLineWidthMagic)
-            ret = static_cast<VectorListLineWidthData*>(handle)->Pointer();
+            ret = static_cast<VectorListLineWidthData*>(handle)->Value();
         else
             bu_log("CastVectorListLineWidth: wrong handle");
     }
@@ -315,7 +315,7 @@ BRLCAD::VectorList::ModelSpace* CastVectorListModelSpace
     BRLCAD::VectorList::ModelSpace* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListModelSpaceMagic)
-            ret = static_cast<VectorListModelSpaceData*>(handle)->Pointer();
+            ret = static_cast<VectorListModelSpaceData*>(handle)->Value();
         else
             bu_log("CastVectorListModelSpace: wrong handle");
     }
@@ -330,7 +330,7 @@ BRLCAD::VectorList::PolygonStart* CastVectorListPolygonStart
     BRLCAD::VectorList::PolygonStart* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPolygonStartMagic)
-            ret = static_cast<VectorListPolygonStartData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonStartData*>(handle)->Value();
         else
             bu_log("CastVectorListPolygonStart: wrong handle");
     }
@@ -345,7 +345,7 @@ BRLCAD::VectorList::PolygonMove* CastVectorListPolygonMove
     BRLCAD::VectorList::PolygonMove* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPolygonMoveMagic)
-            ret = static_cast<VectorListPolygonMoveData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonMoveData*>(handle)->Value();
         else
             bu_log("CastVectorListPolygonMove: wrong handle");
     }
@@ -360,7 +360,7 @@ BRLCAD::VectorList::PolygonDraw* CastVectorListPolygonDraw
     BRLCAD::VectorList::PolygonDraw* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPolygonDrawMagic)
-            ret = static_cast<VectorListPolygonDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonDrawData*>(handle)->Value();
         else
             bu_log("CastVectorListPolygonDraw: wrong handle");
     }
@@ -375,7 +375,7 @@ BRLCAD::VectorList::PolygonEnd* CastVectorListPolygonEnd
     BRLCAD::VectorList::PolygonEnd* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPolygonEndMagic)
-            ret = static_cast<VectorListPolygonEndData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonEndData*>(handle)->Value();
         else
             bu_log("CastVectorListPolygonEnd: wrong handle");
     }
@@ -390,7 +390,7 @@ BRLCAD::VectorList::PolygonVertexNormal* CastVectorListPolygonVertexNormal
     BRLCAD::VectorList::PolygonVertexNormal* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListPolygonVertexNormalMagic)
-            ret = static_cast<VectorListPolygonVertexNormalData*>(handle)->Pointer();
+            ret = static_cast<VectorListPolygonVertexNormalData*>(handle)->Value();
         else
             bu_log("CastVectorListPolygonVertexNormal: wrong handle");
     }
@@ -405,7 +405,7 @@ BRLCAD::VectorList::TriangleStart* CastVectorListTriangleStart
     BRLCAD::VectorList::TriangleStart* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListTriangleStartMagic)
-            ret = static_cast<VectorListTriangleStartData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleStartData*>(handle)->Value();
         else
             bu_log("CastVectorListTriangleStart: wrong handle");
     }
@@ -420,7 +420,7 @@ BRLCAD::VectorList::TriangleMove* CastVectorListTriangleMove
     BRLCAD::VectorList::TriangleMove* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListTriangleMoveMagic)
-            ret = static_cast<VectorListTriangleMoveData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleMoveData*>(handle)->Value();
         else
             bu_log("CastVectorListTriangleMove: wrong handle");
     }
@@ -435,7 +435,7 @@ BRLCAD::VectorList::TriangleDraw* CastVectorListTriangleDraw
     BRLCAD::VectorList::TriangleDraw* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListTriangleDrawMagic)
-            ret = static_cast<VectorListTriangleDrawData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleDrawData*>(handle)->Value();
         else
             bu_log("CastVectorListTriangleDraw: wrong handle");
     }
@@ -450,7 +450,7 @@ BRLCAD::VectorList::TriangleEnd* CastVectorListTriangleEnd
     BRLCAD::VectorList::TriangleEnd* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListTriangleEndMagic)
-            ret = static_cast<VectorListTriangleEndData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleEndData*>(handle)->Value();
         else
             bu_log("CastVectorListTriangleEnd: wrong handle");
     }
@@ -465,7 +465,7 @@ BRLCAD::VectorList::TriangleVertexNormal* CastVectorListTriangleVertexNormal
     BRLCAD::VectorList::TriangleVertexNormal* ret = nullptr;
     if (handle != nullptr) {
         if (handle->Magic() == VectorListTriangleVertexNormalMagic)
-            ret = static_cast<VectorListTriangleVertexNormalData*>(handle)->Pointer();
+            ret = static_cast<VectorListTriangleVertexNormalData*>(handle)->Value();
         else
             bu_log("CastVectorListTriangleVertexNormal: wrong handle");
     }

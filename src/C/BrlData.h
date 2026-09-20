@@ -26,6 +26,7 @@
 #ifndef BRLCAD_C_BRLDATA_INCLUDED
 #define BRLCAD_C_BRLDATA_INCLUDED
 
+#include <brlcad/VectorList.h>
 #include <brlcad/Database/Arb8.h>
 #include <brlcad/Database/BagOfTriangles.h>
 #include <brlcad/Database/Combination.h>
@@ -46,7 +47,6 @@
 #include <brlcad/Database/Sphere.h>
 #include <brlcad/Database/Torus.h>
 #include <brlcad/Database/Unknown.h>
-#include <brlcad/VectorList.h>
 
 
 class BrlData {
@@ -161,10 +161,10 @@ private:
 template<class PointerType> class PointerData : public BrlData {
 public:
     PointerData(const char*  magic,
-                PointerType* pointer, bool owned = true) : BrlData(magic), m_pointer(pointer), m_owned(owned) {}
+                PointerType* pointer) : BrlData(magic), m_pointer(pointer) {}
 
     ~PointerData(void) override {
-        if (m_owned && m_pointer != nullptr)
+        if (m_pointer != nullptr)
             delete m_pointer;
     }
 
@@ -176,8 +176,6 @@ public:
         return m_pointer;
     }
 
-protected:
-    bool m_owned;
 private:
     PointerType* m_pointer;
 
@@ -206,111 +204,111 @@ public:
 };
 
 
-class VectorListElementData : public PointerData<BRLCAD::VectorList::Element> {
+class VectorListElementData : public ValueData<BRLCAD::VectorList::Element*> {
 public:
-    VectorListElementData(BRLCAD::VectorList::Element* pointer, bool owned = true) : PointerData(VectorListElementMagic, pointer, owned) {}
+    VectorListElementData(BRLCAD::VectorList::Element* pointer) : ValueData(VectorListElementMagic, pointer) {}
 };
 
 
-class VectorListDisplaySpaceData : public PointerData<BRLCAD::VectorList::DisplaySpace> {
+class VectorListDisplaySpaceData : public ValueData<BRLCAD::VectorList::DisplaySpace*> {
 public:
-    VectorListDisplaySpaceData(BRLCAD::VectorList::DisplaySpace* pointer, bool owned = true) : PointerData(VectorListDisplaySpaceMagic, pointer, owned) {}
+    VectorListDisplaySpaceData(BRLCAD::VectorList::DisplaySpace* pointer) : ValueData(VectorListDisplaySpaceMagic, pointer) {}
 };
 
 
-class VectorListPointDrawData : public PointerData<BRLCAD::VectorList::PointDraw> {
+class VectorListPointDrawData : public ValueData<BRLCAD::VectorList::PointDraw*> {
 public:
-    VectorListPointDrawData(BRLCAD::VectorList::PointDraw* pointer, bool owned = true) : PointerData(VectorListPointDrawMagic, pointer, owned) {}
+    VectorListPointDrawData(BRLCAD::VectorList::PointDraw* pointer) : ValueData(VectorListPointDrawMagic, pointer) {}
 };
 
 
-class VectorListPointSizeData : public PointerData<BRLCAD::VectorList::PointSize> {
+class VectorListPointSizeData : public ValueData<BRLCAD::VectorList::PointSize*> {
 public:
-    VectorListPointSizeData(BRLCAD::VectorList::PointSize* pointer, bool owned = true) : PointerData(VectorListPointSizeMagic, pointer, owned) {}
+    VectorListPointSizeData(BRLCAD::VectorList::PointSize* pointer) : ValueData(VectorListPointSizeMagic, pointer) {}
 };
 
 
-class VectorListLineMoveData : public PointerData<BRLCAD::VectorList::LineMove> {
+class VectorListLineMoveData : public ValueData<BRLCAD::VectorList::LineMove*> {
 public:
-    VectorListLineMoveData(BRLCAD::VectorList::LineMove* pointer, bool owned = true) : PointerData(VectorListLineMoveMagic, pointer, owned) {}
+    VectorListLineMoveData(BRLCAD::VectorList::LineMove* pointer) : ValueData(VectorListLineMoveMagic, pointer) {}
 };
 
 
-class VectorListLineDrawData : public PointerData<BRLCAD::VectorList::LineDraw> {
+class VectorListLineDrawData : public ValueData<BRLCAD::VectorList::LineDraw*> {
 public:
-    VectorListLineDrawData(BRLCAD::VectorList::LineDraw* pointer, bool owned = true) : PointerData(VectorListLineDrawMagic, pointer, owned) {}
+    VectorListLineDrawData(BRLCAD::VectorList::LineDraw* pointer) : ValueData(VectorListLineDrawMagic, pointer) {}
 };
 
 
-class VectorListLineWidthData : public PointerData<BRLCAD::VectorList::LineWidth> {
+class VectorListLineWidthData : public ValueData<BRLCAD::VectorList::LineWidth*> {
 public:
-    VectorListLineWidthData(BRLCAD::VectorList::LineWidth* pointer, bool owned = true) : PointerData(VectorListLineWidthMagic, pointer, owned) {}
+    VectorListLineWidthData(BRLCAD::VectorList::LineWidth* pointer) : ValueData(VectorListLineWidthMagic, pointer) {}
 };
 
 
-class VectorListModelSpaceData : public PointerData<BRLCAD::VectorList::ModelSpace> {
+class VectorListModelSpaceData : public ValueData<BRLCAD::VectorList::ModelSpace*> {
 public:
-    VectorListModelSpaceData(BRLCAD::VectorList::ModelSpace* pointer, bool owned = true) : PointerData(VectorListModelSpaceMagic, pointer, owned) {}
+    VectorListModelSpaceData(BRLCAD::VectorList::ModelSpace* pointer) : ValueData(VectorListModelSpaceMagic, pointer) {}
 };
 
 
-class VectorListPolygonStartData : public PointerData<BRLCAD::VectorList::PolygonStart> {
+class VectorListPolygonStartData : public ValueData<BRLCAD::VectorList::PolygonStart*> {
 public:
-    VectorListPolygonStartData(BRLCAD::VectorList::PolygonStart* pointer, bool owned = true) : PointerData(VectorListPolygonStartMagic, pointer, owned) {}
+    VectorListPolygonStartData(BRLCAD::VectorList::PolygonStart* pointer) : ValueData(VectorListPolygonStartMagic, pointer) {}
 };
 
 
-class VectorListPolygonMoveData : public PointerData<BRLCAD::VectorList::PolygonMove> {
+class VectorListPolygonMoveData : public ValueData<BRLCAD::VectorList::PolygonMove*> {
 public:
-    VectorListPolygonMoveData(BRLCAD::VectorList::PolygonMove* pointer, bool owned = true) : PointerData(VectorListPolygonMoveMagic, pointer, owned) {}
+    VectorListPolygonMoveData(BRLCAD::VectorList::PolygonMove* pointer) : ValueData(VectorListPolygonMoveMagic, pointer) {}
 };
 
 
-class VectorListPolygonDrawData : public PointerData<BRLCAD::VectorList::PolygonDraw> {
+class VectorListPolygonDrawData : public ValueData<BRLCAD::VectorList::PolygonDraw*> {
 public:
-    VectorListPolygonDrawData(BRLCAD::VectorList::PolygonDraw* pointer, bool owned = true) : PointerData(VectorListPolygonDrawMagic, pointer, owned) {}
+    VectorListPolygonDrawData(BRLCAD::VectorList::PolygonDraw* pointer) : ValueData(VectorListPolygonDrawMagic, pointer) {}
 };
 
 
-class VectorListPolygonEndData : public PointerData<BRLCAD::VectorList::PolygonEnd> {
+class VectorListPolygonEndData : public ValueData<BRLCAD::VectorList::PolygonEnd*> {
 public:
-    VectorListPolygonEndData(BRLCAD::VectorList::PolygonEnd* pointer, bool owned = true) : PointerData(VectorListPolygonEndMagic, pointer, owned) {}
+    VectorListPolygonEndData(BRLCAD::VectorList::PolygonEnd* pointer) : ValueData(VectorListPolygonEndMagic, pointer) {}
 };
 
 
-class VectorListPolygonVertexNormalData : public PointerData<BRLCAD::VectorList::PolygonVertexNormal> {
+class VectorListPolygonVertexNormalData : public ValueData<BRLCAD::VectorList::PolygonVertexNormal*> {
 public:
-    VectorListPolygonVertexNormalData(BRLCAD::VectorList::PolygonVertexNormal* pointer, bool owned = true) : PointerData(VectorListPolygonVertexNormalMagic, pointer, owned) {}
+    VectorListPolygonVertexNormalData(BRLCAD::VectorList::PolygonVertexNormal* pointer) : ValueData(VectorListPolygonVertexNormalMagic, pointer) {}
 };
 
 
-class VectorListTriangleStartData : public PointerData<BRLCAD::VectorList::TriangleStart> {
+class VectorListTriangleStartData : public ValueData<BRLCAD::VectorList::TriangleStart*> {
 public:
-    VectorListTriangleStartData(BRLCAD::VectorList::TriangleStart* pointer, bool owned = true) : PointerData(VectorListTriangleStartMagic, pointer, owned) {}
+    VectorListTriangleStartData(BRLCAD::VectorList::TriangleStart* pointer) : ValueData(VectorListTriangleStartMagic, pointer) {}
 };
 
 
-class VectorListTriangleMoveData : public PointerData<BRLCAD::VectorList::TriangleMove> {
+class VectorListTriangleMoveData : public ValueData<BRLCAD::VectorList::TriangleMove*> {
 public:
-    VectorListTriangleMoveData(BRLCAD::VectorList::TriangleMove* pointer, bool owned = true) : PointerData(VectorListTriangleMoveMagic, pointer, owned) {}
+    VectorListTriangleMoveData(BRLCAD::VectorList::TriangleMove* pointer) : ValueData(VectorListTriangleMoveMagic, pointer) {}
 };
 
 
-class VectorListTriangleDrawData : public PointerData<BRLCAD::VectorList::TriangleDraw> {
+class VectorListTriangleDrawData : public ValueData<BRLCAD::VectorList::TriangleDraw*> {
 public:
-    VectorListTriangleDrawData(BRLCAD::VectorList::TriangleDraw* pointer, bool owned = true) : PointerData(VectorListTriangleDrawMagic, pointer, owned) {}
+    VectorListTriangleDrawData(BRLCAD::VectorList::TriangleDraw* pointer) : ValueData(VectorListTriangleDrawMagic, pointer) {}
 };
 
 
-class VectorListTriangleEndData : public PointerData<BRLCAD::VectorList::TriangleEnd> {
+class VectorListTriangleEndData : public ValueData<BRLCAD::VectorList::TriangleEnd*> {
 public:
-    VectorListTriangleEndData(BRLCAD::VectorList::TriangleEnd* pointer, bool owned = true) : PointerData(VectorListTriangleEndMagic, pointer, owned) {}
+    VectorListTriangleEndData(BRLCAD::VectorList::TriangleEnd* pointer) : ValueData(VectorListTriangleEndMagic, pointer) {}
 };
 
 
-class VectorListTriangleVertexNormalData : public PointerData<BRLCAD::VectorList::TriangleVertexNormal> {
+class VectorListTriangleVertexNormalData : public ValueData<BRLCAD::VectorList::TriangleVertexNormal*> {
 public:
-    VectorListTriangleVertexNormalData(BRLCAD::VectorList::TriangleVertexNormal* pointer, bool owned = true) : PointerData(VectorListTriangleVertexNormalMagic, pointer, owned) {}
+    VectorListTriangleVertexNormalData(BRLCAD::VectorList::TriangleVertexNormal* pointer) : ValueData(VectorListTriangleVertexNormalMagic, pointer) {}
 };
 
 
