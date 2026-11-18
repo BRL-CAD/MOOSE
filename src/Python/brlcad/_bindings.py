@@ -240,6 +240,23 @@ _bind("BrlVectorListPolygonEndPoint",         c_void_p,   [c_void_p])
 _bind("BrlVectorListPolygonVertexNormalNormal", c_void_p, [c_void_p])
 _bind("BrlVectorListDisplaySpaceReferencePoint", c_void_p, [c_void_p])
 
+_bind("BrlVectorListPointDrawSetPoint",                    None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListPointSizeSetSize",                     None,       [c_void_p, c_double])
+_bind("BrlVectorListLineMoveSetPoint",                     None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListLineDrawSetPoint",                     None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListLineWidthSetWidth",                    None,       [c_void_p, c_double])
+_bind("BrlVectorListTriangleStartSetNormal",               None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListTriangleMoveSetPoint",                 None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListTriangleDrawSetPoint",                 None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListTriangleEndSetPoint",                  None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListTriangleVertexNormalSetNormal",        None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListPolygonStartSetNormal",                None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListPolygonMoveSetPoint",                  None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListPolygonDrawSetPoint",                  None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListPolygonEndSetPoint",                   None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListPolygonVertexNormalSetNormal",        None,       [c_void_p, c_double, c_double, c_double])
+_bind("BrlVectorListDisplaySpaceSetReferencePoint",        None,       [c_void_p, c_double, c_double, c_double])
+
 # -----------------------------------------------------------------------------
 # Combinations Function Signatures
 # -----------------------------------------------------------------------------
