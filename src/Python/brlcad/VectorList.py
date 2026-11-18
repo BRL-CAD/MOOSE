@@ -48,7 +48,7 @@ class ElementType:
 
 def _vector3d_tuple(vec_handle):
     if not vec_handle:
-        return None
+        return (0.0, 0.0, 0.0)
     x = _lib.BrlVector3DX(vec_handle)
     y = _lib.BrlVector3DY(vec_handle)
     z = _lib.BrlVector3DZ(vec_handle)
@@ -106,7 +106,7 @@ class VectorListElement(Handle):
             new_obj = VectorListModelSpace(handle=self._handle)
         else:
             return self
-            
+
         new_obj._owned = self._owned
         self._owned = False
         return new_obj
@@ -124,7 +124,16 @@ class VectorListPointDraw(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListPointDrawPoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListPointDrawSetPoint(self._handle, x, y, z)
 
 
 class VectorListPointSize(VectorListElement):
@@ -138,7 +147,15 @@ class VectorListPointSize(VectorListElement):
 
     @property
     def size(self):
+        if not self._handle:
+            return 0.0
         return _lib.BrlVectorListPointSizeSize(self._handle)
+
+    @size.setter
+    def size(self, value):
+        if not self._handle:
+            return
+        _lib.BrlVectorListPointSizeSetSize(self._handle, value)
 
 
 class VectorListLineMove(VectorListElement):
@@ -153,7 +170,16 @@ class VectorListLineMove(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListLineMovePoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListLineMoveSetPoint(self._handle, x, y, z)
 
 
 class VectorListLineDraw(VectorListElement):
@@ -168,7 +194,16 @@ class VectorListLineDraw(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListLineDrawPoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListLineDrawSetPoint(self._handle, x, y, z)
 
 
 class VectorListLineWidth(VectorListElement):
@@ -182,7 +217,15 @@ class VectorListLineWidth(VectorListElement):
 
     @property
     def width(self):
+        if not self._handle:
+            return 0.0
         return _lib.BrlVectorListLineWidthWidth(self._handle)
+
+    @width.setter
+    def width(self, value):
+        if not self._handle:
+            return
+        _lib.BrlVectorListLineWidthSetWidth(self._handle, value)
 
 
 class VectorListTriangleStart(VectorListElement):
@@ -197,7 +240,16 @@ class VectorListTriangleStart(VectorListElement):
 
     @property
     def normal(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListTriangleStartNormal(self._handle))
+
+    @normal.setter
+    def normal(self, value):
+        if not self._handle:
+            return
+        nx, ny, nz = value
+        _lib.BrlVectorListTriangleStartSetNormal(self._handle, nx, ny, nz)
 
 
 class VectorListTriangleMove(VectorListElement):
@@ -212,7 +264,16 @@ class VectorListTriangleMove(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListTriangleMovePoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListTriangleMoveSetPoint(self._handle, x, y, z)
 
 
 class VectorListTriangleDraw(VectorListElement):
@@ -227,7 +288,16 @@ class VectorListTriangleDraw(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListTriangleDrawPoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListTriangleDrawSetPoint(self._handle, x, y, z)
 
 
 class VectorListTriangleEnd(VectorListElement):
@@ -242,7 +312,16 @@ class VectorListTriangleEnd(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListTriangleEndPoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListTriangleEndSetPoint(self._handle, x, y, z)
 
 
 class VectorListTriangleVertexNormal(VectorListElement):
@@ -257,7 +336,16 @@ class VectorListTriangleVertexNormal(VectorListElement):
 
     @property
     def normal(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListTriangleVertexNormalNormal(self._handle))
+
+    @normal.setter
+    def normal(self, value):
+        if not self._handle:
+            return
+        nx, ny, nz = value
+        _lib.BrlVectorListTriangleVertexNormalSetNormal(self._handle, nx, ny, nz)
 
 
 class VectorListPolygonStart(VectorListElement):
@@ -272,7 +360,16 @@ class VectorListPolygonStart(VectorListElement):
 
     @property
     def normal(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListPolygonStartNormal(self._handle))
+
+    @normal.setter
+    def normal(self, value):
+        if not self._handle:
+            return
+        nx, ny, nz = value
+        _lib.BrlVectorListPolygonStartSetNormal(self._handle, nx, ny, nz)
 
 
 class VectorListPolygonMove(VectorListElement):
@@ -287,7 +384,16 @@ class VectorListPolygonMove(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListPolygonMovePoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListPolygonMoveSetPoint(self._handle, x, y, z)
 
 
 class VectorListPolygonDraw(VectorListElement):
@@ -302,7 +408,16 @@ class VectorListPolygonDraw(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListPolygonDrawPoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListPolygonDrawSetPoint(self._handle, x, y, z)
 
 
 class VectorListPolygonEnd(VectorListElement):
@@ -317,7 +432,16 @@ class VectorListPolygonEnd(VectorListElement):
 
     @property
     def point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListPolygonEndPoint(self._handle))
+
+    @point.setter
+    def point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListPolygonEndSetPoint(self._handle, x, y, z)
 
 
 class VectorListPolygonVertexNormal(VectorListElement):
@@ -332,7 +456,16 @@ class VectorListPolygonVertexNormal(VectorListElement):
 
     @property
     def normal(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListPolygonVertexNormalNormal(self._handle))
+
+    @normal.setter
+    def normal(self, value):
+        if not self._handle:
+            return
+        nx, ny, nz = value
+        _lib.BrlVectorListPolygonVertexNormalSetNormal(self._handle, nx, ny, nz)
 
 
 class VectorListDisplaySpace(VectorListElement):
@@ -347,7 +480,16 @@ class VectorListDisplaySpace(VectorListElement):
 
     @property
     def reference_point(self):
+        if not self._handle:
+            return (0.0, 0.0, 0.0)
         return _vector3d_tuple(_lib.BrlVectorListDisplaySpaceReferencePoint(self._handle))
+
+    @reference_point.setter
+    def reference_point(self, value):
+        if not self._handle:
+            return
+        x, y, z = value
+        _lib.BrlVectorListDisplaySpaceSetReferencePoint(self._handle, x, y, z)
 
 
 class VectorListModelSpace(VectorListElement):
